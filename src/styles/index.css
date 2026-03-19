@@ -1,0 +1,14 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Global mobile overflow fix */
+html, body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Smooth tap highlights on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
