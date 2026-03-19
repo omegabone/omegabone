@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router";
 import { router } from "./routes";
 import { BlogspotProvider } from "./context/BlogspotContext";
-import { Component, ReactNode } from "react";
+import { Component, ReactNode, useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -21,12 +21,15 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 }
 
 export default function App() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
   return (
     <ErrorBoundary>
       <BlogspotProvider>
         <RouterProvider router={router} />
-        <Analytics />
-        <SpeedInsights />
+        {hydrated && <Analytics />}
+        {hydrated && <SpeedInsights />}
       </BlogspotProvider>
     </ErrorBoundary>
   );
