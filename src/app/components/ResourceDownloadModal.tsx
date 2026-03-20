@@ -22,10 +22,10 @@ export function ResourceDownloadModal({ resource, onClose }: ResourceDownloadMod
     setError("");
 
     try {
-      await fetch("/api/subscribe", {
+      await fetch("https://api.convertkit.com/v3/forms/9224462/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ api_key: "yAz6SreIym3gsF5ZdO-Z9w", email }),
       });
     } catch (_) {
       // silently fail — still show success and trigger download
