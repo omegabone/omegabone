@@ -63,14 +63,16 @@ export function AboutPage() {
       {/* ── HERO ── */}
       <section
         className="mt-28 sm:mt-36 lg:mt-40 pb-0 relative bg-black"
-        style={{
-          backgroundImage: `url(${omegaHeroImg})`,
-          backgroundSize: "auto 100%",
-          backgroundPosition: "center top",
-          backgroundRepeat: "no-repeat",
-          minHeight: "380px",
-        }}
+        style={{ minHeight: "380px" }}
       >
+        <img
+          src={omegaHeroImg}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          loading="eager"
+          className="absolute inset-0 w-full h-full object-cover object-top"
+        />
         {/* Dark overlay on the right side for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/55 to-black/85 pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 flex justify-end">
