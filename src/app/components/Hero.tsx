@@ -78,6 +78,8 @@ export function Hero() {
                   src={heroImage}
                   alt="Omega Bone - Vocal Coach"
                   className="w-full h-[300px] sm:h-[420px] lg:h-[520px] object-cover"
+                  fetchPriority="high"
+                  loading="eager"
                 />
               </div>
 
