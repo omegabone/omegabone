@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const response = await fetch(
-    `https://api.convertkit.com/v3/forms/${process.env.VITE_KIT_FORM_ID}/subscribe`,
+    `https://api.convertkit.com/v3/forms/${process.env.KIT_FORM_ID}/subscribe`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
