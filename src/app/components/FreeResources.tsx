@@ -69,7 +69,7 @@ export function FreeResources() {
               </div>
 
               <button
-                onClick={() => openPopup("all free resources")}
+                onClick={() => setActiveResource({ label: "7-Day Vocal Warm-Up Series", file: "vocal-warmup-series.zip" })}
                 className="inline-flex items-center gap-2 mt-8 bg-[#1a56db] text-white px-8 py-4 rounded-full hover:bg-[#1649c0] transition-all hover:shadow-lg"
                 style={{ fontWeight: 700 }}
               >
