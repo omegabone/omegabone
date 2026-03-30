@@ -21,14 +21,21 @@ export function ResourceDownloadModal({ resource, onClose }: ResourceDownloadMod
     }
     setError("");
 
+    const apiKey = import.meta.env.VITE_KIT_API_KEY;
+    const formId = import.meta.env.VITE_KIT_FORM_ID;
+
     try {
-      await fetch("https://api.convertkit.com/v3/forms/9224462/subscribe", {
+      const res = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key: "yAz6SreIym3gsF5ZdO-Z9w", email }),
+        body: JSON.stringify({ api_key: apiKey, email }),
       });
-    } catch (_) {
-      // silently fail — still show success and trigger download
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        console.error("Kit subscribe failed:", res.status, body);
+      }
+    } catch (err) {
+      console.error("Kit subscribe error:", err);
     }
 
     setSubmitted(true);
