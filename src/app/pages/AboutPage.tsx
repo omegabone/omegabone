@@ -242,6 +242,7 @@ export function AboutPage() {
                       scrolling="no"
                       frameBorder="no"
                       allow="autoplay"
+                      loading="lazy"
                       src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/helghast-trooper/final-fantasy-xiv-heavensward-trailer-song&color=%231a56db&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
                     />
                   </div>
@@ -254,6 +255,7 @@ export function AboutPage() {
                       src="https://www.youtube.com/embed/X23C4tYOpD8"
                       title="Rolling in the Deep"
                       frameBorder="0"
+                      loading="lazy"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
@@ -267,6 +269,7 @@ export function AboutPage() {
                       scrolling="no"
                       frameBorder="no"
                       allow="autoplay"
+                      loading="lazy"
                       src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/law-mathis/dariusburst-cs-freedom%3Fin%3Ddac-c%2Fsets%2Fgc&color=%231a56db&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
                     />
                   </div>
