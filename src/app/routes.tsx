@@ -20,10 +20,14 @@ const Music33BlogPage    = lazy(() => import("./pages/Music33BlogPage").then(m =
 const Music33BlogPostPage = lazy(() => import("./pages/Music33BlogPostPage").then(m => ({ default: m.Music33BlogPostPage })));
 const AlbumReleaseBlogPage = lazy(() => import("./pages/AlbumReleaseBlogPage").then(m => ({ default: m.AlbumReleaseBlogPage })));
 
+function PageLoader() {
+  return <div className="page-loading" aria-label="Loading" />;
+}
+
 function wrap(Comp: ComponentType) {
   return function Wrapped() {
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={<PageLoader />}>
         <Comp />
       </Suspense>
     );
