@@ -48,7 +48,7 @@ export function FreeResources() {
                 {resources.map((r, i) => (
                   <div
                     key={i}
-                    onClick={() => openPopup(r.title)}
+                    onClick={() => setActiveResource({ label: r.title, file: r.file })}
                     className="flex items-start gap-5 p-5 rounded-2xl border border-gray-100 bg-[#f7f9ff] hover:border-[#1a56db]/30 hover:shadow-md transition-all group cursor-pointer"
                   >
                     <div className="w-12 h-12 rounded-xl bg-[#e8f0fe] text-[#1a56db] flex items-center justify-center shrink-0 group-hover:bg-[#1a56db] group-hover:text-white transition-colors">
