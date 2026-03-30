@@ -629,7 +629,7 @@ export function ComeWithMePage() {
 
       {/* ══ INVESTMENT TIERS ══════════════════════════════════ */}
       <section style={{ padding: "4rem 1.5rem 6rem", background: "#0a0a0a" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.7rem", letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: "1rem" }}>Investor Gates Are Open</p>
             <h2 style={{ ...cinzel, fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 700, color: "#f0ead8", marginBottom: "1rem" }}>
@@ -640,147 +640,172 @@ export function ComeWithMePage() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", alignItems: "start" }}>
 
-            {/* Witness */}
+            {/* ── Witness ─────────────────────────────── */}
             <div style={{ background: "#131313", border: "1px solid #2a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <div>
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier I</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Witness</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.1rem", fontWeight: 700 }}>$150</span>
+                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$150</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #2a2a2a" }}>
                 <ImageWithFallback src={spread7Img} alt="Witness" style={{ width: "100%", height: "auto" }} />
               </div>
-              <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 {[
-                  "Digital album (10 tracks)",
+                  "10-track digital album",
                   "Vinyl record",
                   "Hardback novel",
-                  "Full-color glossy comic book",
+                  "Full color glossy comic book",
                 ].map((item, i) => (
-                  <li key={i} style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ color: "#ef4444", flexShrink: 0 }}>✦</span> {item}
+                  <li key={i} style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                    <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>{item}
                   </li>
                 ))}
               </ul>
-              <a href="#get-started" style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.75rem 1.5rem", textAlign: "center", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block" }}>
-                Claim Your Spot
+              <a
+                href="https://www.paypal.com/ncp/payment/CVQPN7RHR5PF4"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.85rem 1.5rem", textAlign: "center", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", marginTop: "auto" }}
+              >
+                Choose Witness
               </a>
             </div>
 
-            {/* Companion */}
-            <div style={{ background: "#131313", border: "1px solid #2a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            {/* ── Companion ───────────────────────────── */}
+            <div style={{ background: "#131313", border: "1px solid #3a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible" }}>
+              {/* Signed Set badge */}
+              <div style={{
+                position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)",
+                background: "#2a1a1a", border: "1px solid #ef4444", color: "#ef4444",
+                padding: "0.25rem 0.9rem", borderRadius: "99px",
+                fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase",
+                whiteSpace: "nowrap", ...cinzel,
+              }}>
+                Signed Set
+              </div>
               <div>
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier II</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Companion</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.1rem", fontWeight: 700 }}>$200</span>
+                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$500</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #2a2a2a" }}>
                 <ImageWithFallback src={spread6Img} alt="Companion" style={{ width: "100%", height: "auto" }} />
               </div>
-              <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 {[
-                  "Digital album (10 tracks)",
-                  "Vinyl record",
-                  "Hardback novel",
-                  "Full-color glossy comic book",
-                  "Exclusive Come With Me T-shirt",
+                  { text: "10-track digital album", signed: false },
+                  { text: "Signed vinyl record", signed: true },
+                  { text: "Signed hardback novel", signed: true },
+                  { text: "Signed full color glossy comic book", signed: true },
+                  { text: "T-shirt", signed: false },
                 ].map((item, i) => (
-                  <li key={i} style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ color: "#ef4444", flexShrink: 0 }}>✦</span> {item}
+                  <li key={i} style={{ ...garamond, color: item.signed ? "#f0ead8" : "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                    <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                    <span>{item.text}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#get-started" style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.75rem 1.5rem", textAlign: "center", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block" }}>
-                Claim Your Spot
+              <a
+                href="https://www.paypal.com/ncp/payment/9EDMDHLFX5LS6"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.85rem 1.5rem", textAlign: "center", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", marginTop: "auto" }}
+              >
+                Choose Companion
               </a>
             </div>
 
-            {/* Patron */}
-            <div style={{ background: "#180606", border: "2px solid #ef4444", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", boxShadow: "0 0 50px rgba(239,68,68,0.25), inset 0 0 30px rgba(239,68,68,0.04)" }}>
+            {/* ── Patron ──────────────────────────────── */}
+            <div style={{ background: "#180606", border: "2px solid #ef4444", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", boxShadow: "0 0 50px rgba(239,68,68,0.2), inset 0 0 30px rgba(239,68,68,0.04)", position: "relative", overflow: "visible" }}>
+              <div style={{
+                position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)",
+                background: "#ef4444", color: "#fff",
+                padding: "0.25rem 0.9rem", borderRadius: "99px",
+                fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase",
+                whiteSpace: "nowrap", boxShadow: "0 4px 16px rgba(239,68,68,0.5)", ...cinzel,
+              }}>
+                Most Coveted
+              </div>
               <div>
-                <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier III · Most Coveted</p>
+                <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier III</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Patron</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.1rem", fontWeight: 700 }}>$250</span>
+                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$1,000</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #7f1d1d" }}>
                 <ImageWithFallback src={spread8Img} alt="Patron" style={{ width: "100%", height: "auto" }} />
               </div>
-              <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
-                {[
-                  "Digital album (10 tracks)",
-                  "Vinyl record",
-                  "Hardback novel",
-                  "Full-color glossy comic book",
-                  "Exclusive \"Come With Me\" T-shirt",
-                  "1 free Virtual Concert ticket",
-                ].map((item, i) => (
-                  <li key={i} style={{ ...garamond, color: i >= 4 ? "#f0ead8" : "#a89880", fontSize: "0.95rem", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ color: "#ef4444", flexShrink: 0 }}>✦</span>{item}
-                  </li>
-                ))}
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+                <li style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Everything in <span style={{ color: "#f0ead8", fontStyle: "normal" }}>Companion</span> +</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>1-hour private session</span>
+                </li>
               </ul>
-              <a href="#get-started" style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.75rem 1.5rem", textAlign: "center", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", boxShadow: "0 0 20px rgba(239,68,68,0.4)" }}>
-                Claim Your Spot
+              <a
+                href="https://www.paypal.com/ncp/payment/5LPM3ZLYW8PSJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.85rem 1.5rem", textAlign: "center", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", boxShadow: "0 0 20px rgba(239,68,68,0.45)", marginTop: "auto" }}
+              >
+                Choose Patron
               </a>
             </div>
 
-            {/* Angel Investor */}
-            <div style={{ background: "#131313", border: "1px solid #2a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible" }}>
+            {/* ── Angel ───────────────────────────────── */}
+            <div style={{ background: "#0f0d09", border: "1px solid #5a4a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible", boxShadow: "0 0 60px rgba(180,140,60,0.1), inset 0 0 40px rgba(180,140,60,0.03)" }}>
               {/* Only One pin */}
               <div style={{
-                position: "absolute",
-                top: "-12px",
-                right: "16px",
-                background: "#ef4444",
-                color: "#fff",
-                padding: "0.3rem 0.85rem",
-                borderRadius: "99px",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                boxShadow: "0 4px 16px rgba(239,68,68,0.5)",
-                zIndex: 10,
-                ...cinzel,
+                position: "absolute", top: "-12px", right: "16px",
+                background: "linear-gradient(135deg, #b8922a, #d4aa3a)",
+                color: "#0f0d09",
+                padding: "0.3rem 0.85rem", borderRadius: "99px",
+                fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase",
+                boxShadow: "0 4px 16px rgba(180,140,60,0.45)", zIndex: 10, ...cinzel,
               }}>
                 Only One
               </div>
               <div>
-                <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier IV</p>
+                <p style={{ ...cinzel, color: "#b8922a", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier IV</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Angel</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.1rem", fontWeight: 700 }}>$10,000</span>
+                  <span style={{ ...cinzel, color: "#d4aa3a", fontSize: "1.2rem", fontWeight: 700 }}>$15,000</span>
                 </div>
               </div>
-              <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #2a2a2a" }}>
+              <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #3a2e14" }}>
                 <ImageWithFallback src={horsebackImg} alt="Angel Investor" style={{ width: "100%", height: "auto" }} />
               </div>
-              <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
-                {[
-                  "Digital album (10 tracks)",
-                  "Vinyl record",
-                  "Hardback novel",
-                  "Full-color glossy comic book",
-                  "Exclusive \"Come With Me\" T-shirt",
-                  "A live concert within 12 months, performed for you",
-                ].map((item, i) => (
-                  <li key={i} style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ color: "#ef4444", flexShrink: 0 }}>✦</span> {item}
-                  </li>
-                ))}
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+                <li style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Everything in <span style={{ color: "#f0ead8", fontStyle: "normal" }}>Patron</span> +</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Live performance within 1 year of investment</span>
+                </li>
               </ul>
-              <a href="#get-started" style={{ ...cinzel, background: "#ef4444", color: "#f0ead8", borderRadius: "99px", padding: "0.75rem 1.5rem", textAlign: "center", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block" }}>
-                Claim Your Spot
+              <a
+                href="https://www.paypal.com/ncp/payment/5925R33FLGUQG"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ ...cinzel, background: "linear-gradient(135deg, #b8922a, #d4aa3a)", color: "#0f0d09", borderRadius: "99px", padding: "0.85rem 1.5rem", textAlign: "center", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", boxShadow: "0 0 24px rgba(180,140,60,0.35)", marginTop: "auto" }}
+              >
+                Choose Angel
               </a>
             </div>
+
           </div>
 
           <p style={{ ...garamond, color: "#4a4a4a", textAlign: "center", marginTop: "2.5rem", fontStyle: "italic", fontSize: "0.95rem" }}>
