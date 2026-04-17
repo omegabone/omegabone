@@ -102,6 +102,84 @@ export function AboutPage() {
         </div>
       </section>
 
+      {/* ── PROGRAMS CTA ── */}
+      <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-[#f0f5ff]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <p className="text-[#1a56db] text-sm mb-3 uppercase tracking-widest" style={{ fontWeight: 700 }}>
+              Work With Omega
+            </p>
+            <h2
+              className="text-black"
+              style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.02em" }}
+            >
+              Three ways to find your voice
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            {/* Card 1 */}
+            <div className="bg-white rounded-3xl p-7 sm:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
+              <div className="w-14 h-14 rounded-2xl bg-[#e8f0fe] text-[#1a56db] flex items-center justify-center mb-6">
+                <Music size={26} />
+              </div>
+              <p className="text-[#1a56db] text-xs uppercase tracking-widest mb-2" style={{ fontWeight: 700 }}>For ambitious Families & Children</p>
+              <h3 className="text-black mb-4" style={{ fontSize: "1.5rem", fontWeight: 800, lineHeight: 1.2 }}>Music Room 33</h3>
+              <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>The most important stage a child will ever stand on is inside their own home. Music Room 33 helps parents and children unlock their musical potential together, building confidence, connection, and creativity in the everyday moments that matter most.</p>
+              <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>A child who grows up singing grows up knowing they have something to say.</p>
+              <Link
+                to="/music-room-33"
+                className="inline-flex items-center justify-center gap-2 bg-[#1a56db] text-white px-8 py-4 rounded-full hover:bg-[#1649c0] transition-all hover:shadow-lg group mt-auto text-[14px]"
+                style={{ fontWeight: 700 }}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Explore Music Room 33
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-3xl p-7 sm:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
+              <div className="w-14 h-14 rounded-2xl bg-[#ede9f6] text-[#554274] flex items-center justify-center mb-6">
+                <Mic2 size={26} />
+              </div>
+              <p className="text-[#554274] text-xs uppercase tracking-widest mb-2" style={{ fontWeight: 700 }}>For entrepreneurs, coaches & creators</p>
+              <h3 className="text-black mb-4" style={{ fontSize: "1.5rem", fontWeight: 800, lineHeight: 1.2 }}>Learn 2 Sing</h3>
+              <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>You already have the message. What's missing is a voice that makes people stop, lean in, and feel it. Learn 2 Sing is for entrepreneurs, coaches, and creators who know their ideas are worth hearing and are done letting a flat, forgettable delivery get in the way.</p>
+              <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>When your voice carries authority, your words carry weight.</p>
+              <a
+                href="/learn2sing#top"
+                className="inline-flex items-center justify-center gap-2 bg-[#554274] text-white px-8 py-4 rounded-full hover:bg-[#443360] transition-all hover:shadow-lg group mt-auto text-[14px]"
+                style={{ fontWeight: 700 }}
+              >
+                Explore Learn 2 Sing
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-3xl p-7 sm:p-10 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
+              <div className="w-14 h-14 rounded-2xl bg-[#dcfce7] text-[#166534] flex items-center justify-center mb-6">
+                <MessageSquare size={26} />
+              </div>
+              <p className="text-[#166534] text-xs uppercase tracking-widest mb-2" style={{ fontWeight: 700 }}>For professionals & public speakers</p>
+              <h3 className="text-black mb-4" style={{ fontSize: "1.5rem", fontWeight: 800, lineHeight: 1.2 }}>Learn to Communicate</h3>
+              <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>Communication is not just what you say, it is how your voice makes people feel. Learn to Communicate trains you to speak with clarity, resonance, and conviction, so every room you walk into already knows you mean it.</p>
+              <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>The voice is the instrument. The message is the music.</p>
+              <Link
+                to="/learn-to-communicate"
+                className="inline-flex items-center justify-center gap-2 bg-[#166534] text-white px-8 py-4 rounded-full hover:bg-[#14532d] transition-all hover:shadow-lg group mt-auto text-[14px]"
+                style={{ fontWeight: 700 }}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Explore Learn to Communicate
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── ORIGIN STORY ── */}
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
