@@ -1,19 +1,11 @@
 import image_c203af8148e96bab0b430f3321aa301dbae6cef3 from 'figma:asset/c203af8148e96bab0b430f3321aa301dbae6cef3.png'
-import { useState, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
-
-const homeDropdown = [
-  { label: "For Artists",        href: "/learn2sing" },
-  { label: "For Entrepreneurs",  href: "/learn-to-communicate" },
-  { label: "For Families",       href: "/music-room-33" },
-];
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
 export function AboutNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -26,21 +18,6 @@ export function AboutNavbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const navLinks = [
-    { label: "About",   href: "/about" },
-    { label: "Contact", href: "/contact" },
-  ];
 
   const bannerTop = bannerVisible ? "top-[36px]" : "top-0";
 
@@ -92,54 +69,11 @@ export function AboutNavbar() {
           {/* Desktop: links + CTA */}
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-8">
-              {/* About */}
-              <a
-                href="/about"
-                className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors"
-                style={{ fontWeight: 600 }}
-              >
-                About
-              </a>
-
-              {/* Home dropdown */}
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setDropdownOpen((o) => !o)}
-                  className="flex items-center gap-1 text-sm text-gray-700 hover:text-[#1a56db] transition-colors"
-                  style={{ fontWeight: 600 }}
-                >
-                  Home
-                  <ChevronDown
-                    size={14}
-                    className="transition-transform duration-200"
-                    style={{ transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                  />
-                </button>
-                {dropdownOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-white border border-gray-100 rounded-2xl shadow-lg py-2 z-50">
-                    {homeDropdown.map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        onClick={() => setDropdownOpen(false)}
-                        className="block px-5 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#f0f5ff] transition-colors"
-                        style={{ fontWeight: 600 }}
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Contact */}
-              <a
-                href="/contact"
-                className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors"
-                style={{ fontWeight: 600 }}
-              >
-                Contact
-              </a>
+              <a href="/about" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>About</a>
+              <a href="/learn2sing" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Artists</a>
+              <a href="/learn-to-communicate" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
+              <a href="/music-room-33" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
+              <a href="/contact" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             </nav>
 
             {/* Desktop CTA */}
@@ -167,37 +101,11 @@ export function AboutNavbar() {
         {/* Mobile menu */}
         {isOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 px-6 py-5 space-y-4 shadow-lg">
-            <a
-              href="/about"
-              onClick={() => setIsOpen(false)}
-              className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors"
-              style={{ fontWeight: 600 }}
-            >
-              About
-            </a>
-            {/* Home sub-items always visible on mobile */}
-            <div>
-              <p className="text-xs text-gray-400 uppercase tracking-widest mb-2 px-0" style={{ fontWeight: 700 }}>Home</p>
-              {homeDropdown.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors py-1"
-                  style={{ fontWeight: 600 }}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-            <a
-              href="/contact"
-              onClick={() => setIsOpen(false)}
-              className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors"
-              style={{ fontWeight: 600 }}
-            >
-              Contact
-            </a>
+            <a href="/about" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>About</a>
+            <a href="/learn2sing" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Artists</a>
+            <a href="/learn-to-communicate" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
+            <a href="/music-room-33" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
+            <a href="/contact" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             <a
               href="https://calendar.app.google/Y83p7Rf5idJkdzKc6"
               target="_blank"
