@@ -6,6 +6,7 @@ import mcdonaldsLogo from "figma:asset/0b8b0ec876fecacbb42f778dc6767c68fd5a67f7.
 import mjLogo from "figma:asset/c1b415218306eb53993c1f397d8335b5fd9c645e.png";
 import finalFantasyLogo from "figma:asset/28ac6a367e54af004c814fb1fcec33eec12022b3.png";
 import princeLogo from "figma:asset/3216ea2ff4d1a1e8a36ee5ab8f4b04dd12e0fb88.png";
+import haagenDazsLogo from "../../assets/haagen-dazs-logo.jpg";
 
 const logos = [
   { src: fifaLogo, alt: "FIFA", maxH: "3rem" },
@@ -16,6 +17,7 @@ const logos = [
   { src: mjLogo, alt: "Michael Jackson", maxH: "3.5rem" },
   { src: finalFantasyLogo, alt: "Final Fantasy", maxH: "3.2rem" },
   { src: princeLogo, alt: "Prince", maxH: "3.5rem" },
+  { src: haagenDazsLogo, alt: "Häagen-Dazs", maxH: "3.5rem" },
 ];
 
 export function LogoCarousel() {
