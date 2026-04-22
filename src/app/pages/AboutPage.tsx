@@ -102,6 +102,8 @@ export function AboutPage() {
         </div>
       </section>
 
+      <LogoCarousel />
+
       {/* ── PROGRAMS CTA ── */}
       <section id="programs" className="py-12 sm:py-16 lg:py-20 bg-[#f0f5ff]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
