@@ -33,7 +33,7 @@ export function VPNavBar() {
         <div className="bg-[#554274] text-white text-center py-2 px-4 flex items-center justify-center gap-3">
           <span className="inline-block w-2 h-2 rounded-full bg-purple-200 animate-pulse shrink-0" />
           <p className="text-xs sm:text-sm" style={{ fontWeight: 500 }}>
-            <span style={{ fontWeight: 700 }}>Only 3 spots left</span> for 1-on-1 coaching this month &mdash;{" "}
+            <span style={{ fontWeight: 700 }}>Only 2 spots left</span> for 1-on-1 coaching this month &mdash;{" "}
             <a
               href="https://calendar.app.google/Y83p7Rf5idJkdzKc6"
               target="_blank"

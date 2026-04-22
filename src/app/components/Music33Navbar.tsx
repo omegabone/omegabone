@@ -34,7 +34,7 @@ export function Music33Navbar() {
         <div className="fixed top-0 left-0 right-0 z-[60] text-gray-700 text-center py-2 px-4 flex items-center justify-center gap-3 bg-gray-100">
           <span className="inline-block w-2 h-2 rounded-full bg-red-400 animate-pulse shrink-0" />
           <p className="text-xs sm:text-sm" style={{ fontWeight: 500 }}>
-            <span style={{ fontWeight: 700 }}>Only 3 spots left</span> for 1-on-1 coaching this month -{" "}
+            <span style={{ fontWeight: 700 }}>Only 2 spots left</span> for 1-on-1 coaching this month -{" "}
             <a
               href="https://calendar.app.google/Y83p7Rf5idJkdzKc6"
               target="_blank"
