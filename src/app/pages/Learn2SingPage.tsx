@@ -246,7 +246,7 @@ const l2sPrograms = [
     tag: "Most Requested",
     tagColor: "bg-[#dcfce7] text-[#166534]",
     title: "The 90-Day Keynote Authority Blueprint",
-    subtitle: "90-Day Programme · 24 Sessions + Live Performance",
+    subtitle: "90-Day Programme · 60 Sessions + Live Performance",
     highlight: true,
     description:
       "Most communication training tells you what to say. This programme changes how your voice carries it. Over 90 days, song is your training ground. By the end, you perform live in front of a real audience and walk away with vocal authority that no workshop, course, or keynote training can replicate.",
