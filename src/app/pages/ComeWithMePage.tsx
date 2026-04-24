@@ -30,6 +30,7 @@ import dusseldorfSingImg  from "figma:asset/6433989b8c9380f13c3207d62f43a1e3d0c5
 import frankfurtPortImg   from "figma:asset/7b00d3fe89568ef422ecfdfec14bfb786c444b6e.png";
 import seoulImg           from "figma:asset/72c98691a2b1f98dbaec5f79b7f37df5322ec473.png";
 import seoulNewImg        from "../../assets/seoul-card-new.jpg";
+import seoul6Img           from "../../assets/seoul-card-6.jpg";
 import frankfurtCardNewImg from "../../assets/frankfurt-card.jpg";
 import tokyoImg           from "figma:asset/4375268fa3bca2a0d727c67cf57d7a30a12c5eb3.png";
 import lombokImg          from "../../assets/lombok-kuta-card.jpg";
