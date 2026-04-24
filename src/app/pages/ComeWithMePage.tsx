@@ -437,8 +437,8 @@ export function ComeWithMePage() {
               { src: spread4Img,        alt: "Nierstein am Rhein - Card 5",  rotate: "16deg",  z: 1, tx: "-18px" },
             ],
             [
-              { src: seoulNewImg,        alt: "Seoul - Card 6",               rotate: "-16deg", z: 1, tx: "18px"  },
-              { src: lasVegasImg,       alt: "Las Vegas - Card 7",           rotate: "-8deg",  z: 2, tx: "9px"   },
+              { src: seoulImg,          alt: "Seoul - Card 6",               rotate: "-16deg", z: 1, tx: "18px"  },
+              { src: seoulNewImg,       alt: "Seoul - Card 7",               rotate: "-8deg",  z: 2, tx: "9px"   },
               { src: tokyoImg,          alt: "Tokyo - Card 8",               rotate: "0deg",   z: 3, tx: "0px"   },
               { src: lombokImg,         alt: "Lombok - Card 9",              rotate: "8deg",   z: 2, tx: "-9px"  },
               { src: theFutureImg,      alt: "The Future - Card 10",         rotate: "16deg",  z: 1, tx: "-18px" },
