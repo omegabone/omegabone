@@ -432,7 +432,7 @@ export function ComeWithMePage() {
             [
               { src: havanaImg,         alt: "Havana - Card 1",              rotate: "-16deg", z: 1, tx: "18px"  },
               { src: spread1Img,        alt: "Los Angeles - Card 2",         rotate: "-8deg",  z: 2, tx: "9px"   },
-              { src: lasVegasImg,       alt: "Las Vegas - Card 3",           rotate: "0deg",   z: 3, tx: "0px"   },
+              { src: seoulImg,          alt: "Seoul - Card 3",               rotate: "0deg",   z: 3, tx: "0px"   },
               { src: dusseldorfSingImg, alt: "Dusseldorf - Card 4",          rotate: "8deg",   z: 2, tx: "-9px"  },
               { src: spread4Img,        alt: "Nierstein am Rhein - Card 5",  rotate: "16deg",  z: 1, tx: "-18px" },
             ],
