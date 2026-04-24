@@ -33,7 +33,6 @@ import seoulNewImg        from "../../assets/seoul-card-new.jpg";
 import tokyoImg           from "figma:asset/4375268fa3bca2a0d727c67cf57d7a30a12c5eb3.png";
 import lombokImg          from "../../assets/lombok-kuta-card.jpg";
 import theFutureImg       from "figma:asset/9885ebb609a23af38de444f9fba8ed25710c5182.png";
-import frankfurtNewImg    from "figma:asset/06abf2643b5029c1445456df168396a3ffe59edd.png";
 
 /* ── Countdown hook ─────────────────────────────────── */
 function useCountdown(targetDate: Date) {
