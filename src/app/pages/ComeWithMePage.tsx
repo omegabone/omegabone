@@ -412,7 +412,7 @@ export function ComeWithMePage() {
             {audioPlaying && <Waveform playing={audioPlaying} />}
             <div style={{ textAlign: "left" }}>
               <p style={{ ...cinzel, color: "#f0ead8", fontSize: "0.85rem", fontWeight: 600 }}>I Am</p>
-              <p style={{ ...garamond, color: "#6b6b6b", fontSize: "0.85rem", fontStyle: "italic" }}>Come With Me - Track 04</p>
+              <p style={{ ...garamond, color: "#6b6b6b", fontSize: "0.85rem", fontStyle: "italic" }}>Come With Me - Track 06</p>
             </div>
             {audioPlaying && <Waveform playing={audioPlaying} />}
           </div>
