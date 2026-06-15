@@ -165,8 +165,8 @@ export function AboutPage() {
                 <MessageSquare size={26} />
               </div>
               <p className="text-[#166534] text-xs uppercase tracking-widest mb-2" style={{ fontWeight: 700 }}>For professionals & public speakers</p>
-              <h3 className="text-black mb-4" style={{ fontSize: "1.5rem", fontWeight: 800, lineHeight: 1.2 }}>Learn to Communicate</h3>
-              <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>Communication is not just what you say, it is how your voice makes people feel. Learn to Communicate trains you to speak with clarity, resonance, and conviction, so every room you walk into already knows you mean it.</p>
+              <h3 className="text-black mb-4" style={{ fontSize: "1.5rem", fontWeight: 800, lineHeight: 1.2 }}>Vocal Mastery</h3>
+              <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>Communication is not just what you say, it is how your voice makes people feel. Vocal Mastery trains you to speak with clarity, resonance, and conviction, so every room you walk into already knows you mean it.</p>
               <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>The voice is the instrument. The message is the music.</p>
               <Link
                 to="/vocal-mastery"
