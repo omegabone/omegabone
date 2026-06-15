@@ -291,9 +291,13 @@ function L2SProgramCard({ program }: { program: typeof l2sPrograms[0] }) {
           {program.highlight ? "Popular" : program.tag}
         </span>
 
-        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${program.highlight ? "bg-white/20 text-white" : "bg-[#dcfce7] text-[#166534]"}`}>
-          {program.icon}
-        </div>
+        {"image" in program && program.image ? (
+          <img src={program.image as string} alt={program.title} className="w-full rounded-2xl mb-5 object-contain" />
+        ) : (
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${program.highlight ? "bg-white/20 text-white" : "bg-[#dcfce7] text-[#166534]"}`}>
+            {program.icon}
+          </div>
+        )}
 
         <h3 className={`mb-1 ${program.highlight ? "text-white" : "text-black"}`} style={{ fontSize: "1.25rem", fontWeight: 800 }}>
           {program.title}
