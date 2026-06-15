@@ -82,7 +82,7 @@ export function L2SBlogPage() {
           <>
             {/* FEATURED */}
             {featured && (
-              <a href={`/learn-to-communicate/blog/${featured.slug}`} className="group block mb-16">
+              <a href={`/vocal-mastery/blog/${featured.slug}`} className="group block mb-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden border hover:shadow-2xl transition-all duration-500" style={{ borderColor: accentMid }}>
                   {featured.image && (
                     <div className="overflow-hidden h-72 lg:h-auto relative">
@@ -127,7 +127,7 @@ export function L2SBlogPage() {
                 {rest.map((post) => (
                   <a
                     key={post.slug}
-                    href={`/learn-to-communicate/blog/${post.slug}`}
+                    href={`/vocal-mastery/blog/${post.slug}`}
                     className="group bg-white rounded-3xl overflow-hidden border hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                     style={{ borderColor: "#e7f5ee" }}
                   >
@@ -179,7 +179,7 @@ export function L2SBlogPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/learn-to-communicate"
+              href="/vocal-mastery"
               className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-full hover:opacity-90 transition-all group"
               style={{ background: accent, fontWeight: 700 }}
             >

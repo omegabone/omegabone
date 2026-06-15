@@ -169,7 +169,7 @@ export function AboutPage() {
               <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>Communication is not just what you say, it is how your voice makes people feel. Learn to Communicate trains you to speak with clarity, resonance, and conviction, so every room you walk into already knows you mean it.</p>
               <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>The voice is the instrument. The message is the music.</p>
               <Link
-                to="/learn-to-communicate"
+                to="/vocal-mastery"
                 className="inline-flex items-center justify-center gap-2 bg-[#166534] text-white px-8 py-4 rounded-full hover:bg-[#14532d] transition-all hover:shadow-lg group mt-auto text-[14px]"
                 style={{ fontWeight: 700 }}
                 onClick={() => window.scrollTo(0, 0)}

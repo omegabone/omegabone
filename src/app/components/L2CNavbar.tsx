@@ -22,7 +22,7 @@ export function L2CNavbar() {
   const navLinks = [
     { label: "About",   href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Blog",    href: "/learn-to-communicate/blog" },
+    { label: "Blog",    href: "/vocal-mastery/blog" },
   ];
 
   const bannerTop = bannerVisible ? "top-[36px]" : "top-0";
