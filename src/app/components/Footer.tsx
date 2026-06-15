@@ -14,8 +14,8 @@ export function Footer() {
 
   const links: Record<string, { label: string; href: string }[]> = {
     Programs: [
-      { label: "Learn to Communicate", href: "/vocal-mastery" },
-      { label: "Learn to Sing", href: "/learn2sing" },
+      { label: "Vocal Mastery", href: "/vocal-mastery" },
+      { label: "Learn 2 Sing", href: "/learn2sing" },
       { label: "Music Room 33", href: "/music-room-33" },
       { label: "Private Sessions", href: "/contact" },
       { label: "Group Workshops", href: "/contact" },
