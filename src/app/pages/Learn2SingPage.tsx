@@ -23,6 +23,7 @@ import videoThumbImg from "figma:asset/d0e85cf59d269d1eae80bc43bb42139e08c63d3e.
 import omegaImg from "figma:asset/a5c44fa231ece841b7c75f3487148d5d4d53f216.png";
 import image_4de58a02f605261925990ba9260bdfdaefdad934 from "figma:asset/4de58a02f605261925990ba9260bdfdaefdad934.png";
 
+import blueprintThumbImg from "../../assets/blueprint-exercise-thumb.png";
 import { l2sBlogPosts } from "../data/l2sBlogPosts";
 import { useBlogspotFeed } from "../hooks/useBlogspotFeed";
 
