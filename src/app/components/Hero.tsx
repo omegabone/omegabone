@@ -18,7 +18,7 @@ export function Hero() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f0fe] text-[#1a56db] px-4 py-2 rounded-full text-sm mb-6" style={{ fontWeight: 600 }}>
               <span className="w-2 h-2 rounded-full bg-[#1a56db] animate-pulse" />
-              Now Enrolling — Spring 2026 Cohort
+              Now Enrolling
             </div>
 
             {/* Headline */}
