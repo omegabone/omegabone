@@ -174,7 +174,7 @@ export function AboutPage() {
                 style={{ fontWeight: 700 }}
                 onClick={() => window.scrollTo(0, 0)}
               >
-                Explore Learn to Communicate
+                Explore Vocal Mastery
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
