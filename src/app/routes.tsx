@@ -19,6 +19,7 @@ const L2SBlogPostPage    = lazy(() => import("./pages/L2SBlogPostPage").then(m =
 const Music33BlogPage    = lazy(() => import("./pages/Music33BlogPage").then(m => ({ default: m.Music33BlogPage })));
 const Music33BlogPostPage = lazy(() => import("./pages/Music33BlogPostPage").then(m => ({ default: m.Music33BlogPostPage })));
 const AlbumReleaseBlogPage = lazy(() => import("./pages/AlbumReleaseBlogPage").then(m => ({ default: m.AlbumReleaseBlogPage })));
+const ApplyPage            = lazy(() => import("./pages/ApplyPage").then(m => ({ default: m.ApplyPage })));
 
 function PageLoader() {
   return <div className="page-loading" aria-label="Loading" />;
