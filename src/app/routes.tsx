@@ -59,5 +59,6 @@ export const router = createBrowserRouter([
   { path: "/terms",                             Component: wrap(TermsOfServicePage) },
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
+  { path: "/apply",                             Component: wrap(ApplyPage) },
   { path: "*",                                  Component: NotFound },
 ]);
