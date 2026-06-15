@@ -10,6 +10,7 @@ import {
   Headphones, Video, Star, Mic, Music, Guitar, Users,
   ChevronLeft, ChevronRight, Quote, Trophy, Gift, ChevronDown, ChevronUp, Sparkles,
 } from "lucide-react";
+import vpProgramThumbImg from "../../assets/vp-program-thumb.png";
 import { L2SingNavbar } from "../components/L2SingNavbar";
 import { Footer } from "../components/Footer";
 import { LogoCarousel } from "../components/LogoCarousel";
