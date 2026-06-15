@@ -230,6 +230,7 @@ function VPAbout() {
 const vpPrograms = [
   {
     icon: <Music size={28} />,
+    image: vpProgramThumbImg,
     tag: "Start Here",
     tagColor: "bg-[#ede8f5] text-[#554274]",
     title: "Sing Your First Full Song in 30 Days, Even If You've Never Had a Lesson",
