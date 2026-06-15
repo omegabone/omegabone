@@ -276,6 +276,7 @@ const vpPrograms = [
   },
   {
     icon: <Star size={28} />,
+    image: vpProgramThumbImg,
     tag: "Maximum Results",
     tagColor: "bg-[#ede8f5] text-[#554274]",
     title: "From Blank Page to Professional Album in 14 Weeks, Done With You",
