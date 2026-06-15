@@ -243,7 +243,7 @@ const l2sPrograms = [
     urgency: null,
   },
   {
-    icon: <Trophy size={28} />,
+    icon: <img src={blueprintThumbImg} alt="Exercise 3" className="w-full h-full object-cover rounded-2xl" />,
     tag: "Most Requested",
     tagColor: "bg-[#dcfce7] text-[#166534]",
     title: "The 90-Day Keynote Authority Blueprint",
