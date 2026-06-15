@@ -251,6 +251,7 @@ const vpPrograms = [
   },
   {
     icon: <Trophy size={28} />,
+    image: vpProgramThumb2Img,
     tag: "Most Requested",
     tagColor: "bg-black text-white",
     title: "From First Note to Real Concert in 90 Days, Guaranteed",
