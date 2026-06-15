@@ -227,6 +227,7 @@ function L2SAbout() {
 const l2sPrograms = [
   {
     icon: <Mic size={28} />,
+    image: founderVoiceThumbImg,
     tag: "Start Here",
     tagColor: "bg-[#dcfce7] text-[#166534]",
     title: "The 30-Day Founder Voice Intensive",
