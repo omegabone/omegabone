@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { label: "Blog", href: "/learn2sing/blog" },
   { label: "About", href: "/about" },
-  { label: "Album Release", href: "/come-with-me" },
+  { label: "Come With Me", href: "/come-with-me" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -74,7 +74,7 @@ export function VPNavBar() {
                 key={link.label}
                 href={link.href}
                 className={`text-sm transition-colors ${
-                  link.label === "Album Release"
+                  link.label === "Come With Me"
                     ? "text-[#554274] hover:text-[#432f5c]"
                     : "text-gray-700 hover:text-[#554274]"
                 }`}
@@ -115,7 +115,7 @@ export function VPNavBar() {
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`block text-sm transition-colors ${
-                  link.label === "Album Release"
+                  link.label === "Come With Me"
                     ? "text-[#554274]"
                     : "text-gray-700 hover:text-[#554274]"
                 }`}
