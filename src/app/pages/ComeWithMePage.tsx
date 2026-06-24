@@ -156,7 +156,7 @@ export function ComeWithMePage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const countdown = useCountdown(new Date("2026-03-31T23:59:59-05:00"));
+  const countdown = useCountdown(new Date("2026-07-17T23:59:59-05:00"));
   const { posts: blogPosts, isLoading: isLoadingBlog } = useBlogspotFeed("https://comewithmeseries.blogspot.com");
 
   const cinzel   = { fontFamily: "'Cinzel', serif" };
