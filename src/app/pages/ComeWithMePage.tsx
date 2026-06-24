@@ -638,18 +638,18 @@ export function ComeWithMePage() {
               Choose Your Role in This Story
             </h2>
             <p style={{ ...garamond, color: "#6b6b6b", fontStyle: "italic", fontSize: "1rem" }}>
-              Once the production budget is locked, these tiers close permanently.
+              Each tier is a deeper transmission. Once a spot is filled, it is gone.
             </p>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", alignItems: "start" }}>
 
-            {/* ── Witness ─────────────────────────────── */}
+            {/* ── The Frequency ────────────────────────── */}
             <div style={{ background: "#131313", border: "1px solid #2a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <div>
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier I</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Witness</h3>
+                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The Frequency</h3>
                   <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$150</span>
                 </div>
               </div>
@@ -658,10 +658,10 @@ export function ComeWithMePage() {
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 {[
-                  "10-track digital album",
-                  "Vinyl record",
-                  "Hardback novel",
-                  "Full color glossy comic book",
+                  "Full album access on OmegaBone.com",
+                  "Command the Room: 5-lesson course",
+                  "NFT ownership token",
+                  "Private access to the vault",
                 ].map((item, i) => (
                   <li key={i} style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                     <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>{item}
@@ -678,7 +678,7 @@ export function ComeWithMePage() {
               </a>
             </div>
 
-            {/* ── Companion ───────────────────────────── */}
+            {/* ── The Signal ────────────────────────────── */}
             <div style={{ background: "#131313", border: "1px solid #3a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible" }}>
               {/* Signed Set badge */}
               <div style={{
@@ -693,7 +693,7 @@ export function ComeWithMePage() {
               <div>
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier II</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Companion</h3>
+                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The<br />Signal</h3>
                   <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$500</span>
                 </div>
               </div>
@@ -702,11 +702,11 @@ export function ComeWithMePage() {
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 {[
-                  { text: "10-track digital album", signed: false },
-                  { text: "Signed vinyl record", signed: true },
-                  { text: "Signed hardback novel", signed: true },
-                  { text: "Signed full color glossy comic book", signed: true },
-                  { text: "T-shirt", signed: false },
+                  { text: "Everything in The Frequency", signed: false },
+                  { text: "Month-long group course with Omega", signed: true },
+                  { text: "Live group session, recorded for your vault", signed: true },
+                  { text: "Named in the album credits", signed: true },
+                  { text: "First access to Album 2", signed: false },
                 ].map((item, i) => (
                   <li key={i} style={{ ...garamond, color: item.signed ? "#f0ead8" : "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                     <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
@@ -724,7 +724,7 @@ export function ComeWithMePage() {
               </a>
             </div>
 
-            {/* ── Patron ──────────────────────────────── */}
+            {/* ── The Resonance ─────────────────────────── */}
             <div style={{ background: "#180606", border: "2px solid #ef4444", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", boxShadow: "0 0 50px rgba(239,68,68,0.2), inset 0 0 30px rgba(239,68,68,0.04)", position: "relative", overflow: "visible" }}>
               <div style={{
                 position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)",
@@ -738,8 +738,8 @@ export function ComeWithMePage() {
               <div>
                 <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier III</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Patron</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$1,000</span>
+                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The Resonance</h3>
+                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$5,000</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #7f1d1d" }}>
@@ -748,11 +748,19 @@ export function ComeWithMePage() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 <li style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                   <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
-                  <span>Everything in <span style={{ color: "#f0ead8", fontStyle: "normal" }}>Companion</span> +</span>
+                  <span>Everything in <span style={{ color: "#f0ead8", fontStyle: "normal" }}>The Signal</span> +</span>
                 </li>
                 <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                   <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
-                  <span>1-hour private session</span>
+                  <span>3-month private course with Omega</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Direct access: voice notes and session feedback</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>3 spots only</span>
                 </li>
               </ul>
               <a
@@ -765,7 +773,7 @@ export function ComeWithMePage() {
               </a>
             </div>
 
-            {/* ── Angel ───────────────────────────────── */}
+            {/* ── The Transmission ──────────────────────── */}
             <div style={{ background: "#0f0d09", border: "1px solid #5a4a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible", boxShadow: "0 0 60px rgba(180,140,60,0.1), inset 0 0 40px rgba(180,140,60,0.03)" }}>
               {/* Only One pin */}
               <div style={{
@@ -781,8 +789,8 @@ export function ComeWithMePage() {
               <div>
                 <p style={{ ...cinzel, color: "#b8922a", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier IV</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Angel</h3>
-                  <span style={{ ...cinzel, color: "#d4aa3a", fontSize: "1.2rem", fontWeight: 700 }}>$15,000</span>
+                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The Transmission</h3>
+                  <span style={{ ...cinzel, color: "#d4aa3a", fontSize: "1.2rem", fontWeight: 700 }}>$5,000</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #3a2e14" }}>
@@ -791,11 +799,23 @@ export function ComeWithMePage() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
                 <li style={{ ...garamond, color: "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                   <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
-                  <span>Everything in <span style={{ color: "#f0ead8", fontStyle: "normal" }}>Patron</span> +</span>
+                  <span>By application only. One spot.</span>
                 </li>
                 <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                   <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
-                  <span>Live performance within 1 year of investment</span>
+                  <span>Omega travels to your location</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Full album co-created on site</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Songwriting, production, vocal coaching</span>
+                </li>
+                <li style={{ ...garamond, color: "#f0ead8", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                  <span style={{ color: "#b8922a", flexShrink: 0, marginTop: "2px" }}>✦</span>
+                  <span>Live concert to launch your record</span>
                 </li>
               </ul>
               <a
