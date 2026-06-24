@@ -36,6 +36,7 @@ export function Navbar() {
   const ctaHover    = isLearnCommunicate ? "hover:bg-[#145228]" : isVocalPresence ? "hover:bg-[#432f5c]" : "hover:bg-[#1649c0]";
 
   const navLinks = [
+    { label: "Come with Me Album", href: "/come-with-me" },
     { label: "About",   href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
