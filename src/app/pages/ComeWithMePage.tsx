@@ -547,10 +547,10 @@ export function ComeWithMePage() {
           }}>
             {/* Counts */}
             <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "0.9rem" }}>
-              <span style={{ ...cinzel, color: "#f0ead8", fontSize: "clamp(1.6rem, 4vw, 2.1rem)", fontWeight: 700 }}>47</span>
+              <span style={{ ...cinzel, color: "#f0ead8", fontSize: "clamp(1.6rem, 4vw, 2.1rem)", fontWeight: 700 }}>68</span>
               <span style={{ ...cinzel, color: "#a89880", fontSize: "0.85rem" }}>of</span>
               <span style={{ ...cinzel, color: "#f0ead8", fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)", fontWeight: 700 }}>200</span>
-              <span style={{ ...cinzel, color: "#a89880", fontSize: "0.82rem" }}>Supporter packages claimed</span>
+              <span style={{ ...cinzel, color: "#a89880", fontSize: "0.82rem" }}>packages claimed</span>
             </div>
 
             {/* Progress bar */}
