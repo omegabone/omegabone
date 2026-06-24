@@ -588,7 +588,7 @@ export function ComeWithMePage() {
           {/* Countdown */}
           <div style={{ marginBottom: "3rem" }}>
             <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.25rem" }}>
-              Investor Gates Close -- March 31 at Midnight EST
+              Investor Gates Close -- July 17 at Midnight EST
             </p>
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
               {[
