@@ -103,6 +103,7 @@ export function AboutNavbar() {
         {isOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 px-6 py-5 space-y-4 shadow-lg">
             <a href="/about" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>About</a>
+            <a href="/come-with-me" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Come With Me</a>
             <a href="/learn2sing" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Artists</a>
             <a href="/vocal-mastery" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
             <a href="/music-room-33" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
