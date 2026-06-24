@@ -557,7 +557,7 @@ export function ComeWithMePage() {
             <div style={{ width: "100%", height: "5px", background: "rgba(255,255,255,0.07)", borderRadius: "999px", overflow: "hidden", marginBottom: "0.9rem" }}>
               <div style={{
                 height: "100%",
-                width: "23.5%",
+                width: "34%",
                 background: "linear-gradient(90deg, #ef4444, #f87171)",
                 borderRadius: "999px",
                 boxShadow: "0 0 8px rgba(239,68,68,0.6)",
