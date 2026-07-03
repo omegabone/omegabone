@@ -20,6 +20,7 @@ const Music33BlogPage    = lazy(() => import("./pages/Music33BlogPage").then(m =
 const Music33BlogPostPage = lazy(() => import("./pages/Music33BlogPostPage").then(m => ({ default: m.Music33BlogPostPage })));
 const AlbumReleaseBlogPage = lazy(() => import("./pages/AlbumReleaseBlogPage").then(m => ({ default: m.AlbumReleaseBlogPage })));
 const ApplyPage            = lazy(() => import("./pages/ApplyPage").then(m => ({ default: m.ApplyPage })));
+const PracticePage         = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.PracticePage })));
 
 function PageLoader() {
   return <div className="page-loading" aria-label="Loading" />;
@@ -60,5 +61,6 @@ export const router = createBrowserRouter([
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
+  { path: "/practice",                          Component: wrap(PracticePage) },
   { path: "*",                                  Component: NotFound },
 ]);
