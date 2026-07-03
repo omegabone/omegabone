@@ -9,9 +9,8 @@ import {
 } from "../hooks/useWarmupRoutine";
 import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
 
-const cinzel = { fontFamily: "'Cinzel', serif" };
-const cinzelDec = { fontFamily: "'Cinzel Decorative', serif" };
-const garamond = { fontFamily: "'EB Garamond', serif" };
+// Site font stack from omegabone-fonts.css — system fonts throughout.
+const systemFont = { fontFamily: "system-ui, -apple-system, sans-serif" };
 
 const COLORS = {
   bg: "#081812",
@@ -99,10 +98,10 @@ function SliderRow({
   return (
     <div style={{ marginBottom: "1.75rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.6rem" }}>
-        <span style={{ ...cinzel, color: COLORS.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <span style={{ ...systemFont, color: COLORS.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
           {label}
         </span>
-        <span style={{ ...cinzel, color: trackColor, fontSize: "0.95rem", fontWeight: 700 }}>{valueLabel}</span>
+        <span style={{ ...systemFont, color: trackColor, fontSize: "0.95rem", fontWeight: 700 }}>{valueLabel}</span>
       </div>
       <SliderPrimitive.Root
         value={[value]}
@@ -186,13 +185,13 @@ export function PracticePage() {
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <a
             href="/"
-            style={{ ...cinzel, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", textDecoration: "none" }}
+            style={{ ...systemFont, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", textDecoration: "none" }}
           >
             Omega Bone
           </a>
           <h1
             style={{
-              ...cinzelDec,
+              ...systemFont,
               color: COLORS.white,
               fontSize: "clamp(1.8rem, 6vw, 2.6rem)",
               fontWeight: 700,
@@ -202,7 +201,7 @@ export function PracticePage() {
           >
             Daily Warm-Up
           </h1>
-          <p style={{ ...garamond, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
+          <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
             Press Start. Follow along. ~20 minutes.
           </p>
         </div>
@@ -219,7 +218,7 @@ export function PracticePage() {
             transition: "box-shadow 0.4s ease",
           }}
         >
-          <p style={{ ...cinzel, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
+          <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
             {isLoading
               ? "Loading Exercises..."
               : isFinished
@@ -230,11 +229,11 @@ export function PracticePage() {
           </p>
 
           <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
-            <h2 style={{ ...cinzel, color: COLORS.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
+            <h2 style={{ ...systemFont, color: COLORS.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
               {isFinished ? "Nice work" : isError ? "Add your exercise files" : currentFile.title}
             </h2>
             {!isFinished && !isError && currentFile.instruction && (
-              <p style={{ ...garamond, color: COLORS.whiteDim, fontStyle: "italic", marginTop: "0.4rem" }}>{currentFile.instruction}</p>
+              <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", marginTop: "0.4rem" }}>{currentFile.instruction}</p>
             )}
           </div>
 
@@ -260,7 +259,7 @@ export function PracticePage() {
 
           {isError && (
             <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ ...garamond, color: COLORS.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
+              <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
                 None of the warm-up files could be found. Drop{" "}
                 <code style={{ color: COLORS.lightGreen }}>exercise-1-C.mp3</code> through{" "}
                 <code style={{ color: COLORS.lightGreen }}>exercise-4-C.mp3</code> into{" "}
@@ -280,7 +279,7 @@ export function PracticePage() {
               marginBottom: "1.5rem",
             }}
           >
-            <p style={{ ...garamond, color: COLORS.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
+            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
               Skipped missing file{loadErrors.length > 1 ? "s" : ""}:{" "}
               <span style={{ color: COLORS.lightGreen }}>{loadErrors.join(", ")}</span>. Add{loadErrors.length > 1 ? "" : " it"} to{" "}
               <code>public/audio/</code> to include {loadErrors.length > 1 ? "them" : "it"} in the routine.
@@ -295,7 +294,7 @@ export function PracticePage() {
               onClick={start}
               disabled={isLoading}
               style={{
-                ...cinzel,
+                ...systemFont,
                 background: isLoading ? COLORS.trackBg : `linear-gradient(135deg, ${COLORS.lightGreenBright}, ${COLORS.lightGreen})`,
                 color: COLORS.buttonText,
                 border: "none",
@@ -317,7 +316,7 @@ export function PracticePage() {
             <button
               onClick={start}
               style={{
-                ...cinzel,
+                ...systemFont,
                 background: "transparent",
                 color: COLORS.lightGreen,
                 border: `1px solid ${COLORS.lightGreen}`,
@@ -339,7 +338,7 @@ export function PracticePage() {
               <button
                 onClick={isPlaying ? pause : resume}
                 style={{
-                  ...cinzel,
+                  ...systemFont,
                   flex: 2,
                   display: "flex",
                   alignItems: "center",
@@ -363,7 +362,7 @@ export function PracticePage() {
               <button
                 onClick={skip}
                 style={{
-                  ...cinzel,
+                  ...systemFont,
                   flex: 1,
                   display: "flex",
                   alignItems: "center",
@@ -390,7 +389,7 @@ export function PracticePage() {
             <button
               onClick={restart}
               style={{
-                ...cinzel,
+                ...systemFont,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -415,7 +414,7 @@ export function PracticePage() {
         {/* ── Key + tempo controls ── */}
         <div style={{ background: COLORS.panel, border: `1px solid ${COLORS.border}`, borderRadius: "20px", padding: "1.75rem 1.5rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-            <p style={{ ...cinzel, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+            <p style={{ ...systemFont, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
               Key &amp; Tempo — Applies To The Whole Routine
             </p>
           </div>
@@ -445,7 +444,7 @@ export function PracticePage() {
           <button
             onClick={resetKeyTempo}
             style={{
-              ...cinzel,
+              ...systemFont,
               display: "block",
               margin: "0.5rem auto 0",
               background: "transparent",
@@ -462,7 +461,7 @@ export function PracticePage() {
           </button>
         </div>
 
-        <p style={{ ...garamond, color: COLORS.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
+        <p style={{ ...systemFont, color: COLORS.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
           Pitch-shifted with tempo preserved — practice at your own key and speed.
         </p>
       </div>
