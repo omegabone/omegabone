@@ -202,7 +202,7 @@ export function PracticePage() {
             Daily Warm-Up
           </h1>
           <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
-            Press Start. Follow along. ~20 minutes.
+            Press Start. Follow along. ~12 minutes.
           </p>
         </div>
 
