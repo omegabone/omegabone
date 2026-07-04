@@ -11,7 +11,7 @@ import {
 import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
 import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
 import { useStreak } from "../hooks/useStreak";
-import logoImg from "figma:asset/c203af8148e96bab0b430f3321aa301dbae6cef3.png";
+import logoImg from "../../assets/omegabone-logo-trimmed.png";
 
 declare const __BUILD_DATE__: string;
 
@@ -201,7 +201,7 @@ export function PracticePage() {
             <img
               src={logoImg}
               alt="Omega Bone"
-              style={{ height: "72px", width: "auto", display: "block", margin: "0 auto", filter: "invert(1)" }}
+              style={{ width: "min(280px, 75vw)", height: "auto", display: "block", margin: "0 auto", filter: "invert(1)" }}
             />
           </a>
           <h1
