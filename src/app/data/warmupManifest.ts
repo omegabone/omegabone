@@ -68,7 +68,7 @@ export const warmupManifest: WarmupManifestEntry[] = [
     technique: "K with the OOH Shape — Big Leaps",
     instruction:
       "Buzz it first, then sing it with the OOH shape locked in place, dark cave intact, while " +
-      "the “K” engages your abdominals. Let your support, not your mouth, carry you through " +
+      "the “K” engages your abdominals. Let your breath support, not your mouth, carry you through " +
       "the big leaps.",
     defaultKey: "C",
   },
