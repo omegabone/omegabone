@@ -8,6 +8,7 @@ import {
   useWarmupRoutine,
 } from "../hooks/useWarmupRoutine";
 import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
+import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
 
 // Site font stack from omegabone-fonts.css — system fonts throughout.
 const systemFont = { fontFamily: "system-ui, -apple-system, sans-serif" };
@@ -230,12 +231,41 @@ export function PracticePage() {
 
           <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
             <h2 style={{ ...systemFont, color: COLORS.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
-              {isFinished ? "Nice work" : isError ? "Add your exercise files" : currentFile.title}
+              {isFinished
+                ? "Nice work"
+                : isError
+                  ? "Add your exercise files"
+                  : `${currentFile.title}: ${rep === 1 ? "Buzz" : "Syllables"}`}
             </h2>
-            {!isFinished && !isError && currentFile.instruction && (
-              <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", marginTop: "0.4rem" }}>{currentFile.instruction}</p>
+            {!isFinished && !isError && (
+              <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
+                {currentFile.technique}
+              </p>
             )}
           </div>
+
+          {/* Live rep cue: pass 1 buzzes, pass 2 sings */}
+          {(isPlaying || isPaused) && (
+            <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+              <span
+                style={{
+                  ...systemFont,
+                  display: "inline-block",
+                  background: `${COLORS.lightGreen}1f`,
+                  border: `1px solid ${COLORS.lightGreen}66`,
+                  color: COLORS.lightGreenBright,
+                  borderRadius: "999px",
+                  padding: "0.45rem 1.1rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Pass {rep}: {repCues[rep - 1]}
+              </span>
+            </div>
+          )}
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "1.25rem" }}>
             <Waveform active={isPlaying} color={COLORS.lightGreen} />
@@ -256,6 +286,21 @@ export function PracticePage() {
           )}
 
           <StepDots total={totalSteps} current={isFinished ? totalSteps : hasStarted ? stepIndex : -1} />
+
+          {!isFinished && !isError && (
+            <p
+              style={{
+                ...systemFont,
+                color: COLORS.whiteDim,
+                fontSize: "0.95rem",
+                lineHeight: 1.7,
+                marginTop: "1.5rem",
+                textAlign: "left",
+              }}
+            >
+              {currentFile.instruction}
+            </p>
+          )}
 
           {isError && (
             <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
@@ -410,6 +455,32 @@ export function PracticePage() {
             </button>
           )}
         </div>
+
+        {/* ── How to practice (shown until the routine starts) ── */}
+        {!hasStarted && (
+          <div
+            style={{
+              background: COLORS.panel,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: "20px",
+              padding: "1.75rem 1.5rem",
+              marginBottom: "1.5rem",
+            }}
+          >
+            <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+              How to Practice
+            </p>
+            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
+              {howToPractice}
+            </p>
+            <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+              The Buzz — First Pass of Every Exercise
+            </p>
+            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.95rem", lineHeight: 1.7 }}>
+              {buzzNote}
+            </p>
+          </div>
+        )}
 
         {/* ── Key + tempo controls ── */}
         <div style={{ background: COLORS.panel, border: `1px solid ${COLORS.border}`, borderRadius: "20px", padding: "1.75rem 1.5rem" }}>
