@@ -61,6 +61,8 @@ export const router = createBrowserRouter([
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
-  { path: "/practice",                          Component: wrap(PracticePage) },
+  { path: "/vocalmastery",                      Component: wrap(PracticePage) },
+  // Old address for the practice portal — keep shared links working
+  { path: "/practice",                          Component: () => <Navigate to="/vocalmastery" replace /> },
   { path: "*",                                  Component: NotFound },
 ]);
