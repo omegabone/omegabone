@@ -163,9 +163,10 @@ export function PracticePage() {
   const isPlaying = status === "playing";
   const isPaused = status === "paused";
   const isLoading = status === "loading";
+  const isBuffering = status === "buffering";
   const isFinished = status === "finished";
   const isError = status === "error";
-  const hasStarted = isPlaying || isPaused || isFinished;
+  const hasStarted = isPlaying || isPaused || isBuffering || isFinished;
 
   // Completing the routine counts as today's practice.
   useEffect(() => {
@@ -258,11 +259,13 @@ export function PracticePage() {
           <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
             {isLoading
               ? "Loading Exercises..."
-              : isFinished
-                ? "Warm-Up Complete"
-                : isError
-                  ? "Couldn't Load Audio"
-                  : `Step ${stepIndex + 1} of ${totalSteps} · Rep ${rep} of 2`}
+              : isBuffering
+                ? `Step ${stepIndex + 1} of ${totalSteps} · Loading...`
+                : isFinished
+                  ? "Warm-Up Complete"
+                  : isError
+                    ? "Couldn't Load Audio"
+                    : `Step ${stepIndex + 1} of ${totalSteps} · Rep ${rep} of 2`}
           </p>
 
           <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
@@ -286,7 +289,7 @@ export function PracticePage() {
           </div>
 
           {/* Live rep cue: pass 1 buzzes, pass 2 sings */}
-          {(isPlaying || isPaused) && (
+          {(isPlaying || isPaused || isBuffering) && (
             <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
               <span
                 style={{
@@ -419,10 +422,11 @@ export function PracticePage() {
             </button>
           )}
 
-          {(isPlaying || isPaused) && (
+          {(isPlaying || isPaused || isBuffering) && (
             <div style={{ display: "flex", gap: "0.75rem" }}>
               <button
-                onClick={isPlaying ? pause : resume}
+                onClick={isPlaying ? pause : isPaused ? resume : undefined}
+                disabled={isBuffering}
                 style={{
                   ...systemFont,
                   flex: 2,
@@ -430,8 +434,10 @@ export function PracticePage() {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: "0.5rem",
-                  background: `linear-gradient(135deg, ${COLORS.lightGreenBright}, ${COLORS.lightGreen})`,
-                  color: COLORS.buttonText,
+                  background: isBuffering
+                    ? COLORS.trackBg
+                    : `linear-gradient(135deg, ${COLORS.lightGreenBright}, ${COLORS.lightGreen})`,
+                  color: isBuffering ? COLORS.whiteDim : COLORS.buttonText,
                   border: "none",
                   borderRadius: "999px",
                   padding: "0.9rem 1rem",
@@ -439,11 +445,11 @@ export function PracticePage() {
                   fontWeight: 700,
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  cursor: "pointer",
+                  cursor: isBuffering ? "default" : "pointer",
                 }}
               >
-                {isPlaying ? <Pause size={16} fill={COLORS.buttonText} /> : <Play size={16} fill={COLORS.buttonText} />}
-                {isPlaying ? "Pause" : "Resume"}
+                {isPlaying ? <Pause size={16} fill={COLORS.buttonText} /> : isPaused ? <Play size={16} fill={COLORS.buttonText} /> : null}
+                {isPlaying ? "Pause" : isPaused ? "Resume" : "Loading..."}
               </button>
               <button
                 onClick={skip}
