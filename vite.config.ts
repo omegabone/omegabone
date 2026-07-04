@@ -15,6 +15,10 @@ const figmaAssetPlugin = {
 }
 
 export default defineConfig({
+  // Visible in the /practice footer so anyone can tell which build they're on
+  define: {
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+  },
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them

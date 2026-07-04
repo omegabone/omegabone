@@ -1,5 +1,6 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { Pause, Play, RotateCcw, SkipForward } from "lucide-react";
+import { Flame, Pause, Play, RotateCcw, SkipForward } from "lucide-react";
+import { useEffect } from "react";
 import {
   MAX_KEY_SEMITONES,
   MAX_TEMPO_PERCENT,
@@ -9,6 +10,9 @@ import {
 } from "../hooks/useWarmupRoutine";
 import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
 import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
+import { useStreak } from "../hooks/useStreak";
+
+declare const __BUILD_DATE__: string;
 
 // Site font stack from omegabone-fonts.css — system fonts throughout.
 const systemFont = { fontFamily: "system-ui, -apple-system, sans-serif" };
@@ -154,12 +158,19 @@ export function PracticePage() {
     resetKeyTempo,
   } = useWarmupRoutine();
 
+  const { streak, practicedToday, recordPractice } = useStreak();
+
   const isPlaying = status === "playing";
   const isPaused = status === "paused";
   const isLoading = status === "loading";
   const isFinished = status === "finished";
   const isError = status === "error";
   const hasStarted = isPlaying || isPaused || isFinished;
+
+  // Completing the routine counts as today's practice.
+  useEffect(() => {
+    if (isFinished) recordPractice();
+  }, [isFinished, recordPractice]);
 
   const resultKey = transposeNoteLabel(currentFile.defaultKey, keySemitones);
   const keyLabel =
@@ -205,6 +216,31 @@ export function PracticePage() {
           <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
             Press Start. Follow along. ~12 minutes.
           </p>
+
+          {streak > 0 && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                marginTop: "1rem",
+                background: `${COLORS.lightGreen}1f`,
+                border: `1px solid ${COLORS.lightGreen}66`,
+                borderRadius: "999px",
+                padding: "0.45rem 1.1rem",
+              }}
+            >
+              <Flame size={16} color={COLORS.lightGreenBright} fill={COLORS.lightGreen} />
+              <span style={{ ...systemFont, color: COLORS.lightGreenBright, fontSize: "0.9rem", fontWeight: 700 }}>
+                Day {streak}
+              </span>
+              {!practicedToday && (
+                <span style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.8rem" }}>
+                  — practice today to keep it
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ── Now playing card ── */}
@@ -237,6 +273,11 @@ export function PracticePage() {
                   ? "Add your exercise files"
                   : `${currentFile.title}: ${rep === 1 ? "Buzz" : "Syllables"}`}
             </h2>
+            {isFinished && streak > 0 && (
+              <p style={{ ...systemFont, color: COLORS.lightGreenBright, fontSize: "1.05rem", fontWeight: 700, marginTop: "0.5rem" }}>
+                Day {streak} 🔥 {streak === 1 ? "Your streak starts now." : "Keep it alive tomorrow."}
+              </p>
+            )}
             {!isFinished && !isError && (
               <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
                 {currentFile.technique}
@@ -534,6 +575,9 @@ export function PracticePage() {
 
         <p style={{ ...systemFont, color: COLORS.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
           Pitch-shifted with tempo preserved — practice at your own key and speed.
+        </p>
+        <p style={{ ...systemFont, color: COLORS.whiteFaint, textAlign: "center", fontSize: "0.65rem", marginTop: "0.75rem", opacity: 0.7 }}>
+          v{__BUILD_DATE__}
         </p>
       </div>
     </div>
