@@ -5,6 +5,8 @@ export interface WarmupManifestEntry {
   technique: string;
   instruction: string;
   defaultKey: string;
+  /** 1-based measure range of this exercise within the warm-ups score. */
+  measures: [number, number];
 }
 
 /** Shown before the routine starts — how the whole practice works. */
@@ -37,6 +39,7 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "lips soft and round with the dark cave inside. Only your tongue moves: flat for “ah,” " +
       "up for “ee,” jaw completely still, pushing enough air to travel across the room.",
     defaultKey: "C",
+    measures: [1, 3],
   },
   {
     id: 2,
@@ -48,6 +51,7 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "a sharp punch from your abdominals. Once your K is set, don't chew. Keep the OOH shape " +
       "in place and move only your tongue, pressing one clean note at a time.",
     defaultKey: "C",
+    measures: [4, 5],
   },
   {
     id: 3,
@@ -60,6 +64,7 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "through the “ee” and “ah” vowels, raising your eyebrows and easing the breath as you " +
       "cross from chest into head voice, so it all sounds like one voice.",
     defaultKey: "C",
+    measures: [6, 9],
   },
   {
     id: 4,
@@ -71,5 +76,6 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "the “K” engages your abdominals. Let your breath support, not your mouth, carry you through " +
       "the big leaps.",
     defaultKey: "C",
+    measures: [10, 12],
   },
 ];

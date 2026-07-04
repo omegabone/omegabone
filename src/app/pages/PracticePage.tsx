@@ -12,6 +12,7 @@ import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
 import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
 import { useStreak } from "../hooks/useStreak";
 import logoImg from "../../assets/omegabone-logo-trimmed.png";
+import { ExerciseNotation } from "../components/ExerciseNotation";
 
 declare const __BUILD_DATE__: string;
 
@@ -310,6 +311,13 @@ export function PracticePage() {
               >
                 Pass {rep}: {repCues[rep - 1]}
               </span>
+            </div>
+          )}
+
+          {/* Sheet music: melody + syllables for the current exercise */}
+          {!isFinished && !isError && (
+            <div style={{ marginBottom: "1rem" }}>
+              <ExerciseNotation measures={currentFile.measures} />
             </div>
           )}
 
