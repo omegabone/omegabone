@@ -11,6 +11,7 @@ import {
 import { toFlatSymbol, transposeNoteLabel } from "../lib/musicTheory";
 import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
 import { useStreak } from "../hooks/useStreak";
+import logoImg from "figma:asset/c203af8148e96bab0b430f3321aa301dbae6cef3.png";
 
 declare const __BUILD_DATE__: string;
 
@@ -196,11 +197,12 @@ export function PracticePage() {
       <div style={{ maxWidth: "560px", margin: "0 auto", padding: "3rem 1.25rem 5rem", position: "relative", zIndex: 1 }}>
         {/* ── Header ── */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <a
-            href="/"
-            style={{ ...systemFont, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", textDecoration: "none" }}
-          >
-            Omega Bone
+          <a href="/" style={{ display: "inline-block" }}>
+            <img
+              src={logoImg}
+              alt="Omega Bone"
+              style={{ height: "72px", width: "auto", display: "block", margin: "0 auto", filter: "invert(1)" }}
+            />
           </a>
           <h1
             style={{
@@ -208,14 +210,14 @@ export function PracticePage() {
               color: COLORS.white,
               fontSize: "clamp(1.8rem, 6vw, 2.6rem)",
               fontWeight: 700,
-              marginTop: "0.75rem",
+              marginTop: "0.5rem",
               marginBottom: "0.5rem",
             }}
           >
             Daily Warm-Up
           </h1>
           <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
-            Press Start. Follow along. ~12 minutes.
+            Press Start. Follow along.
           </p>
 
           {streak > 0 && (
