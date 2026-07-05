@@ -37,7 +37,7 @@ export function L2SBlogPostPage() {
         <L2CNavbar />
         <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
           <h1 className="text-black" style={{ fontSize: "2rem", fontWeight: 800 }}>Article not found</h1>
-          <a href="/vocal-mastery/blog" className="flex items-center gap-2" style={{ color: accent, fontWeight: 700 }}>
+          <a href="/vocalmastery/blog" className="flex items-center gap-2" style={{ color: accent, fontWeight: 700 }}>
             <ArrowLeft size={18} /> Back to Blog
           </a>
         </div>
@@ -76,7 +76,7 @@ export function L2SBlogPostPage() {
       {/* ARTICLE HEADER */}
       <div className="max-w-3xl mx-auto px-6 pt-12 pb-2">
         <a
-          href="/vocal-mastery/blog"
+          href="/vocalmastery/blog"
           className="inline-flex items-center gap-2 text-sm mb-8 transition-colors hover:opacity-70"
           style={{ color: accent, fontWeight: 600 }}
         >
@@ -167,7 +167,7 @@ export function L2SBlogPostPage() {
             Reading about communication is the first step. The transformation happens in the work.
           </p>
           <a
-            href="/vocal-mastery"
+            href="/vocalmastery"
             className="inline-flex items-center gap-2 bg-white px-8 py-4 rounded-full hover:bg-green-50 transition-all hover:shadow-xl group"
             style={{ fontWeight: 700, color: accent }}
           >
