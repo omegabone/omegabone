@@ -1,6 +1,7 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { Flame, Pause, Play, RotateCcw, SkipForward } from "lucide-react";
-import { useEffect } from "react";
+import { CalendarPlus, Flame, Pause, Play, RotateCcw, SkipForward } from "lucide-react";
+import { useEffect, useState } from "react";
+import { downloadWarmupIcs } from "../lib/warmupReminder";
 import {
   MAX_KEY_SEMITONES,
   MAX_TEMPO_PERCENT,
@@ -193,6 +194,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
   } = useWarmupRoutine();
 
   const { streak, practicedToday, recordPractice } = useStreak();
+  const [reminderTime, setReminderTime] = useState("09:00");
 
   const isPlaying = status === "playing";
   const isPaused = status === "paused";
@@ -621,6 +623,66 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           >
             Reset to original key &amp; tempo
           </button>
+        </div>
+
+        {/* ── Daily reminder ── */}
+        <div
+          style={{
+            background: colors.panel,
+            border: `1px solid ${colors.border}`,
+            borderRadius: "20px",
+            padding: "1.75rem 1.5rem",
+            marginTop: "1.5rem",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.5rem" }}>
+            Make It a Habit
+          </p>
+          <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+            Put a daily warm-up reminder in your calendar.
+          </p>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+            <label style={{ ...systemFont, color: colors.white, fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              Every day at
+              <input
+                type="time"
+                value={reminderTime}
+                onChange={(e) => setReminderTime(e.target.value)}
+                style={{
+                  ...systemFont,
+                  background: colors.trackBg,
+                  color: colors.white,
+                  border: `1px solid ${colors.border}`,
+                  borderRadius: "10px",
+                  padding: "0.5rem 0.75rem",
+                  fontSize: "0.95rem",
+                  colorScheme: "dark",
+                }}
+              />
+            </label>
+            <button
+              onClick={() => downloadWarmupIcs(reminderTime, window.location.href)}
+              style={{
+                ...systemFont,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: `linear-gradient(135deg, ${colors.accentBright}, ${colors.accent})`,
+                color: colors.buttonText,
+                border: "none",
+                borderRadius: "999px",
+                padding: "0.75rem 1.4rem",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+              }}
+            >
+              <CalendarPlus size={16} /> Add to Calendar
+            </button>
+          </div>
         </div>
 
         <p style={{ ...systemFont, color: colors.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
