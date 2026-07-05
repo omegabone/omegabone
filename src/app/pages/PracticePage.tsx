@@ -634,7 +634,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
   );
 }
 
-/** Vocal Mastery practice portal — omegabone.com/vocalmastery */
+/** Vocal Mastery practice portal — omegabone.com/vocalmastery/practice */
 export function PracticePage() {
   return <PracticePortal colors={FOREST_GREEN} />;
 }

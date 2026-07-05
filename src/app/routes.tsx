@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter, Navigate, useParams } from "react-router";
 import { lazy, Suspense, ComponentType } from "react";
 
 const Music33Page        = lazy(() => import("./pages/Music33Page").then(m => ({ default: m.Music33Page })));
@@ -41,19 +41,25 @@ function NotFound() {
   return <Navigate to="/" replace />;
 }
 
+// Old hyphenated blog URLs → new spelling, preserving the post slug
+function VocalMasteryBlogPostRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/vocalmastery/blog/${slug}`} replace />;
+}
+
 export const router = createBrowserRouter([
   { path: "/",                                  Component: wrap(AboutPage) },
   { path: "/about",                             Component: wrap(AboutPage) },
   { path: "/music-room-33",                     Component: wrap(Music33Page) },
-  { path: "/vocal-mastery",              Component: wrap(Learn2SingPage) },
+  { path: "/vocalmastery",              Component: wrap(Learn2SingPage) },
   { path: "/come-with-me",                      Component: wrap(ComeWithMePage) },
   { path: "/contact",                           Component: wrap(ContactPage) },
   { path: "/learn2sing",                        Component: wrap(VocalPresencePage) },
   { path: "/learn2sing/blog",                   Component: wrap(BlogPage) },
   { path: "/learn2sing/blog/:slug",             Component: wrap(BlogPostPage) },
   { path: "/blogspot/:slug",                    Component: wrap(BlogspotPostPage) },
-  { path: "/vocal-mastery/blog",         Component: wrap(L2SBlogPage) },
-  { path: "/vocal-mastery/blog/:slug",   Component: wrap(L2SBlogPostPage) },
+  { path: "/vocalmastery/blog",         Component: wrap(L2SBlogPage) },
+  { path: "/vocalmastery/blog/:slug",   Component: wrap(L2SBlogPostPage) },
   { path: "/music-room-33/blog",                Component: wrap(Music33BlogPage) },
   { path: "/music-room-33/blog/:slug",          Component: wrap(Music33BlogPostPage) },
   { path: "/come-with-me/blog",                 Component: wrap(AlbumReleaseBlogPage) },
@@ -62,9 +68,12 @@ export const router = createBrowserRouter([
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
-  { path: "/vocalmastery",                      Component: wrap(PracticePage) },
+  { path: "/vocalmastery/practice",             Component: wrap(PracticePage) },
   { path: "/learn2sing/practice",               Component: wrap(Learn2SingPracticePage) },
-  // Old address for the practice portal — keep shared links working
-  { path: "/practice",                          Component: () => <Navigate to="/vocalmastery" replace /> },
+  // Old addresses — keep shared links and indexed URLs working
+  { path: "/practice",                          Component: () => <Navigate to="/vocalmastery/practice" replace /> },
+  { path: "/vocal-mastery",                     Component: () => <Navigate to="/vocalmastery" replace /> },
+  { path: "/vocal-mastery/blog",                Component: () => <Navigate to="/vocalmastery/blog" replace /> },
+  { path: "/vocal-mastery/blog/:slug",          Component: VocalMasteryBlogPostRedirect },
   { path: "*",                                  Component: NotFound },
 ]);

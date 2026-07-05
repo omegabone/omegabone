@@ -14,7 +14,7 @@ export function Footer() {
 
   const links: Record<string, { label: string; href: string }[]> = {
     Programs: [
-      { label: "Vocal Mastery", href: "/vocal-mastery" },
+      { label: "Vocal Mastery", href: "/vocalmastery" },
       { label: "Learn 2 Sing", href: "/learn2sing" },
       { label: "Music Room 33", href: "/music-room-33" },
       { label: "Private Sessions", href: "/contact" },
@@ -22,8 +22,8 @@ export function Footer() {
       { label: "Corporate Workshops", href: "/contact" },
     ],
     Resources: [
-      { label: "Vocal Warm-Up Series", href: "/vocal-mastery#resources" },
-      { label: "Singer's Handbook", href: "/vocal-mastery#resources" },
+      { label: "Vocal Warm-Up Series", href: "/vocalmastery#resources" },
+      { label: "Singer's Handbook", href: "/vocalmastery#resources" },
     ],
     Company: [
       { label: "About Omega Bone", href: "/about" },
