@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import unmuteIosAudio from "unmute-ios-audio";
 import { warmupManifest } from "../data/warmupManifest";
 import { PitchAudioEngine } from "../lib/pitchAudioEngine";
+
+// iOS mutes Web Audio while the hardware ring/silent switch is on — even
+// though the graph keeps running (progress moves, no sound). This library
+// hooks the first user gesture and routes the audio session to "playback"
+// so the warm-up is audible regardless of the switch. Install once.
+let unmuteInstalled = false;
 
 export const REPS_PER_FILE = 2;
 export const MIN_KEY_SEMITONES = -6;
@@ -129,6 +136,10 @@ export function useWarmupRoutine() {
   // Prefetch on mount: by the time Start is pressed the first file is
   // usually already decoded, and the rest keep arriving during exercise 1.
   useEffect(() => {
+    if (!unmuteInstalled) {
+      unmuteInstalled = true;
+      unmuteIosAudio();
+    }
     ensureLoading();
   }, [ensureLoading]);
 

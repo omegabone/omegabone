@@ -14,19 +14,12 @@ interface PlayEvents {
  * ScriptProcessorNode — the shifter keeps its source position while
  * disconnected, so reconnecting continues from the same spot.
  */
-// Shortest possible valid silent WAV — looped through an <audio> element to
-// switch iOS's audio session to "playback", which stops the hardware
-// ring/silent switch from muting Web Audio output.
-const SILENT_WAV =
-  "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQQAAAAAAAAA";
-
 export class PitchAudioEngine {
   private ctx: AudioContext | null = null;
   private gain: GainNode | null = null;
   private shifter: PitchShifter | null = null;
   private tempo = 1;
   private pitchSemitones = 0;
-  private silentEl: HTMLAudioElement | null = null;
   private unlocked = false;
 
   /**
@@ -34,8 +27,8 @@ export class PitchAudioEngine {
    * playback. Mobile browsers — iOS Safari above all — only allow an
    * AudioContext to start from within the gesture's call stack; anything
    * after an `await` is too late. Also kicks a silent buffer (the classic
-   * iOS unlock) and starts a looping silent <audio> element so the iPhone
-   * mute switch doesn't silence Web Audio.
+   * iOS unlock). The mute-switch workaround itself lives in
+   * unmute-ios-audio, installed by useWarmupRoutine.
    */
   unlock() {
     const ctx = this.ensureContext();
@@ -49,15 +42,6 @@ export class PitchAudioEngine {
       kick.start(0);
     } catch {
       // best-effort — some browsers don't need it
-    }
-    try {
-      const el = document.createElement("audio");
-      el.loop = true;
-      el.src = SILENT_WAV;
-      el.play().catch(() => {});
-      this.silentEl = el;
-    } catch {
-      // best-effort
     }
   }
 
@@ -134,11 +118,6 @@ export class PitchAudioEngine {
 
   close() {
     this.stop();
-    if (this.silentEl) {
-      this.silentEl.pause();
-      this.silentEl.src = "";
-      this.silentEl = null;
-    }
     this.unlocked = false;
     this.ctx?.close().catch(() => {});
     this.ctx = null;
