@@ -21,6 +21,7 @@ const Music33BlogPostPage = lazy(() => import("./pages/Music33BlogPostPage").the
 const AlbumReleaseBlogPage = lazy(() => import("./pages/AlbumReleaseBlogPage").then(m => ({ default: m.AlbumReleaseBlogPage })));
 const ApplyPage            = lazy(() => import("./pages/ApplyPage").then(m => ({ default: m.ApplyPage })));
 const PracticePage         = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.PracticePage })));
+const Learn2SingPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.Learn2SingPracticePage })));
 
 function PageLoader() {
   return <div className="page-loading" aria-label="Loading" />;
@@ -62,6 +63,7 @@ export const router = createBrowserRouter([
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
   { path: "/vocalmastery",                      Component: wrap(PracticePage) },
+  { path: "/learn2sing/practice",               Component: wrap(Learn2SingPracticePage) },
   // Old address for the practice portal — keep shared links working
   { path: "/practice",                          Component: () => <Navigate to="/vocalmastery" replace /> },
   { path: "*",                                  Component: NotFound },
