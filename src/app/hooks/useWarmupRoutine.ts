@@ -135,6 +135,10 @@ export function useWarmupRoutine() {
   const start = useCallback(async () => {
     if (status === "playing" || status === "loading" || status === "buffering") return;
 
+    // Must happen before any await: mobile browsers only let audio start
+    // from inside the tap's synchronous call stack.
+    engineRef.current!.unlock();
+
     const promises = ensureLoading();
     // Only wait for the FIRST playable file, not all four.
     setStatus("loading");
@@ -166,6 +170,8 @@ export function useWarmupRoutine() {
 
   const resume = useCallback(() => {
     if (status !== "paused") return;
+    // iOS may have suspended the context during the pause
+    engineRef.current?.unlock();
     engineRef.current?.resume();
     setStatus("playing");
   }, [status]);
