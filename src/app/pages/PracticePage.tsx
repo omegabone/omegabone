@@ -19,15 +19,45 @@ declare const __BUILD_DATE__: string;
 // Site font stack from omegabone-fonts.css — system fonts throughout.
 const systemFont = { fontFamily: "system-ui, -apple-system, sans-serif" };
 
-const COLORS = {
+interface PracticePalette {
+  bg: string;
+  panel: string;
+  card: string;
+  border: string;
+  trackBg: string;
+  accent: string;
+  accentBright: string;
+  buttonText: string;
+  white: string;
+  whiteDim: string;
+  whiteFaint: string;
+}
+
+/** Vocal Mastery portal: dark forest green with light green accents. */
+const FOREST_GREEN: PracticePalette = {
   bg: "#081812",
   panel: "#0f261a",
   card: "#122d1e",
   border: "#1f4a32",
   trackBg: "#173b28",
-  lightGreen: "#7CE8A0",
-  lightGreenBright: "#9CFFC0",
+  accent: "#7CE8A0",
+  accentBright: "#9CFFC0",
   buttonText: "#08160f",
+  white: "#ffffff",
+  whiteDim: "rgba(255,255,255,0.65)",
+  whiteFaint: "rgba(255,255,255,0.42)",
+};
+
+/** Learn-2-Sing portal: dark purple with lavender accents. */
+const LAVENDER: PracticePalette = {
+  bg: "#130a1e",
+  panel: "#1d122c",
+  card: "#241636",
+  border: "#453061",
+  trackBg: "#2f2047",
+  accent: "#C9A9F0",
+  accentBright: "#E2CCFF",
+  buttonText: "#170d24",
   white: "#ffffff",
   whiteDim: "rgba(255,255,255,0.65)",
   whiteFaint: "rgba(255,255,255,0.42)",
@@ -57,7 +87,7 @@ function Waveform({ active, color }: { active: boolean; color: string }) {
 }
 
 /* ── Step progress dots — one per rep, grouped in pairs per file ── */
-function StepDots({ total, current }: { total: number; current: number }) {
+function StepDots({ total, current, colors }: { total: number; current: number; colors: PracticePalette }) {
   return (
     <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
       {Array.from({ length: total }, (_, i) => {
@@ -70,9 +100,9 @@ function StepDots({ total, current }: { total: number; current: number }) {
               width: active ? "12px" : "9px",
               height: active ? "12px" : "9px",
               borderRadius: "50%",
-              background: done ? COLORS.lightGreen : active ? COLORS.lightGreenBright : "transparent",
-              border: `1.5px solid ${done ? COLORS.lightGreen : active ? COLORS.lightGreenBright : COLORS.border}`,
-              boxShadow: active ? `0 0 10px ${COLORS.lightGreenBright}80` : "none",
+              background: done ? colors.accent : active ? colors.accentBright : "transparent",
+              border: `1.5px solid ${done ? colors.accent : active ? colors.accentBright : colors.border}`,
+              boxShadow: active ? `0 0 10px ${colors.accentBright}80` : "none",
               transition: "all 0.25s ease",
             }}
           />
@@ -92,6 +122,7 @@ function SliderRow({
   step,
   onChange,
   trackColor,
+  colors,
 }: {
   label: string;
   valueLabel: string;
@@ -101,11 +132,12 @@ function SliderRow({
   step: number;
   onChange: (v: number) => void;
   trackColor: string;
+  colors: PracticePalette;
 }) {
   return (
     <div style={{ marginBottom: "1.75rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.6rem" }}>
-        <span style={{ ...systemFont, color: COLORS.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <span style={{ ...systemFont, color: colors.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
           {label}
         </span>
         <span style={{ ...systemFont, color: trackColor, fontSize: "0.95rem", fontWeight: 700 }}>{valueLabel}</span>
@@ -118,7 +150,7 @@ function SliderRow({
         onValueChange={(v) => onChange(v[0])}
         style={{ position: "relative", display: "flex", alignItems: "center", width: "100%", height: "28px", touchAction: "none" }}
       >
-        <SliderPrimitive.Track style={{ position: "relative", flexGrow: 1, height: "6px", borderRadius: "999px", background: COLORS.trackBg }}>
+        <SliderPrimitive.Track style={{ position: "relative", flexGrow: 1, height: "6px", borderRadius: "999px", background: colors.trackBg }}>
           <SliderPrimitive.Range style={{ position: "absolute", height: "100%", borderRadius: "999px", background: trackColor }} />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
@@ -127,7 +159,7 @@ function SliderRow({
             width: "22px",
             height: "22px",
             borderRadius: "50%",
-            background: COLORS.white,
+            background: colors.white,
             border: `2px solid ${trackColor}`,
             boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
             cursor: "pointer",
@@ -139,7 +171,7 @@ function SliderRow({
   );
 }
 
-export function PracticePage() {
+function PracticePortal({ colors }: { colors: PracticePalette }) {
   const {
     status,
     stepIndex,
@@ -182,7 +214,7 @@ export function PracticePage() {
       : `${currentFile.defaultKey} → ${toFlatSymbol(resultKey)}`;
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: "100vh", color: COLORS.white, overflowX: "hidden" }}>
+    <div style={{ background: colors.bg, minHeight: "100vh", color: colors.white, overflowX: "hidden" }}>
       {/* Noise texture, same treatment as the rest of the dark pages */}
       <div
         style={{
@@ -208,7 +240,7 @@ export function PracticePage() {
           <h1
             style={{
               ...systemFont,
-              color: COLORS.white,
+              color: colors.white,
               fontSize: "clamp(1.8rem, 6vw, 2.6rem)",
               fontWeight: 700,
               marginTop: "0.5rem",
@@ -217,7 +249,7 @@ export function PracticePage() {
           >
             Daily Warm-Up
           </h1>
-          <p style={{ ...systemFont, color: COLORS.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
+          <p style={{ ...systemFont, color: colors.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
             Press Start. Follow along.
           </p>
 
@@ -228,18 +260,18 @@ export function PracticePage() {
                 alignItems: "center",
                 gap: "0.4rem",
                 marginTop: "1rem",
-                background: `${COLORS.lightGreen}1f`,
-                border: `1px solid ${COLORS.lightGreen}66`,
+                background: `${colors.accent}1f`,
+                border: `1px solid ${colors.accent}66`,
                 borderRadius: "999px",
                 padding: "0.45rem 1.1rem",
               }}
             >
-              <Flame size={16} color={COLORS.lightGreenBright} fill={COLORS.lightGreen} />
-              <span style={{ ...systemFont, color: COLORS.lightGreenBright, fontSize: "0.9rem", fontWeight: 700 }}>
+              <Flame size={16} color={colors.accentBright} fill={colors.accent} />
+              <span style={{ ...systemFont, color: colors.accentBright, fontSize: "0.9rem", fontWeight: 700 }}>
                 Day {streak}
               </span>
               {!practicedToday && (
-                <span style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.8rem" }}>
+                <span style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.8rem" }}>
                   — practice today to keep it
                 </span>
               )}
@@ -250,16 +282,16 @@ export function PracticePage() {
         {/* ── Now playing card ── */}
         <div
           style={{
-            background: COLORS.card,
-            border: `1px solid ${COLORS.border}`,
+            background: colors.card,
+            border: `1px solid ${colors.border}`,
             borderRadius: "20px",
             padding: "2rem 1.5rem",
             marginBottom: "1.5rem",
-            boxShadow: isPlaying ? `0 0 50px ${COLORS.lightGreen}22, inset 0 0 30px ${COLORS.lightGreen}08` : "none",
+            boxShadow: isPlaying ? `0 0 50px ${colors.accent}22, inset 0 0 30px ${colors.accent}08` : "none",
             transition: "box-shadow 0.4s ease",
           }}
         >
-          <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
+          <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
             {isLoading
               ? "Loading Exercises..."
               : isBuffering
@@ -272,7 +304,7 @@ export function PracticePage() {
           </p>
 
           <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
-            <h2 style={{ ...systemFont, color: COLORS.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
+            <h2 style={{ ...systemFont, color: colors.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
               {isFinished
                 ? "Nice work"
                 : isError
@@ -280,12 +312,12 @@ export function PracticePage() {
                   : `${currentFile.title}: ${rep === 1 ? "Buzz" : "Syllables"}`}
             </h2>
             {isFinished && streak > 0 && (
-              <p style={{ ...systemFont, color: COLORS.lightGreenBright, fontSize: "1.05rem", fontWeight: 700, marginTop: "0.5rem" }}>
+              <p style={{ ...systemFont, color: colors.accentBright, fontSize: "1.05rem", fontWeight: 700, marginTop: "0.5rem" }}>
                 Day {streak} 🔥 {streak === 1 ? "Your streak starts now." : "Keep it alive tomorrow."}
               </p>
             )}
             {!isFinished && !isError && (
-              <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
+              <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
                 {currentFile.technique}
               </p>
             )}
@@ -298,9 +330,9 @@ export function PracticePage() {
                 style={{
                   ...systemFont,
                   display: "inline-block",
-                  background: `${COLORS.lightGreen}1f`,
-                  border: `1px solid ${COLORS.lightGreen}66`,
-                  color: COLORS.lightGreenBright,
+                  background: `${colors.accent}1f`,
+                  border: `1px solid ${colors.accent}66`,
+                  color: colors.accentBright,
                   borderRadius: "999px",
                   padding: "0.45rem 1.1rem",
                   fontSize: "0.85rem",
@@ -322,30 +354,30 @@ export function PracticePage() {
           )}
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-            <Waveform active={isPlaying} color={COLORS.lightGreen} />
+            <Waveform active={isPlaying} color={colors.accent} />
           </div>
 
           {/* Progress bar for the current file */}
           {!isFinished && !isError && (
-            <div style={{ width: "100%", height: "4px", borderRadius: "999px", background: COLORS.trackBg, overflow: "hidden", marginBottom: "1.5rem" }}>
+            <div style={{ width: "100%", height: "4px", borderRadius: "999px", background: colors.trackBg, overflow: "hidden", marginBottom: "1.5rem" }}>
               <div
                 style={{
                   height: "100%",
                   width: `${progress}%`,
-                  background: `linear-gradient(90deg, ${COLORS.lightGreen}, ${COLORS.lightGreenBright})`,
+                  background: `linear-gradient(90deg, ${colors.accent}, ${colors.accentBright})`,
                   transition: "width 0.2s linear",
                 }}
               />
             </div>
           )}
 
-          <StepDots total={totalSteps} current={isFinished ? totalSteps : hasStarted ? stepIndex : -1} />
+          <StepDots total={totalSteps} current={isFinished ? totalSteps : hasStarted ? stepIndex : -1} colors={colors} />
 
           {!isFinished && !isError && (
             <p
               style={{
                 ...systemFont,
-                color: COLORS.whiteDim,
+                color: colors.whiteDim,
                 fontSize: "0.95rem",
                 lineHeight: 1.7,
                 marginTop: "1.5rem",
@@ -358,11 +390,11 @@ export function PracticePage() {
 
           {isError && (
             <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
+              <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
                 None of the warm-up files could be found. Drop{" "}
-                <code style={{ color: COLORS.lightGreen }}>exercise-1-C.mp3</code> through{" "}
-                <code style={{ color: COLORS.lightGreen }}>exercise-4-C.mp3</code> into{" "}
-                <code style={{ color: COLORS.lightGreen }}>public/audio/</code>.
+                <code style={{ color: colors.accent }}>exercise-1-C.mp3</code> through{" "}
+                <code style={{ color: colors.accent }}>exercise-4-C.mp3</code> into{" "}
+                <code style={{ color: colors.accent }}>public/audio/</code>.
               </p>
             </div>
           )}
@@ -371,16 +403,16 @@ export function PracticePage() {
         {loadErrors.length > 0 && !isError && (
           <div
             style={{
-              background: COLORS.panel,
-              border: `1px solid ${COLORS.lightGreen}44`,
+              background: colors.panel,
+              border: `1px solid ${colors.accent}44`,
               borderRadius: "12px",
               padding: "1rem 1.25rem",
               marginBottom: "1.5rem",
             }}
           >
-            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
+            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
               Skipped missing file{loadErrors.length > 1 ? "s" : ""}:{" "}
-              <span style={{ color: COLORS.lightGreen }}>{loadErrors.join(", ")}</span>. Add{loadErrors.length > 1 ? "" : " it"} to{" "}
+              <span style={{ color: colors.accent }}>{loadErrors.join(", ")}</span>. Add{loadErrors.length > 1 ? "" : " it"} to{" "}
               <code>public/audio/</code> to include {loadErrors.length > 1 ? "them" : "it"} in the routine.
             </p>
           </div>
@@ -394,8 +426,8 @@ export function PracticePage() {
               disabled={isLoading}
               style={{
                 ...systemFont,
-                background: isLoading ? COLORS.trackBg : `linear-gradient(135deg, ${COLORS.lightGreenBright}, ${COLORS.lightGreen})`,
-                color: COLORS.buttonText,
+                background: isLoading ? colors.trackBg : `linear-gradient(135deg, ${colors.accentBright}, ${colors.accent})`,
+                color: colors.buttonText,
                 border: "none",
                 borderRadius: "999px",
                 padding: "1rem 1.5rem",
@@ -404,7 +436,7 @@ export function PracticePage() {
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 cursor: isLoading ? "default" : "pointer",
-                boxShadow: isLoading ? "none" : `0 0 30px ${COLORS.lightGreen}40`,
+                boxShadow: isLoading ? "none" : `0 0 30px ${colors.accent}40`,
               }}
             >
               {isLoading ? "Loading..." : "Start Warm-Up"}
@@ -417,8 +449,8 @@ export function PracticePage() {
               style={{
                 ...systemFont,
                 background: "transparent",
-                color: COLORS.lightGreen,
-                border: `1px solid ${COLORS.lightGreen}`,
+                color: colors.accent,
+                border: `1px solid ${colors.accent}`,
                 borderRadius: "999px",
                 padding: "1rem 1.5rem",
                 fontSize: "0.85rem",
@@ -445,9 +477,9 @@ export function PracticePage() {
                   justifyContent: "center",
                   gap: "0.5rem",
                   background: isBuffering
-                    ? COLORS.trackBg
-                    : `linear-gradient(135deg, ${COLORS.lightGreenBright}, ${COLORS.lightGreen})`,
-                  color: isBuffering ? COLORS.whiteDim : COLORS.buttonText,
+                    ? colors.trackBg
+                    : `linear-gradient(135deg, ${colors.accentBright}, ${colors.accent})`,
+                  color: isBuffering ? colors.whiteDim : colors.buttonText,
                   border: "none",
                   borderRadius: "999px",
                   padding: "0.9rem 1rem",
@@ -458,7 +490,7 @@ export function PracticePage() {
                   cursor: isBuffering ? "default" : "pointer",
                 }}
               >
-                {isPlaying ? <Pause size={16} fill={COLORS.buttonText} /> : isPaused ? <Play size={16} fill={COLORS.buttonText} /> : null}
+                {isPlaying ? <Pause size={16} fill={colors.buttonText} /> : isPaused ? <Play size={16} fill={colors.buttonText} /> : null}
                 {isPlaying ? "Pause" : isPaused ? "Resume" : "Loading..."}
               </button>
               <button
@@ -471,8 +503,8 @@ export function PracticePage() {
                   justifyContent: "center",
                   gap: "0.4rem",
                   background: "transparent",
-                  color: COLORS.lightGreen,
-                  border: `1px solid ${COLORS.lightGreen}66`,
+                  color: colors.accent,
+                  border: `1px solid ${colors.accent}66`,
                   borderRadius: "999px",
                   padding: "0.9rem 1rem",
                   fontSize: "0.8rem",
@@ -497,8 +529,8 @@ export function PracticePage() {
                 justifyContent: "center",
                 gap: "0.4rem",
                 background: "transparent",
-                color: COLORS.lightGreen,
-                border: `1px solid ${COLORS.lightGreen}66`,
+                color: colors.accent,
+                border: `1px solid ${colors.accent}66`,
                 borderRadius: "999px",
                 padding: "0.75rem 1rem",
                 fontSize: "0.75rem",
@@ -517,32 +549,32 @@ export function PracticePage() {
         {!hasStarted && (
           <div
             style={{
-              background: COLORS.panel,
-              border: `1px solid ${COLORS.border}`,
+              background: colors.panel,
+              border: `1px solid ${colors.border}`,
               borderRadius: "20px",
               padding: "1.75rem 1.5rem",
               marginBottom: "1.5rem",
             }}
           >
-            <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+            <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
               How to Practice
             </p>
-            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
+            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
               {howToPractice}
             </p>
-            <p style={{ ...systemFont, color: COLORS.lightGreen, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+            <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
               The Buzz — First Pass of Every Exercise
             </p>
-            <p style={{ ...systemFont, color: COLORS.whiteDim, fontSize: "0.95rem", lineHeight: 1.7 }}>
+            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7 }}>
               {buzzNote}
             </p>
           </div>
         )}
 
         {/* ── Key + tempo controls ── */}
-        <div style={{ background: COLORS.panel, border: `1px solid ${COLORS.border}`, borderRadius: "20px", padding: "1.75rem 1.5rem" }}>
+        <div style={{ background: colors.panel, border: `1px solid ${colors.border}`, borderRadius: "20px", padding: "1.75rem 1.5rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-            <p style={{ ...systemFont, color: COLORS.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+            <p style={{ ...systemFont, color: colors.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
               Key &amp; Tempo — Applies To The Whole Routine
             </p>
           </div>
@@ -555,7 +587,8 @@ export function PracticePage() {
             max={MAX_KEY_SEMITONES}
             step={1}
             onChange={setKeySemitones}
-            trackColor={COLORS.lightGreen}
+            trackColor={colors.accent}
+            colors={colors}
           />
 
           <SliderRow
@@ -566,7 +599,8 @@ export function PracticePage() {
             max={MAX_TEMPO_PERCENT}
             step={5}
             onChange={setTempoPercent}
-            trackColor={COLORS.lightGreen}
+            trackColor={colors.accent}
+            colors={colors}
           />
 
           <button
@@ -576,7 +610,7 @@ export function PracticePage() {
               display: "block",
               margin: "0.5rem auto 0",
               background: "transparent",
-              color: COLORS.whiteFaint,
+              color: colors.whiteFaint,
               border: "none",
               fontSize: "0.75rem",
               letterSpacing: "0.05em",
@@ -589,13 +623,23 @@ export function PracticePage() {
           </button>
         </div>
 
-        <p style={{ ...systemFont, color: COLORS.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
+        <p style={{ ...systemFont, color: colors.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
           Pitch-shifted with tempo preserved — practice at your own key and speed.
         </p>
-        <p style={{ ...systemFont, color: COLORS.whiteFaint, textAlign: "center", fontSize: "0.65rem", marginTop: "0.75rem", opacity: 0.7 }}>
+        <p style={{ ...systemFont, color: colors.whiteFaint, textAlign: "center", fontSize: "0.65rem", marginTop: "0.75rem", opacity: 0.7 }}>
           v{__BUILD_DATE__}
         </p>
       </div>
     </div>
   );
+}
+
+/** Vocal Mastery practice portal — omegabone.com/vocalmastery */
+export function PracticePage() {
+  return <PracticePortal colors={FOREST_GREEN} />;
+}
+
+/** Learn-2-Sing practice portal — omegabone.com/learn2sing/practice */
+export function Learn2SingPracticePage() {
+  return <PracticePortal colors={LAVENDER} />;
 }
