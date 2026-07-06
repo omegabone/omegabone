@@ -21,7 +21,7 @@ export function L2SingNavbar() {
 
   const navLinks = [
     { label: "About",   href: "/about" },
-    { label: "Album Release", href: "/come-with-me" },
+    { label: "Album Release", href: "/comewithme" },
     { label: "Contact", href: "/contact" },
     { label: "Blog",    href: "/learn2sing/blog" },
   ];
