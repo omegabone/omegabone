@@ -72,7 +72,7 @@ export function AboutNavbar() {
               <a href="/about" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>About</a>
               <a href="/comewithme" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Come With Me</a>
               <a href="/learn2sing" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Creators</a>
-              <a href="/vocal-mastery" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
+              <a href="/vocalmastery" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
               <a href="/music-room-33" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
               <a href="/contact" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             </nav>
@@ -105,7 +105,7 @@ export function AboutNavbar() {
             <a href="/about" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>About</a>
             <a href="/comewithme" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Come With Me</a>
             <a href="/learn2sing" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Creators</a>
-            <a href="/vocal-mastery" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
+            <a href="/vocalmastery" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
             <a href="/music-room-33" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
             <a href="/contact" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             <a

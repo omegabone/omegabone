@@ -21,8 +21,9 @@ export function L2CNavbar() {
 
   const navLinks = [
     { label: "About",   href: "/about" },
+    { label: "Warmups", href: "/vocalmastery/practice" },
     { label: "Contact", href: "/contact" },
-    { label: "Blog",    href: "/vocal-mastery/blog" },
+    { label: "Blog",    href: "/vocalmastery/blog" },
   ];
 
   const bannerTop = bannerVisible ? "top-[36px]" : "top-0";

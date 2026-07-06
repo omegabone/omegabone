@@ -28,7 +28,7 @@ export function Navbar() {
   const isComeWithMe =
     currentPath === "/comewithme" || currentPath.startsWith("/comewithme/");
 
-  const isLearnCommunicate = currentPath === "/vocal-mastery";
+  const isLearnCommunicate = currentPath === "/vocalmastery";
   const isVocalPresence    = currentPath === "/learn2sing";
 
   const ctaText     = isLearnCommunicate ? "Work with Omega" : "Get in touch";
@@ -95,7 +95,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-8">
               <a
-                href="/vocal-mastery/blog"
+                href="/vocalmastery/blog"
                 className="text-sm text-gray-700 hover:text-[#166534] transition-colors"
                 style={{ fontWeight: 600 }}
               >
