@@ -27,7 +27,7 @@ export function Footer() {
     ],
     Company: [
       { label: "About Omega Bone", href: "/about" },
-      { label: "Album Release", href: "/come-with-me" },
+      { label: "Album Release", href: "/comewithme" },
       { label: "Contact", href: "/contact" },
     ],
     Legal: [
