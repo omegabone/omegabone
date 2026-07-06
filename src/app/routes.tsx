@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
   { path: "/vocal-mastery/blog/:slug",   Component: wrap(L2SBlogPostPage) },
   { path: "/music-room-33/blog",                Component: wrap(Music33BlogPage) },
   { path: "/music-room-33/blog/:slug",          Component: wrap(Music33BlogPostPage) },
-  { path: "/come-with-me/blog",                 Component: wrap(AlbumReleaseBlogPage) },
+  { path: "/comewithme/blog",                    Component: wrap(AlbumReleaseBlogPage) },
   { path: "/privacy",                           Component: wrap(PrivacyPolicyPage) },
   { path: "/terms",                             Component: wrap(TermsOfServicePage) },
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
