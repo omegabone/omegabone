@@ -824,7 +824,7 @@ export function ComeWithMePage() {
                 rel="noopener noreferrer"
                 style={{ ...cinzel, background: "linear-gradient(135deg, #b8922a, #d4aa3a)", color: "#0f0d09", borderRadius: "99px", padding: "0.85rem 1.5rem", textAlign: "center", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", display: "block", boxShadow: "0 0 24px rgba(180,140,60,0.35)", marginTop: "auto" }}
               >
-                Choose The Frequency
+                Choose Frequency
               </a>
             </div>
 
