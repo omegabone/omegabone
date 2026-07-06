@@ -26,7 +26,7 @@ export function Navbar() {
   }, []);
 
   const isComeWithMe =
-    currentPath === "/come-with-me" || currentPath.startsWith("/come-with-me/");
+    currentPath === "/comewithme" || currentPath.startsWith("/comewithme/");
 
   const isLearnCommunicate = currentPath === "/vocal-mastery";
   const isVocalPresence    = currentPath === "/learn2sing";
@@ -36,12 +36,12 @@ export function Navbar() {
   const ctaHover    = isLearnCommunicate ? "hover:bg-[#145228]" : isVocalPresence ? "hover:bg-[#432f5c]" : "hover:bg-[#1649c0]";
 
   const navLinks = [
-    { label: "Come with Me Album", href: "/come-with-me" },
+    { label: "Come with Me Album", href: "/comewithme" },
     { label: "About",   href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
 
-  // On /come-with-me pages render nothing at all
+  // On /comewithme pages render nothing at all
   if (isComeWithMe) return null;
 
   const bannerTop = bannerVisible ? "top-[36px]" : "top-0";
