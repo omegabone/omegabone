@@ -738,7 +738,7 @@ export function ComeWithMePage() {
               <div>
                 <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier III</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The Resonance</h3>
+                  <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>The Transmission</h3>
                   <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$5,000</span>
                 </div>
               </div>
