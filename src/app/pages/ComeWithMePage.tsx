@@ -862,7 +862,7 @@ export function ComeWithMePage() {
                 {blogPosts.slice(0, 6).map((post) => (
                   <a
                     key={post.slug}
-                    href={`/come-with-me/blog`}
+                    href={`/comewithme/blog`}
                     style={{
                       background: "#111111",
                       border: "1px solid #1e1e1e",
@@ -915,7 +915,7 @@ export function ComeWithMePage() {
               {blogPosts.length > 6 && (
                 <div style={{ textAlign: "center", marginTop: "3rem" }}>
                   <a
-                    href="/come-with-me/blog"
+                    href="/comewithme/blog"
                     style={{
                       ...cinzel,
                       display: "inline-flex",
