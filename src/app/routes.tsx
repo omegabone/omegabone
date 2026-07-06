@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
   { path: "/about",                             Component: wrap(AboutPage) },
   { path: "/music-room-33",                     Component: wrap(Music33Page) },
   { path: "/vocal-mastery",              Component: wrap(Learn2SingPage) },
-  { path: "/come-with-me",                      Component: wrap(ComeWithMePage) },
+  { path: "/comewithme",                         Component: wrap(ComeWithMePage) },
   { path: "/contact",                           Component: wrap(ContactPage) },
   { path: "/learn2sing",                        Component: wrap(VocalPresencePage) },
   { path: "/learn2sing/blog",                   Component: wrap(BlogPage) },
