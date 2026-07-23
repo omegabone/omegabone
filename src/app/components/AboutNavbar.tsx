@@ -108,6 +108,7 @@ export function AboutNavbar() {
             <a href="/learn2sing" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Creators</a>
             <a href="/vocalmastery" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
             <a href="/music-room-33" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
+            <a href="/music-education" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Schools</a>
             <a href="/contact" onClick={() => setIsOpen(false)} className="block text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             <a
               href="https://calendar.app.google/Y83p7Rf5idJkdzKc6"
