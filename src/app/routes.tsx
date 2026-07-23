@@ -22,6 +22,7 @@ const AlbumReleaseBlogPage = lazy(() => import("./pages/AlbumReleaseBlogPage").t
 const ApplyPage            = lazy(() => import("./pages/ApplyPage").then(m => ({ default: m.ApplyPage })));
 const PracticePage         = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.PracticePage })));
 const Learn2SingPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.Learn2SingPracticePage })));
+const MusicEducationLandingPage = lazy(() => import("./pages/MusicEducationLandingPage").then(m => ({ default: m.MusicEducationLandingPage })));
 
 function PageLoader() {
   return <div className="page-loading" aria-label="Loading" />;
