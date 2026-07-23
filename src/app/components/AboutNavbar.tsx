@@ -74,6 +74,7 @@ export function AboutNavbar() {
               <a href="/learn2sing" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Creators</a>
               <a href="/vocalmastery" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Entrepreneurs</a>
               <a href="/music-room-33" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Families</a>
+              <a href="/music-education" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>For Schools</a>
               <a href="/contact" className="text-sm text-gray-700 hover:text-[#1a56db] transition-colors" style={{ fontWeight: 600 }}>Contact</a>
             </nav>
 
