@@ -443,7 +443,7 @@ export function MusicEducationLandingPage() {
 
       {/* Navigation */}
       <nav className="ed-nav">
-        <a className="ed-wordmark" href="https://omegabone.com">Omega Bone</a>
+        <span className="ed-wordmark">Omega Bone</span>
         <button
           className="ed-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
