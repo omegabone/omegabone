@@ -10,6 +10,7 @@ import { Link } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { AboutNavbar } from "../components/AboutNavbar";
 import { Footer } from "../components/Footer";
+import { ForSchoolsBlock } from "../components/ForSchoolsBlock";
 import { LogoCarousel } from "../components/LogoCarousel";
 
 const careerHighlights = [
