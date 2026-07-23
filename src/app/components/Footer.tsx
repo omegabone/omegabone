@@ -17,6 +17,7 @@ export function Footer() {
       { label: "Vocal Mastery", href: "/vocalmastery" },
       { label: "Learn 2 Sing", href: "/learn2sing" },
       { label: "Music Room 33", href: "/music-room-33" },
+      { label: "For Schools", href: "/music-education" },
       { label: "Private Sessions", href: "/contact" },
       { label: "Group Workshops", href: "/contact" },
       { label: "Corporate Workshops", href: "/contact" },
