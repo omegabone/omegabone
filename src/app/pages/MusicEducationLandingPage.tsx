@@ -81,7 +81,7 @@ export function MusicEducationLandingPage() {
     },
     {
       title: "Celebrating Music Excellence",
-      detail: "",
+      detail: "Promotional Video",
       id: "aGtT4UyUprg",
     },
     {
