@@ -60,9 +60,19 @@ export function MusicEducationLandingPage() {
       id: "GMrLQ_sqYn0",
     },
     {
+      title: "Winter Concert",
+      detail: "Rehearsal",
+      id: "YXHxgUYMdzE",
+    },
+    {
       title: "Try Everything / We Wanna Be",
       detail: "PE Collaboration",
       id: "UQ4ldwol1jw",
+    },
+    {
+      title: "Land of the Silver Birch",
+      detail: "",
+      id: "2tBVwalFrjo",
     },
     {
       title: "Down Hill",
