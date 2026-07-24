@@ -1,10 +1,10 @@
 export function ForSchoolsBlock() {
   return (
-    <section className="py-8 px-4 sm:px-6">
+    <section>
       <style>{`
         .fsb * { box-sizing: border-box; }
         .fsb-inner {
-          max-width: 620px; margin: 0 auto;
+          max-width: 620px;
           background: #1e3a8a; color: #f4efe6;
           border-radius: 16px;
           padding: 1rem 1.25rem;
