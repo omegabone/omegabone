@@ -61,9 +61,13 @@ export function AboutPage() {
     <div className="bg-white min-h-screen overflow-x-hidden">
       <AboutNavbar />
 
+      <div className="mt-28 sm:mt-36 lg:mt-40 px-4 sm:px-6 pt-4 pb-2">
+        <ForSchoolsBlock />
+      </div>
+
       {/* ── HERO ── */}
       <section
-        className="mt-28 sm:mt-36 lg:mt-40 pb-0 relative bg-black"
+        className="pb-0 relative bg-black"
         style={{ minHeight: "380px" }}
       >
         <img
