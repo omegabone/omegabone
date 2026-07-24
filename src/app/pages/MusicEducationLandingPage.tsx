@@ -71,7 +71,7 @@ export function MusicEducationLandingPage() {
     },
     {
       title: "Land of the Silver Birch",
-      detail: "",
+      detail: "PYP Assembly",
       id: "2tBVwalFrjo",
     },
     {
