@@ -503,9 +503,10 @@ export function MusicEducationLandingPage() {
           <h2>A few projects, from first note to final cut.</h2>
           <hr className="ed-rule" />
           <p className="lede">
-            Singers learn their parts, an orchestra in rehearsal, a schoolwide
-            collaboration with physical education, and a short film written,
-            scored, and produced by scholars.
+            Singers learn their parts; an orchestra in rehearsal; a collaboration
+            with physical education; a short film written, scored, and produced
+            by scholars; students conduct, sing and dance; and behind the scenes
+            at the Winter Concert.
           </p>
           <div className="ed-video-grid">
             {videos.map((v) => (
