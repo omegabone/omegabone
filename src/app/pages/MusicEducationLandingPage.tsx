@@ -500,7 +500,7 @@ export function MusicEducationLandingPage() {
       <section className="ed-section" id="featured-work">
         <div className="ed-container">
           <div className="ed-kicker">Featured Work</div>
-          <h2>Four projects, from first note to final cut.</h2>
+          <h2>A few projects, from first note to final cut.</h2>
           <hr className="ed-rule" />
           <p className="lede">
             Singers learn their parts, an orchestra in rehearsal, a schoolwide
