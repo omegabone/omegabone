@@ -79,6 +79,21 @@ export function MusicEducationLandingPage() {
       detail: "Student Film",
       id: "izHTKB4DEXo",
     },
+    {
+      title: "Celebrating Music Excellence",
+      detail: "",
+      id: "aGtT4UyUprg",
+    },
+    {
+      title: "Thinking Out Loud",
+      detail: "Music Video",
+      id: "_K_4PeLnCMU",
+    },
+    {
+      title: "I'm Beautiful",
+      detail: "Student Composition",
+      id: "5RC2Zp6vOKc",
+    },
   ];
 
   const skillGroups = [
