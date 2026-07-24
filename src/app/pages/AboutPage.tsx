@@ -429,7 +429,6 @@ export function AboutPage() {
         </div>
       </section>
 
-      <ForSchoolsBlock />
       <Footer />
     </div>
   );
