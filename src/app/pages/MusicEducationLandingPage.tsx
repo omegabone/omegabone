@@ -631,7 +631,7 @@ export function MusicEducationLandingPage() {
             singer@omegabone.com
           </a>
           <a className="detail" href="tel:+13239614050">
-            (323) 961-4050
+            WhatsApp: +1.323.961.4050
           </a>
           <a className="ed-btn primary" href="mailto:singer@omegabone.com">
             Start the Conversation
