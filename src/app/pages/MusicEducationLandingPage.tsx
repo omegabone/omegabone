@@ -470,7 +470,7 @@ export function MusicEducationLandingPage() {
         <div className="ed-hero-inner">
           <span className="ed-eyebrow">Music Education Specialist</span>
           <h1>
-            Your scholars already have the music. <span>I help them share it.</span>
+            Your scholars already have the music.<br /><span>I help them share it.</span>
           </h1>
           <p className="tagline">
             A third-generation educator with 25-plus years of teaching and
