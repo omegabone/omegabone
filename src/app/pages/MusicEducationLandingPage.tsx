@@ -61,7 +61,7 @@ export function MusicEducationLandingPage() {
     },
     {
       title: "Winter Concert",
-      detail: "Rehearsal",
+      detail: "Behind the Scenes",
       id: "YXHxgUYMdzE",
     },
     {
