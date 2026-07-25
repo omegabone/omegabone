@@ -75,9 +75,9 @@ export function MusicEducationLandingPage() {
       id: "2tBVwalFrjo",
     },
     {
-      title: "Down Hill",
-      detail: "Student Film",
-      id: "izHTKB4DEXo",
+      title: "I Am",
+      detail: "Student Composition",
+      id: "5RC2Zp6vOKc",
     },
     {
       title: "Celebrating Music Excellence",
@@ -90,9 +90,9 @@ export function MusicEducationLandingPage() {
       id: "_K_4PeLnCMU",
     },
     {
-      title: "I'm Beautiful",
-      detail: "Student Composition",
-      id: "5RC2Zp6vOKc",
+      title: "Down Hill",
+      detail: "Student Film",
+      id: "izHTKB4DEXo",
     },
   ];
 
