@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle, Mail, Play, User } from "lucide-react";
 import { L2CNavbar } from "../components/L2CNavbar";
 import { Footer } from "../components/Footer";
-import omegaPortrait from "/images/omega-bw-portrait.png";
+
+const omegaPortrait = "/images/omega-bw-portrait.png";
 
 /* ─────────────── SHARED OPT-IN FORM ─────────────── */
 function FrequencyOptInForm({ variant = "light" }: { variant?: "light" | "dark" }) {
