@@ -71,6 +71,7 @@ export const router = createBrowserRouter([
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
   { path: "/music-education",                   Component: wrap(MusicEducationLandingPage) },
+  { path: "/frequency",                         Component: wrap(FrequencyPage) },
   { path: "/vocalmastery/practice",             Component: wrap(PracticePage) },
   { path: "/learn2sing/practice",               Component: wrap(Learn2SingPracticePage) },
   // Old addresses — keep shared links and indexed URLs working
