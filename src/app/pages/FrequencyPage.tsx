@@ -1,351 +1,322 @@
-import { useEffect, useState } from "react";
-import { ArrowRight, CheckCircle, Mail, Play, User } from "lucide-react";
-import { L2CNavbar } from "../components/L2CNavbar";
-import { Footer } from "../components/Footer";
+import { useEffect, useRef } from "react";
 
-const omegaPortrait = "/images/omega-bw-portrait.png";
+/*
+  THE FREQUENCY FUNNEL — VME Landing Page
+  Ported from the standalone HTML/CSS mock exactly as authored (Vintage Charm
+  palette: Oxblood / Crimson / Cream / Vintage Gold / Taupe, Cinzel Decorative
+  + Cinzel + EB Garamond). This page is intentionally styled differently from
+  the rest of the site — the same way /music-education (cream) and /comewithme
+  (black) are their own worlds. No shared Navbar/Footer here on purpose.
 
-/* ─────────────── SHARED OPT-IN FORM ─────────────── */
-function FrequencyOptInForm({ variant = "light" }: { variant?: "light" | "dark" }) {
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  CSS custom properties are prefixed --freq- so they don't collide with the
+  shadcn/tailwind theme tokens defined globally in src/styles/theme.css.
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-    setError("");
-    setSubmitting(true);
+  VIDEO FILES live in /public/videos and /public/images:
+    /videos/antoine-testimonial.mp4 (+ /videos/antoine-poster.jpg)
+    /videos/free-lesson.mp4         (+ /videos/free-lesson-poster.jpg)  — not yet supplied, shows the graceful fallback below
+    /images/omega-bw-portrait.png
+  Primary CTA points to /apply (the live intake route). The fork CTA points
+  to /practice (redirects to /vocalmastery/practice).
+*/
 
-    const apiKey = import.meta.env.VITE_KIT_API_KEY;
-    const formId = import.meta.env.VITE_KIT_FORM_ID;
+const FREQUENCY_CSS = `
+  :root {
+    --freq-obsidian: #3F0D12;
+    --freq-obsidian-2: #4A1319;
+    --freq-accent: #A71D31;
+    --freq-accent-bright: #C42A40;
+    --freq-gold: #D5BF86;
+    --freq-bronze: #8D775F;
+    --freq-amber: #D5BF86;
+    --freq-bone: #F1F0CC;
+    --freq-bone-dim: #BAB09A;
+    --freq-jewel: #8D775F;
 
-    try {
-      const res = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key: apiKey, email, first_name: firstName }),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        console.error("Kit subscribe failed:", res.status, body);
-      }
-    } catch (err) {
-      console.error("Kit subscribe error:", err);
-    }
+    --freq-ground: var(--freq-obsidian);
+    --freq-font-plate: 'Cinzel Decorative', serif;
+    --freq-font-caps: 'Cinzel', serif;
+    --freq-font-head: 'EB Garamond', serif;
+    --freq-font-body: 'EB Garamond', serif;
 
-    setSubmitting(false);
-    setSubmitted(true);
-  };
-
-  const dark = variant === "dark";
-
-  if (submitted) {
-    return (
-      <div
-        className={`flex items-center gap-3 rounded-2xl px-6 py-5 ${
-          dark ? "bg-white/10 text-white" : "bg-[#f0fdf4] text-black"
-        }`}
-      >
-        <CheckCircle size={24} className={dark ? "text-white shrink-0" : "text-[#166534] shrink-0"} />
-        <p style={{ lineHeight: 1.6 }}>
-          You're in. Video one of the Frequency Series is on its way to your inbox right now.
-        </p>
-      </div>
-    );
+    --freq-maxw: 1080px;
+    --freq-gutter: clamp(20px, 5vw, 64px);
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full max-w-md">
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <User
-            size={16}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 ${dark ? "text-white/50" : "text-gray-400"}`}
-          />
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="First name"
-            className={`w-full pl-10 pr-4 py-3.5 rounded-full text-sm outline-none transition-all ${
-              dark
-                ? "bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:border-white/50"
-                : "border border-gray-200 text-black focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20"
-            }`}
-          />
-        </div>
-        <div className="relative flex-1">
-          <Mail
-            size={16}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 ${dark ? "text-white/50" : "text-gray-400"}`}
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value); setError(""); }}
-            placeholder="your@email.com"
-            className={`w-full pl-10 pr-4 py-3.5 rounded-full text-sm outline-none transition-all ${
-              dark
-                ? "bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:border-white/50"
-                : "border border-gray-200 text-black focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20"
-            }`}
-          />
-        </div>
-      </div>
-      {error && <p className={`text-xs ${dark ? "text-red-200" : "text-red-500"}`}>{error}</p>}
-      <button
-        type="submit"
-        disabled={submitting}
-        className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full transition-all group disabled:opacity-70 ${
-          dark
-            ? "bg-white text-[#166534] hover:bg-green-50"
-            : "bg-[#166534] text-white hover:bg-[#14532d] hover:shadow-lg hover:shadow-[#166534]/30"
-        }`}
-        style={{ fontWeight: 700, fontSize: "1rem" }}
-      >
-        {submitting ? "Sending..." : "Send Me The Free Series"}
-        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-      </button>
-      <p className={`text-xs ${dark ? "text-white/60" : "text-gray-500"}`}>
-        Five free videos. No credit card, no spam, unsubscribe anytime.
-      </p>
-    </form>
-  );
-}
+  .freq-root * { box-sizing: border-box; margin: 0; padding: 0; }
+  .freq-root { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    .freq-root { scroll-behavior: auto; }
+    .freq-root * { animation: none !important; transition: none !important; }
+  }
 
-/* ─────────────── HERO ─────────────── */
-function FrequencyHero() {
-  return (
-    <section className="relative bg-white pt-24 pb-20 overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-[#f0fdf4] hidden lg:block" style={{ clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)" }} />
-      <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-[#166534]/5 blur-3xl" />
+  .freq-root {
+    background: var(--freq-ground);
+    color: var(--freq-bone);
+    font-family: var(--freq-font-body);
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="flex-1 max-w-xl">
-            <div className="inline-flex items-center gap-2 bg-[#dcfce7] text-[#166534] px-4 py-2 rounded-full text-sm mb-6" style={{ fontWeight: 600 }}>
-              <span className="w-2 h-2 rounded-full bg-[#166534] animate-pulse" />
-              Free 5-Part Video Series
-            </div>
+  .freq-root .wrap { max-width: var(--freq-maxw); margin: 0 auto; padding: 0 var(--freq-gutter); }
 
-            <h1 className="text-black mb-6" style={{ fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em" }}>
-              Your voice is not the obstacle. It's the <span style={{ color: "#166534" }}>answer</span>.
-            </h1>
+  .freq-root .plate {
+    font-family: var(--freq-font-plate);
+    font-size: clamp(11px, 1.4vw, 14px);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--freq-gold);
+    font-weight: 700;
+  }
+  .freq-root .eyebrow {
+    font-family: var(--freq-font-caps);
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--freq-bronze);
+  }
+  .freq-root h1, .freq-root h2, .freq-root h3 { font-family: var(--freq-font-head); font-weight: 600; line-height: 1.08; letter-spacing: -0.01em; }
+  .freq-root h1 { font-size: clamp(40px, 7vw, 76px); }
+  .freq-root h2 { font-size: clamp(30px, 4.6vw, 52px); }
+  .freq-root h3 { font-size: clamp(22px, 2.6vw, 30px); }
+  .freq-root .subline { font-style: italic; color: var(--freq-bone-dim); font-size: clamp(18px, 2.1vw, 23px); line-height: 1.5; }
 
-            <p className="text-gray-600 mb-8 text-lg" style={{ lineHeight: 1.7 }}>
-              The Frequency Series is five free videos, one pillar of the method at a time, so you can feel the difference before you ever book a call.
-            </p>
+  .freq-root .divider {
+    display: flex; align-items: center; justify-content: center; gap: 22px;
+    color: var(--freq-accent); margin: 0 auto; width: min(520px, 80%);
+    padding: 6px 0;
+  }
+  .freq-root .divider::before, .freq-root .divider::after {
+    content: ""; height: 1px; flex: 1;
+    background: linear-gradient(90deg, transparent, var(--freq-bronze), transparent);
+  }
+  .freq-root .divider .star { font-size: 18px; color: var(--freq-accent); }
 
-            <FrequencyOptInForm />
-          </div>
+  .freq-root .btn-primary {
+    display: inline-block; font-family: var(--freq-font-caps); font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 15px;
+    color: var(--freq-bone); background: var(--freq-accent);
+    padding: 18px 40px; border: 1px solid var(--freq-accent);
+    border-radius: 2px; text-decoration: none; cursor: pointer;
+    box-shadow: 0 0 0 rgba(213,191,134,0); transition: all .35s ease;
+  }
+  .freq-root .btn-primary:hover, .freq-root .btn-primary:focus-visible {
+    background: var(--freq-accent-bright); border-color: var(--freq-gold);
+    box-shadow: 0 10px 40px rgba(167,29,49,0.45), 0 0 0 1px var(--freq-gold);
+    transform: translateY(-2px);
+  }
+  .freq-root .btn-ghost {
+    display: inline-block; font-family: var(--freq-font-caps); font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 14px;
+    color: var(--freq-gold); background: transparent;
+    padding: 15px 34px; border: 1px solid var(--freq-bronze);
+    border-radius: 2px; text-decoration: none; transition: all .3s ease;
+  }
+  .freq-root .btn-ghost:hover, .freq-root .btn-ghost:focus-visible { border-color: var(--freq-gold); color: var(--freq-bone); }
+  .freq-root a:focus-visible, .freq-root button:focus-visible { outline: 2px solid var(--freq-gold); outline-offset: 3px; }
 
-          <div className="flex-1 w-full max-w-lg">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <img
-                src={omegaPortrait}
-                alt="Omega Bone"
-                className="w-full h-[340px] sm:h-[440px] object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+  .freq-root .cta-trust { font-style: italic; color: var(--freq-bone-dim); font-size: 15px; margin-top: 16px; }
 
-/* ─────────────── WHAT'S INSIDE ─────────────── */
-function FrequencyPillars() {
-  const pillars = [
-    {
-      title: "The warm-up",
-      desc: "A protocol built for your voice and your specific patterns of tension, not a generic scale.",
-    },
-    {
-      title: "The mechanics",
-      desc: "The speaking-voice fundamentals that hold under pressure, so your voice steadies when the stakes rise.",
-    },
-    {
-      title: "The diction",
-      desc: "How to be understood the first time, without repeating yourself.",
-    },
-    {
-      title: "The state",
-      desc: "A pre-performance ritual, so you walk into any room already regulated.",
-    },
-    {
-      title: "The presence",
-      desc: "Stage and room presence, so your body tells the right story before you speak.",
-    },
-  ];
+  .freq-root section { padding: clamp(72px, 10vw, 128px) 0; position: relative; }
+  .freq-root .band-dark { background: var(--freq-obsidian); }
+  .freq-root .band-deep { background: radial-gradient(120% 100% at 50% 0%, #4A1319 0%, var(--freq-obsidian) 60%); }
+  .freq-root .band-bone { background: var(--freq-obsidian-2); color: var(--freq-bone); }
+  .freq-root .band-bone .subline { color: var(--freq-bone-dim); }
+  .freq-root .band-bone .plate { color: var(--freq-gold); }
 
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#166534] text-sm mb-3 uppercase tracking-widest" style={{ fontWeight: 700 }}>
-            What's inside
-          </p>
-          <h2 className="text-black mb-4" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-            Five videos. Five pillars. One method.
-          </h2>
-          <p className="text-gray-600" style={{ lineHeight: 1.8 }}>
-            Each video covers one part of the same method Omega uses with private clients, delivered one pillar at a time.
-          </p>
-        </div>
+  .freq-root .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: rgba(63,13,18,0.92); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--freq-bronze);
+    padding: 12px 16px; display: none; text-align: center;
+    transform: translateY(100%); transition: transform .4s ease;
+  }
+  .freq-root .sticky-cta.show { transform: translateY(0); }
+  .freq-root .sticky-cta .btn-primary { display: block; padding: 15px; }
+  @media (max-width: 720px) { .freq-root .sticky-cta { display: block; } .freq-root footer { padding-bottom: 120px; } }
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-          {pillars.map((p, i) => (
-            <div key={i} className="bg-[#f0fdf4] rounded-2xl p-6 border border-green-50">
-              <p className="text-[#166534] mb-3" style={{ fontSize: "1.6rem", fontWeight: 800 }}>{`0${i + 1}`}</p>
-              <p className="text-black mb-2" style={{ fontWeight: 700 }}>{p.title}</p>
-              <p className="text-gray-600 text-sm" style={{ lineHeight: 1.6 }}>{p.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+  .freq-root .hero {
+    min-height: 92vh; display: flex; align-items: center;
+    background:
+      radial-gradient(80% 60% at 78% 30%, rgba(167,29,49,0.16), transparent 60%),
+      radial-gradient(60% 50% at 20% 90%, rgba(213,191,134,0.10), transparent 60%),
+      var(--freq-obsidian);
+    border-bottom: 1px solid rgba(141,119,95,0.35);
+  }
+  .freq-root .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 64px); align-items: center; width: 100%; }
+  .freq-root .hero h1 { margin: 18px 0 22px; }
+  .freq-root .hero .accent-word { color: var(--freq-gold); font-style: italic; }
+  .freq-root .hero-cta-row { margin-top: 34px; display: flex; flex-direction: column; align-items: flex-start; }
+  @media (max-width: 860px) {
+    .freq-root .hero-grid { grid-template-columns: 1fr; }
+    .freq-root .hero { min-height: auto; padding-top: 96px; padding-bottom: 64px; }
+  }
 
-/* ─────────────── PROOF (ANTOINE) ─────────────── */
-function FrequencyProof() {
-  const [playing, setPlaying] = useState(false);
+  .freq-root .vsl {
+    position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 4px;
+    background: linear-gradient(160deg, #4A1319, #3F0D12);
+    border: 1px solid var(--freq-bronze);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(213,191,134,0.12);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    overflow: hidden;
+  }
+  .freq-root .vsl::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(60% 60% at 50% 45%, rgba(167,29,49,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .freq-root .vsl .play {
+    width: 74px; height: 74px; border-radius: 50%; border: 1px solid var(--freq-gold);
+    display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
+    background: rgba(167,29,49,0.25);
+  }
+  .freq-root .vsl .play::before {
+    content: ""; border-left: 20px solid var(--freq-bone); border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent; margin-left: 5px;
+  }
+  .freq-root .vsl .vsl-label { position: relative; z-index: 1; text-align: center; }
 
-  return (
-    <section className="py-24 bg-[#f0fdf4]">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-[#166534] text-sm mb-3 uppercase tracking-widest" style={{ fontWeight: 700 }}>
-            The proof
-          </p>
-          <h2 className="text-black mb-4" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-            It changes people. In their own words.
-          </h2>
-        </div>
+  .freq-root .authority { text-align: center; }
+  .freq-root .authority h2 { margin: 22px auto 20px; max-width: 20ch; }
+  .freq-root .authority .big-mark { font-family: var(--freq-font-head); color: var(--freq-gold); font-size: clamp(30px, 4.6vw, 52px); font-weight: 600; }
 
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group max-w-3xl mx-auto" onClick={() => setPlaying(true)}>
-          {!playing ? (
-            <>
-              <img
-                src="/videos/antoine-poster.jpg"
-                alt="Antoine Riendeau, video testimonial"
-                className="w-full h-[420px] object-cover transition-transform group-hover:scale-105 duration-700"
-              />
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                  <Play size={28} fill="#166534" className="text-[#166534] ml-1" />
-                </div>
-              </div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-white text-sm" style={{ fontWeight: 600 }}>
-                  "It took me a month to really discover that I had three levels of voice."
-                </p>
-              </div>
-            </>
-          ) : (
-            <video
-              className="w-full h-[420px] object-cover bg-black"
-              src="/videos/antoine-testimonial.mp4"
-              poster="/videos/antoine-poster.jpg"
-              controls
-              autoPlay
-              playsInline
-            />
-          )}
-        </div>
-        <p className="text-center text-gray-500 text-sm mt-5 uppercase tracking-widest" style={{ fontWeight: 700 }}>
-          Antoine Riendeau
-        </p>
-      </div>
-    </section>
-  );
-}
+  .freq-root .diptych { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(141,119,95,0.4); border-radius: 4px; overflow: hidden; margin-top: 40px; }
+  .freq-root .col { padding: clamp(26px, 4vw, 46px); }
+  .freq-root .col-gap { background: #33090E; }
+  .freq-root .col-signal { background: linear-gradient(180deg, rgba(167,29,49,0.10), rgba(213,191,134,0.10)); border-left: 1px solid var(--freq-bronze); }
+  .freq-root .col-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+  .freq-root .col-gap .col-head .plate { color: var(--freq-bone-dim); }
+  .freq-root .pair { padding: 16px 0; border-bottom: 1px solid rgba(141,119,95,0.18); }
+  .freq-root .pair:last-child { border-bottom: none; }
+  .freq-root .col-gap .pair { color: var(--freq-bone-dim); }
+  .freq-root .col-signal .pair { color: var(--freq-bone); }
+  .freq-root .col-signal .pair strong { color: var(--freq-gold); font-weight: 500; font-style: italic; }
+  .freq-root .center-narrow { max-width: 34ch; }
+  @media (max-width: 720px) {
+    .freq-root .diptych { grid-template-columns: 1fr; }
+    .freq-root .col-signal { border-left: none; border-top: 1px solid var(--freq-bronze); }
+  }
 
-/* ─────────────── STORY (OMEGA) ─────────────── */
-function FrequencyStory() {
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="flex-1 relative order-1 w-full">
-            <div className="relative max-w-md mx-auto">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  src={omegaPortrait}
-                  alt="Omega Bone"
-                  className="w-full h-[420px] object-cover"
-                />
-              </div>
-              <div className="hidden sm:block absolute -bottom-6 -left-6 w-40 h-40 bg-[#dcfce7] rounded-3xl -z-10" />
-            </div>
-          </div>
+  .freq-root .mech-head { text-align: center; max-width: 22ch; margin: 18px auto 8px; }
+  .freq-root .mech-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 54px; }
+  .freq-root .mech-card { border-top: 1px solid var(--freq-accent); padding-top: 22px; }
+  .freq-root .mech-card .num { font-family: var(--freq-font-plate); color: var(--freq-gold); font-size: 13px; letter-spacing: 0.2em; }
+  .freq-root .mech-card p { margin-top: 12px; color: var(--freq-bone-dim); }
+  @media (max-width: 720px) { .freq-root .mech-grid { grid-template-columns: 1fr; gap: 30px; } }
 
-          <div className="flex-1 max-w-xl order-2">
-            <p className="text-[#166534] text-sm mb-3 uppercase tracking-widest" style={{ fontWeight: 700 }}>
-              The why beneath the work
-            </p>
-            <h2 className="text-black mb-6" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-              I spent years believing I taught singing.
-            </h2>
-            <p className="text-gray-600 mb-5" style={{ lineHeight: 1.85 }}>
-              Slowly, across a career that took me from sharing the stage with Michael Jackson at Super Bowl XXVII to training more than 7,400 students worldwide, I understood I was teaching something else. I was teaching people to stop being afraid of being heard.
-            </p>
-            <p className="text-gray-600 mb-8" style={{ lineHeight: 1.85 }}>
-              Your frequency is real. This free series is the first step in clearing the interference so it finally reaches the room.
-            </p>
-            <a
-              href="#top"
-              className="inline-flex items-center justify-center gap-2 bg-[#166534] text-white px-8 py-4 rounded-full hover:bg-[#14532d] transition-all hover:shadow-lg hover:shadow-[#166534]/30 group"
-              style={{ fontWeight: 700, fontSize: "1rem" }}
-            >
-              Start With Video One
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+  .freq-root .proof-head { text-align: center; margin-bottom: 46px; }
+  .freq-root .proof-video { max-width: 760px; margin: 0 auto 44px; }
+  .freq-root .videoframe {
+    position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden;
+    border: 1px solid var(--freq-bronze); background: #33090E;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+  }
+  .freq-root .videoframe video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .freq-root .video-fallback {
+    position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; text-align: center; padding: 20px; color: var(--freq-bone-dim);
+    background: radial-gradient(60% 60% at 50% 45%, rgba(167,29,49,0.16), transparent 70%), #33090E;
+  }
+  .freq-root .videoframe.is-missing .video-fallback { display: flex; }
+  .freq-root .videoframe.is-missing video { visibility: hidden; }
+  .freq-root .video-caption { text-align: center; margin-top: 16px; }
+  .freq-root .video-caption .name { font-family: var(--freq-font-caps); letter-spacing: 0.18em; text-transform: uppercase; color: var(--freq-gold); font-size: 14px; }
 
-/* ─────────────── FINAL CTA ─────────────── */
-function FrequencyFinalCTA() {
-  return (
-    <section className="relative py-24 bg-[#166534] overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <svg viewBox="0 0 800 400" className="w-full h-full" preserveAspectRatio="none">
-          <path d="M0,300 Q200,150 400,300 T800,300" stroke="white" strokeWidth="2" fill="none" />
-          <path d="M0,230 Q200,80 400,230 T800,230" stroke="white" strokeWidth="2" fill="none" />
-        </svg>
-      </div>
+  .freq-root .quotes { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+  .freq-root .qcard { background: #33090E; border-left: 2px solid var(--freq-accent); padding: 26px 24px; border-radius: 3px; }
+  .freq-root .qcard p { font-style: italic; color: var(--freq-bone); font-size: 17px; line-height: 1.55; }
+  .freq-root .qcard .name { font-family: var(--freq-font-caps); letter-spacing: 0.16em; text-transform: uppercase; color: var(--freq-gold); font-size: 13px; margin-top: 18px; display: block; }
+  @media (max-width: 860px) { .freq-root .quotes { grid-template-columns: 1fr; } }
 
-      <div className="max-w-3xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-        <h2 className="text-white mb-6" style={{ fontSize: "clamp(2rem, 4.6vw, 3rem)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em" }}>
-          Your voice is not broken. It is the thing you are.
-        </h2>
-        <p className="text-green-100 mb-10 text-lg max-w-xl" style={{ lineHeight: 1.7 }}>
-          Get all five videos of the Frequency Series free, delivered one pillar at a time.
-        </p>
-        <FrequencyOptInForm variant="dark" />
-      </div>
-    </section>
-  );
-}
+  .freq-root .offer-head { text-align: center; max-width: 40ch; margin: 0 auto; }
+  .freq-root .offer-list { max-width: 720px; margin: 40px auto 0; }
+  .freq-root .offer-item { display: flex; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(141,119,95,0.2); align-items: baseline; }
+  .freq-root .offer-item:last-child { border-bottom: none; }
+  .freq-root .offer-item .star { color: var(--freq-accent); font-size: 14px; }
+  .freq-root .offer-item strong { color: var(--freq-gold); font-weight: 500; font-style: italic; }
 
-/* ─────────────── PAGE ASSEMBLY ─────────────── */
+  .freq-root .tiers { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; margin-top: 64px; align-items: stretch; }
+  .freq-root .tier {
+    background: #33090E; border: 1px solid rgba(141,119,95,0.4); border-radius: 4px;
+    padding: 34px 28px; display: flex; flex-direction: column;
+  }
+  .freq-root .tier.featured {
+    border-color: var(--freq-gold);
+    background: linear-gradient(180deg, rgba(167,29,49,0.10), #33090E 55%);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+    transform: translateY(-10px);
+  }
+  .freq-root .tier .tier-plate { margin-bottom: 6px; }
+  .freq-root .tier .rec { display: inline-block; font-family: var(--freq-font-caps); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--freq-obsidian); background: var(--freq-gold); padding: 4px 12px; border-radius: 2px; margin-bottom: 14px; }
+  .freq-root .tier h3 { margin-bottom: 10px; }
+  .freq-root .tier .who { color: var(--freq-bone-dim); font-style: italic; font-size: 16px; min-height: 3em; }
+  .freq-root .tier .price { font-family: var(--freq-font-head); color: var(--freq-gold); font-size: 30px; margin: 20px 0 6px; }
+  .freq-root .tier .price .small { font-size: 15px; color: var(--freq-bone-dim); font-style: italic; }
+  .freq-root .tier ul { list-style: none; margin: 14px 0 24px; }
+  .freq-root .tier li { padding: 8px 0 8px 22px; position: relative; font-size: 16px; color: var(--freq-bone-dim); border-bottom: 1px solid rgba(141,119,95,0.12); }
+  .freq-root .tier li::before { content: "✦"; position: absolute; left: 0; color: var(--freq-accent); font-size: 11px; top: 11px; }
+  .freq-root .tier .tier-cta { margin-top: auto; }
+  .freq-root .tier .tier-cta a { width: 100%; text-align: center; }
+  @media (max-width: 860px) {
+    .freq-root .tiers { grid-template-columns: 1fr; }
+    .freq-root .tier.featured { transform: none; }
+  }
+
+  .freq-root .centered { text-align: center; }
+  .freq-root .risk h2 { max-width: 22ch; margin: 18px auto 22px; }
+  .freq-root .risk p { max-width: 60ch; margin: 0 auto; color: var(--freq-bone-dim); }
+  .freq-root .scarcity p { max-width: 58ch; margin: 0 auto; text-align: center; color: var(--freq-bone-dim); font-style: italic; }
+
+  .freq-root .story-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px,5vw,60px); align-items: center; }
+  .freq-root .portrait {
+    aspect-ratio: 4/5; border-radius: 4px; border: 1px solid var(--freq-bronze);
+    overflow: hidden; background: #2a0a0e;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .freq-root .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+  .freq-root .story-quote { font-size: clamp(21px, 2.6vw, 28px); line-height: 1.5; }
+  .freq-root .story-quote .lead { color: var(--freq-gold); }
+  @media (max-width: 780px) { .freq-root .story-grid { grid-template-columns: 1fr; } .freq-root .portrait { max-width: 320px; } }
+
+  .freq-root .faq-head { text-align: center; margin-bottom: 40px; }
+  .freq-root .faq { max-width: 760px; margin: 0 auto; }
+  .freq-root .qa { border-bottom: 1px solid rgba(141,119,95,0.28); }
+  .freq-root .qa button {
+    width: 100%; text-align: left; background: none; border: none; color: var(--freq-bone);
+    font-family: var(--freq-font-head); font-size: clamp(19px,2.2vw,23px); padding: 24px 40px 24px 0;
+    cursor: pointer; position: relative; line-height: 1.3;
+  }
+  .freq-root .qa button::after { content: "+"; position: absolute; right: 4px; top: 22px; color: var(--freq-gold); font-size: 26px; transition: transform .3s ease; }
+  .freq-root .qa.open button::after { content: "–"; }
+  .freq-root .qa .ans { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .freq-root .qa .ans p { padding: 0 0 24px; color: var(--freq-bone-dim); max-width: 62ch; }
+
+  .freq-root .final { text-align: center; background: radial-gradient(90% 70% at 50% 20%, rgba(167,29,49,0.16), transparent 60%), var(--freq-obsidian); }
+  .freq-root .final h2 { max-width: 20ch; margin: 20px auto 22px; }
+  .freq-root .final .subline { max-width: 46ch; margin: 0 auto 40px; }
+
+  .freq-root .fork { text-align: center; border-top: 1px solid rgba(141,119,95,0.35); }
+  .freq-root .fork .plate { color: var(--freq-bronze); }
+  .freq-root .fork p { color: var(--freq-bone-dim); font-style: italic; max-width: 50ch; margin: 14px auto 26px; }
+  .freq-root .fork-video { max-width: 620px; margin: 34px auto 0; }
+
+  .freq-root footer { padding: 46px 0 70px; text-align: center; color: var(--freq-bronze); border-top: 1px solid rgba(141,119,95,0.25); }
+  .freq-root footer .plate { color: var(--freq-bronze); }
+  .freq-root footer .fine { font-size: 14px; margin-top: 14px; font-style: italic; }
+
+  .freq-root .fade { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
+  .freq-root .fade.in { opacity: 1; transform: none; }
+`;
+
 export function FrequencyPage() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Title / meta, restored on unmount
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "The Frequency Series — Free Video Training | Omega Bone";
+    document.title = "Vocal Mastery for Entrepreneurs · Omega Bone";
 
     let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     const prevDesc = metaDesc?.content ?? "";
@@ -355,7 +326,7 @@ export function FrequencyPage() {
       document.head.appendChild(metaDesc);
     }
     metaDesc.content =
-      "Five free videos on the warm-up, mechanics, diction, state, and presence behind Vocal Mastery for Entrepreneurs. No credit card required.";
+      "Your voice is not the obstacle. It is the answer. Vocal Mastery for Entrepreneurs with Omega Bone.";
 
     return () => {
       document.title = prevTitle;
@@ -363,15 +334,423 @@ export function FrequencyPage() {
     };
   }, []);
 
+  // Ported vanilla JS: FAQ accordion, sticky CTA reveal, scroll reveal, video fallback
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const cleanups: Array<() => void> = [];
+
+    // FAQ accordion
+    root.querySelectorAll<HTMLButtonElement>(".qa button").forEach((btn) => {
+      const handler = () => {
+        const qa = btn.parentElement as HTMLElement;
+        const ans = qa.querySelector(".ans") as HTMLElement;
+        const open = qa.classList.toggle("open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        ans.style.maxHeight = open ? `${ans.scrollHeight}px` : "0";
+      };
+      btn.addEventListener("click", handler);
+      cleanups.push(() => btn.removeEventListener("click", handler));
+    });
+
+    // Sticky CTA reveal after hero scrolls away
+    const sticky = root.querySelector("#freq-sticky-cta");
+    const hero = root.querySelector("#freq-top");
+    if (sticky && hero && "IntersectionObserver" in window) {
+      const stickyObserver = new IntersectionObserver(
+        (entries) => sticky.classList.toggle("show", !entries[0].isIntersecting),
+        { threshold: 0.1 }
+      );
+      stickyObserver.observe(hero);
+      cleanups.push(() => stickyObserver.disconnect());
+    }
+
+    // Scroll reveal
+    const fadeEls = root.querySelectorAll(".fade");
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      fadeEls.forEach((el) => io.observe(el));
+      cleanups.push(() => io.disconnect());
+    } else {
+      fadeEls.forEach((el) => el.classList.add("in"));
+    }
+
+    // Graceful video fallback if a source file is missing
+    root.querySelectorAll<HTMLVideoElement>(".videoframe video").forEach((v) => {
+      const errorHandler = () => v.closest(".videoframe")?.classList.add("is-missing");
+      v.addEventListener("error", errorHandler);
+      cleanups.push(() => v.removeEventListener("error", errorHandler));
+
+      const src = v.querySelector("source");
+      if (src) {
+        const test = new XMLHttpRequest();
+        try {
+          test.open("HEAD", (src as HTMLSourceElement).src, true);
+          test.onreadystatechange = () => {
+            if (test.readyState === 4 && (test.status === 0 || test.status >= 400)) {
+              v.closest(".videoframe")?.classList.add("is-missing");
+            }
+          };
+          test.send();
+        } catch {
+          // local file protocol may block HEAD; error handler covers it
+        }
+      }
+    });
+
+    return () => cleanups.forEach((fn) => fn());
+  }, []);
+
   return (
-    <div id="top" className="bg-white min-h-screen overflow-x-hidden">
-      <L2CNavbar />
-      <FrequencyHero />
-      <FrequencyPillars />
-      <FrequencyProof />
-      <FrequencyStory />
-      <FrequencyFinalCTA />
-      <Footer />
+    <div className="freq-root" ref={rootRef}>
+      <style>{FREQUENCY_CSS}</style>
+
+      {/* ================= HERO / ANCHOR ================= */}
+      <header className="hero" id="freq-top">
+        <div className="wrap">
+          <div className="hero-grid">
+            <div>
+              <span className="plate">Vocal Mastery for Entrepreneurs</span>
+              <h1>Your voice is not the obstacle. It is the <span className="accent-word">answer</span>.</h1>
+              <p className="subline">I am a singer from Los Angeles, with a team of musicians, engineers, and producers behind me. We take artists and messengers who carry something the world needs to hear, and clear everything between them and the sound they were born to make.</p>
+              <div className="hero-cta-row">
+                <a className="btn-primary" href="/apply">Book Your Frequency Call</a>
+                <span className="cta-trust">Private. Twenty minutes. No pitch you have to sit through.</span>
+              </div>
+            </div>
+
+            {/* VSL PLACEHOLDER — paste your YouTube/Vimeo iframe inside .vsl to replace */}
+            <div className="vsl" role="img" aria-label="Video placeholder">
+              <div className="play" aria-hidden="true" />
+              <div className="vsl-label">
+                <div className="plate" style={{ color: "var(--freq-gold)" }}>The Transmission</div>
+                <div className="subline" style={{ fontSize: 15, marginTop: 6 }}>VSL embed goes here</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ================= AUTHORITY ================= */}
+      <section className="band-deep authority fade">
+        <div className="wrap">
+          <div className="big-mark">1993 &middot; The Rose Bowl &middot; Ninety thousand people</div>
+          <h2>I was on that stage with Michael Jackson.</h2>
+          <p className="subline center-narrow" style={{ margin: "0 auto" }}>I did not just hear his frequency. I felt it in my chest before I saw him. That is the state I have spent twenty-five years learning to build in other people.</p>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= TRANSFORMATION ================= */}
+      <section className="band-dark fade">
+        <div className="wrap centered">
+          <span className="plate">The distance you are buying</span>
+          <h2 style={{ marginTop: 16 }}>From the gap to the signal.</h2>
+        </div>
+        <div className="wrap">
+          <div className="diptych">
+            <div className="col col-gap">
+              <div className="col-head"><span className="plate">The gap</span></div>
+              <div className="pair">You knew the idea was right. The room did not receive it the way it lived in you.</div>
+              <div className="pair">You overexplain, because part of you is not sure you will be believed.</div>
+              <div className="pair">Your voice tightens at the exact moment the stakes rise.</div>
+              <div className="pair">You prepared everything except the instrument delivering it.</div>
+              <div className="pair">The room hears hesitation where there is magnitude.</div>
+            </div>
+            <div className="col col-signal">
+              <div className="col-head"><span className="plate" style={{ color: "var(--freq-gold)" }}>The signal</span></div>
+              <div className="pair"><strong>The idea lands the first time, at the weight you feel it.</strong></div>
+              <div className="pair"><strong>You say less. The room leans in.</strong></div>
+              <div className="pair"><strong>Your voice steadies precisely when it matters most.</strong></div>
+              <div className="pair"><strong>The instrument is prepared before you walk in.</strong></div>
+              <div className="pair"><strong>The room hears authority, because that is now what you transmit.</strong></div>
+            </div>
+          </div>
+          <div className="centered" style={{ marginTop: 44 }}>
+            <a className="btn-primary" href="/apply">Close the gap</a>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= MECHANISM ================= */}
+      <section className="band-deep fade">
+        <div className="wrap">
+          <div className="centered"><span className="plate">Why this is different</span></div>
+          <h2 className="mech-head centered">Most coaching teaches technique. Technique is not the problem.</h2>
+          <div className="mech-grid">
+            <div className="mech-card">
+              <p>Your voice stores everything. Every room where you made yourself small is still running as interference.</p>
+            </div>
+            <div className="mech-card">
+              <p>You cannot breathe your way out of a belief. Technique on top of interference is a louder version of the same block.</p>
+            </div>
+            <div className="mech-card">
+              <p>The work is not to build a new voice. It is to remove what is blocking the one you already are.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= PROOF ================= */}
+      <section className="band-dark fade">
+        <div className="wrap">
+          <div className="proof-head">
+            <span className="plate">The proof</span>
+            <h2 style={{ marginTop: 16 }}>It changes people. In their own words.</h2>
+          </div>
+
+          {/* ANTOINE VIDEO TESTIMONIAL — /public/videos/antoine-testimonial.mp4 */}
+          <div className="proof-video">
+            <div className="videoframe" data-name="Antoine Riendeau">
+              <video controls playsInline preload="metadata" poster="/videos/antoine-poster.jpg">
+                <source src="/videos/antoine-testimonial.mp4" type="video/mp4" />
+              </video>
+              <div className="video-fallback">
+                <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
+                <div className="plate" style={{ color: "var(--freq-gold)" }}>Antoine Riendeau, video testimonial</div>
+                <div className="subline" style={{ fontSize: 14 }}>Drop antoine-testimonial.mp4 into /public/videos</div>
+              </div>
+            </div>
+            <div className="video-caption"><span className="name">Antoine Riendeau</span></div>
+          </div>
+
+          <div className="quotes">
+            <div className="qcard">
+              <p>"Just do it. I mean, it's worth it 100%, because Omega is a great teacher, and I keep saying it."</p>
+              <span className="name">Irina Sergeeva</span>
+            </div>
+            <div className="qcard">
+              <p>"Within this class, within the past six weeks, my voice has definitely improved. I'm more inspired to practice every single day."</p>
+              <span className="name">Desiree Haussler</span>
+            </div>
+            <div className="qcard">
+              <p>"The significant changes would be how to control the top voices, the breath, the diction, and the emotion, to be accurate and projected."</p>
+              <span className="name">Richie Chong</span>
+            </div>
+          </div>
+
+          <div className="centered" style={{ marginTop: 44 }}>
+            <a className="btn-primary" href="/apply">Book Your Frequency Call</a>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= THE HOUSE (team) ================= */}
+      <section className="band-dark fade">
+        <div className="wrap">
+          <div className="centered"><span className="plate">You are not doing this alone</span></div>
+          <h2 className="mech-head centered" style={{ maxWidth: "26ch" }}>A singer from Los Angeles, and a house behind her.</h2>
+          <p className="subline centered" style={{ maxWidth: "62ch", margin: "18px auto 0" }}>I came up as a singer in Los Angeles. Over the years I built something around the work: a team of musicians, engineers, and producers who know how to take a new artist and bring them to their highest potential. When you work with me, you are not hiring a coach. You are stepping into a house.</p>
+          <div className="mech-grid">
+            <div className="mech-card">
+              <span className="num">Musicians</span>
+              <p>Players who build the sound around your voice, so what you hear inside your head finally exists in the air.</p>
+            </div>
+            <div className="mech-card">
+              <span className="num">Engineers</span>
+              <p>The hands that capture the signal cleanly and hold back nothing of what you actually sound like.</p>
+            </div>
+            <div className="mech-card">
+              <span className="num">Producers</span>
+              <p>The vision that shapes a body of work, so a voice becomes a record, a show, a moment people remember.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= OFFER ================= */}
+      <section className="band-deep fade">
+        <div className="wrap">
+          <div className="centered"><span className="plate">The mentorship</span></div>
+          <h2 className="offer-head centered" style={{ marginTop: 16 }}>Four months. From the gap to the signal.</h2>
+          <p className="subline offer-head centered" style={{ margin: "16px auto 0" }}>Built around your voice, your message, and the sound you are reaching for. With the house behind you the whole way.</p>
+
+          <div className="offer-list">
+            <div className="offer-item"><span className="star">✦</span><div>A <strong>warmup protocol built for your voice</strong> and your patterns of tension, not a generic scale.</div></div>
+            <div className="offer-item"><span className="star">✦</span><div>The <strong>speaking-voice mechanics that hold under pressure</strong>, so your voice steadies when the stakes rise.</div></div>
+            <div className="offer-item"><span className="star">✦</span><div><strong>Diction that makes you understood the first time</strong>, without repeating yourself.</div></div>
+            <div className="offer-item"><span className="star">✦</span><div>A <strong>pre-performance state ritual</strong>, so you walk in already regulated.</div></div>
+            <div className="offer-item"><span className="star">✦</span><div><strong>Stage and room presence</strong>, so your body tells the right story before you speak.</div></div>
+            <div className="offer-item"><span className="star">✦</span><div>The <strong>Six-Song Standard</strong>, the culmination the entire method builds toward.</div></div>
+          </div>
+
+          <div className="tiers">
+            <div className="tier">
+              <h3>The Live Room</h3>
+              <p className="who">For the artist who wants transformation with the momentum of a room.</p>
+              <div className="price">$5,000</div>
+              <div className="price small">Group cohort, capped at ten</div>
+              <ul>
+                <li>The full method across the cohort arc</li>
+                <li>Weekly live work, every voice still heard</li>
+                <li>The Six-Song Standard as the finish line</li>
+              </ul>
+              <div className="tier-cta"><a className="btn-ghost" href="/apply">Enter the room</a></div>
+            </div>
+
+            <div className="tier featured">
+              <span className="rec">Recommended</span>
+              <h3>The Inner Circle</h3>
+              <p className="who">For the messenger whose calling is too important to be misheard.</p>
+              <div className="price">$18,000<span className="small"> to $25,000</span></div>
+              <div className="price small">Private, capped at five clients</div>
+              <ul>
+                <li>Built entirely around your voice and your rooms</li>
+                <li>A warmup protocol that is yours alone</li>
+                <li>Your pre-performance state ritual</li>
+                <li>Direct access across four months</li>
+              </ul>
+              <div className="tier-cta"><a className="btn-primary" href="/apply">Book Your Frequency Call</a></div>
+            </div>
+
+            <div className="tier">
+              <h3>The Frequency Tower</h3>
+              <p className="who">For the artist building a body of work, and a life, around the sound.</p>
+              <div className="price">By application</div>
+              <div className="price small">The flagship, strictly limited</div>
+              <ul>
+                <li>The four-month intensive, voice and vision at once</li>
+                <li>The full house behind you: musicians, engineers, producers</li>
+                <li>Toward a record, a show, a moment that lasts a lifetime</li>
+              </ul>
+              <div className="tier-cta"><a className="btn-ghost" href="/apply">Request an application</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= RISK REVERSAL ================= */}
+      <section className="band-dark risk centered fade">
+        <div className="wrap">
+          <span className="plate">The promise</span>
+          <h2>You will hear the difference, or we keep working.</h2>
+          <p>Do the work in the first month, the exercises, the recordings, the sessions, and if you and I do not both hear your signal change, I continue with you at no additional cost until we do. I do not lose students to the work not landing. I lose them to the work not being done.</p>
+        </div>
+      </section>
+
+      {/* ================= SCARCITY ================= */}
+      <section className="band-deep scarcity fade" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="divider" style={{ marginBottom: 48 }} aria-hidden="true"><span className="star">✦</span></div>
+          <p>The private tier holds a limited number of clients at a time, because the work is built for each voice individually. When it is full, it is full. The next opening is a genuine wait.</p>
+        </div>
+      </section>
+
+      {/* ================= STORY ================= */}
+      <section className="band-bone fade">
+        <div className="wrap">
+          <div className="story-grid">
+            <div className="portrait">
+              <img src="/images/omega-bw-portrait.png" alt="Omega Bone" />
+            </div>
+            <div>
+              <span className="plate">The why beneath the work</span>
+              <p className="story-quote" style={{ marginTop: 20 }}><span className="lead">"I spent years believing I taught singing.</span> Slowly, across five countries and thousands of hours, I understood I was teaching something else. I was teaching people to stop being afraid of being heard. Your frequency is real. My whole work is clearing the interference so it finally reaches the room."</p>
+              <div style={{ marginTop: 34 }}><a className="btn-primary" href="/apply">Book Your Frequency Call</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
+      {/* ================= FAQ ================= */}
+      <section className="band-dark fade">
+        <div className="wrap">
+          <div className="faq-head">
+            <span className="plate">Before you decide</span>
+            <h2 style={{ marginTop: 16 }}>The questions that matter.</h2>
+          </div>
+          <div className="faq">
+            <div className="qa">
+              <button aria-expanded="false">I am not a singer. I have something to say.</button>
+              <div className="ans"><p>Then this is for you. The method works on the voice itself, sung or spoken. Whether you are stepping to a microphone, a stage, or a room that needs to hear your message, the interference is the same and the work is the same.</p></div>
+            </div>
+            <div className="qa">
+              <button aria-expanded="false">I have tried voice or presence coaching before.</button>
+              <div className="ans"><p>Then you were likely taught technique on top of interference. This program clears the interference first. That is the difference you felt in the video.</p></div>
+            </div>
+            <div className="qa">
+              <button aria-expanded="false">I do not have hours a day.</button>
+              <div className="ans"><p>Five minutes daily beats one long session a week, and the math is not subtle. The protocol is built for a founder's calendar.</p></div>
+            </div>
+            <div className="qa">
+              <button aria-expanded="false">What actually happens on the call.</button>
+              <div className="ans"><p>Twenty minutes. You describe the rooms that matter to you. I tell you honestly whether this work will move them. If it will not, I say so.</p></div>
+            </div>
+            <div className="qa">
+              <button aria-expanded="false">Is this remote or in person.</button>
+              <div className="ans"><p>It's both. The first week in The Frequency Tower is in person. From there we schedule the rest of the meetings, online and in person. The week of the recordings or the concert is in person as well.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FINAL ANCHOR ================= */}
+      <section className="final fade">
+        <div className="wrap">
+          <span className="plate">One last thing</span>
+          <h2>Your voice is not broken. It is not behind. It is the thing you are.</h2>
+          <p className="subline">When it is free, the right rooms and the right life find you. Let us free it.</p>
+          <a className="btn-primary" href="/apply">Book Your Frequency Call</a>
+        </div>
+      </section>
+
+      {/* ================= FORK (not ready) ================= */}
+      <section className="band-deep fork fade">
+        <div className="wrap">
+          <span className="plate">Not ready to talk yet</span>
+          <p>Start with the free Frequency Series. Five videos, the full method, one pillar at a time. Then decide.</p>
+
+          {/* FREE VIDEO — /public/videos/free-lesson.mp4 */}
+          <div className="fork-video">
+            <div className="videoframe" data-name="Free lesson">
+              <video controls preload="metadata" poster="/videos/free-lesson-poster.jpg">
+                <source src="/videos/free-lesson.mp4" type="video/mp4" />
+              </video>
+              <div className="video-fallback">
+                <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
+                <div className="plate" style={{ color: "var(--freq-gold)" }}>Free lesson</div>
+                <div className="subline" style={{ fontSize: 14 }}>Drop free-lesson.mp4 into /public/videos</div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 28 }}><a className="btn-ghost" href="/practice">Get the free course</a></div>
+        </div>
+      </section>
+
+      <footer>
+        <span className="plate">Omega Bone &middot; Vocal Mastery for Entrepreneurs</span>
+        <p className="fine">Your voice is not the obstacle. It is the answer.</p>
+      </footer>
+
+      {/* Sticky mobile CTA */}
+      <div className="sticky-cta" id="freq-sticky-cta">
+        <a className="btn-primary" href="/apply">Book Your Frequency Call</a>
+      </div>
     </div>
   );
 }
