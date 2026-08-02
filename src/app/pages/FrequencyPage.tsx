@@ -430,13 +430,15 @@ export function FrequencyPage() {
               </div>
             </div>
 
-            {/* VSL PLACEHOLDER — paste your YouTube/Vimeo iframe inside .vsl to replace */}
-            <div className="vsl" role="img" aria-label="Video placeholder">
-              <div className="play" aria-hidden="true" />
-              <div className="vsl-label">
-                <div className="plate" style={{ color: "var(--freq-gold)" }}>The Transmission</div>
-                <div className="subline" style={{ fontSize: 15, marginTop: 6 }}>VSL embed goes here</div>
-              </div>
+            {/* THE TRANSMISSION — main VSL, hosted on YouTube (unlisted) */}
+            <div className="vsl" style={{ aspectRatio: "1920 / 1246" }}>
+              <iframe
+                src="https://www.youtube.com/embed/nPGkC8zPkr4"
+                title="The Transmission — Omega Bone"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0, zIndex: 1 }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>
