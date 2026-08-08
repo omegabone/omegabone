@@ -250,20 +250,6 @@ export function CourseVaultPage() {
         </p>
       </section>
 
-      <section style={{ padding: "0 1.5rem 5rem", maxWidth: 1100, margin: "0 auto" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1.75rem",
-          }}
-        >
-          {VIDEOS.map((v) => (
-            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} />
-          ))}
-        </div>
-      </section>
-
       <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
           THE BOOKS
@@ -277,6 +263,23 @@ export function CourseVaultPage() {
         >
           {BOOKS.map((b) => (
             <BookCard key={b.title} {...b} />
+          ))}
+        </div>
+      </section>
+
+      <section style={{ padding: "0 1.5rem 5rem", maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
+          THE VIDEOS
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "1.75rem",
+          }}
+        >
+          {VIDEOS.map((v) => (
+            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} />
           ))}
         </div>
       </section>
