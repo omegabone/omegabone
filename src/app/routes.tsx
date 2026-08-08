@@ -24,6 +24,7 @@ const PracticePage         = lazy(() => import("./pages/PracticePage").then(m =>
 const Learn2SingPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.Learn2SingPracticePage })));
 const MusicEducationLandingPage = lazy(() => import("./pages/MusicEducationLandingPage").then(m => ({ default: m.MusicEducationLandingPage })));
 const FrequencyPage        = lazy(() => import("./pages/FrequencyPage").then(m => ({ default: m.FrequencyPage })));
+const CourseVaultPage      = lazy(() => import("./pages/CourseVaultPage").then(m => ({ default: m.CourseVaultPage })));
 
 function PageLoader() {
   return <div className="page-loading" aria-label="Loading" />;
