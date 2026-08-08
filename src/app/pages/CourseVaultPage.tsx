@@ -284,6 +284,48 @@ export function CourseVaultPage() {
         </div>
       </section>
 
+      <section style={{ padding: "1rem 1.5rem 6rem", textAlign: "center" }}>
+        <div
+          style={{
+            maxWidth: 640,
+            margin: "0 auto",
+            background: "#131313",
+            border: `1px solid ${GOLD_DIM}55`,
+            borderRadius: 20,
+            padding: "3rem 2rem",
+          }}
+        >
+          <div style={{ ...cinzel, fontSize: "0.72rem", letterSpacing: "0.18em", color: GOLD_DIM, marginBottom: "0.75rem" }}>
+            THANK YOU
+          </div>
+          <h2 style={{ ...cinzelDec, fontSize: "1.6rem", margin: "0 0 1rem", color: CREAM }}>
+            Thank you for doing this work.
+          </h2>
+          <p style={{ ...garamond, fontSize: "1.05rem", color: "#a89f8f", maxWidth: 480, margin: "0 auto 2rem" }}>
+            Once you've watched all five videos, book your free 30-minute lesson with Omega and let's take the next step together.
+          </p>
+          <a
+            href="https://calendar.app.google/Y83p7Rf5idJkdzKc6"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...cinzel,
+              display: "inline-block",
+              background: `linear-gradient(135deg, ${GOLD_DIM}, ${GOLD})`,
+              color: "#0f0d09",
+              borderRadius: 99,
+              padding: "0.9rem 2rem",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textDecoration: "none",
+            }}
+          >
+            BOOK YOUR FREE 30-MIN LESSON
+          </a>
+        </div>
+      </section>
+
       <footer style={{ padding: "2rem 1.5rem 4rem", textAlign: "center" }}>
         <a href="/" style={{ ...garamond, color: "#6a6a6a", fontSize: "0.9rem", textDecoration: "none" }}>
           ← Back to omegabone.com
