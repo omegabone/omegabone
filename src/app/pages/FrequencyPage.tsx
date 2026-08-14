@@ -264,6 +264,9 @@ const FREQUENCY_CSS = `
     .freq-root .tier.featured { transform: none; }
   }
 
+  .freq-root .course-start { max-width: 460px; margin: 48px auto 0; }
+  .freq-root .course-start .tier .who { min-height: 0; }
+
   .freq-root .centered { text-align: center; }
   .freq-root .risk h2 { max-width: 22ch; margin: 18px auto 22px; }
   .freq-root .risk p { max-width: 60ch; margin: 0 auto; color: var(--freq-bone-dim); }
@@ -596,6 +599,33 @@ export function FrequencyPage() {
             <div className="offer-item"><span className="star">✦</span><div>The <strong>Six-Song Standard</strong>, the culmination the entire method builds toward.</div></div>
           </div>
 
+          <div className="course-start">
+            <div className="tier">
+              <span className="plate tier-plate">The Frequency Series</span>
+              <h3>Self-Paced Video Course</h3>
+              <p className="who">For the messenger who wants to start clearing the signal before they ever step into a room with me.</p>
+              <div className="price">$500<span className="small"> one time</span></div>
+              <div className="price small">Five modules, worked on your own time</div>
+              <ul>
+                <li>Five video modules: the warmup, the speaking voice, diction, emotional delivery, the stage</li>
+                <li>The companion text, Vocal Mastery for Entrepreneurs, included</li>
+                <li>Your first move toward the Live Room and the Inner Circle, at your own pace</li>
+              </ul>
+              <div className="tier-cta">
+                <a
+                  className="btn-primary"
+                  href="https://www.paypal.com/ncp/payment/WB7JGER2N3BTU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Begin the course
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="divider" style={{ margin: "48px auto" }} aria-hidden="true"><span className="star">✦</span></div>
+
           <div className="tiers">
             <div className="tier">
               <h3>The Live Room</h3>
@@ -724,7 +754,7 @@ export function FrequencyPage() {
       <section className="band-deep fork fade">
         <div className="wrap">
           <span className="plate">Not ready to talk yet</span>
-          <p>Start with the free Frequency Series. Five videos, the full method, one pillar at a time. Then decide.</p>
+          <p>Start with one free lesson from the Frequency Series. If it resonates, the full five-module course is yours to keep.</p>
 
           {/* FREE VIDEO — /public/videos/free-lesson.mp4 */}
           <div className="fork-video">
@@ -740,7 +770,16 @@ export function FrequencyPage() {
             </div>
           </div>
 
-          <div style={{ marginTop: 28 }}><a className="btn-ghost" href="/practice">Get the free course</a></div>
+          <div style={{ marginTop: 28 }}>
+            <a
+              className="btn-ghost"
+              href="https://www.paypal.com/ncp/payment/WB7JGER2N3BTU"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get the full course
+            </a>
+          </div>
         </div>
       </section>
 
