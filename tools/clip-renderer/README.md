@@ -48,7 +48,7 @@ node scripts/render-all.mjs \
 | `--manifest <path>` | Extractor output to render from |
 | `--video <file>` | One source video for every clip |
 | `--video-dir <dir>` | Directory of sources, matched to lessons by student and date in the filename |
-| `--brand <name>` | `vme` (default), `frequency`, `learn2sing` |
+| `--brand <name>` | Force one brand for all clips. Omit it — the brand is read from each lesson's title (see below) |
 | `--id <clipId>` | Render one clip |
 | `--no-captions` | Skip burned-in captions |
 | `--dry-run` | List what would render |
@@ -77,13 +77,26 @@ node bin/extract-clips.mjs --transcript lesson.srt --url "https://youtube.com/li
 Brand tokens are lifted from the site so clips match it rather than inventing a
 second identity:
 
-| Brand | Source | Look |
-|---|---|---|
-| `vme` (default) | `PracticePage.tsx` → `FOREST_GREEN` | Dark forest green, mint accents |
-| `frequency` | `FrequencyPage.tsx` → `--freq-*` | Deep red, gold and bone, EB Garamond |
-| `learn2sing` | `PracticePage.tsx` → `LAVENDER` | Dark purple, lavender accents |
+**The brand comes from the lesson title.** A title says which product it is, so
+nothing needs to be passed per run:
 
-Lesson clips are VME, which is why green is the default.
+| Title contains | Brand | Source | Look |
+|---|---|---|---|
+| "Vocal Mastery", "VME" | `vme` | `PracticePage.tsx` → `FOREST_GREEN` | Dark forest green, mint accents |
+| "Learn 2 Sing", "L2S" | `learn2sing` | `PracticePage.tsx` → `LAVENDER` | Dark purple, lavender accents |
+| "Frequency" | `frequency` | `FrequencyPage.tsx` → `--freq-*` | Deep red, gold and bone, EB Garamond |
+
+A mixed library therefore renders correctly in one pass — the Vocal Mastery
+lessons come out green and the Learn 2 Sing lessons purple.
+
+Matching is whitespace-tolerant and substring-based because library titles are
+hand-typed: "Vocal  Mastery with Antoine" (double space), "Learn 2 Sing Antoine"
+(no "with"), "Vocal Mastery with Brittany 19.May.2026" (trailing date) all
+resolve correctly. Learn 2 Sing is checked before Vocal Mastery, so an L2S
+session that mentions Vocal Mastery still renders purple.
+
+A title matching nothing falls back to VME and warns, so it shows up rather than
+silently rendering in the wrong colour. `--brand` overrides detection entirely.
 
 If you change those palettes on the site, update `src/theme.ts` to match — they
 are copied values, not imports, because the site is a separate build.

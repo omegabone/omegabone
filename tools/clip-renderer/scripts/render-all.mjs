@@ -19,6 +19,7 @@ import {
 import { join, resolve, extname, basename } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
+import { brandFromTitle } from './brand-from-title.mjs';
 
 const { values: args } = parseArgs({
   options: {
@@ -29,7 +30,7 @@ const { values: args } = parseArgs({
     id: { type: 'string' },
     'dry-run': { type: 'boolean', default: false },
     'no-captions': { type: 'boolean', default: false },
-    brand: { type: 'string', default: 'vme' },
+    brand: { type: 'string' },
     help: { type: 'boolean', default: false, short: 'h' },
   },
 });
@@ -50,7 +51,9 @@ Options
   --out <dir>          Output directory (default out).
   --id <clipId>        Render one clip only.
   --no-captions        Skip burned-in captions.
-  --brand <name>       vme (default), frequency, or learn2sing.
+  --brand <name>       Force one brand for every clip. By default the brand is
+                       read from each lesson's title: "Learn 2 Sing ..." renders
+                       purple, "Vocal Mastery ..." renders green.
   --dry-run            List what would render, without rendering.
 
 Only clips with real timecodes can be rendered. Clips cut from an untimed
@@ -126,6 +129,15 @@ const skipped = [];
 
 for (const lesson of manifest.lessons) {
   const video = resolveVideo(lesson);
+
+  // The title states the product, so the brand comes from it unless overridden.
+  const detected = brandFromTitle(lesson.videoTitle);
+  const brand = args.brand ?? detected.brand;
+  if (!args.brand && !detected.matched && lesson.clips.length) {
+    console.warn(
+      `  "${lesson.videoTitle || '(untitled)'}" matched no product in its title — rendering ${brand}`,
+    );
+  }
   for (const clip of lesson.clips) {
     if (args.id && clip.id !== args.id) continue;
 
@@ -153,7 +165,7 @@ for (const lesson of manifest.lessons) {
         cta: clip.cta,
         captions: clip.captions ?? [],
         showCaptions: !args['no-captions'],
-        brand: args.brand,
+        brand,
       },
     });
   }
@@ -166,7 +178,7 @@ console.log();
 if (args['dry-run']) {
   for (const j of jobs) {
     console.log(
-      `  would render ${j.clip.id}  ${j.clip.durationSeconds}s @ ${j.clip.start}s  <- ${basename(j.props.videoSrc)}`,
+      `  would render ${j.clip.id}  [${j.props.brand}]  ${j.clip.durationSeconds}s @ ${j.clip.start}s  <- ${basename(j.props.videoSrc)}`,
     );
   }
   process.exit(0);

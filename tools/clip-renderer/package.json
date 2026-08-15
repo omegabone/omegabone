@@ -6,7 +6,8 @@
   "scripts": {
     "studio": "remotion studio",
     "render": "node scripts/render-all.mjs",
-    "still": "remotion still ClipPreview out/preview.png"
+    "still": "remotion still ClipPreview out/preview.png",
+    "test": "node --test 'test/*.test.mjs'"
   },
   "dependencies": {
     "@remotion/cli": "4.0.410",
