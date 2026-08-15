@@ -72,6 +72,18 @@ node bin/extract-clips.mjs --transcript lesson.srt --url "https://youtube.com/li
 
 ---
 
+## Reviewing the batch
+
+`tools/clip-review` serves a page that plays each rendered clip beside its
+metadata, takes written feedback, and copies the approved ones into
+`out/approved/`:
+
+```bash
+cd ../clip-review && node bin/review.mjs --clips ../clip-renderer/out
+```
+
+---
+
 ## Branding
 
 Brand tokens are lifted from the site so clips match it rather than inventing a

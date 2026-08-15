@@ -1,0 +1,493 @@
+/*
+ * Tokens are the VME palette from the renderer (tools/clip-renderer/src/theme.ts)
+ * so the review room looks like the clips being reviewed rather than a second
+ * identity. Copied values, not imports — this page has no build step.
+ */
+
+:root {
+  --bg: #081812;
+  --panel: #0d2418;
+  --panel-raised: #122d1e;
+  --border: #1f4a32;
+  --accent: #7ce8a0;
+  --accent-bright: #9cffc0;
+  --ink: #ffffff;
+  --ink-dim: rgba(255, 255, 255, 0.62);
+  --ink-faint: rgba(255, 255, 255, 0.38);
+  --reject: #ff8a7a;
+  --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bar-height: 3.5rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*
+ * Several panels below set `display`, which would otherwise beat the browser's
+ * own `[hidden] { display: none }` and leave hidden things on screen.
+ */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+kbd {
+  font: inherit;
+  font-size: 0.75em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--ink-faint);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- top bar ---------- */
+
+.bar {
+  height: var(--bar-height);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.bar h1 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.filters {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.filters button[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.filters .count {
+  opacity: 0.7;
+  margin-left: 0.4rem;
+}
+
+.bar-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.mode {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.hint {
+  cursor: help;
+}
+
+/* ---------- layout ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 24rem) 1fr;
+  height: calc(100vh - var(--bar-height));
+}
+
+.list {
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.list-lesson {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.7rem 1rem 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 0.75rem 1fr auto;
+  align-items: baseline;
+  gap: 0.7rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink-dim);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(31, 74, 50, 0.5);
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--panel-raised);
+  color: var(--ink);
+}
+
+.row[aria-current="true"] {
+  background: var(--panel-raised);
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.row .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--ink-faint);
+  align-self: center;
+}
+
+.row[data-status="approved"] .dot {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.row[data-status="rejected"] .dot {
+  background: var(--reject);
+  border-color: var(--reject);
+}
+
+.row .title {
+  min-width: 0;
+}
+
+.row .title strong {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row .title span {
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+.row .tail {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.row[data-rendered="false"] .tail {
+  color: var(--reject);
+}
+
+.row .note {
+  grid-column: 2 / -1;
+  font-size: 0.74rem;
+  color: var(--accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- stage ---------- */
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(240px, 26rem) minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.stage.empty {
+  display: grid;
+  place-items: center;
+  color: var(--ink-faint);
+}
+
+.player {
+  position: sticky;
+  top: 0;
+}
+
+video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: calc(100vh - var(--bar-height) - 3rem);
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.unrendered {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 9 / 16;
+  margin: 0;
+  padding: 2rem;
+  text-align: center;
+  color: var(--ink-faint);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
+.detail {
+  min-width: 0;
+  max-width: 46rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.detail h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.meta {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}
+
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1.25rem 0;
+}
+
+.verdict button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-raised);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.verdict button:hover {
+  border-color: var(--accent);
+}
+
+.verdict button kbd {
+  border-color: currentColor;
+  opacity: 0.55;
+}
+
+.verdict .approve[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.verdict .reject[aria-pressed="true"] {
+  background: var(--reject);
+  border-color: var(--reject);
+  color: var(--bg);
+}
+
+.verdict .reset[aria-pressed="true"] {
+  border-color: var(--ink-dim);
+}
+
+.saved {
+  font-size: 0.78rem;
+  color: var(--accent);
+  min-height: 1.2em;
+}
+
+.saved.error {
+  color: var(--reject);
+}
+
+.field {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.field > span {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.facts dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 0.15rem;
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--ink-dim);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.facts dd.quote {
+  border-left: 2px solid var(--border);
+  padding-left: 0.85rem;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.facts a {
+  color: var(--accent);
+}
+
+dialog {
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 24rem;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+dialog h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+dialog ul {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+  color: var(--ink-dim);
+  font-size: 0.88rem;
+}
+
+dialog button {
+  font: inherit;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-raised);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
+  .layout,
+  .stage {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .list {
+    max-height: 40vh;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .player {
+    position: static;
+  }
+
+  video {
+    max-height: 70vh;
+  }
+}
