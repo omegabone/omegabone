@@ -58,6 +58,9 @@ Selection Criteria
 * Each clip must be self-contained and understandable without full video context
 * Favor moments with authority
 * Avoid clips with rambling, filler, or unclear teaching points
+* Do not pick clips that are just the student or coach singing/vocalizing with no coaching
+  commentary — no correction, instruction, or explanation. A clip needs Omega actually teaching,
+  not just a nice-sounding performance moment.
 * Each clip should be 30-90 seconds — cut at the natural end of the thought, not a fixed length
 * Return 5-8 clips total"""
 
