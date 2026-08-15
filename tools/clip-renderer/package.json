@@ -1,0 +1,23 @@
+{
+  "name": "@omegabone/clip-renderer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Renders vertical social clips from clip-extractor output using Remotion.",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "node scripts/render-all.mjs",
+    "still": "remotion still ClipPreview out/preview.png",
+    "test": "node --test 'test/*.test.mjs'"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.410",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.410",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.2"
+  }
+}
