@@ -120,6 +120,13 @@ function snapToCues(candidate, segment, opts) {
     duration: Math.round(duration),
     quote: span.map((c) => c.text).join(' '),
     estimated: false,
+    // Cue timings rebased to the clip's own timeline, so a renderer can burn
+    // captions from the real transcript instead of re-transcribing the audio.
+    captions: span.map((c) => ({
+      start: Math.max(0, +(c.start - start).toFixed(3)),
+      end: +(Math.min(c.end, end) - start).toFixed(3),
+      text: c.text,
+    })),
   };
 }
 
@@ -148,6 +155,9 @@ function fitUntimed(candidate, opts) {
     duration: estimateSeconds(quote, wpm),
     quote,
     estimated: true,
+    // No source timings to rebase, so there are no caption cues. A renderer
+    // must not fake them: without timecodes there is nothing to sync to.
+    captions: null,
   };
 }
 

@@ -240,5 +240,10 @@ console.log(`\nWrote ${written.clipCount} clips`);
 console.log(`  ${written.csv}`);
 console.log(`  ${written.manifest}`);
 console.log(`  ${written.report}`);
+if (written.srtCount) {
+  console.log(`  ${written.captions}  (${written.srtCount} caption files)`);
+} else {
+  console.log('  (no caption files — source has no timecodes)');
+}
 if (failures) console.log(`\n${failures} lesson(s) failed — see messages above.`);
 console.log();
