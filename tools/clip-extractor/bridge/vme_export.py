@@ -190,6 +190,14 @@ def check_clip(clip, words, others):
     if singing_problem:
         problems.append(singing_problem)
 
+    # The app locates a clip's start/end by finding its quoted words verbatim
+    # in the transcript. When that search fails, it silently falls back to
+    # the AI's own guessed timestamp — which is exactly the failure mode
+    # that produces a title/quote that don't match. Surface that here rather
+    # than let an ungrounded clip pass as "ok".
+    if clip.get("grounded") is False:
+        problems.append("start/end could not be matched to the transcript — title may not match the footage")
+
     return problems
 
 
