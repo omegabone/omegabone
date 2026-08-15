@@ -122,6 +122,32 @@ def timecode(seconds):
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m:02d}:{s:02d}"
 
 
+def _singing_only_problem(quote):
+    """
+    Flag a quote that reads as sung/vocalized repetition rather than spoken
+    instruction. Returns a problem string, or None if the quote looks fine.
+    """
+    tokens = re.findall(r"[a-z']+", quote.lower())
+    if not tokens:
+        return None
+    if len(tokens) < MIN_INSTRUCTION_WORDS:
+        return f"only {len(tokens)} word(s) spoken — not enough to be instruction"
+
+    counts = {}
+    for t in tokens:
+        counts[t] = counts.get(t, 0) + 1
+    dominant_word, dominant_count = max(counts.items(), key=lambda kv: kv[1])
+    repeat_share = dominant_count / len(tokens)
+    unique_share = len(counts) / len(tokens)
+
+    if repeat_share >= MAX_REPEAT_SHARE or unique_share <= MIN_UNIQUE_SHARE:
+        return (
+            f'sounds like singing/repetition, not instruction ("{dominant_word}" '
+            f"is {dominant_count} of {len(tokens)} words)"
+        )
+    return None
+
+
 def check_clip(clip, words, others):
     """
     Return a list of problems with this clip. Empty list means it passed.
