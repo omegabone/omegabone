@@ -53,6 +53,15 @@ MAX_SECONDS = 90.0
 MIN_CLIPS = 5
 MAX_CLIPS = 8
 
+# A clip that's just the student/coach singing or vocalizing, with no
+# coaching commentary, reads as very repetitive: a short vocabulary said
+# over and over ("cry, cry, cry", "wow, wow, wow, very good, wow"), unlike
+# spoken instruction which draws on a much wider set of words. Measured the
+# same way as the other checks here rather than taken on the AI's word.
+MIN_INSTRUCTION_WORDS = 8
+MAX_REPEAT_SHARE = 0.55
+MIN_UNIQUE_SHARE = 0.35
+
 SHEET_HEADER = [
     "Goal / CTA",
     "Rank",
