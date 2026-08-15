@@ -186,6 +186,10 @@ def check_clip(clip, words, others):
     if spoken and not re.search(r"[.!?][\"')\]]?$", spoken[-1]):
         problems.append("does not end on a finished sentence")
 
+    singing_problem = _singing_only_problem(" ".join(spoken))
+    if singing_problem:
+        problems.append(singing_problem)
+
     return problems
 
 
