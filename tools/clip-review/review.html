@@ -1455,10 +1455,19 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           var clip = current();
           if (!clip || el.video.dataset.windowed !== 'true') return;
 
-          el.clock.textContent = clock(el.video.currentTime - (clip.start || 0)) +
-            ' / ' + clock(clip.durationSeconds);
+          var t = el.video.currentTime;
+          el.clock.textContent = clock(t - (clip.start || 0)) + ' / ' + clock(clip.durationSeconds);
 
-          if (clip.end !== null && el.video.currentTime >= clip.end) {
+          // Same rule as tools/clip-renderer/src/Captions.tsx: the cue whose
+          // [start, end) contains the current time, one at a time.
+          var cues = state.currentCaptions || [];
+          var active = null;
+          for (var i = 0; i < cues.length; i++) {
+            if (t >= cues[i].start && t < cues[i].end) { active = cues[i]; break; }
+          }
+          el.frameCaption.textContent = active ? active.text : '';
+
+          if (clip.end !== null && t >= clip.end) {
             el.video.pause();
             seekTo(clip.start === null ? 0 : clip.start);
           }
