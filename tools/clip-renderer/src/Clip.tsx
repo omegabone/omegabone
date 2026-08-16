@@ -26,11 +26,9 @@ const Rule: React.FC<{ accent: string; width: number }> = ({ accent, width }) =>
 export const Clip: React.FC<ClipProps> = ({
   videoSrc,
   startSeconds,
-  awarenessLabel,
   topic,
   student,
   suggestedCaption,
-  cta,
   captions,
   showCaptions,
   brand: brandName,
