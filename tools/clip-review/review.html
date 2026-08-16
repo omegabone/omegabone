@@ -1091,9 +1091,33 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
         }
 
-        function seconds(value) {
-          var n = Number(value);
-          return isNaN(n) ? null : n;
+        // The trim inputs read and write M:SS (or H:MM:SS) so a time can be typed
+        // straight off the YouTube scrubber, rather than raw seconds nobody
+        // reads off the video.
+        function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+        function formatTime(value) {
+          if (value === null || value === undefined || isNaN(value)) return '';
+          var v = Math.max(0, Number(value));
+          var h = Math.floor(v / 3600);
+          var m = Math.floor((v % 3600) / 60);
+          var s = v - h * 3600 - m * 60;
+          var secStr = pad2(Math.floor(s)) + (Math.abs(s - Math.round(s)) < 0.005 ? '' : ('.' + s.toFixed(2).split('.')[1]));
+          return h > 0 ? (h + ':' + pad2(m) + ':' + secStr) : (m + ':' + secStr);
+        }
+
+        function parseTime(value) {
+          var text = String(value || '').trim();
+          if (!text) return null;
+          var parts = text.split(':').map(function (p) { return p.trim(); });
+          if (parts.some(function (p) { return p === '' || isNaN(Number(p)); })) return null;
+          var nums = parts.map(Number);
+          var total;
+          if (nums.length === 3) total = nums[0] * 3600 + nums[1] * 60 + nums[2];
+          else if (nums.length === 2) total = nums[0] * 60 + nums[1];
+          else if (nums.length === 1) total = nums[0];
+          else return null;
+          return isNaN(total) || total < 0 ? null : total;
         }
 
         /* ================= render ================= */
