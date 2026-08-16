@@ -167,9 +167,10 @@ if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
 fi
 
 if [ -n "$SELECTOR" ]; then
-  echo "Picking clips by keyword — no API key set."
-  echo "For picks worth posting, set a key once:"
-  echo "    echo 'ANTHROPIC_API_KEY=sk-ant-...' >> \"$REPO/.env\""
+  # No key, no problem — this path is the default and needs nothing set up.
+  # Anything that looks like a demand for a key here reads as a wall, and the
+  # run does not need one.
+  echo "Reading your lessons and picking clips. This needs nothing set up."
 fi
 
 rm -rf "$BATCH"
