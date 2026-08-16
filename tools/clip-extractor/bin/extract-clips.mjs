@@ -245,5 +245,8 @@ if (written.srtCount) {
 } else {
   console.log('  (no caption files — source has no timecodes)');
 }
+if (written.transcripts) {
+  console.log(`  ${written.transcripts}  (for trimming clips in the review page)`);
+}
 if (failures) console.log(`\n${failures} lesson(s) failed — see messages above.`);
 console.log();

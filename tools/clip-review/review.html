@@ -277,6 +277,14 @@
         border-radius: 10px;
       }
 
+      /*
+       * A rendered clip is the vertical 1080x1920 frame; the lesson it was cut
+       * from is landscape. Same element, so the shape follows the source.
+       */
+      video[data-windowed="true"] {
+        aspect-ratio: 16 / 9;
+      }
+
       .unrendered {
         display: grid;
         place-items: center;
@@ -589,6 +597,183 @@
         color: var(--ink);
         border-color: var(--accent);
       }
+      /* ---------- transport ---------- */
+
+      .transport {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.6rem;
+      }
+
+      .transport button {
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .transport button:hover { border-color: var(--accent); }
+
+      .clock {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ---------- trim editor ---------- */
+
+      .trim {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.9rem;
+        margin: 1.25rem 0;
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      .trim-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .trim-title {
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .length {
+        font-size: 0.8rem;
+        font-weight: 650;
+        font-variant-numeric: tabular-nums;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.1rem 0.55rem;
+      }
+
+      .length.ok { color: var(--accent); border-color: var(--accent); }
+      .length.out { color: var(--reject); border-color: var(--reject); }
+
+      .ghost {
+        font: inherit;
+        font-size: 0.76rem;
+        margin-left: auto;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink-dim);
+        cursor: pointer;
+      }
+
+      .ghost:hover { color: var(--ink); border-color: var(--accent); }
+
+      .times {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.6rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .times label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .times input {
+        font: inherit;
+        font-size: 0.9rem;
+        font-variant-numeric: tabular-nums;
+        width: 7rem;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.35rem 0.5rem;
+      }
+
+      .times input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+      .times .arrow { color: var(--ink-faint); padding-bottom: 0.5rem; }
+
+      .trim-help {
+        margin: 0 0 0.6rem;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+      }
+
+      .words {
+        max-height: 12rem;
+        overflow-y: auto;
+        line-height: 2;
+        border-top: 1px solid var(--border);
+        padding-top: 0.6rem;
+      }
+
+      .word {
+        font: inherit;
+        font-size: 0.88rem;
+        color: var(--ink-faint);
+        background: transparent;
+        border: 0;
+        border-radius: 4px;
+        padding: 0.1rem 0.2rem;
+        margin: 0 0.05rem;
+        cursor: pointer;
+      }
+
+      .word:hover { color: var(--ink); background: rgba(124, 232, 160, 0.14); }
+      .word:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+      .word.in {
+        color: var(--bg);
+        background: var(--accent);
+        font-weight: 600;
+      }
+
+      .word.in:hover { background: var(--accent-bright); }
+
+      .row .tail.edited { color: var(--accent); }
+
+      .batch {
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        max-width: 26rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .welcome pre {
+        margin: 0.75rem 0 0;
+        text-align: left;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.8rem;
+        color: var(--accent);
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.7rem 0.85rem;
+      }
+
+      .welcome code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent); }
+
     </style>
   </head>
   <body>
@@ -596,9 +781,7 @@
       <h1>Clip review</h1>
       <nav class="filters" id="filters" aria-label="Filter clips"></nav>
       <div class="bar-end">
-        <span class="folder" id="folder"></span>
-        <span class="mode" id="mode"></span>
-        <button type="button" id="change" hidden>Change folder</button>
+        <span class="batch" id="batch"></span>
         <span class="hint" id="hint">? for keys</span>
       </div>
     </header>
@@ -609,9 +792,12 @@
       <section class="stage" id="stage" hidden>
         <div class="player">
           <video id="video" controls preload="metadata" playsinline></video>
-          <p class="unrendered" id="unrendered" hidden>
-            No video file for this clip in the folder.
-          </p>
+          <p class="unrendered" id="novideo" hidden></p>
+
+          <div class="transport" id="transport">
+            <button type="button" id="play-clip">Play the clip <kbd>Space</kbd></button>
+            <span class="clock" id="clock"></span>
+          </div>
         </div>
 
         <div class="detail">
@@ -620,6 +806,33 @@
             <h2 id="topic"></h2>
             <p class="meta" id="meta"></p>
           </div>
+
+          <section class="trim" id="trim" aria-label="Trim">
+            <header class="trim-head">
+              <span class="trim-title">In and out</span>
+              <span class="length" id="length"></span>
+              <button type="button" class="ghost" id="reset-trim" hidden>Undo trim</button>
+            </header>
+
+            <div class="times">
+              <label>
+                <span>Start</span>
+                <input type="number" id="start" step="0.25" min="0" inputmode="decimal" />
+              </label>
+              <span class="arrow">→</span>
+              <label>
+                <span>End</span>
+                <input type="number" id="end" step="0.25" min="0" inputmode="decimal" />
+              </label>
+            </div>
+
+            <p class="trim-help" id="trim-help">
+              Click a word to move the nearer edge to it — a word outside the clip
+              lengthens it, a word inside shortens it.
+            </p>
+
+            <div class="words" id="words" aria-label="Transcript"></div>
+          </section>
 
           <div class="verdict" role="group" aria-label="Verdict">
             <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
@@ -630,7 +843,7 @@
 
           <label class="field">
             <span>Feedback <kbd>F</kbd></span>
-            <textarea id="feedback" rows="6" placeholder="What works, what to recut, caption changes…"></textarea>
+            <textarea id="feedback" rows="4" placeholder="What works, what to recut, caption changes…"></textarea>
           </label>
 
           <dl class="facts" id="facts"></dl>
@@ -644,21 +857,18 @@
 
     <section class="welcome" id="welcome" hidden>
       <div class="welcome-inner">
-        <h2>Choose the folder your clips are in</h2>
-        <p id="welcome-copy">
-          The page reads the videos from that folder and copies the ones you
-          approve into an <code>approved</code> folder inside it. Nothing is
-          uploaded — the files never leave this machine.
-        </p>
+        <h2>Start it with the launcher</h2>
         <p>
-          <button type="button" class="big" id="pick">Choose folder…</button>
-          <button type="button" class="secondary" id="reopen" hidden></button>
+          This page reviews the batch your extractor last wrote, and plays the
+          lesson videos it cut the clips from. A page opened straight from the
+          filesystem cannot reach either, so it has to be started rather than
+          double-clicked on its own.
         </p>
-        <p class="note" id="welcome-note">
-          Clip metadata — topic, caption, quote — comes from the extractor’s
-          <code>manifest.json</code>. Keep a copy in the same folder and it is
-          picked up automatically.
+        <p class="note">
+          Double-click <code>Review clips.command</code> in this folder — or run:
         </p>
+        <pre id="launch-cmd">cd tools/clip-review
+node bin/review.mjs --video-dir ~/Videos/lessons</pre>
       </div>
     </section>
 
@@ -667,7 +877,8 @@
       <ul>
         <li><kbd>J</kbd> / <kbd>K</kbd> next / previous clip</li>
         <li><kbd>A</kbd> approve <kbd>R</kbd> reject <kbd>U</kbd> undecided</li>
-        <li><kbd>Space</kbd> play / pause</li>
+        <li><kbd>Space</kbd> play the clip from its in-point</li>
+        <li><kbd>[</kbd> / <kbd>]</kbd> nudge the in-point, <kbd>Shift</kbd> for the out-point</li>
         <li><kbd>N</kbd> jump to the next undecided clip</li>
         <li><kbd>F</kbd> write feedback, <kbd>Esc</kbd> to leave the box</li>
         <li><kbd>?</kbd> this list</li>
@@ -677,18 +888,21 @@
 
     <script>
       /*
-       * One page, two backends.
+       * The review page.
        *
-       * Served by bin/review.mjs, it talks to that server over fetch. Opened
-       * straight from the filesystem, it asks the browser for the clips folder
-       * and does the same work itself through the File System Access API.
+       * A clip is a decision, not a file: it is reviewed, trimmed and approved
+       * before anything is rendered, by playing the lesson video across the
+       * clip's window. Approving writes a render manifest of the approved clips
+       * at their trimmed in and out points, so the renderer only ever renders
+       * what was actually approved.
        *
-       * The review UI below does not know which one it is talking to. That is
-       * the point of the split: a served page and a double-clicked page that
-       * were two separate files would drift into two different tools.
+       * Trimming is by word. Clicking a word moves whichever boundary is nearer
+       * to it, so a word before the in-point pulls the clip open and a word
+       * inside it pulls the clip in.
        *
-       * A classic script, not a module — module scripts are blocked by CORS on
-       * file:// URLs, which is exactly where this page has to work.
+       * A classic script, not a module, and inline CSS: the file is served by
+       * bin/review.mjs but must still render standalone, and module scripts are
+       * blocked by CORS on file:// URLs.
        */
       (function () {
         'use strict';
@@ -696,427 +910,44 @@
         var $ = function (id) { return document.getElementById(id); };
         var el = {
           filters: $('filters'), list: $('list'), stage: $('stage'), empty: $('empty'),
-          video: $('video'), unrendered: $('unrendered'), eyebrow: $('eyebrow'),
-          topic: $('topic'), meta: $('meta'), feedback: $('feedback'), facts: $('facts'),
-          saved: $('saved'), mode: $('mode'), folder: $('folder'), hint: $('hint'),
-          keys: $('keys'), welcome: $('welcome'), welcomeCopy: $('welcome-copy'),
-          welcomeNote: $('welcome-note'), pick: $('pick'), reopen: $('reopen'),
-          change: $('change'),
+          video: $('video'), novideo: $('novideo'), transport: $('transport'),
+          playClip: $('play-clip'), clock: $('clock'), eyebrow: $('eyebrow'),
+          topic: $('topic'), meta: $('meta'), trim: $('trim'), length: $('length'),
+          resetTrim: $('reset-trim'), start: $('start'), end: $('end'),
+          trimHelp: $('trim-help'), words: $('words'), feedback: $('feedback'),
+          facts: $('facts'), saved: $('saved'), batch: $('batch'), hint: $('hint'),
+          keys: $('keys'), welcome: $('welcome'), layout: document.querySelector('.layout'),
         };
 
         var FILTERS = [['all', 'All'], ['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected']];
-        var VIDEO_EXT = /\.(mp4|mov|webm|m4v)$/i;
+        var NUDGE = 0.25;
 
-        var state = { clips: [], counts: {}, filter: 'pending', currentId: null };
-        var backend = null;
-        var mediaUrl = null;
-        var mediaToken = 0;
-
-        /* ================= shared shape =================
-         * Ported from src/library.mjs. The server sends clips in this shape;
-         * the folder backend builds the same shape from the folder itself, so
-         * everything below this point is identical either way.
-         */
-
-        function emptyClip(id) {
-          return {
-            id: id, rank: null, lesson: '', student: '', date: '', awareness: '',
-            highValueType: '', topic: '', cta: '', clipType: '', durationSeconds: null,
-            durationEstimated: false, quote: '', whyItHooks: '', suggestedCaption: '',
-            score: null, sourceUrl: '', renderable: true,
-          };
-        }
-
-        function flattenManifest(manifest) {
-          var out = [];
-          (manifest && manifest.lessons ? manifest.lessons : []).forEach(function (lesson) {
-            (lesson.clips || []).forEach(function (clip) {
-              var entry = emptyClip(clip.id);
-              entry.rank = clip.rank == null ? null : clip.rank;
-              entry.lesson = lesson.videoTitle || '';
-              entry.student = lesson.student || '';
-              entry.date = lesson.date || '';
-              entry.awareness = clip.awarenessLabel || '';
-              entry.highValueType = clip.highValueType ? clip.highValueType.replace(/_/g, ' ') : '';
-              entry.topic = clip.topic || '';
-              entry.cta = clip.cta || '';
-              entry.clipType = clip.clipType || '';
-              entry.durationSeconds = clip.durationSeconds == null ? null : clip.durationSeconds;
-              entry.durationEstimated = Boolean(clip.durationEstimated);
-              entry.quote = clip.quote || '';
-              entry.whyItHooks = clip.whyItHooks || '';
-              entry.suggestedCaption = clip.suggestedCaption || '';
-              entry.score = clip.score == null ? null : clip.score;
-              entry.sourceUrl = clip.clipUrl || lesson.url || '';
-              entry.renderable = Boolean(clip.renderable);
-              out.push(entry);
-            });
-          });
-          return out;
-        }
-
-        function mergeLibrary(manifestClips, files, reviews) {
-          var seen = {};
-          var clips = [];
-
-          function decorate(entry, name) {
-            var review = reviews[entry.id] || {};
-            entry.file = name || null;
-            entry.rendered = Boolean(name);
-            entry.status = review.status || 'pending';
-            entry.feedback = review.feedback || '';
-            entry.reviewedAt = review.updatedAt || null;
-            return entry;
-          }
-
-          manifestClips.forEach(function (entry) {
-            seen[entry.id] = true;
-            clips.push(decorate(entry, files[entry.id]));
-          });
-          Object.keys(files).forEach(function (id) {
-            if (!seen[id]) clips.push(decorate(emptyClip(id), files[id]));
-          });
-          return clips;
-        }
-
-        function countStatuses(clips) {
-          var counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, unrendered: 0 };
-          clips.forEach(function (clip) {
-            counts[clip.status] = (counts[clip.status] || 0) + 1;
-            if (!clip.rendered) counts.unrendered++;
-          });
-          return counts;
-        }
-
-        function csvEscape(value) {
-          var s = value === null || value === undefined ? '' : String(value);
-          return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-        }
-
-        function approvedCsv(clips) {
-          var header = ['File', 'Student', 'Topic', 'Awareness Category', 'Suggested Caption', 'CTA', 'Feedback', 'Source'];
-          var rows = clips.filter(function (c) { return c.status === 'approved'; }).map(function (c) {
-            return [c.file || c.id + '.mp4', c.student, c.topic, c.awareness, c.suggestedCaption, c.cta, c.feedback, c.sourceUrl];
-          });
-          if (!rows.length) return null;
-          return [header].concat(rows).map(function (row) { return row.map(csvEscape).join(','); }).join('\n') + '\n';
-        }
-
-        /* ================= server backend ================= */
-
-        function serverBackend() {
-          return {
-            kind: 'server',
-            load: function () {
-              return fetch('/api/clips').then(function (res) {
-                if (!res.ok) throw new Error('server said ' + res.status);
-                return res.json();
-              }).then(function (data) {
-                return {
-                  clips: data.clips, counts: data.counts, folder: data.renderDir,
-                  mode: data.mode === 'move' ? 'moving on approve' : 'copying on approve',
-                  approvedDir: data.approvedDir,
-                };
-              });
-            },
-            save: function (id, patch) {
-              return fetch('/api/clips/' + encodeURIComponent(id), {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(patch),
-              }).then(function (res) {
-                if (res.ok) return res.json();
-                return res.json().catch(function () { return { error: res.statusText }; })
-                  .then(function (body) { throw new Error(body.error); });
-              });
-            },
-            media: function (clip) { return Promise.resolve('/media/' + encodeURIComponent(clip.file)); },
-            unload: function (id, feedback) {
-              if (!navigator.sendBeacon) return;
-              navigator.sendBeacon('/api/clips/' + encodeURIComponent(id),
-                new Blob([JSON.stringify({ feedback: feedback })], { type: 'application/json' }));
-            },
-          };
-        }
-
-        /* ================= folder backend =================
-         * Does what the server does — read the folder, keep reviews.json,
-         * copy approved clips into approved/ — using the browser's file system
-         * access instead of node's.
-         */
-
-        function folderBackend(dir, manifestHandle) {
-          var reviews = {};
-          var files = {};
-          var manifestClips = [];
-          var clips = [];
-
-          function rebuild() { clips = mergeLibrary(manifestClips, files, reviews); }
-
-          function readJson(handle) {
-            return handle.getFile().then(function (file) { return file.text(); }).then(JSON.parse);
-          }
-
-          function fileHandle(name, create) {
-            return dir.getFileHandle(name, { create: Boolean(create) }).catch(function () { return null; });
-          }
-
-          function writeFile(handle, contents) {
-            return handle.createWritable().then(function (writable) {
-              return writable.write(contents).then(function () { return writable.close(); });
-            });
-          }
-
-          function scan() {
-            files = {};
-            var walk = dir.values();
-            return (function next() {
-              return walk.next().then(function (step) {
-                if (step.done) return;
-                var entry = step.value;
-                if (entry.kind === 'file' && VIDEO_EXT.test(entry.name)) {
-                  files[entry.name.replace(VIDEO_EXT, '')] = entry.name;
-                }
-                return next();
-              });
-            })();
-          }
-
-          function loadReviews() {
-            return fileHandle('reviews.json').then(function (handle) {
-              if (!handle) return {};
-              return readJson(handle).then(function (parsed) {
-                return parsed && parsed.clips ? parsed.clips : {};
-              }).catch(function () { return {}; });
-            });
-          }
-
-          function loadManifest() {
-            var source = manifestHandle
-              ? Promise.resolve(manifestHandle)
-              : fileHandle('manifest.json');
-            return source.then(function (handle) {
-              if (!handle) return [];
-              return readJson(handle).then(flattenManifest).catch(function () { return []; });
-            });
-          }
-
-          function sidecars(id, name) {
-            var stem = name ? name.replace(/\.[^.]+$/, '') : id;
-            var wanted = {};
-            [stem + '.srt', id + '.srt', stem + '.jpg', stem + '.png'].forEach(function (n) { wanted[n] = true; });
-            return Object.keys(wanted);
-          }
-
-          function copyInto(target, name) {
-            return fileHandle(name).then(function (src) {
-              if (!src) return null;
-              return src.getFile().then(function (file) {
-                return target.getFileHandle(name, { create: true }).then(function (dest) {
-                  return writeFile(dest, file);
-                });
-              });
-            });
-          }
-
-          function approvedDir(create) {
-            return dir.getDirectoryHandle('approved', { create: Boolean(create) })
-              .catch(function () { return null; });
-          }
-
-          function syncApproved(id, status) {
-            var name = files[id];
-            if (status === 'approved') {
-              // A verdict on a clip that has not been rendered is recorded;
-              // there is simply nothing to copy yet.
-              if (!name) return Promise.resolve();
-              return approvedDir(true).then(function (target) {
-                return copyInto(target, name).then(function () {
-                  return Promise.all(sidecars(id, name).map(function (n) { return copyInto(target, n); }));
-                });
-              });
-            }
-            return approvedDir(false).then(function (target) {
-              if (!target) return;
-              var names = sidecars(id, name).concat(name ? [name] : []);
-              return Promise.all(names.map(function (n) {
-                return target.removeEntry(n).catch(function () { /* was never there */ });
-              }));
-            });
-          }
-
-          function writeApprovedIndex() {
-            var csv = approvedCsv(clips);
-            return approvedDir(Boolean(csv)).then(function (target) {
-              if (!target) return;
-              if (!csv) return target.removeEntry('approved.csv').catch(function () {});
-              return target.getFileHandle('approved.csv', { create: true }).then(function (handle) {
-                return writeFile(handle, csv);
-              });
-            });
-          }
-
-          function persist() {
-            return dir.getFileHandle('reviews.json', { create: true }).then(function (handle) {
-              return writeFile(handle, JSON.stringify({
-                version: 1, updatedAt: new Date().toISOString(), clips: reviews,
-              }, null, 2) + '\n');
-            });
-          }
-
-          return {
-            kind: 'folder',
-            load: function () {
-              return Promise.all([scan(), loadReviews(), loadManifest()]).then(function (results) {
-                reviews = results[1];
-                manifestClips = results[2];
-                rebuild();
-                return {
-                  clips: clips, counts: countStatuses(clips), folder: dir.name,
-                  mode: manifestClips.length ? 'copying on approve' : 'copying on approve · no manifest',
-                };
-              });
-            },
-            save: function (id, patch) {
-              var before = reviews[id] || { status: 'pending', feedback: '' };
-              var after = {
-                status: patch.status === undefined ? before.status : patch.status,
-                feedback: patch.feedback === undefined ? before.feedback : patch.feedback,
-                updatedAt: new Date().toISOString(),
-              };
-              reviews[id] = after;
-
-              var work = after.status === before.status
-                ? Promise.resolve()
-                : syncApproved(id, after.status);
-
-              return work
-                .then(function () { rebuild(); return writeApprovedIndex(); })
-                .then(persist)
-                .then(function () {
-                  var found = clips.filter(function (c) { return c.id === id; })[0];
-                  return { clip: found, counts: countStatuses(clips) };
-                });
-            },
-            media: function (clip) {
-              return dir.getFileHandle(clip.file).then(function (handle) { return handle.getFile(); })
-                .then(function (file) { return URL.createObjectURL(file); });
-            },
-            unload: function () { /* every save already reached disk */ },
-          };
-        }
-
-        /* ================= remembering the folder =================
-         * A directory handle survives in IndexedDB, so a second visit is one
-         * "allow" click rather than navigating the picker again.
-         */
-
-        function idb(mode, run) {
-          return new Promise(function (resolve, reject) {
-            var open = indexedDB.open('clip-review', 1);
-            open.onupgradeneeded = function () { open.result.createObjectStore('handles'); };
-            open.onerror = function () { reject(open.error); };
-            open.onsuccess = function () {
-              var tx = open.result.transaction('handles', mode);
-              var request = run(tx.objectStore('handles'));
-              tx.oncomplete = function () { resolve(request ? request.result : null); };
-              tx.onerror = function () { reject(tx.error); };
-            };
-          }).catch(function () { return null; });
-        }
-
-        var remember = {
-          get: function (key) { return idb('readonly', function (store) { return store.get(key); }); },
-          set: function (key, value) { return idb('readwrite', function (store) { store.put(value, key); }); },
+        var state = {
+          clips: [], counts: {}, rules: {}, lessons: {}, filter: 'pending',
+          currentId: null, words: {}, loaded: false,
         };
 
-        /* ================= start-up ================= */
+        /* ================= server ================= */
 
-        function start() {
-          // A page served by bin/review.mjs answers this; a page on file:// does
-          // not, and falls through to picking a folder.
-          var probe = location.protocol === 'file:'
-            ? Promise.reject(new Error('file://'))
-            : fetch('/api/clips', { method: 'HEAD' }).then(function (res) {
-                if (!res.ok) throw new Error('no server');
-              });
-
-          return probe.then(function () {
-            return open(serverBackend());
-          }).catch(function () {
-            return offerFolder();
+        function getJson(path) {
+          return fetch(path).then(function (res) {
+            if (!res.ok) throw new Error('server said ' + res.status);
+            return res.json();
           });
-        }
-
-        function offerFolder() {
-          el.welcome.hidden = false;
-
-          if (!window.showDirectoryPicker) {
-            el.welcomeCopy.innerHTML =
-              '<span class="warn">This browser cannot open a folder from a local page.</span> ' +
-              'Chrome or Edge can. In any browser, the same page works when it is served:';
-            el.welcomeNote.innerHTML =
-              '<code>cd tools/clip-review &amp;&amp; node bin/review.mjs --clips ../clip-renderer/out</code>';
-            el.pick.hidden = true;
-            return;
-          }
-
-          return remember.get('clipsDir').then(function (saved) {
-            if (!saved) return;
-            el.reopen.hidden = false;
-            el.reopen.textContent = 'Reopen “' + saved.name + '”';
-            el.reopen.addEventListener('click', function () {
-              grant(saved).then(function (ok) {
-                if (ok) return remember.get('manifest').then(function (m) { return openFolder(saved, m); });
-              });
-            });
-          });
-        }
-
-        /* Permission has to be asked for from a click, so this is only ever
-         * called from one. */
-        function grant(handle) {
-          var options = { mode: 'readwrite' };
-          return handle.queryPermission(options).then(function (status) {
-            return status === 'granted' ? true : handle.requestPermission(options).then(function (result) {
-              return result === 'granted';
-            });
-          }).catch(function () { return false; });
-        }
-
-        function pickFolder() {
-          return window.showDirectoryPicker({ id: 'clips', mode: 'readwrite' }).then(function (dir) {
-            return grant(dir).then(function (ok) {
-              if (!ok) return;
-              return remember.set('clipsDir', dir).then(function () { return openFolder(dir, null); });
-            });
-          }).catch(function (err) {
-            // An abandoned picker is not an error worth shouting about.
-            if (err && err.name === 'AbortError') return;
-            el.welcomeCopy.textContent = 'Could not open that folder: ' + err.message;
-          });
-        }
-
-        function openFolder(dir, manifestHandle) {
-          el.welcome.hidden = true;
-          el.change.hidden = false;
-          return open(folderBackend(dir, manifestHandle));
-        }
-
-        function open(chosen) {
-          backend = chosen;
-          state.currentId = null;
-          return load();
         }
 
         function load() {
-          return backend.load().then(function (data) {
+          return getJson('/api/clips').then(function (data) {
             state.clips = data.clips;
             state.counts = data.counts;
+            state.rules = data.rules || {};
+            state.lessons = {};
+            (data.lessons || []).forEach(function (lesson) { state.lessons[lesson.id] = lesson; });
+            state.loaded = true;
 
-            el.mode.textContent = data.mode;
-            el.folder.textContent = data.folder || '';
-            el.folder.title = data.approvedDir ? 'Approved clips go to ' + data.approvedDir : '';
+            el.batch.textContent = data.counts.all + ' clips · approved batch written to ' +
+              shortPath(data.renderManifest);
+            el.batch.title = data.renderManifest;
 
             if (!visible().length && state.filter === 'pending') state.filter = 'all';
             if (!state.currentId) state.currentId = (visible()[0] || {}).id || null;
@@ -1124,11 +955,19 @@
           });
         }
 
-        function save(id, body) {
+        function save(id, patch) {
           el.saved.className = 'saved';
           el.saved.textContent = 'Saving…';
 
-          return backend.save(id, body).then(function (data) {
+          return fetch('/api/clips/' + encodeURIComponent(id), {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(patch),
+          }).then(function (res) {
+            if (res.ok) return res.json();
+            return res.json().catch(function () { return { error: res.statusText }; })
+              .then(function (body) { throw new Error(body.error); });
+          }).then(function (data) {
             for (var i = 0; i < state.clips.length; i++) {
               if (state.clips[i].id === id) state.clips[i] = data.clip;
             }
@@ -1144,6 +983,16 @@
           });
         }
 
+        function wordsFor(clip) {
+          if (state.words[clip.id]) return Promise.resolve(state.words[clip.id]);
+          return getJson('/api/words/' + encodeURIComponent(clip.id)).then(function (data) {
+            state.words[clip.id] = data;
+            return data;
+          }).catch(function () {
+            return { words: [], hasWords: false, hasTranscript: false };
+          });
+        }
+
         /* ================= selectors ================= */
 
         function visible() {
@@ -1156,25 +1005,43 @@
           return state.clips.filter(function (c) { return c.id === state.currentId; })[0] || null;
         }
 
+        function shortPath(path) {
+          if (!path) return '';
+          var parts = String(path).split(/[/\\]/);
+          return parts.slice(-2).join('/');
+        }
+
+        function clock(seconds) {
+          if (seconds === null || seconds === undefined || isNaN(seconds)) return '—';
+          var whole = Math.max(0, Math.floor(seconds));
+          var m = Math.floor(whole / 60);
+          var s = whole % 60;
+          return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function seconds(value) {
+          var n = Number(value);
+          return isNaN(n) ? null : n;
+        }
+
         /* ================= render ================= */
 
         function render() { renderFilters(); renderList(); renderDetail(); }
 
         function renderFilters() {
           var nodes = FILTERS.map(function (entry) {
-            var key = entry[0];
             var button = document.createElement('button');
             button.type = 'button';
-            button.setAttribute('aria-pressed', String(state.filter === key));
+            button.setAttribute('aria-pressed', String(state.filter === entry[0]));
             button.appendChild(document.createTextNode(entry[1]));
 
             var count = document.createElement('span');
             count.className = 'count';
-            count.textContent = state.counts[key] || 0;
+            count.textContent = state.counts[entry[0]] || 0;
             button.appendChild(count);
 
             button.addEventListener('click', function () {
-              state.filter = key;
+              state.filter = entry[0];
               var kept = visible().filter(function (c) { return c.id === state.currentId; });
               if (!kept.length) state.currentId = (visible()[0] || {}).id || null;
               render();
@@ -1227,7 +1094,8 @@
 
           var tail = document.createElement('span');
           tail.className = 'tail';
-          tail.textContent = clip.rendered ? duration(clip.durationSeconds) : 'no file';
+          tail.textContent = clip.durationSeconds === null ? 'no times' : Math.round(clip.durationSeconds) + 's';
+          if (clip.trimmed) tail.classList.add('edited');
 
           row.appendChild(dot);
           row.appendChild(title);
@@ -1252,12 +1120,12 @@
 
           el.eyebrow.textContent = [clip.awareness, clip.highValueType].filter(Boolean).join(' · ');
           el.topic.textContent = clip.topic || clip.id;
-          el.meta.textContent = [
-            clip.student, clip.date,
-            clip.rendered ? duration(clip.durationSeconds) : 'no file',
-          ].filter(Boolean).join(' · ') + (clip.durationEstimated ? ' (estimated)' : '');
+          el.meta.textContent = [clip.student, clip.date].filter(Boolean).join(' · ') +
+            (clip.trimmed ? ' · trimmed' : '') +
+            (clip.renderStale ? ' · rendered file is the old cut' : '');
 
-          showMedia(clip);
+          showVideo(clip);
+          renderTrim(clip);
 
           var buttons = document.querySelectorAll('.verdict button');
           for (var i = 0; i < buttons.length; i++) {
@@ -1270,52 +1138,209 @@
           renderFacts(clip);
         }
 
-        function showMedia(clip) {
-          if (!clip.rendered) {
-            releaseMedia();
-            el.video.removeAttribute('src');
-            el.video.load();
+        /* ---------- the player ----------
+         * The lesson video is the thing being reviewed: a clip is a window on
+         * it, and trimming moves the window. A rendered file, when one exists,
+         * is only played when there is no lesson video to play instead.
+         */
+
+        function videoSource(clip) {
+          var lesson = state.lessons[clip.lessonId];
+          if (lesson && lesson.hasSource) {
+            return { url: '/source/' + encodeURIComponent(clip.lessonId), windowed: true };
+          }
+          if (clip.rendered) {
+            return { url: '/media/' + encodeURIComponent(clip.file), windowed: false };
+          }
+          return null;
+        }
+
+        function showVideo(clip) {
+          var source = videoSource(clip);
+
+          if (!source) {
             el.video.hidden = true;
-            el.unrendered.hidden = false;
+            el.transport.hidden = true;
+            el.novideo.hidden = false;
+            el.novideo.textContent = clip.rendered
+              ? 'No lesson video for this clip.'
+              : 'No video yet — pass --video-dir to review against the lesson.';
             return;
           }
 
           el.video.hidden = false;
-          el.unrendered.hidden = true;
-          if (el.video.dataset.clip === clip.id) return;
+          el.novideo.hidden = true;
+          el.transport.hidden = !source.windowed;
 
-          // Object URLs are per-file, so a stale one is revoked on the way past.
-          // The token guards against a slow resolve landing after the reviewer
-          // has already moved on.
-          var token = ++mediaToken;
-          backend.media(clip).then(function (url) {
-            if (token !== mediaToken) {
-              if (url.indexOf('blob:') === 0) URL.revokeObjectURL(url);
-              return;
-            }
-            releaseMedia();
-            mediaUrl = url;
-            el.video.dataset.clip = clip.id;
-            el.video.src = url;
-          }).catch(function (err) {
-            el.video.hidden = true;
-            el.unrendered.hidden = false;
-            el.unrendered.textContent = 'Could not open the file: ' + err.message;
+          if (el.video.dataset.src !== source.url) {
+            el.video.dataset.src = source.url;
+            el.video.src = source.url;
+          }
+          el.video.dataset.windowed = String(source.windowed);
+          if (source.windowed && clip.start !== null) seekTo(clip.start);
+        }
+
+        function seekTo(time) {
+          var apply = function () {
+            try { el.video.currentTime = time; } catch (err) { /* not seekable yet */ }
+          };
+          if (el.video.readyState >= 1) apply();
+          else el.video.addEventListener('loadedmetadata', apply, { once: true });
+        }
+
+        function playClip() {
+          var clip = current();
+          if (!clip || el.video.hidden) return;
+
+          if (el.video.dataset.windowed !== 'true') {
+            if (el.video.paused) el.video.play(); else el.video.pause();
+            return;
+          }
+          if (clip.start !== null) seekTo(clip.start);
+          el.video.play();
+        }
+
+        // Stop at the out-point, so playing a clip plays the clip rather than
+        // running on into the rest of the lesson.
+        el.video.addEventListener('timeupdate', function () {
+          var clip = current();
+          if (!clip || el.video.dataset.windowed !== 'true') return;
+
+          el.clock.textContent = clock(el.video.currentTime - (clip.start || 0)) +
+            ' / ' + clock(clip.durationSeconds);
+
+          if (clip.end !== null && el.video.currentTime >= clip.end) {
+            el.video.pause();
+            seekTo(clip.start === null ? 0 : clip.start);
+          }
+        });
+
+        /* ---------- the trim editor ---------- */
+
+        function renderTrim(clip) {
+          var editable = clip.start !== null && clip.end !== null;
+          el.trim.hidden = !editable;
+          if (!editable) return;
+
+          if (document.activeElement !== el.start) el.start.value = clip.start;
+          if (document.activeElement !== el.end) el.end.value = clip.end;
+
+          el.length.textContent = Math.round(clip.durationSeconds) + 's';
+          el.length.className = 'length ' + lengthVerdict(clip.durationSeconds);
+          el.length.title = ruleText();
+          el.resetTrim.hidden = !clip.trimmed;
+
+          wordsFor(clip).then(function (data) {
+            if (state.currentId !== clip.id) return;
+            renderWords(clip, data);
           });
         }
 
-        function releaseMedia() {
-          if (mediaUrl && mediaUrl.indexOf('blob:') === 0) URL.revokeObjectURL(mediaUrl);
-          mediaUrl = null;
-          delete el.video.dataset.clip;
+        function lengthVerdict(length) {
+          var min = state.rules.minSeconds;
+          var max = state.rules.maxSeconds;
+          if (!min || !max) return 'ok';
+          return length < min || length > max ? 'out' : 'ok';
+        }
+
+        function ruleText() {
+          var min = state.rules.minSeconds;
+          var max = state.rules.maxSeconds;
+          return min && max ? 'The batch rule is ' + min + '–' + max + 's' : '';
+        }
+
+        function renderWords(clip, data) {
+          if (!data.hasTranscript) {
+            el.trimHelp.textContent =
+              'No transcript for this lesson, so there are no words to click. The in and out points can still be typed.';
+            el.words.replaceChildren();
+            return;
+          }
+
+          el.trimHelp.textContent = data.hasWords
+            ? 'Click a word to move the nearer edge to it — a word outside the clip lengthens it, a word inside shortens it.'
+            : 'Click a word to move the nearer edge to it. This lesson has no word-level timings, so word times are spread across each subtitle line — check the cut by ear.';
+
+          var nodes = data.words.map(function (word) {
+            var span = document.createElement('button');
+            span.type = 'button';
+            span.className = 'word' + (inClip(word, clip) ? ' in' : '');
+            span.textContent = word.word;
+            span.title = clock(word.start);
+            span.addEventListener('click', function () { snapTo(word); });
+            return span;
+          });
+
+          el.words.replaceChildren.apply(el.words, nodes);
+
+          var first = el.words.querySelector('.word.in');
+          if (first) {
+            el.words.scrollTop = Math.max(0, first.offsetTop - el.words.offsetTop - 40);
+          }
+        }
+
+        function inClip(word, clip) {
+          return word.start >= clip.start - 0.05 && word.end <= clip.end + 0.05;
+        }
+
+        /**
+         * Which edge a clicked word moves. The nearer one — so clicking out in
+         * the context before the clip pulls the in-point back to that word, and
+         * clicking a word just inside the end pulls the out-point in to it.
+         */
+        function chooseEdge(word, start, end) {
+          return Math.abs(word.start - start) <= Math.abs(word.end - end) ? 'start' : 'end';
+        }
+
+        function snapTo(word) {
+          var clip = current();
+          if (!clip) return;
+
+          var edge = chooseEdge(word, clip.start, clip.end);
+          var patch = {};
+          patch[edge] = edge === 'start' ? word.start : word.end;
+          commitTrim(patch);
+        }
+
+        function commitTrim(patch) {
+          var clip = current();
+          if (!clip) return;
+
+          // Guard here as well as on the server: a rejected patch would leave
+          // the boxes showing an edit that was never made.
+          var next = {
+            start: patch.start === undefined ? clip.start : patch.start,
+            end: patch.end === undefined ? clip.end : patch.end,
+          };
+          if (next.start !== null && next.end !== null && next.end - next.start < 1) {
+            el.saved.className = 'saved error';
+            el.saved.textContent = 'That would leave less than a second';
+            return;
+          }
+
+          save(clip.id, patch).then(function (saved) {
+            if (!saved) return;
+            renderDetail();
+            renderList();
+            if (saved.start !== null) seekTo(saved.start);
+          });
+        }
+
+        function nudge(edge, by) {
+          var clip = current();
+          if (!clip || clip.start === null) return;
+          var patch = {};
+          patch[edge] = Math.max(0, (edge === 'start' ? clip.start : clip.end) + by);
+          commitTrim(patch);
         }
 
         function renderFacts(clip) {
           var facts = [
-            ['Caption', clip.suggestedCaption], ['CTA', clip.cta], ['Clip type', clip.clipType],
+            ['Caption', clip.suggestedCaption], ['CTA', clip.cta],
             ['Why it hooks', clip.whyItHooks], ['Quote', clip.quote],
+            ['In the lesson', clip.start === null ? '' : clock(clip.start) + ' – ' + clock(clip.end)],
             ['Score', clip.score === null ? '' : String(clip.score)],
-            ['File', clip.file || ''], ['Source', clip.sourceUrl],
+            ['Rendered file', clip.file || ''], ['Source', clip.sourceUrl],
           ].filter(function (entry) { return entry[1]; });
 
           var nodes = [];
@@ -1328,7 +1353,7 @@
             if (entry[0] === 'Source') {
               var a = document.createElement('a');
               a.href = entry[1];
-              a.textContent = 'open at the clip’s in-point';
+              a.textContent = 'open the lesson at this point';
               a.target = '_blank';
               a.rel = 'noreferrer';
               dd.appendChild(a);
@@ -1338,12 +1363,6 @@
             nodes.push(dt, dd);
           });
           el.facts.replaceChildren.apply(el.facts, nodes);
-        }
-
-        function duration(seconds) {
-          if (seconds === null || seconds === undefined) return '';
-          var s = Math.round(seconds);
-          return s >= 60 ? Math.floor(s / 60) + 'm ' + String(s % 60).padStart(2, '0') + 's' : s + 's';
         }
 
         /* ================= actions ================= */
@@ -1380,8 +1399,6 @@
             return save(clip.id, { status: status });
           }).then(function () {
             render();
-            // A decided clip drops out of the Undecided filter, so land on the
-            // next one rather than on nothing.
             var kept = visible().filter(function (c) { return c.id === state.currentId; });
             if (state.filter === 'pending' && !kept.length) {
               state.currentId = (visible()[0] || {}).id || null;
@@ -1422,6 +1439,19 @@
           })(verdictButtons[i]);
         }
 
+        el.playClip.addEventListener('click', playClip);
+        el.resetTrim.addEventListener('click', function () {
+          commitTrim({ start: null, end: null });
+        });
+
+        [el.start, el.end].forEach(function (input) {
+          input.addEventListener('change', function () {
+            var patch = {};
+            patch[input === el.start ? 'start' : 'end'] = seconds(input.value);
+            commitTrim(patch);
+          });
+        });
+
         el.feedback.addEventListener('input', queueFeedback);
         el.feedback.addEventListener('blur', flushFeedback);
         el.feedback.addEventListener('keydown', function (e) {
@@ -1429,15 +1459,9 @@
         });
 
         el.hint.addEventListener('click', function () { el.keys.showModal(); });
-        el.pick.addEventListener('click', pickFolder);
-        el.change.addEventListener('click', pickFolder);
-
-        window.addEventListener('pagehide', function () {
-          if (pendingEdit && backend) backend.unload(pendingEdit.id, pendingEdit.feedback);
-        });
 
         document.addEventListener('keydown', function (e) {
-          if (!backend || e.metaKey || e.ctrlKey || e.altKey) return;
+          if (!state.loaded || e.metaKey || e.ctrlKey || e.altKey) return;
           if (e.target && e.target.matches && e.target.matches('textarea, input')) return;
 
           var actions = {
@@ -1448,28 +1472,33 @@
             u: function () { setStatus('pending'); },
             n: nextUndecided,
             f: function () { el.feedback.focus(); },
+            '[': function () { nudge(e.shiftKey ? 'end' : 'start', -NUDGE); },
+            ']': function () { nudge(e.shiftKey ? 'end' : 'start', NUDGE); },
+            '{': function () { nudge('end', -NUDGE); },
+            '}': function () { nudge('end', NUDGE); },
             '?': function () { el.keys.showModal(); },
-            ' ': function () { el.video.paused ? el.video.play() : el.video.pause(); },
+            ' ': playClip,
           };
 
-          var action = actions[e.key.toLowerCase()];
+          var action = actions[e.key.toLowerCase()] || actions[e.key];
           if (!action) return;
           e.preventDefault();
           action();
         });
 
-        // Exposed for the browser tests in test/browser/, which drive the folder
-        // backend against a stand-in directory handle. Nothing in the page reads
-        // it back.
-        window.ClipReview = {
-          openFolder: openFolder,
-          state: state,
-          mergeLibrary: mergeLibrary,
-          countStatuses: countStatuses,
-          approvedCsv: approvedCsv,
-        };
+        // Exposed for the browser tests, which drive the page against a stubbed
+        // server. Nothing in the page reads it back.
+        window.ClipReview = { state: state, chooseEdge: chooseEdge, load: load, render: render };
 
-        start();
+        // Served, this answers. Opened from the filesystem it does not, and the
+        // page says how to start it rather than showing an empty room.
+        (location.protocol === 'file:'
+          ? Promise.reject(new Error('file://'))
+          : load()
+        ).catch(function () {
+          el.welcome.hidden = false;
+          el.layout.hidden = true;
+        });
       })();
     </script>
   </body>

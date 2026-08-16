@@ -197,6 +197,29 @@ function parseSrtVtt(text) {
   return cues;
 }
 
+/**
+ * Word timings, when the transcriber recorded them.
+ *
+ * Whisper writes these under `words` with `word_timestamps=True`; other tools
+ * spell the key `word` or `text`. They are worth carrying because the review
+ * tool trims clips by clicking a word, and a real word boundary beats one
+ * guessed by dividing a cue up.
+ */
+function parseWords(segment) {
+  const raw = segment.words || segment.word_timestamps;
+  if (!Array.isArray(raw)) return null;
+
+  const words = raw
+    .map((w) => ({
+      word: String(w.word ?? w.text ?? '').trim(),
+      start: w.start ?? w.timestamp?.[0] ?? null,
+      end: w.end ?? w.timestamp?.[1] ?? null,
+    }))
+    .filter((w) => w.word && w.start !== null && w.end !== null);
+
+  return words.length ? words : null;
+}
+
 function parseWhisperJson(text) {
   const data = JSON.parse(text);
   const segments = data.segments || data.chunks || (Array.isArray(data) ? data : null);
@@ -206,6 +229,7 @@ function parseWhisperJson(text) {
       start: s.start ?? s.timestamp?.[0] ?? null,
       end: s.end ?? s.timestamp?.[1] ?? null,
       text: (s.text || '').trim(),
+      words: parseWords(s),
     }))
     .filter((c) => c.start !== null && c.end !== null && c.text);
 }

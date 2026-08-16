@@ -9,6 +9,16 @@ import { join } from 'node:path';
 import { AWARENESS_CATEGORIES } from './config.mjs';
 import { formatTimecode } from './prompt.mjs';
 
+/** Filesystem-safe identifier for a lesson, stable across runs. */
+export function lessonSlug(lesson) {
+  const base = `${lesson.student || 'unknown'}-${lesson.date || 'undated'}-${lesson.videoTitle || ''}`;
+  return base
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 80);
+}
+
 /** Filesystem-safe identifier for a clip, stable across runs. */
 export function clipSlug(lesson, clip) {
   const base = `${lesson.student || 'unknown'}-${lesson.date || 'undated'}-${clip.rankPosition}`;
@@ -144,6 +154,7 @@ export function writeOutputs(outDir, results, opts = {}) {
       model: opts.offline ? 'offline-heuristic' : opts.model,
     },
     lessons: results.map(({ lesson, clips, rejected, shortfall }) => ({
+      id: lessonSlug(lesson),
       videoTitle: lesson.videoTitle,
       student: lesson.student,
       date: lesson.date,
@@ -183,6 +194,8 @@ export function writeOutputs(outDir, results, opts = {}) {
     'utf8',
   );
 
+  const transcriptPath = writeTranscripts(outDir, results);
+
   writeFileSync(join(outDir, 'report.md'), buildReport(results, opts), 'utf8');
 
   return {
@@ -190,9 +203,53 @@ export function writeOutputs(outDir, results, opts = {}) {
     manifest: join(outDir, 'manifest.json'),
     report: join(outDir, 'report.md'),
     captions: srtCount ? srtDir : null,
+    transcripts: transcriptPath,
     clipCount: rows.length,
     srtCount,
   };
+}
+
+/**
+ * The lesson's own timed transcript, written beside the manifest.
+ *
+ * The manifest carries each clip's captions, rebased to that clip. Trimming a
+ * clip needs what is on either side of it as well — the words you would pull
+ * the in-point back over — so the whole lesson is written out once, in the
+ * lesson's own timeline.
+ *
+ * Only timed lessons appear. An untimed library transcript has no times to
+ * trim against, so writing it here would only offer an edit that cannot work.
+ */
+export function writeTranscripts(outDir, results) {
+  const lessons = results
+    .filter(({ lesson }) => lesson.timed && lesson.cues?.length)
+    .map(({ lesson }) => ({
+      id: lessonSlug(lesson),
+      videoTitle: lesson.videoTitle,
+      student: lesson.student,
+      date: lesson.date,
+      url: lesson.url,
+      // Word timings survive only when the transcriber recorded them. The
+      // review tool falls back to spreading a cue across its words, and says
+      // so, rather than pretending these are always here.
+      hasWords: lesson.cues.some((c) => c.words?.length),
+      cues: lesson.cues.map((c) => ({
+        start: c.start,
+        end: c.end,
+        text: c.text,
+        ...(c.words?.length ? { words: c.words } : {}),
+      })),
+    }));
+
+  if (!lessons.length) return null;
+
+  const path = join(outDir, 'transcripts.json');
+  writeFileSync(
+    path,
+    `${JSON.stringify({ generatedAt: new Date().toISOString(), lessons }, null, 2)}\n`,
+    'utf8',
+  );
+  return path;
 }
 
 function buildReport(results, opts) {

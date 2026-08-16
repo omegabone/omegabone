@@ -69,6 +69,7 @@ export function applyVerdict(store, id, patch, options) {
   const after = {
     status: patch.status ?? before.status,
     feedback: patch.feedback ?? before.feedback,
+    ...trimFrom(patch, before),
     updatedAt: new Date().toISOString(),
   };
   store[id] = after;
@@ -77,6 +78,34 @@ export function applyVerdict(store, id, patch, options) {
     syncApprovedFile(id, after.status, options);
   }
   return after;
+}
+
+/**
+ * The trim carried on a review record.
+ *
+ * `null` is a real value here — it means "back to the extractor's own in and
+ * out points" — so it has to be distinguishable from a patch that says nothing
+ * about the trim at all and should leave it alone.
+ */
+function trimFrom(patch, before) {
+  const trim = {};
+  if ('start' in patch) trim.start = coerceTime(patch.start, 'start');
+  else if (before.start !== undefined) trim.start = before.start;
+
+  if ('end' in patch) trim.end = coerceTime(patch.end, 'end');
+  else if (before.end !== undefined) trim.end = before.end;
+
+  if (trim.start !== undefined && trim.start !== null && trim.end !== undefined && trim.end !== null) {
+    if (trim.end <= trim.start) throw new Error('the clip would end before it starts');
+  }
+  return trim;
+}
+
+function coerceTime(value, which) {
+  if (value === null) return null;
+  const seconds = Number(value);
+  if (!Number.isFinite(seconds) || seconds < 0) throw new Error(`${which} is not a time`);
+  return Math.round(seconds * 100) / 100;
 }
 
 /**
@@ -171,4 +200,89 @@ export function writeApprovedIndex(approvedDir, clips) {
 function csvEscape(value) {
   const s = value === null || value === undefined ? '' : String(value);
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+/**
+ * The batch to render, written in the extractor's own manifest shape.
+ *
+ * This is what trimming is for. The renderer takes a manifest; this writes one
+ * containing the approved clips only, at the in and out points the reviewer
+ * settled on, with captions re-cut from the lesson transcript to match. So the
+ * render is of what was approved, rather than of what the model first proposed.
+ *
+ *   node scripts/render-all.mjs --manifest <this file> --video-dir ~/Videos
+ */
+/** A lesson link that opens at a given second. */
+function deepLink(url, start) {
+  if (!url || start === null || start === undefined) return '';
+  const t = Math.floor(start);
+  return url.includes('?') ? `${url}&t=${t}s` : `${url}?t=${t}s`;
+}
+
+export function writeRenderManifest(path, clips, { lessons, transcripts, captionsFor }) {
+  const approved = clips.filter((c) => c.status === 'approved');
+  const byLesson = new Map();
+
+  for (const clip of approved) {
+    if (!byLesson.has(clip.lessonId)) byLesson.set(clip.lessonId, []);
+    byLesson.get(clip.lessonId).push(clip);
+  }
+
+  const out = {
+    generatedAt: new Date().toISOString(),
+    source: 'clip-review',
+    lessons: [],
+  };
+
+  for (const lesson of lessons) {
+    const picked = byLesson.get(lesson.id);
+    if (!picked?.length) continue;
+
+    const transcript = transcripts.get(lesson.id);
+    out.lessons.push({
+      id: lesson.id,
+      videoTitle: lesson.videoTitle,
+      student: lesson.student,
+      date: lesson.date,
+      url: lesson.url,
+      clipCount: picked.length,
+      clips: picked.map((clip) => {
+        const captions =
+          clip.start === null || clip.end === null
+            ? []
+            : captionsFor(transcript, clip.start, clip.end);
+
+        return {
+          id: clip.id,
+          rank: clip.rank,
+          awarenessLabel: clip.awareness,
+          highValueType: clip.highValueType || null,
+          topic: clip.topic,
+          cta: clip.cta,
+          clipType: clip.clipType,
+          start: clip.start,
+          end: clip.end,
+          durationSeconds: clip.durationSeconds,
+          durationEstimated: clip.durationEstimated,
+          // Follows the trim: a link that still points at the model's original
+          // in-point sends you to the wrong moment once the clip has moved.
+          clipUrl: deepLink(lesson.url, clip.start) || clip.sourceUrl,
+          quote: clip.quote,
+          whyItHooks: clip.whyItHooks,
+          suggestedCaption: clip.suggestedCaption,
+          score: clip.score,
+          trimmed: clip.trimmed,
+          reviewNote: clip.feedback,
+          captions,
+          // The renderer needs an in-point and cues to cut against. A clip
+          // approved without either is carried here but marked unrenderable,
+          // so it is listed and skipped rather than silently dropped.
+          renderable: Boolean(captions.length) && clip.start !== null,
+        };
+      }),
+    });
+  }
+
+  writeFileSync(path, `${JSON.stringify(out, null, 2)}\n`, 'utf8');
+  return { path, lessons: out.lessons.length, clips: approved.length };
 }

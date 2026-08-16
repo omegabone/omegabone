@@ -1,11 +1,14 @@
 /**
  * Builds the review list.
  *
- * Two sources, deliberately: the extractor manifest carries everything worth
- * knowing about a clip (topic, quote, why it hooks, the caption that will be
- * burned in), and the render directory carries the files that actually exist.
- * Neither alone is the truth — a manifest clip may not have been rendered yet,
- * and a stray mp4 may have been dropped in by hand. Both show up, flagged.
+ * A clip is a decision, not a file. It exists as soon as the extractor picks
+ * it, and reviewing it — watching it, trimming it, approving it — happens
+ * before anything is rendered. A rendered file, when there is one, is an extra
+ * way to view the same clip rather than the thing being reviewed.
+ *
+ * So three sources are merged: the extractor manifest (which clips exist and
+ * where they sit in the lesson), the render directory (which of them have been
+ * rendered), and the saved review (what was decided, and any trim).
  */
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
@@ -45,27 +48,45 @@ export function scanRenders(dir) {
   return found;
 }
 
-/** Flatten a clip-extractor manifest into per-clip records. */
-export function readManifest(path) {
-  if (!path || !existsSync(path)) return [];
+/** The lessons in a manifest, with the ids the transcripts are keyed by. */
+export function readLessons(path) {
+  if (!path || !existsSync(path)) return { lessons: [], rules: {} };
 
   const manifest = JSON.parse(readFileSync(path, 'utf8'));
+  return {
+    rules: manifest.rules ?? {},
+    lessons: (manifest.lessons ?? []).map((lesson) => ({
+      id: lesson.id ?? '',
+      videoTitle: lesson.videoTitle ?? '',
+      student: lesson.student ?? '',
+      date: lesson.date ?? '',
+      url: lesson.url ?? '',
+      clips: lesson.clips ?? [],
+    })),
+  };
+}
+
+/** Flatten a manifest into per-clip records, before any review is applied. */
+export function readManifest(path) {
+  const { lessons } = readLessons(path);
   const clips = [];
 
-  for (const lesson of manifest.lessons ?? []) {
-    for (const clip of lesson.clips ?? []) {
+  for (const lesson of lessons) {
+    for (const clip of lesson.clips) {
       clips.push({
         id: clip.id,
-        rank: clip.rank,
-        lesson: lesson.videoTitle ?? '',
-        student: lesson.student ?? '',
-        date: lesson.date ?? '',
+        lessonId: lesson.id,
+        rank: clip.rank ?? null,
+        lesson: lesson.videoTitle,
+        student: lesson.student,
+        date: lesson.date,
         awareness: clip.awarenessLabel ?? '',
         highValueType: clip.highValueType ? clip.highValueType.replace(/_/g, ' ') : '',
         topic: clip.topic ?? '',
         cta: clip.cta ?? '',
         clipType: clip.clipType ?? '',
-        durationSeconds: clip.durationSeconds ?? null,
+        originalStart: clip.start ?? null,
+        originalEnd: clip.end ?? null,
         durationEstimated: Boolean(clip.durationEstimated),
         quote: clip.quote ?? '',
         whyItHooks: clip.whyItHooks ?? '',
@@ -79,10 +100,11 @@ export function readManifest(path) {
   return clips;
 }
 
-/** An entry for a file on disk that the manifest knows nothing about. */
+/** An entry for a rendered file that no manifest mentions. */
 function orphan(id) {
   return {
     id,
+    lessonId: '',
     rank: null,
     lesson: '',
     student: '',
@@ -92,7 +114,8 @@ function orphan(id) {
     topic: '',
     cta: '',
     clipType: '',
-    durationSeconds: null,
+    originalStart: null,
+    originalEnd: null,
     durationEstimated: false,
     quote: '',
     whyItHooks: '',
@@ -104,11 +127,11 @@ function orphan(id) {
 }
 
 /**
- * Merge manifest metadata, rendered files and saved reviews into the list the
- * page renders. Manifest order is preserved — it is rank order within a lesson,
- * which is the order worth reviewing in — with orphaned renders appended.
+ * Merge everything into the list the page renders. Manifest order is kept — it
+ * is rank order within a lesson, which is the order worth reviewing in — with
+ * orphaned renders appended.
  */
-export function buildLibrary({ manifestPath, renderDir, reviews = {} }) {
+export function buildLibrary({ manifestPath, renderDir, reviews = {}, sources = new Map() }) {
   const meta = readManifest(manifestPath);
   const renders = scanRenders(renderDir);
   const seen = new Set();
@@ -116,22 +139,36 @@ export function buildLibrary({ manifestPath, renderDir, reviews = {} }) {
   const clips = [];
   for (const entry of meta) {
     seen.add(entry.id);
-    clips.push(decorate(entry, renders.get(entry.id), reviews[entry.id]));
+    clips.push(decorate(entry, renders.get(entry.id), reviews[entry.id], sources));
   }
   for (const [id, render] of renders) {
     if (seen.has(id)) continue;
-    clips.push(decorate(orphan(id), render, reviews[id]));
+    clips.push(decorate(orphan(id), render, reviews[id], sources));
   }
 
   return clips;
 }
 
-function decorate(entry, render, review) {
+function decorate(entry, render, review, sources) {
+  // A trim is stored against the clip and wins over the extractor's own in and
+  // out points, which stay on the record so the edit can be seen and undone.
+  const start = review?.start ?? entry.originalStart;
+  const end = review?.end ?? entry.originalEnd;
+  const trimmed =
+    start !== entry.originalStart || end !== entry.originalEnd;
+
   return {
     ...entry,
+    start,
+    end,
+    durationSeconds: start === null || end === null ? null : Math.round((end - start) * 10) / 10,
+    trimmed,
     file: render?.file ?? null,
     bytes: render?.bytes ?? null,
     rendered: Boolean(render),
+    // Stale once trimmed: the file on disk is the old cut.
+    renderStale: Boolean(render) && trimmed,
+    hasSource: sources.has(entry.lessonId),
     status: review?.status ?? 'pending',
     feedback: review?.feedback ?? '',
     reviewedAt: review?.updatedAt ?? null,
@@ -140,10 +177,11 @@ function decorate(entry, render, review) {
 
 /** Tally for the filter bar. */
 export function countStatuses(clips) {
-  const counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, unrendered: 0 };
+  const counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, unrendered: 0, trimmed: 0 };
   for (const clip of clips) {
     counts[clip.status] = (counts[clip.status] ?? 0) + 1;
     if (!clip.rendered) counts.unrendered++;
+    if (clip.trimmed) counts.trimmed++;
   }
   return counts;
 }

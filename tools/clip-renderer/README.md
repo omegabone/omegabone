@@ -72,15 +72,27 @@ node bin/extract-clips.mjs --transcript lesson.srt --url "https://youtube.com/li
 
 ---
 
-## Reviewing the batch
+## Render what was approved, not what was proposed
 
-`tools/clip-review` serves a page that plays each rendered clip beside its
-metadata, takes written feedback, and copies the approved ones into
-`out/approved/`:
+`tools/clip-review` is where clips are decided: it plays each one against the
+lesson video before anything is rendered, trims it by clicking words in the
+transcript, and writes `approved-manifest.json` — the approved clips at their
+trimmed in and out points, captions re-cut to match.
 
 ```bash
-cd ../clip-review && node bin/review.mjs --clips ../clip-renderer/out
+cd ../clip-review && node bin/review.mjs --video-dir ~/Videos/lessons
 ```
+
+Then render that batch instead of the extractor's:
+
+```bash
+node scripts/render-all.mjs \
+  --manifest ../clip-extractor/clips-out/approved-manifest.json \
+  --video-dir ~/Videos/lessons
+```
+
+Rendering the extractor's manifest directly still works, and renders everything
+it proposed.
 
 ---
 

@@ -90,6 +90,7 @@ test('saved reviews are attached to their clips', () => {
     approved: 1,
     rejected: 0,
     unrendered: 1,
+    trimmed: 0,
   });
 });
 
