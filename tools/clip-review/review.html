@@ -1439,7 +1439,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
 
         function playClip() {
           var clip = current();
-          if (!clip || el.video.hidden) return;
+          if (!clip || el.frame.hidden) return;
 
           if (el.video.dataset.windowed !== 'true') {
             if (el.video.paused) el.video.play(); else el.video.pause();
