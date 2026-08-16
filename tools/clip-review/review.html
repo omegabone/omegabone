@@ -1366,6 +1366,24 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
          * is only played when there is no lesson video to play instead.
          */
 
+        // Styles the composed frame like the renderer would for this clip's
+        // chosen brand — tools/clip-renderer/src/Clip.tsx, minus the footage
+        // itself (that stays a real <video>, not a redrawn approximation).
+        function renderFrameBrand(clip) {
+          var brand = brandFor(clip.brand);
+          el.frame.style.background = brand.bg;
+          el.frameTopic.style.fontFamily = brand.font;
+          el.frameTopic.style.fontWeight = brand.weight;
+          el.frameTopic.style.color = brand.ink;
+          el.frameTopic.textContent = clip.topic || clip.id;
+          el.frameStudent.style.fontFamily = brand.font;
+          el.frameStudent.style.color = brand.inkDim;
+          el.frameStudent.textContent = clip.student ? ('with ' + clip.student) : '';
+          el.frameCaption.style.fontFamily = brand.font;
+          el.frameCaption.style.fontWeight = brand.weight;
+          el.frameCaption.style.color = brand.ink;
+        }
+
         function videoSource(clip) {
           var lesson = state.lessons[clip.lessonId];
           if (lesson && lesson.hasSource) {
