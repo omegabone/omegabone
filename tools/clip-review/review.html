@@ -1588,8 +1588,16 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
 
         [el.start, el.end].forEach(function (input) {
           input.addEventListener('change', function () {
+            var value = parseTime(input.value);
+            if (value === null) {
+              el.saved.className = 'saved error';
+              el.saved.textContent = 'Could not read that time — use M:SS or H:MM:SS';
+              var clip = current();
+              if (clip) input.value = formatTime(input === el.start ? clip.start : clip.end);
+              return;
+            }
             var patch = {};
-            patch[input === el.start ? 'start' : 'end'] = seconds(input.value);
+            patch[input === el.start ? 'start' : 'end'] = value;
             commitTrim(patch);
           });
         });
