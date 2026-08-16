@@ -183,31 +183,6 @@ export const Clip: React.FC<ClipProps> = ({
           {suggestedCaption}
         </div>
       )}
-
-      {/* Footer: the call to action alone. */}
-      <AbsoluteFill
-        style={{
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          paddingBottom: layout.footerBottom,
-          opacity: footer,
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-          <Rule accent={brand.accent} width={300} />
-          <div
-            style={{
-              fontFamily: brand.display,
-              fontWeight: brand.displayWeight,
-              fontSize: 33,
-              letterSpacing: '0.04em',
-              color: brand.accentBright,
-            }}
-          >
-            {cta}
-          </div>
-        </div>
-      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
