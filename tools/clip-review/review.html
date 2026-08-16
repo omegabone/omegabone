@@ -1364,8 +1364,8 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           el.trim.hidden = !editable;
           if (!editable) return;
 
-          if (document.activeElement !== el.start) el.start.value = clip.start;
-          if (document.activeElement !== el.end) el.end.value = clip.end;
+          if (document.activeElement !== el.start) el.start.value = formatTime(clip.start);
+          if (document.activeElement !== el.end) el.end.value = formatTime(clip.end);
 
           el.length.textContent = Math.round(clip.durationSeconds) + 's';
           el.length.className = 'length ' + lengthVerdict(clip.durationSeconds);
