@@ -151,14 +151,21 @@ server.listen(port, '127.0.0.1', () => {
   Rendered   ${rendered.size} clip file(s) in ${renderDir}
   Approved   ${stateDir}/approved-manifest.json
 
-  Reviewing  ${url}
+  Open this in your browser:  ${url}
 ${remembered ? '\n  Settings remembered — next time, double-click "Review clips.command".\n' : ''}
   Ctrl-C to stop.
 `);
   if (!args['no-open']) openBrowser(url);
 });
 
-/** Best-effort browser open; the URL is printed either way. */
+/**
+ * Best-effort browser open.
+ *
+ * It fails quietly in the cases that matter — no desktop session, no handler
+ * registered, a remote shell — so the printed address above is the instruction
+ * and this is only a convenience. A page that never appears reads as a broken
+ * program rather than a browser that did not get opened.
+ */
 function openBrowser(url) {
   const cmd =
     process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open';

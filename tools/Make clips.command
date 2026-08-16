@@ -182,7 +182,13 @@ node "$TOOLS/clip-extractor/bin/extract-clips.mjs" \
 # ---------------------------------------------------------------- 3. review
 
 step "3 of 4 — review, trim, approve"
-echo "The review page is opening in your browser."
+echo
+echo "  ================================================"
+echo "   OPEN YOUR BROWSER AND GO TO:  localhost:4321"
+echo "  ================================================"
+echo
+echo "It may open by itself. If it does not, type that address in Safari or"
+echo "Chrome like a website. Leave this window open — it is serving the page."
 echo
 echo "  · Click a word in the transcript to move the nearer edge of the clip."
 echo "  · Pick the brand under the clip — that is the caption highlight colour."
