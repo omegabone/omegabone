@@ -629,6 +629,61 @@
         font-variant-numeric: tabular-nums;
       }
 
+      /* ---------- brand picker ---------- */
+
+      .brands {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 1rem 0 0;
+      }
+
+      .brand-label {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-right: 0.35rem;
+      }
+
+      .brand {
+        font: inherit;
+        font-size: 0.8rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink-dim);
+        cursor: pointer;
+      }
+
+      .brand:hover { color: var(--ink); }
+      .brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+      .brand .chip {
+        width: 0.85rem;
+        height: 0.85rem;
+        border-radius: 3px;
+        /* The swatch is the caption highlight itself, at the alpha it renders
+         * at, with the solid bar under it. */
+        box-shadow: inset 0 -3px 0 0 currentColor;
+      }
+
+      .brand[aria-pressed="true"] {
+        color: var(--ink);
+        border-color: currentColor;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .brand .auto {
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+      }
+
       /* ---------- trim editor ---------- */
 
       .trim {
@@ -834,6 +889,10 @@
             <div class="words" id="words" aria-label="Transcript"></div>
           </section>
 
+          <div class="brands" id="brands" role="group" aria-label="Brand">
+            <span class="brand-label">Caption highlight</span>
+          </div>
+
           <div class="verdict" role="group" aria-label="Verdict">
             <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
             <button type="button" class="reject" data-status="rejected">Reject <kbd>R</kbd></button>
@@ -916,11 +975,24 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           resetTrim: $('reset-trim'), start: $('start'), end: $('end'),
           trimHelp: $('trim-help'), words: $('words'), feedback: $('feedback'),
           facts: $('facts'), saved: $('saved'), batch: $('batch'), hint: $('hint'),
+          brands: $('brands'),
           keys: $('keys'), welcome: $('welcome'), layout: document.querySelector('.layout'),
         };
 
         var FILTERS = [['all', 'All'], ['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected']];
         var NUDGE = 0.25;
+
+        /*
+         * The four products, with the accent each one highlights captions in.
+         * These are the accents from tools/clip-renderer/src/theme.ts — copied,
+         * because that file is TypeScript and this page has no build step.
+         */
+        var BRANDS = [
+          { id: 'vme', label: 'VME', accent: '#7CE8A0' },
+          { id: 'frequency', label: 'Frequency', accent: '#C42A40' },
+          { id: 'learn2sing', label: 'Learn 2 Sing', accent: '#C9A9F0' },
+          { id: 'mr33', label: 'Music 33', accent: '#6FA3FF' },
+        ];
 
         var state = {
           clips: [], counts: {}, rules: {}, lessons: {}, filter: 'pending',
@@ -1126,6 +1198,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
 
           showVideo(clip);
           renderTrim(clip);
+          renderBrands(clip);
 
           var buttons = document.querySelectorAll('.verdict button');
           for (var i = 0; i < buttons.length; i++) {
@@ -1214,6 +1287,51 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             seekTo(clip.start === null ? 0 : clip.start);
           }
         });
+
+        function renderBrands(clip) {
+          var nodes = [document.createTextNode('')];
+          var label = document.createElement('span');
+          label.className = 'brand-label';
+          label.textContent = 'Caption highlight';
+          nodes = [label];
+
+          BRANDS.forEach(function (brand) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'brand';
+            button.style.color = brand.accent;
+            button.setAttribute('aria-pressed', String(brand.id === clip.brand));
+
+            var chip = document.createElement('span');
+            chip.className = 'chip';
+            chip.style.background = brand.accent + '4D';
+
+            var name = document.createElement('span');
+            name.textContent = brand.label;
+            name.style.color = brand.id === clip.brand ? 'var(--ink)' : 'var(--ink-dim)';
+
+            button.appendChild(chip);
+            button.appendChild(name);
+
+            // Says where the current brand came from, so an unreviewed clip
+            // does not look like somebody chose it.
+            if (brand.id === clip.brand && !clip.brandChosen) {
+              var auto = document.createElement('span');
+              auto.className = 'auto';
+              auto.textContent = 'from the title';
+              button.appendChild(auto);
+            }
+
+            button.addEventListener('click', function () {
+              save(clip.id, { brand: brand.id }).then(function (saved) {
+                if (saved) renderDetail();
+              });
+            });
+            nodes.push(button);
+          });
+
+          el.brands.replaceChildren.apply(el.brands, nodes);
+        }
 
         /* ---------- the trim editor ---------- */
 

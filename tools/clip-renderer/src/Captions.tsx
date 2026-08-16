@@ -49,22 +49,41 @@ export const Captions: React.FC<{
     >
       <div
         style={{
-          fontFamily: brand.display,
-          fontWeight: brand.displayWeight,
-          fontSize: 66,
-          lineHeight: 1.2,
-          letterSpacing: '-0.015em',
-          textAlign: 'center',
-          textWrap: 'balance',
-          color: brand.ink,
+          position: 'relative',
           opacity: fade,
           transform: `translateY(${rise}px)`,
-          // Captions sit on the brand ground rather than over the footage, so
-          // they need lift rather than a scrim.
-          textShadow: `0 2px 18px rgba(0,0,0,0.55), 0 0 44px ${brand.accent}33`,
+          padding: '10px 26px',
+          borderRadius: 14,
+          /*
+           * The highlight is where the brand shows. A marker swipe behind the
+           * words in the brand accent, with a solid bar under them — the words
+           * themselves stay white, because a whole sentence set in an accent
+           * colour is harder to read at arm's length on a phone.
+           *
+           * Swap the brand and this is what changes: green for VME, red for
+           * Frequency, purple for Learn 2 Sing, blue for Music 33.
+           */
+          background: `${brand.accent}2E`,
+          boxShadow: `inset 0 -6px 0 0 ${brand.accent}`,
         }}
       >
-        {active.text}
+        <div
+          style={{
+            fontFamily: brand.display,
+            fontWeight: brand.displayWeight,
+            fontSize: 66,
+            lineHeight: 1.2,
+            letterSpacing: '-0.015em',
+            textAlign: 'center',
+            textWrap: 'balance',
+            color: brand.ink,
+            // Captions sit on the brand ground rather than over the footage, so
+            // they need lift rather than a scrim.
+            textShadow: `0 2px 18px rgba(0,0,0,0.55), 0 0 44px ${brand.accent}44`,
+          }}
+        >
+          {active.text}
+        </div>
       </div>
     </div>
   );

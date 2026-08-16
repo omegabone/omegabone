@@ -81,9 +81,36 @@ export const BRANDS: Record<string, BrandTokens> = {
     displayWeight: 700,
     uppercaseLabels: true,
   },
+
+  /**
+   * Music 33. The site blue is #1a56db on white (M33Programs.tsx); on a dark
+   * ground that reads as a hole rather than an accent, so the accent here is
+   * that hue lifted to sit on the panel, the way the mint and lavender do.
+   */
+  mr33: {
+    bg: '#07142c',
+    panel: '#0f2146',
+    border: '#1f3c73',
+    accent: '#6FA3FF',
+    accentBright: '#9CC3FF',
+    ink: '#ffffff',
+    inkDim: 'rgba(255,255,255,0.65)',
+    display: 'Inter, system-ui, sans-serif',
+    text: 'Inter, system-ui, sans-serif',
+    displayWeight: 700,
+    uppercaseLabels: true,
+  },
 };
 
 export const DEFAULT_BRAND = 'vme';
+
+/** The brands a reviewer can pick between, in the order they are offered. */
+export const BRAND_CHOICES = [
+  { id: 'vme', label: 'VME', swatch: BRANDS.vme.accent },
+  { id: 'frequency', label: 'Frequency', swatch: BRANDS.frequency.accent },
+  { id: 'learn2sing', label: 'Learn 2 Sing', swatch: BRANDS.learn2sing.accent },
+  { id: 'mr33', label: 'Music 33', swatch: BRANDS.mr33.accent },
+];
 
 export const brandFor = (name: string): BrandTokens =>
   BRANDS[name] ?? BRANDS[DEFAULT_BRAND];

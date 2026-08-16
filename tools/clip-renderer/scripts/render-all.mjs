@@ -150,6 +150,10 @@ for (const lesson of manifest.lessons) {
       continue;
     }
 
+    // A brand chosen in the review page beats one guessed from the title: the
+    // reviewer looked at the clip, the title rule only looked at a string.
+    const clipBrand = clip.brand || brand;
+
     jobs.push({
       clip,
       lesson,
@@ -165,7 +169,7 @@ for (const lesson of manifest.lessons) {
         cta: clip.cta,
         captions: clip.captions ?? [],
         showCaptions: !args['no-captions'],
-        brand,
+        brand: clipBrand,
       },
     });
   }

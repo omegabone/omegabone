@@ -13,6 +13,8 @@
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, extname, basename } from 'node:path';
+// One source of truth for which product a title belongs to — the renderer's.
+import { brandFromTitle } from '../../clip-renderer/scripts/brand-from-title.mjs';
 
 /**
  * Clip ids are filename stems. The extractor's own slugs are lowercase and
@@ -169,6 +171,9 @@ function decorate(entry, render, review, sources) {
     // Stale once trimmed: the file on disk is the old cut.
     renderStale: Boolean(render) && trimmed,
     hasSource: sources.has(entry.lessonId),
+    // The reviewer's choice wins; otherwise the lesson title decides.
+    brand: review?.brand ?? brandFromTitle(entry.lesson).brand,
+    brandChosen: Boolean(review?.brand),
     status: review?.status ?? 'pending',
     feedback: review?.feedback ?? '',
     reviewedAt: review?.updatedAt ?? null,

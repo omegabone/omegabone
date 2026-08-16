@@ -24,6 +24,13 @@ import { join, extname } from 'node:path';
 
 export const STATUSES = new Set(['pending', 'approved', 'rejected']);
 
+/**
+ * The brand a clip renders in — its caption highlight, title block and ground.
+ * Kept in step with tools/clip-renderer/src/theme.ts, which is TypeScript and
+ * so cannot be imported here.
+ */
+export const BRANDS = new Set(['vme', 'frequency', 'learn2sing', 'mr33']);
+
 const STATE_VERSION = 1;
 
 export function statePath(renderDir) {
@@ -65,10 +72,15 @@ export function applyVerdict(store, id, patch, options) {
     throw new Error(`unknown status: ${patch.status}`);
   }
 
+  if (patch.brand !== undefined && patch.brand !== null && !BRANDS.has(patch.brand)) {
+    throw new Error(`unknown brand: ${patch.brand}`);
+  }
+
   const before = store[id] ?? { status: 'pending', feedback: '' };
   const after = {
     status: patch.status ?? before.status,
     feedback: patch.feedback ?? before.feedback,
+    ...('brand' in patch ? { brand: patch.brand } : before.brand ? { brand: before.brand } : {}),
     ...trimFrom(patch, before),
     updatedAt: new Date().toISOString(),
   };
@@ -273,6 +285,7 @@ export function writeRenderManifest(path, clips, { lessons, transcripts, caption
           score: clip.score,
           trimmed: clip.trimmed,
           reviewNote: clip.feedback,
+          brand: clip.brand,
           captions,
           // The renderer needs an in-point and cues to cut against. A clip
           // approved without either is carried here but marked unrenderable,

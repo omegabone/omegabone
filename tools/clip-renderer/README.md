@@ -109,6 +109,13 @@ nothing needs to be passed per run:
 | "Vocal Mastery", "VME" | `vme` | `PracticePage.tsx` → `FOREST_GREEN` | Dark forest green, mint accents |
 | "Learn 2 Sing", "L2S" | `learn2sing` | `PracticePage.tsx` → `LAVENDER` | Dark purple, lavender accents |
 | "Frequency" | `frequency` | `FrequencyPage.tsx` → `--freq-*` | Deep red, gold and bone, EB Garamond |
+| "Music 33", "M33" | `mr33` | `M33Programs.tsx` → `#1a56db` | Deep navy, blue accents |
+
+**A brand picked in the review page beats the title.** Each clip in an approved
+manifest can carry its own `brand`, chosen against the four swatches while
+reviewing; the title rule only applies to clips that were never given one. The
+brand is most visible in the caption highlight — the marker band and bar behind
+the words — so picking it is picking what the clip reads as at a glance.
 
 A mixed library therefore renders correctly in one pass — the Vocal Mastery
 lessons come out green and the Learn 2 Sing lessons purple.

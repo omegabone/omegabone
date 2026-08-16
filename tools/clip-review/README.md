@@ -70,6 +70,18 @@ check — play the cut and listen to it.
 
 ---
 
+## Which brand it renders in
+
+Under the clip are the four products, each shown in the colour it highlights
+captions with: **VME** green, **Frequency** red, **Learn 2 Sing** purple,
+**Music 33** blue. Pick one and that is what the clip renders as — the caption
+highlight, the title block and the ground.
+
+Until you pick, the brand is read from the lesson title, and the page says so
+rather than letting a guess look like a decision.
+
+---
+
 ## Approving
 
 Approving writes **`approved-manifest.json`** beside the batch: the approved
