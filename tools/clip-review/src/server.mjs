@@ -148,6 +148,28 @@ export function createReviewServer(config) {
     });
   }
 
+  // For the composed preview: the cues that actually fall inside the clip's
+  // current in/out points, in the lesson's own (absolute) timeline — the same
+  // timeline the video element plays in, so a cue lines up with the frame it
+  // was said in without any rebasing.
+  function captions(clipId, res) {
+    if (!ID_PATTERN.test(clipId)) return json(res, 400, { error: 'bad clip id' });
+
+    const clip = library().find((c) => c.id === clipId);
+    if (!clip) return json(res, 404, { error: 'no such clip' });
+
+    const transcript = transcripts.get(clip.lessonId);
+    if (!transcript || clip.start === null || clip.end === null) {
+      return json(res, 200, { cues: [] });
+    }
+
+    const cues = (transcript.cues ?? [])
+      .filter((cue) => cue.end > clip.start && cue.start < clip.end)
+      .map((cue) => ({ start: cue.start, end: cue.end, text: cue.text }));
+
+    return json(res, 200, { cues });
+  }
+
   async function patchClip(id, req, res) {
     if (!ID_PATTERN.test(id)) return json(res, 400, { error: 'bad clip id' });
 
