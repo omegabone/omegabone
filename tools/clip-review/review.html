@@ -1399,7 +1399,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           var source = videoSource(clip);
 
           if (!source) {
-            el.video.hidden = true;
+            el.frame.hidden = true;
             el.transport.hidden = true;
             el.novideo.hidden = false;
             el.novideo.textContent = clip.rendered
@@ -1408,7 +1408,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             return;
           }
 
-          el.video.hidden = false;
+          el.frame.hidden = false;
           el.novideo.hidden = true;
           el.transport.hidden = !source.windowed;
 
@@ -1417,7 +1417,16 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             el.video.src = source.url;
           }
           el.video.dataset.windowed = String(source.windowed);
+          el.frame.dataset.windowed = String(source.windowed);
           if (source.windowed && clip.start !== null) seekTo(clip.start);
+
+          state.currentCaptions = [];
+          el.frameCaption.textContent = '';
+          if (source.windowed) {
+            captionsFor(clip).then(function (cues) {
+              if (state.currentId === clip.id) state.currentCaptions = cues;
+            });
+          }
         }
 
         function seekTo(time) {
