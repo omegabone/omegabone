@@ -1180,6 +1180,15 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           });
         }
 
+        // Not cached like words: which cues fall inside the clip changes the
+        // instant start/end is trimmed, so a cached set would go stale on the
+        // very edit the preview exists to check.
+        function captionsFor(clip) {
+          return getJson('/api/captions/' + encodeURIComponent(clip.id))
+            .then(function (data) { return data.cues || []; })
+            .catch(function () { return []; });
+        }
+
         /* ================= selectors ================= */
 
         function visible() {
