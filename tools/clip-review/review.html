@@ -846,13 +846,23 @@
 
       <section class="stage" id="stage" hidden>
         <div class="player">
-          <video id="video" controls preload="metadata" playsinline></video>
+          <div class="frame" id="frame">
+            <div class="frame-video" id="frame-video">
+              <video id="video" controls preload="metadata" playsinline></video>
+            </div>
+            <div class="frame-title" id="frame-title">
+              <div class="frame-topic" id="frame-topic"></div>
+              <div class="frame-student" id="frame-student"></div>
+            </div>
+            <div class="frame-caption" id="frame-caption"></div>
+          </div>
           <p class="unrendered" id="novideo" hidden></p>
 
           <div class="transport" id="transport">
             <button type="button" id="play-clip">Play the clip <kbd>Space</kbd></button>
             <span class="clock" id="clock"></span>
           </div>
+          <p class="frame-note">Preview — approximates the actual render; not pixel-exact.</p>
         </div>
 
         <div class="detail">
