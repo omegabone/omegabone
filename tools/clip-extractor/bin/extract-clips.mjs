@@ -207,7 +207,10 @@ function readTranscriptFolder(dir) {
 
     return readTimedTranscript(join(dir, file), {
       videoTitle: stem.replace(/[-_]+/g, ' ').trim(),
-      student: stem.split(/[-_ ]/)[0],
+      // These lesson titles put the student's name last ("Vocal Mastery
+      // Varun", "Vocal Mastery with Adri", "Vocal Mastery Live, Ameesha") —
+      // the first word is always "Vocal", so take the last token instead.
+      student: stem.split(/[-_ ]/).filter(Boolean).pop() || stem,
       date: date ? date[0] : '',
       url: args.url || '',
     });
