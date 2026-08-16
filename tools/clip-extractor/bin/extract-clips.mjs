@@ -8,7 +8,8 @@
  */
 
 import { parseArgs } from 'node:util';
-import { resolve } from 'node:path';
+import { resolve, join, basename, extname } from 'node:path';
+import { readdirSync } from 'node:fs';
 import { readLibrarySheet, readTimedTranscript } from '../src/sources.mjs';
 import { segmentLesson } from '../src/segment.mjs';
 import { createClient, selectFromSegment, mapWithConcurrency } from '../src/select.mjs';
@@ -26,6 +27,7 @@ const { values: args } = parseArgs({
   options: {
     library: { type: 'string' },
     transcript: { type: 'string' },
+    'transcript-dir': { type: 'string' },
     out: { type: 'string', default: 'clips-out' },
 
     provider: { type: 'string', default: 'claude' },
@@ -69,6 +71,9 @@ Source
                           Needs "Video Title" and "Transcript" columns.
   --transcript <path>     A single timed transcript (.srt/.vtt/Whisper .json).
                           Gives real timecodes instead of estimates.
+  --transcript-dir <dir>  A folder of timed transcripts — a whole session's
+                          lessons in one pass. Student and date are read from
+                          each filename.
   --title/--student/--date/--url
                           Metadata for a --transcript run.
 
@@ -122,8 +127,8 @@ if (args.providers) {
   process.exit(0);
 }
 
-if (!args.library && !args.transcript) {
-  console.error('Error: pass --library <sheet> or --transcript <file>. See --help.');
+if (!args.library && !args.transcript && !args['transcript-dir']) {
+  console.error('Error: pass --library <sheet>, --transcript <file> or --transcript-dir <dir>. See --help.');
   process.exit(1);
 }
 
@@ -160,6 +165,8 @@ const opts = {
 let lessons;
 if (args.library) {
   lessons = readLibrarySheet(resolve(args.library));
+} else if (args['transcript-dir']) {
+  lessons = readTranscriptFolder(resolve(args['transcript-dir']));
 } else {
   lessons = [
     readTimedTranscript(resolve(args.transcript), {
@@ -169,6 +176,42 @@ if (args.library) {
       url: args.url,
     }),
   ];
+}
+
+/**
+ * Every timed transcript in a folder, as one batch.
+ *
+ * This is the shape a downloaded set of lessons already has — a video and its
+ * subtitles side by side, named after the lesson — so a whole session's worth
+ * can be run in one pass rather than one command per lesson.
+ *
+ * The filename carries what the sheet would otherwise supply: the student, and
+ * a date if one is in there.
+ */
+function readTranscriptFolder(dir) {
+  const SUBTITLES = new Set(['.srt', '.vtt', '.json']);
+  const files = readdirSync(dir)
+    .filter((f) => SUBTITLES.has(extname(f).toLowerCase()))
+    .sort();
+
+  if (!files.length) {
+    console.error(`No .srt, .vtt or .json transcripts in ${dir}`);
+    process.exit(1);
+  }
+
+  return files.map((file) => {
+    const stem = basename(file, extname(file))
+      // yt-dlp leaves the language on the end: "lesson.en.srt".
+      .replace(/\.[a-z]{2}(-[A-Za-z]+)?$/, '');
+    const date = stem.match(/\d{1,2}[-. ](?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-. ]\d{2,4}/i);
+
+    return readTimedTranscript(join(dir, file), {
+      videoTitle: stem.replace(/[-_]+/g, ' ').trim(),
+      student: stem.split(/[-_ ]/)[0],
+      date: date ? date[0] : '',
+      url: args.url || '',
+    });
+  });
 }
 
 if (args.filter) {
@@ -192,7 +235,7 @@ console.log(
   `Rules: ${opts.minSeconds}-${opts.maxSeconds}s · ${opts.minClips}-${opts.maxClips} clips/lesson · max ${opts.maxPerCategory} per category\n`,
 );
 
-const client = args.offline || args.provider !== 'claude' ? null : createClient();
+const client = args.offline || args.provider !== 'claude' ? null : await createClient();
 const concurrency = Math.max(1, Number(args.concurrency));
 
 const results = [];

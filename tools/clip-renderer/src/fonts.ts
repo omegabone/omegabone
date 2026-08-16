@@ -1,4 +1,4 @@
-import { staticFile, delayRender, continueRender, cancelRender } from 'remotion';
+import { staticFile, delayRender, continueRender } from 'remotion';
 
 /**
  * Locally bundled typefaces.
@@ -39,7 +39,10 @@ export const loadFonts = (): void => {
   if (started || typeof document === 'undefined') return;
   started = true;
 
-  const handle = delayRender('Loading local fonts');
+  // Every render tab loads these, and a tab that is also decoding video can
+  // take a while to get to them. The default 28s deadline is short enough that
+  // a long batch fails on a font rather than on anything to do with the clip.
+  const handle = delayRender('Loading local fonts', { timeoutInMilliseconds: 120_000 });
 
   Promise.all(
     FACES.map(async (face) => {
@@ -53,7 +56,14 @@ export const loadFonts = (): void => {
     }),
   )
     .then(() => continueRender(handle))
-    .catch((err) => cancelRender(err));
+    .catch((err) => {
+      // A face that will not load is a cosmetic problem — the frame renders in
+      // the fallback. Losing the whole batch over it is not a trade worth
+      // making when the clips are wanted today.
+      // eslint-disable-next-line no-console
+      console.warn(`Font loading failed, rendering in a fallback face: ${err.message}`);
+      continueRender(handle);
+    });
 };
 
 loadFonts();

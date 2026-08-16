@@ -11,6 +11,7 @@ import { parseArgs } from 'node:util';
 import { existsSync, mkdirSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { createReviewServer } from '../src/server.mjs';
 import { loadConfig, saveConfig } from '../src/config.mjs';
 import { readLessons, scanRenders } from '../src/library.mjs';
@@ -72,9 +73,15 @@ that batch with:
 // Anything given now is remembered, so the next run — a double-click on the
 // launcher — needs nothing at all.
 const saved = loadConfig();
+
+// Defaults are relative to this tool, not to wherever it was run from — the
+// launcher scripts run it from their own folder, and a sibling path resolved
+// against the shell's working directory lands somewhere that does not exist.
+const near = (path) => fileURLToPath(new URL(path, import.meta.url));
+
 const args = {
-  manifest: '../clip-extractor/clips-out/manifest.json',
-  clips: '../clip-renderer/out',
+  manifest: near('../../clip-extractor/clips-out/manifest.json'),
+  clips: near('../../clip-renderer/out'),
   port: '4321',
   ...saved,
   ...Object.fromEntries(Object.entries(passed).filter(([, v]) => v !== undefined && v !== false)),
