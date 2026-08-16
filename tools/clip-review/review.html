@@ -1344,6 +1344,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             (clip.trimmed ? ' · trimmed' : '') +
             (clip.renderStale ? ' · rendered file is the old cut' : '');
 
+          renderFrameBrand(clip);
           showVideo(clip);
           renderTrim(clip);
           renderBrands(clip);
