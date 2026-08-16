@@ -108,6 +108,10 @@ export function createReviewServer(config) {
         return words(path.slice('/api/words/'.length), url, res);
       }
 
+      if (path.startsWith('/api/captions/') && req.method === 'GET') {
+        return captions(path.slice('/api/captions/'.length), res);
+      }
+
       if (path.startsWith('/api/clips/') && (req.method === 'PATCH' || req.method === 'POST')) {
         return await patchClip(path.slice('/api/clips/'.length), req, res);
       }
