@@ -203,15 +203,27 @@ function readTranscriptFolder(dir) {
     const stem = basename(file, extname(file))
       // yt-dlp leaves the language on the end: "lesson.en.srt".
       .replace(/\.[a-z]{2}(-[A-Za-z]+)?$/, '');
-    const date = stem.match(/\d{1,2}[-. ](?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-. ]\d{2,4}/i);
+    const dateMatch = stem.match(/\d{1,2}[-. ](?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-. ]\d{2,4}/i);
+    const date = dateMatch ? dateMatch[0] : '';
+
+    // These lesson titles put the student's name last ("Vocal Mastery Varun",
+    // "Vocal Mastery with Adri", "Vocal Mastery Live, Ameesha", "🎶 Vocal
+    // Mastery with Ameesha 22.Jun.2026 🎶") — the first word is always
+    // "Vocal", so take the last token instead. The date and any decorative
+    // emoji/punctuation are stripped first, or the last token would be a
+    // trailing 🎶 or the date rather than the name.
+    const nameTokens = stem
+      .replace(date, '')
+      .replace(/[^\p{L}\p{N}'-]+/gu, ' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+    const student = nameTokens.pop() || stem;
 
     return readTimedTranscript(join(dir, file), {
       videoTitle: stem.replace(/[-_]+/g, ' ').trim(),
-      // These lesson titles put the student's name last ("Vocal Mastery
-      // Varun", "Vocal Mastery with Adri", "Vocal Mastery Live, Ameesha") —
-      // the first word is always "Vocal", so take the last token instead.
-      student: stem.split(/[-_ ]/).filter(Boolean).pop() || stem,
-      date: date ? date[0] : '',
+      student,
+      date,
       url: args.url || '',
     });
   });
