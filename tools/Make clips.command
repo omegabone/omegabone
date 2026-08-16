@@ -128,7 +128,7 @@ if [ -n "$URL" ]; then
     --download-archive "$LESSONS/.downloaded.txt" \
     --no-overwrites \
     --write-subs --write-auto-subs \
-    --sub-langs 'en.*' --convert-subs srt \
+    --sub-langs 'en' --convert-subs srt \
     --format 'bv*[height<=1080]+ba/b[height<=1080]' \
     --merge-output-format mp4 \
     "$URL" || warn "yt-dlp stopped early — carrying on with whatever it got."
