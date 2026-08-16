@@ -14,7 +14,10 @@ import { fileURLToPath } from 'node:url';
 import { buildLibrary, countStatuses, ID_PATTERN } from './library.mjs';
 import { loadReviews, saveReviews, applyVerdict, writeApprovedIndex } from './reviews.mjs';
 
-const PUBLIC_DIR = fileURLToPath(new URL('../public/', import.meta.url));
+// The page is one self-contained file so that it also works when it is opened
+// straight from the filesystem, with no server at all. Serving it from here is
+// the other half of the same file.
+const PAGE = fileURLToPath(new URL('../review.html', import.meta.url));
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -40,6 +43,13 @@ export function createReviewServer({ renderDir, approvedDir, manifestPath, move 
       const url = new URL(req.url, 'http://localhost');
       const path = decodeURIComponent(url.pathname);
 
+      // The page probes this with HEAD to work out whether it is being served
+      // or was opened from the filesystem, so it has to answer one.
+      if (path === '/api/clips' && req.method === 'HEAD') {
+        res.writeHead(200, { 'Content-Type': MIME['.json'] });
+        return res.end();
+      }
+
       if (path === '/api/clips' && req.method === 'GET') {
         const clips = library();
         return json(res, 200, {
@@ -61,7 +71,7 @@ export function createReviewServer({ renderDir, approvedDir, manifestPath, move 
         return streamMedia(path.slice('/media/'.length), req, res);
       }
 
-      return serveStatic(path, res);
+      return servePage(path, res);
     } catch (err) {
       json(res, 500, { error: err.message });
     }
@@ -139,18 +149,11 @@ export function createReviewServer({ renderDir, approvedDir, manifestPath, move 
     return createReadStream(file).pipe(res);
   }
 
-  function serveStatic(path, res) {
-    const name = path === '/' ? 'index.html' : path.replace(/^\//, '');
-    const file = safeJoin(PUBLIC_DIR, name);
-    if (!file || !existsSync(file) || !statSync(file).isFile()) {
-      return json(res, 404, { error: 'not found' });
-    }
+  function servePage(path, res) {
+    if (path !== '/' && path !== '/review.html') return json(res, 404, { error: 'not found' });
 
-    res.writeHead(200, {
-      'Content-Type': MIME[extname(file).toLowerCase()] ?? 'application/octet-stream',
-      'Cache-Control': 'no-store',
-    });
-    createReadStream(file).pipe(res);
+    res.writeHead(200, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-store' });
+    createReadStream(PAGE).pipe(res);
   }
 
   return server;

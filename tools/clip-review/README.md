@@ -8,14 +8,21 @@ This is the pass where you decide which ones actually go out.
 
 ---
 
-## Running it
+## Two ways to open it
+
+**Double-click `review.html`.** It asks which folder your clips are in, then
+plays them, keeps your notes, and copies the approved ones into an `approved`
+folder inside it. Chrome or Edge — Safari and Firefox have no way to let a local
+page write to a folder.
+
+**Or serve it**, which works in any browser:
 
 ```bash
 cd tools/clip-review
 node bin/review.mjs --clips ../clip-renderer/out
 ```
 
-It opens `http://localhost:4321`. No install step — there are no dependencies.
+That opens `http://localhost:4321`. No install step — there are no dependencies.
 
 | Flag | Meaning |
 |---|---|
@@ -26,12 +33,20 @@ It opens `http://localhost:4321`. No install step — there are no dependencies.
 | `--move` | Move approved clips instead of copying them |
 | `--no-open` | Do not open a browser |
 
-## Why it is a server and not just a page
+**It is one file either way.** `review.html` carries the whole page, and the
+server serves that same file rather than a copy of it — two files would drift
+into two different tools. It notices which way it was opened: served, it talks
+to the server; double-clicked, it does the same work itself through the
+browser's file system access.
 
-A page opened from the filesystem cannot move a file into another folder, and
-that is the part you asked for. So the page is served by a small local process
-that does the file work — bound to `127.0.0.1`, no dependencies, nothing leaves
-the machine.
+The differences between the two are small and worth knowing:
+
+| | Double-clicked | Served |
+|---|---|---|
+| Browsers | Chrome, Edge | any |
+| Metadata | `manifest.json` kept in the clips folder | any path, via `--manifest` |
+| Approving | copies | copies, or moves with `--move` |
+| Folder | picked once, then remembered — one click to re-grant | passed on the command line |
 
 ---
 
@@ -77,10 +92,11 @@ out/
 approved folder and the next verdict rebuilds it — but a folder of files alone
 cannot say why the other clips were cut, which is the part worth keeping.
 
-**Approving copies by default.** A review pass gets revisited, so un-approving
-should be free: the render stays where the renderer put it and the copy is
-removed from the approved folder. Use `--move` when the approved folder *is* the
-delivery folder and you do not want two copies of every clip.
+**Approving copies.** A review pass gets revisited, so un-approving should be
+free: the clip stays where it was and the copy is removed from the approved
+folder. `--move` is there for when the approved folder *is* the delivery folder
+and you do not want two copies of every clip — it is a server-mode flag, since
+a page you double-clicked should not be deleting your files.
 
 `approved.csv` is rewritten on every verdict so the folder you hand off — or
 upload from — carries the captions and your notes with the files, rather than a
@@ -88,29 +104,37 @@ path back into the tooling.
 
 ---
 
-## Clips with no file, files with no clip
+## Any folder of videos works
 
-Both show up, because neither list is the whole truth:
+The extractor and renderer are not required. Point it at a folder of hand-cut
+clips and you get the player, the feedback box and the approved folder, without
+the per-clip metadata. Filenames are taken as they are — `Hook Test 02.MP4` is
+listed the same as a pipeline slug.
+
+When there *is* a manifest, both lists are shown rather than only their overlap:
 
 - A clip in the manifest that has not been rendered yet is listed and marked
   **no file**. You can still write feedback on it and still approve it — the
   verdict is recorded, and nothing is copied until the render exists.
-- An mp4 in the folder that the manifest knows nothing about is listed under
-  *Unfiled renders* with no metadata. Hand-cut clips dropped into the folder are
-  reviewable the same way.
-
-Run the review against a folder with no manifest at all and it still works —
-you get the videos, the feedback box and the approved folder, without the
-per-clip metadata.
+- A video in the folder that the manifest knows nothing about is listed under
+  *Unfiled clips*.
 
 ---
 
 ## Tests
 
 ```bash
-npm test
+npm test          # the server and the file moves
+npm run test:browser   # the page itself, opened as a local file
 ```
 
-They cover the two things worth being sure of: that a verdict reaches disk, and
+The browser tests need Playwright (`npm i -D playwright`) and skip themselves
+when it is absent, which is why they are a separate script — this package
+otherwise has no dependencies at all. They open `review.html` over `file://`
+and drive it against a stand-in folder, covering the part that cannot be tested
+any other way: that a double-clicked page really can read a folder, play a clip
+out of it, and write to `approved/`.
+
+What both suites are for is the same thing: that a verdict reaches disk, and
 that the approved folder always agrees with the verdicts — including that
-un-approving takes the clip back out, and that no render is ever deleted.
+un-approving takes the clip back out, and that no original is ever deleted.

@@ -11,8 +11,14 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, extname, basename } from 'node:path';
 
-/** Clip ids are filename stems, so keep them to what clipSlug() can produce. */
-export const ID_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
+/**
+ * Clip ids are filename stems. The extractor's own slugs are lowercase and
+ * hyphenated, but a folder of hand-cut clips is full of spaces and capitals —
+ * refusing those would quietly drop exactly the files someone dragged in to be
+ * reviewed. So anything that is a plain filename passes, and only the parts
+ * that could climb out of the folder are refused.
+ */
+export const ID_PATTERN = /^(?!\.\.?$)[^/\\\0]+$/;
 
 const VIDEO_EXT = new Set(['.mp4', '.mov', '.webm', '.m4v']);
 
@@ -22,9 +28,11 @@ export function scanRenders(dir) {
 
   const found = new Map();
   for (const name of readdirSync(dir)) {
-    const ext = extname(name).toLowerCase();
-    if (!VIDEO_EXT.has(ext)) continue;
+    const ext = extname(name);
+    if (!VIDEO_EXT.has(ext.toLowerCase())) continue;
 
+    // Strip the extension as it is actually spelled — stripping a lowercased
+    // ".mp4" off a file named ".MP4" leaves the extension in the id.
     const id = basename(name, ext);
     if (!ID_PATTERN.test(id)) continue;
 

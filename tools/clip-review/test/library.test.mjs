@@ -93,12 +93,19 @@ test('saved reviews are attached to their clips', () => {
   });
 });
 
-test('non-video files and odd names are ignored by the scan', () => {
+test('non-video files are ignored by the scan', () => {
   const { renderDir } = fixture();
   writeFileSync(join(renderDir, 'reviews.json'), '{}');
   writeFileSync(join(renderDir, 'notes.txt'), 'x');
 
   assert.deepEqual([...scanRenders(renderDir).keys()], ['brittany-21-may-1']);
+});
+
+test('hand-cut filenames with spaces and capitals are reviewable too', () => {
+  const { renderDir } = fixture();
+  writeFileSync(join(renderDir, 'Hook Test 02.MP4'), 'video');
+
+  assert.ok(scanRenders(renderDir).has('Hook Test 02'), 'listed rather than skipped');
 });
 
 test('a missing render folder is empty, not an error', () => {

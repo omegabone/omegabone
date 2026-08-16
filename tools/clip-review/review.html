@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clip review</title>
+    <style>
+      /*
+       * Tokens are the VME palette from the renderer (tools/clip-renderer/src/theme.ts)
+       * so the review room looks like the clips being reviewed rather than a second
+       * identity. Copied values, not imports — this page has no build step.
+       */
+
+      :root {
+        --bg: #081812;
+        --panel: #0d2418;
+        --panel-raised: #122d1e;
+        --border: #1f4a32;
+        --accent: #7ce8a0;
+        --accent-bright: #9cffc0;
+        --ink: #ffffff;
+        --ink-dim: rgba(255, 255, 255, 0.62);
+        --ink-faint: rgba(255, 255, 255, 0.38);
+        --reject: #ff8a7a;
+        --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+        --bar-height: 3.5rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      /*
+       * Several panels below set `display`, which would otherwise beat the browser's
+       * own `[hidden] { display: none }` and leave hidden things on screen.
+       */
+      [hidden] {
+        display: none !important;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font);
+        font-size: 15px;
+        line-height: 1.5;
+        overflow: hidden;
+      }
+
+      kbd {
+        font: inherit;
+        font-size: 0.75em;
+        padding: 0.1em 0.35em;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--ink-faint);
+        background: rgba(0, 0, 0, 0.25);
+      }
+
+      /* ---------- top bar ---------- */
+
+      .bar {
+        height: var(--bar-height);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0 1.25rem;
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .bar h1 {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+
+      .filters {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+
+      .filters button {
+        font: inherit;
+        font-size: 0.82rem;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 0.3rem 0.8rem;
+        cursor: pointer;
+      }
+
+      .filters button:hover {
+        color: var(--ink);
+        border-color: var(--border);
+      }
+
+      .filters button[aria-pressed="true"] {
+        color: var(--bg);
+        background: var(--accent);
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+
+      .filters .count {
+        opacity: 0.7;
+        margin-left: 0.4rem;
+      }
+
+      .bar-end {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+      }
+
+      .mode {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+      }
+
+      .hint {
+        cursor: help;
+      }
+
+      /* ---------- layout ---------- */
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 24rem) 1fr;
+        height: calc(100vh - var(--bar-height));
+      }
+
+      .list {
+        overflow-y: auto;
+        border-right: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .list-lesson {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding: 0.7rem 1rem 0.4rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        background: var(--panel);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 0.75rem 1fr auto;
+        align-items: baseline;
+        gap: 0.7rem;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid rgba(31, 74, 50, 0.5);
+        padding: 0.7rem 1rem;
+        cursor: pointer;
+      }
+
+      .row:hover {
+        background: var(--panel-raised);
+        color: var(--ink);
+      }
+
+      .row[aria-current="true"] {
+        background: var(--panel-raised);
+        color: var(--ink);
+        box-shadow: inset 3px 0 0 var(--accent);
+      }
+
+      .row .dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        border: 1px solid var(--ink-faint);
+        align-self: center;
+      }
+
+      .row[data-status="approved"] .dot {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .row[data-status="rejected"] .dot {
+        background: var(--reject);
+        border-color: var(--reject);
+      }
+
+      .row .title {
+        min-width: 0;
+      }
+
+      .row .title strong {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .row .title span {
+        font-size: 0.76rem;
+        color: var(--ink-faint);
+      }
+
+      .row .tail {
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+        white-space: nowrap;
+      }
+
+      .row[data-rendered="false"] .tail {
+        color: var(--reject);
+      }
+
+      .row .note {
+        grid-column: 2 / -1;
+        font-size: 0.74rem;
+        color: var(--accent);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* ---------- stage ---------- */
+
+      .stage {
+        display: grid;
+        grid-template-columns: minmax(240px, 26rem) minmax(0, 1fr);
+        gap: 2rem;
+        padding: 1.5rem;
+        overflow-y: auto;
+      }
+
+      .stage.empty {
+        display: grid;
+        place-items: center;
+        color: var(--ink-faint);
+      }
+
+      .player {
+        position: sticky;
+        top: 0;
+      }
+
+      video {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        max-height: calc(100vh - var(--bar-height) - 3rem);
+        background: #000;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+
+      .unrendered {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 9 / 16;
+        margin: 0;
+        padding: 2rem;
+        text-align: center;
+        color: var(--ink-faint);
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+      }
+
+      .detail {
+        min-width: 0;
+        max-width: 46rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.3rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .detail h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .meta {
+        margin: 0;
+        color: var(--ink-dim);
+        font-size: 0.85rem;
+      }
+
+      .verdict {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 1.25rem 0;
+      }
+
+      .verdict button {
+        font: inherit;
+        font-weight: 600;
+        font-size: 0.88rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .verdict button:hover {
+        border-color: var(--accent);
+      }
+
+      .verdict button kbd {
+        border-color: currentColor;
+        opacity: 0.55;
+      }
+
+      .verdict .approve[aria-pressed="true"] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+      }
+
+      .verdict .reject[aria-pressed="true"] {
+        background: var(--reject);
+        border-color: var(--reject);
+        color: var(--bg);
+      }
+
+      .verdict .reset[aria-pressed="true"] {
+        border-color: var(--ink-dim);
+      }
+
+      .saved {
+        font-size: 0.78rem;
+        color: var(--accent);
+        min-height: 1.2em;
+      }
+
+      .saved.error {
+        color: var(--reject);
+      }
+
+      .field {
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+
+      .field > span {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem;
+        resize: vertical;
+      }
+
+      textarea:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+
+      .facts {
+        margin: 0;
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        gap: 0.5rem 1.25rem;
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.25rem;
+      }
+
+      .facts dt {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        padding-top: 0.15rem;
+      }
+
+      .facts dd {
+        margin: 0;
+        color: var(--ink-dim);
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .facts dd.quote {
+        border-left: 2px solid var(--border);
+        padding-left: 0.85rem;
+        font-style: italic;
+        color: var(--ink);
+      }
+
+      .facts a {
+        color: var(--accent);
+      }
+
+      dialog {
+        background: var(--panel);
+        color: var(--ink);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        max-width: 24rem;
+      }
+
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      dialog h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1rem;
+      }
+
+      dialog ul {
+        margin: 0 0 1rem;
+        padding-left: 1.1rem;
+        color: var(--ink-dim);
+        font-size: 0.88rem;
+      }
+
+      dialog button {
+        font: inherit;
+        padding: 0.4rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        body {
+          overflow: auto;
+        }
+
+        .layout,
+        .stage {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .list {
+          max-height: 40vh;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .player {
+          position: static;
+        }
+
+        video {
+          max-height: 70vh;
+        }
+      }
+
+      /* ---------- folder-mode welcome ---------- */
+
+      .welcome {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: var(--bg);
+        z-index: 10;
+      }
+
+      .welcome-inner {
+        max-width: 34rem;
+        text-align: center;
+      }
+
+      .welcome h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.6rem;
+      }
+
+      .welcome p {
+        margin: 0 0 1.25rem;
+        color: var(--ink-dim);
+      }
+
+      .welcome .big {
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.7rem 1.5rem;
+        border-radius: 10px;
+        border: 1px solid var(--accent);
+        background: var(--accent);
+        color: var(--bg);
+        cursor: pointer;
+      }
+
+      .welcome .secondary {
+        font: inherit;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+        padding: 0.7rem 1.25rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .welcome .note {
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--ink-faint);
+      }
+
+      .welcome .note code {
+        color: var(--accent);
+      }
+
+      .welcome .warn {
+        color: var(--reject);
+      }
+
+      .folder {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+        max-width: 22rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bar-end button {
+        font: inherit;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+        cursor: pointer;
+      }
+
+      .bar-end button:hover {
+        color: var(--ink);
+        border-color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <h1>Clip review</h1>
+      <nav class="filters" id="filters" aria-label="Filter clips"></nav>
+      <div class="bar-end">
+        <span class="folder" id="folder"></span>
+        <span class="mode" id="mode"></span>
+        <button type="button" id="change" hidden>Change folder</button>
+        <span class="hint" id="hint">? for keys</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="list" id="list" aria-label="Clips"></aside>
+
+      <section class="stage" id="stage" hidden>
+        <div class="player">
+          <video id="video" controls preload="metadata" playsinline></video>
+          <p class="unrendered" id="unrendered" hidden>
+            No video file for this clip in the folder.
+          </p>
+        </div>
+
+        <div class="detail">
+          <div class="detail-head">
+            <p class="eyebrow" id="eyebrow"></p>
+            <h2 id="topic"></h2>
+            <p class="meta" id="meta"></p>
+          </div>
+
+          <div class="verdict" role="group" aria-label="Verdict">
+            <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
+            <button type="button" class="reject" data-status="rejected">Reject <kbd>R</kbd></button>
+            <button type="button" class="reset" data-status="pending">Undecided <kbd>U</kbd></button>
+            <span class="saved" id="saved" aria-live="polite"></span>
+          </div>
+
+          <label class="field">
+            <span>Feedback <kbd>F</kbd></span>
+            <textarea id="feedback" rows="6" placeholder="What works, what to recut, caption changes…"></textarea>
+          </label>
+
+          <dl class="facts" id="facts"></dl>
+        </div>
+      </section>
+
+      <section class="stage empty" id="empty" hidden>
+        <p>No clips match this filter.</p>
+      </section>
+    </main>
+
+    <section class="welcome" id="welcome" hidden>
+      <div class="welcome-inner">
+        <h2>Choose the folder your clips are in</h2>
+        <p id="welcome-copy">
+          The page reads the videos from that folder and copies the ones you
+          approve into an <code>approved</code> folder inside it. Nothing is
+          uploaded — the files never leave this machine.
+        </p>
+        <p>
+          <button type="button" class="big" id="pick">Choose folder…</button>
+          <button type="button" class="secondary" id="reopen" hidden></button>
+        </p>
+        <p class="note" id="welcome-note">
+          Clip metadata — topic, caption, quote — comes from the extractor’s
+          <code>manifest.json</code>. Keep a copy in the same folder and it is
+          picked up automatically.
+        </p>
+      </div>
+    </section>
+
+    <dialog id="keys">
+      <h2>Keyboard</h2>
+      <ul>
+        <li><kbd>J</kbd> / <kbd>K</kbd> next / previous clip</li>
+        <li><kbd>A</kbd> approve <kbd>R</kbd> reject <kbd>U</kbd> undecided</li>
+        <li><kbd>Space</kbd> play / pause</li>
+        <li><kbd>N</kbd> jump to the next undecided clip</li>
+        <li><kbd>F</kbd> write feedback, <kbd>Esc</kbd> to leave the box</li>
+        <li><kbd>?</kbd> this list</li>
+      </ul>
+      <form method="dialog"><button>Close</button></form>
+    </dialog>
+
+    <script>
+      /*
+       * One page, two backends.
+       *
+       * Served by bin/review.mjs, it talks to that server over fetch. Opened
+       * straight from the filesystem, it asks the browser for the clips folder
+       * and does the same work itself through the File System Access API.
+       *
+       * The review UI below does not know which one it is talking to. That is
+       * the point of the split: a served page and a double-clicked page that
+       * were two separate files would drift into two different tools.
+       *
+       * A classic script, not a module — module scripts are blocked by CORS on
+       * file:// URLs, which is exactly where this page has to work.
+       */
+      (function () {
+        'use strict';
+
+        var $ = function (id) { return document.getElementById(id); };
+        var el = {
+          filters: $('filters'), list: $('list'), stage: $('stage'), empty: $('empty'),
+          video: $('video'), unrendered: $('unrendered'), eyebrow: $('eyebrow'),
+          topic: $('topic'), meta: $('meta'), feedback: $('feedback'), facts: $('facts'),
+          saved: $('saved'), mode: $('mode'), folder: $('folder'), hint: $('hint'),
+          keys: $('keys'), welcome: $('welcome'), welcomeCopy: $('welcome-copy'),
+          welcomeNote: $('welcome-note'), pick: $('pick'), reopen: $('reopen'),
+          change: $('change'),
+        };
+
+        var FILTERS = [['all', 'All'], ['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected']];
+        var VIDEO_EXT = /\.(mp4|mov|webm|m4v)$/i;
+
+        var state = { clips: [], counts: {}, filter: 'pending', currentId: null };
+        var backend = null;
+        var mediaUrl = null;
+        var mediaToken = 0;
+
+        /* ================= shared shape =================
+         * Ported from src/library.mjs. The server sends clips in this shape;
+         * the folder backend builds the same shape from the folder itself, so
+         * everything below this point is identical either way.
+         */
+
+        function emptyClip(id) {
+          return {
+            id: id, rank: null, lesson: '', student: '', date: '', awareness: '',
+            highValueType: '', topic: '', cta: '', clipType: '', durationSeconds: null,
+            durationEstimated: false, quote: '', whyItHooks: '', suggestedCaption: '',
+            score: null, sourceUrl: '', renderable: true,
+          };
+        }
+
+        function flattenManifest(manifest) {
+          var out = [];
+          (manifest && manifest.lessons ? manifest.lessons : []).forEach(function (lesson) {
+            (lesson.clips || []).forEach(function (clip) {
+              var entry = emptyClip(clip.id);
+              entry.rank = clip.rank == null ? null : clip.rank;
+              entry.lesson = lesson.videoTitle || '';
+              entry.student = lesson.student || '';
+              entry.date = lesson.date || '';
+              entry.awareness = clip.awarenessLabel || '';
+              entry.highValueType = clip.highValueType ? clip.highValueType.replace(/_/g, ' ') : '';
+              entry.topic = clip.topic || '';
+              entry.cta = clip.cta || '';
+              entry.clipType = clip.clipType || '';
+              entry.durationSeconds = clip.durationSeconds == null ? null : clip.durationSeconds;
+              entry.durationEstimated = Boolean(clip.durationEstimated);
+              entry.quote = clip.quote || '';
+              entry.whyItHooks = clip.whyItHooks || '';
+              entry.suggestedCaption = clip.suggestedCaption || '';
+              entry.score = clip.score == null ? null : clip.score;
+              entry.sourceUrl = clip.clipUrl || lesson.url || '';
+              entry.renderable = Boolean(clip.renderable);
+              out.push(entry);
+            });
+          });
+          return out;
+        }
+
+        function mergeLibrary(manifestClips, files, reviews) {
+          var seen = {};
+          var clips = [];
+
+          function decorate(entry, name) {
+            var review = reviews[entry.id] || {};
+            entry.file = name || null;
+            entry.rendered = Boolean(name);
+            entry.status = review.status || 'pending';
+            entry.feedback = review.feedback || '';
+            entry.reviewedAt = review.updatedAt || null;
+            return entry;
+          }
+
+          manifestClips.forEach(function (entry) {
+            seen[entry.id] = true;
+            clips.push(decorate(entry, files[entry.id]));
+          });
+          Object.keys(files).forEach(function (id) {
+            if (!seen[id]) clips.push(decorate(emptyClip(id), files[id]));
+          });
+          return clips;
+        }
+
+        function countStatuses(clips) {
+          var counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, unrendered: 0 };
+          clips.forEach(function (clip) {
+            counts[clip.status] = (counts[clip.status] || 0) + 1;
+            if (!clip.rendered) counts.unrendered++;
+          });
+          return counts;
+        }
+
+        function csvEscape(value) {
+          var s = value === null || value === undefined ? '' : String(value);
+          return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+        }
+
+        function approvedCsv(clips) {
+          var header = ['File', 'Student', 'Topic', 'Awareness Category', 'Suggested Caption', 'CTA', 'Feedback', 'Source'];
+          var rows = clips.filter(function (c) { return c.status === 'approved'; }).map(function (c) {
+            return [c.file || c.id + '.mp4', c.student, c.topic, c.awareness, c.suggestedCaption, c.cta, c.feedback, c.sourceUrl];
+          });
+          if (!rows.length) return null;
+          return [header].concat(rows).map(function (row) { return row.map(csvEscape).join(','); }).join('\n') + '\n';
+        }
+
+        /* ================= server backend ================= */
+
+        function serverBackend() {
+          return {
+            kind: 'server',
+            load: function () {
+              return fetch('/api/clips').then(function (res) {
+                if (!res.ok) throw new Error('server said ' + res.status);
+                return res.json();
+              }).then(function (data) {
+                return {
+                  clips: data.clips, counts: data.counts, folder: data.renderDir,
+                  mode: data.mode === 'move' ? 'moving on approve' : 'copying on approve',
+                  approvedDir: data.approvedDir,
+                };
+              });
+            },
+            save: function (id, patch) {
+              return fetch('/api/clips/' + encodeURIComponent(id), {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(patch),
+              }).then(function (res) {
+                if (res.ok) return res.json();
+                return res.json().catch(function () { return { error: res.statusText }; })
+                  .then(function (body) { throw new Error(body.error); });
+              });
+            },
+            media: function (clip) { return Promise.resolve('/media/' + encodeURIComponent(clip.file)); },
+            unload: function (id, feedback) {
+              if (!navigator.sendBeacon) return;
+              navigator.sendBeacon('/api/clips/' + encodeURIComponent(id),
+                new Blob([JSON.stringify({ feedback: feedback })], { type: 'application/json' }));
+            },
+          };
+        }
+
+        /* ================= folder backend =================
+         * Does what the server does — read the folder, keep reviews.json,
+         * copy approved clips into approved/ — using the browser's file system
+         * access instead of node's.
+         */
+
+        function folderBackend(dir, manifestHandle) {
+          var reviews = {};
+          var files = {};
+          var manifestClips = [];
+          var clips = [];
+
+          function rebuild() { clips = mergeLibrary(manifestClips, files, reviews); }
+
+          function readJson(handle) {
+            return handle.getFile().then(function (file) { return file.text(); }).then(JSON.parse);
+          }
+
+          function fileHandle(name, create) {
+            return dir.getFileHandle(name, { create: Boolean(create) }).catch(function () { return null; });
+          }
+
+          function writeFile(handle, contents) {
+            return handle.createWritable().then(function (writable) {
+              return writable.write(contents).then(function () { return writable.close(); });
+            });
+          }
+
+          function scan() {
+            files = {};
+            var walk = dir.values();
+            return (function next() {
+              return walk.next().then(function (step) {
+                if (step.done) return;
+                var entry = step.value;
+                if (entry.kind === 'file' && VIDEO_EXT.test(entry.name)) {
+                  files[entry.name.replace(VIDEO_EXT, '')] = entry.name;
+                }
+                return next();
+              });
+            })();
+          }
+
+          function loadReviews() {
+            return fileHandle('reviews.json').then(function (handle) {
+              if (!handle) return {};
+              return readJson(handle).then(function (parsed) {
+                return parsed && parsed.clips ? parsed.clips : {};
+              }).catch(function () { return {}; });
+            });
+          }
+
+          function loadManifest() {
+            var source = manifestHandle
+              ? Promise.resolve(manifestHandle)
+              : fileHandle('manifest.json');
+            return source.then(function (handle) {
+              if (!handle) return [];
+              return readJson(handle).then(flattenManifest).catch(function () { return []; });
+            });
+          }
+
+          function sidecars(id, name) {
+            var stem = name ? name.replace(/\.[^.]+$/, '') : id;
+            var wanted = {};
+            [stem + '.srt', id + '.srt', stem + '.jpg', stem + '.png'].forEach(function (n) { wanted[n] = true; });
+            return Object.keys(wanted);
+          }
+
+          function copyInto(target, name) {
+            return fileHandle(name).then(function (src) {
+              if (!src) return null;
+              return src.getFile().then(function (file) {
+                return target.getFileHandle(name, { create: true }).then(function (dest) {
+                  return writeFile(dest, file);
+                });
+              });
+            });
+          }
+
+          function approvedDir(create) {
+            return dir.getDirectoryHandle('approved', { create: Boolean(create) })
+              .catch(function () { return null; });
+          }
+
+          function syncApproved(id, status) {
+            var name = files[id];
+            if (status === 'approved') {
+              // A verdict on a clip that has not been rendered is recorded;
+              // there is simply nothing to copy yet.
+              if (!name) return Promise.resolve();
+              return approvedDir(true).then(function (target) {
+                return copyInto(target, name).then(function () {
+                  return Promise.all(sidecars(id, name).map(function (n) { return copyInto(target, n); }));
+                });
+              });
+            }
+            return approvedDir(false).then(function (target) {
+              if (!target) return;
+              var names = sidecars(id, name).concat(name ? [name] : []);
+              return Promise.all(names.map(function (n) {
+                return target.removeEntry(n).catch(function () { /* was never there */ });
+              }));
+            });
+          }
+
+          function writeApprovedIndex() {
+            var csv = approvedCsv(clips);
+            return approvedDir(Boolean(csv)).then(function (target) {
+              if (!target) return;
+              if (!csv) return target.removeEntry('approved.csv').catch(function () {});
+              return target.getFileHandle('approved.csv', { create: true }).then(function (handle) {
+                return writeFile(handle, csv);
+              });
+            });
+          }
+
+          function persist() {
+            return dir.getFileHandle('reviews.json', { create: true }).then(function (handle) {
+              return writeFile(handle, JSON.stringify({
+                version: 1, updatedAt: new Date().toISOString(), clips: reviews,
+              }, null, 2) + '\n');
+            });
+          }
+
+          return {
+            kind: 'folder',
+            load: function () {
+              return Promise.all([scan(), loadReviews(), loadManifest()]).then(function (results) {
+                reviews = results[1];
+                manifestClips = results[2];
+                rebuild();
+                return {
+                  clips: clips, counts: countStatuses(clips), folder: dir.name,
+                  mode: manifestClips.length ? 'copying on approve' : 'copying on approve · no manifest',
+                };
+              });
+            },
+            save: function (id, patch) {
+              var before = reviews[id] || { status: 'pending', feedback: '' };
+              var after = {
+                status: patch.status === undefined ? before.status : patch.status,
+                feedback: patch.feedback === undefined ? before.feedback : patch.feedback,
+                updatedAt: new Date().toISOString(),
+              };
+              reviews[id] = after;
+
+              var work = after.status === before.status
+                ? Promise.resolve()
+                : syncApproved(id, after.status);
+
+              return work
+                .then(function () { rebuild(); return writeApprovedIndex(); })
+                .then(persist)
+                .then(function () {
+                  var found = clips.filter(function (c) { return c.id === id; })[0];
+                  return { clip: found, counts: countStatuses(clips) };
+                });
+            },
+            media: function (clip) {
+              return dir.getFileHandle(clip.file).then(function (handle) { return handle.getFile(); })
+                .then(function (file) { return URL.createObjectURL(file); });
+            },
+            unload: function () { /* every save already reached disk */ },
+          };
+        }
+
+        /* ================= remembering the folder =================
+         * A directory handle survives in IndexedDB, so a second visit is one
+         * "allow" click rather than navigating the picker again.
+         */
+
+        function idb(mode, run) {
+          return new Promise(function (resolve, reject) {
+            var open = indexedDB.open('clip-review', 1);
+            open.onupgradeneeded = function () { open.result.createObjectStore('handles'); };
+            open.onerror = function () { reject(open.error); };
+            open.onsuccess = function () {
+              var tx = open.result.transaction('handles', mode);
+              var request = run(tx.objectStore('handles'));
+              tx.oncomplete = function () { resolve(request ? request.result : null); };
+              tx.onerror = function () { reject(tx.error); };
+            };
+          }).catch(function () { return null; });
+        }
+
+        var remember = {
+          get: function (key) { return idb('readonly', function (store) { return store.get(key); }); },
+          set: function (key, value) { return idb('readwrite', function (store) { store.put(value, key); }); },
+        };
+
+        /* ================= start-up ================= */
+
+        function start() {
+          // A page served by bin/review.mjs answers this; a page on file:// does
+          // not, and falls through to picking a folder.
+          var probe = location.protocol === 'file:'
+            ? Promise.reject(new Error('file://'))
+            : fetch('/api/clips', { method: 'HEAD' }).then(function (res) {
+                if (!res.ok) throw new Error('no server');
+              });
+
+          return probe.then(function () {
+            return open(serverBackend());
+          }).catch(function () {
+            return offerFolder();
+          });
+        }
+
+        function offerFolder() {
+          el.welcome.hidden = false;
+
+          if (!window.showDirectoryPicker) {
+            el.welcomeCopy.innerHTML =
+              '<span class="warn">This browser cannot open a folder from a local page.</span> ' +
+              'Chrome or Edge can. In any browser, the same page works when it is served:';
+            el.welcomeNote.innerHTML =
+              '<code>cd tools/clip-review &amp;&amp; node bin/review.mjs --clips ../clip-renderer/out</code>';
+            el.pick.hidden = true;
+            return;
+          }
+
+          return remember.get('clipsDir').then(function (saved) {
+            if (!saved) return;
+            el.reopen.hidden = false;
+            el.reopen.textContent = 'Reopen “' + saved.name + '”';
+            el.reopen.addEventListener('click', function () {
+              grant(saved).then(function (ok) {
+                if (ok) return remember.get('manifest').then(function (m) { return openFolder(saved, m); });
+              });
+            });
+          });
+        }
+
+        /* Permission has to be asked for from a click, so this is only ever
+         * called from one. */
+        function grant(handle) {
+          var options = { mode: 'readwrite' };
+          return handle.queryPermission(options).then(function (status) {
+            return status === 'granted' ? true : handle.requestPermission(options).then(function (result) {
+              return result === 'granted';
+            });
+          }).catch(function () { return false; });
+        }
+
+        function pickFolder() {
+          return window.showDirectoryPicker({ id: 'clips', mode: 'readwrite' }).then(function (dir) {
+            return grant(dir).then(function (ok) {
+              if (!ok) return;
+              return remember.set('clipsDir', dir).then(function () { return openFolder(dir, null); });
+            });
+          }).catch(function (err) {
+            // An abandoned picker is not an error worth shouting about.
+            if (err && err.name === 'AbortError') return;
+            el.welcomeCopy.textContent = 'Could not open that folder: ' + err.message;
+          });
+        }
+
+        function openFolder(dir, manifestHandle) {
+          el.welcome.hidden = true;
+          el.change.hidden = false;
+          return open(folderBackend(dir, manifestHandle));
+        }
+
+        function open(chosen) {
+          backend = chosen;
+          state.currentId = null;
+          return load();
+        }
+
+        function load() {
+          return backend.load().then(function (data) {
+            state.clips = data.clips;
+            state.counts = data.counts;
+
+            el.mode.textContent = data.mode;
+            el.folder.textContent = data.folder || '';
+            el.folder.title = data.approvedDir ? 'Approved clips go to ' + data.approvedDir : '';
+
+            if (!visible().length && state.filter === 'pending') state.filter = 'all';
+            if (!state.currentId) state.currentId = (visible()[0] || {}).id || null;
+            render();
+          });
+        }
+
+        function save(id, body) {
+          el.saved.className = 'saved';
+          el.saved.textContent = 'Saving…';
+
+          return backend.save(id, body).then(function (data) {
+            for (var i = 0; i < state.clips.length; i++) {
+              if (state.clips[i].id === id) state.clips[i] = data.clip;
+            }
+            state.counts = data.counts;
+            el.saved.textContent = 'Saved';
+            clearTimeout(save.clear);
+            save.clear = setTimeout(function () { el.saved.textContent = ''; }, 1600);
+            return data.clip;
+          }).catch(function (err) {
+            el.saved.className = 'saved error';
+            el.saved.textContent = 'Not saved: ' + err.message;
+            return null;
+          });
+        }
+
+        /* ================= selectors ================= */
+
+        function visible() {
+          return state.filter === 'all'
+            ? state.clips
+            : state.clips.filter(function (c) { return c.status === state.filter; });
+        }
+
+        function current() {
+          return state.clips.filter(function (c) { return c.id === state.currentId; })[0] || null;
+        }
+
+        /* ================= render ================= */
+
+        function render() { renderFilters(); renderList(); renderDetail(); }
+
+        function renderFilters() {
+          var nodes = FILTERS.map(function (entry) {
+            var key = entry[0];
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.setAttribute('aria-pressed', String(state.filter === key));
+            button.appendChild(document.createTextNode(entry[1]));
+
+            var count = document.createElement('span');
+            count.className = 'count';
+            count.textContent = state.counts[key] || 0;
+            button.appendChild(count);
+
+            button.addEventListener('click', function () {
+              state.filter = key;
+              var kept = visible().filter(function (c) { return c.id === state.currentId; });
+              if (!kept.length) state.currentId = (visible()[0] || {}).id || null;
+              render();
+            });
+            return button;
+          });
+          el.filters.replaceChildren.apply(el.filters, nodes);
+        }
+
+        function renderList() {
+          var nodes = [];
+          var lesson = null;
+
+          visible().forEach(function (clip) {
+            var heading = clip.lesson || 'Unfiled clips';
+            if (heading !== lesson) {
+              lesson = heading;
+              var head = document.createElement('p');
+              head.className = 'list-lesson';
+              head.textContent = heading;
+              nodes.push(head);
+            }
+            nodes.push(rowFor(clip));
+          });
+
+          el.list.replaceChildren.apply(el.list, nodes);
+          var here = el.list.querySelector('[aria-current="true"]');
+          if (here) here.scrollIntoView({ block: 'nearest' });
+        }
+
+        function rowFor(clip) {
+          var row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'row';
+          row.dataset.status = clip.status;
+          row.dataset.rendered = String(clip.rendered);
+          row.setAttribute('aria-current', String(clip.id === state.currentId));
+
+          var dot = document.createElement('span');
+          dot.className = 'dot';
+
+          var title = document.createElement('span');
+          title.className = 'title';
+          var strong = document.createElement('strong');
+          strong.textContent = clip.topic || clip.id;
+          var sub = document.createElement('span');
+          sub.textContent = [clip.student, clip.awareness].filter(Boolean).join(' · ') || clip.id;
+          title.appendChild(strong);
+          title.appendChild(sub);
+
+          var tail = document.createElement('span');
+          tail.className = 'tail';
+          tail.textContent = clip.rendered ? duration(clip.durationSeconds) : 'no file';
+
+          row.appendChild(dot);
+          row.appendChild(title);
+          row.appendChild(tail);
+
+          if (clip.feedback) {
+            var note = document.createElement('span');
+            note.className = 'note';
+            note.textContent = clip.feedback;
+            row.appendChild(note);
+          }
+
+          row.addEventListener('click', function () { select(clip.id); });
+          return row;
+        }
+
+        function renderDetail() {
+          var clip = current();
+          el.stage.hidden = !clip;
+          el.empty.hidden = Boolean(clip);
+          if (!clip) return;
+
+          el.eyebrow.textContent = [clip.awareness, clip.highValueType].filter(Boolean).join(' · ');
+          el.topic.textContent = clip.topic || clip.id;
+          el.meta.textContent = [
+            clip.student, clip.date,
+            clip.rendered ? duration(clip.durationSeconds) : 'no file',
+          ].filter(Boolean).join(' · ') + (clip.durationEstimated ? ' (estimated)' : '');
+
+          showMedia(clip);
+
+          var buttons = document.querySelectorAll('.verdict button');
+          for (var i = 0; i < buttons.length; i++) {
+            buttons[i].setAttribute('aria-pressed', String(buttons[i].dataset.status === clip.status));
+          }
+
+          if (el.feedback.value !== clip.feedback && document.activeElement !== el.feedback) {
+            el.feedback.value = clip.feedback;
+          }
+          renderFacts(clip);
+        }
+
+        function showMedia(clip) {
+          if (!clip.rendered) {
+            releaseMedia();
+            el.video.removeAttribute('src');
+            el.video.load();
+            el.video.hidden = true;
+            el.unrendered.hidden = false;
+            return;
+          }
+
+          el.video.hidden = false;
+          el.unrendered.hidden = true;
+          if (el.video.dataset.clip === clip.id) return;
+
+          // Object URLs are per-file, so a stale one is revoked on the way past.
+          // The token guards against a slow resolve landing after the reviewer
+          // has already moved on.
+          var token = ++mediaToken;
+          backend.media(clip).then(function (url) {
+            if (token !== mediaToken) {
+              if (url.indexOf('blob:') === 0) URL.revokeObjectURL(url);
+              return;
+            }
+            releaseMedia();
+            mediaUrl = url;
+            el.video.dataset.clip = clip.id;
+            el.video.src = url;
+          }).catch(function (err) {
+            el.video.hidden = true;
+            el.unrendered.hidden = false;
+            el.unrendered.textContent = 'Could not open the file: ' + err.message;
+          });
+        }
+
+        function releaseMedia() {
+          if (mediaUrl && mediaUrl.indexOf('blob:') === 0) URL.revokeObjectURL(mediaUrl);
+          mediaUrl = null;
+          delete el.video.dataset.clip;
+        }
+
+        function renderFacts(clip) {
+          var facts = [
+            ['Caption', clip.suggestedCaption], ['CTA', clip.cta], ['Clip type', clip.clipType],
+            ['Why it hooks', clip.whyItHooks], ['Quote', clip.quote],
+            ['Score', clip.score === null ? '' : String(clip.score)],
+            ['File', clip.file || ''], ['Source', clip.sourceUrl],
+          ].filter(function (entry) { return entry[1]; });
+
+          var nodes = [];
+          facts.forEach(function (entry) {
+            var dt = document.createElement('dt');
+            dt.textContent = entry[0];
+            var dd = document.createElement('dd');
+            if (entry[0] === 'Quote') dd.className = 'quote';
+
+            if (entry[0] === 'Source') {
+              var a = document.createElement('a');
+              a.href = entry[1];
+              a.textContent = 'open at the clip’s in-point';
+              a.target = '_blank';
+              a.rel = 'noreferrer';
+              dd.appendChild(a);
+            } else {
+              dd.textContent = entry[1];
+            }
+            nodes.push(dt, dd);
+          });
+          el.facts.replaceChildren.apply(el.facts, nodes);
+        }
+
+        function duration(seconds) {
+          if (seconds === null || seconds === undefined) return '';
+          var s = Math.round(seconds);
+          return s >= 60 ? Math.floor(s / 60) + 'm ' + String(s % 60).padStart(2, '0') + 's' : s + 's';
+        }
+
+        /* ================= actions ================= */
+
+        function select(id) {
+          if (id === state.currentId) return;
+          flushFeedback();
+          state.currentId = id;
+          render();
+        }
+
+        function step(delta) {
+          var clips = visible();
+          var at = -1;
+          clips.forEach(function (c, i) { if (c.id === state.currentId) at = i; });
+          var next = clips[Math.min(Math.max(at + delta, 0), clips.length - 1)];
+          if (next) select(next.id);
+        }
+
+        function nextUndecided() {
+          var clips = visible();
+          var at = -1;
+          clips.forEach(function (c, i) { if (c.id === state.currentId) at = i; });
+          var after = clips.slice(at + 1).filter(function (c) { return c.status === 'pending'; })[0];
+          var found = after || state.clips.filter(function (c) { return c.status === 'pending'; })[0];
+          if (found) select(found.id);
+        }
+
+        function setStatus(status) {
+          var clip = current();
+          if (!clip) return Promise.resolve();
+
+          return Promise.resolve(flushFeedback()).then(function () {
+            return save(clip.id, { status: status });
+          }).then(function () {
+            render();
+            // A decided clip drops out of the Undecided filter, so land on the
+            // next one rather than on nothing.
+            var kept = visible().filter(function (c) { return c.id === state.currentId; });
+            if (state.filter === 'pending' && !kept.length) {
+              state.currentId = (visible()[0] || {}).id || null;
+              render();
+            }
+          });
+        }
+
+        var feedbackTimer = null;
+        var pendingEdit = null;
+
+        function queueFeedback() {
+          var clip = current();
+          if (!clip) return;
+          pendingEdit = { id: clip.id, feedback: el.feedback.value };
+          clearTimeout(feedbackTimer);
+          feedbackTimer = setTimeout(flushFeedback, 700);
+        }
+
+        function flushFeedback() {
+          clearTimeout(feedbackTimer);
+          if (!pendingEdit) return Promise.resolve();
+
+          var edit = pendingEdit;
+          pendingEdit = null;
+          var clip = state.clips.filter(function (c) { return c.id === edit.id; })[0];
+          if (!clip || clip.feedback === edit.feedback) return Promise.resolve();
+
+          return save(edit.id, { feedback: edit.feedback }).then(renderList);
+        }
+
+        /* ================= wiring ================= */
+
+        var verdictButtons = document.querySelectorAll('.verdict button');
+        for (var i = 0; i < verdictButtons.length; i++) {
+          (function (button) {
+            button.addEventListener('click', function () { setStatus(button.dataset.status); });
+          })(verdictButtons[i]);
+        }
+
+        el.feedback.addEventListener('input', queueFeedback);
+        el.feedback.addEventListener('blur', flushFeedback);
+        el.feedback.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') el.feedback.blur();
+        });
+
+        el.hint.addEventListener('click', function () { el.keys.showModal(); });
+        el.pick.addEventListener('click', pickFolder);
+        el.change.addEventListener('click', pickFolder);
+
+        window.addEventListener('pagehide', function () {
+          if (pendingEdit && backend) backend.unload(pendingEdit.id, pendingEdit.feedback);
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (!backend || e.metaKey || e.ctrlKey || e.altKey) return;
+          if (e.target && e.target.matches && e.target.matches('textarea, input')) return;
+
+          var actions = {
+            j: function () { step(1); }, arrowdown: function () { step(1); },
+            k: function () { step(-1); }, arrowup: function () { step(-1); },
+            a: function () { setStatus('approved'); },
+            r: function () { setStatus('rejected'); },
+            u: function () { setStatus('pending'); },
+            n: nextUndecided,
+            f: function () { el.feedback.focus(); },
+            '?': function () { el.keys.showModal(); },
+            ' ': function () { el.video.paused ? el.video.play() : el.video.pause(); },
+          };
+
+          var action = actions[e.key.toLowerCase()];
+          if (!action) return;
+          e.preventDefault();
+          action();
+        });
+
+        // Exposed for the browser tests in test/browser/, which drive the folder
+        // backend against a stand-in directory handle. Nothing in the page reads
+        // it back.
+        window.ClipReview = {
+          openFolder: openFolder,
+          state: state,
+          mergeLibrary: mergeLibrary,
+          countStatuses: countStatuses,
+          approvedCsv: approvedCsv,
+        };
+
+        start();
+      })();
+    </script>
+  </body>
+</html>
