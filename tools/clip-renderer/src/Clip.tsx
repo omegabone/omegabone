@@ -129,18 +129,6 @@ export const Clip: React.FC<ClipProps> = ({
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-          <div
-            style={{
-              fontFamily: brand.text,
-              fontWeight: 600,
-              fontSize: 25,
-              letterSpacing: '0.3em',
-              textTransform: labelCase,
-              color: brand.accent,
-            }}
-          >
-            {awarenessLabel}
-          </div>
           <Rule accent={brand.accent} width={420} />
           <div
             style={{
