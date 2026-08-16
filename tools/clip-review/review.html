@@ -268,21 +268,98 @@
         top: 0;
       }
 
-      video {
+      /*
+       * The composed preview: the same 1080x1920 canvas the renderer draws,
+       * at the same proportions (tools/clip-renderer/src/theme.ts → layout),
+       * so trimming and the caption/brand choice can be judged here instead
+       * of only after a render.
+       */
+      .frame {
+        position: relative;
+        container-type: inline-size;
         width: 100%;
-        aspect-ratio: 9 / 16;
+        aspect-ratio: 1080 / 1920;
         max-height: calc(100vh - var(--bar-height) - 3rem);
+        margin: 0 auto;
+        overflow: hidden;
         background: #000;
         border: 1px solid var(--border);
         border-radius: 10px;
       }
 
-      /*
-       * A rendered clip is the vertical 1080x1920 frame; the lesson it was cut
-       * from is landscape. Same element, so the shape follows the source.
-       */
-      video[data-windowed="true"] {
+      .frame-video {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: #000;
+      }
+
+      /* Windowed = previewing raw lesson footage against the composed frame.
+         Unwindowed = playing an already-rendered file, which already has the
+         title and captions burned in, so the overlay would double them up. */
+      .frame[data-windowed="true"] .frame-video {
+        top: 22.396%;
         aspect-ratio: 16 / 9;
+      }
+
+      .frame[data-windowed="false"] .frame-video {
+        inset: 0;
+      }
+
+      .frame[data-windowed="false"] .frame-title,
+      .frame[data-windowed="false"] .frame-caption {
+        display: none;
+      }
+
+      .frame-video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .frame-title {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        top: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1cqw;
+        text-align: center;
+      }
+
+      .frame-topic {
+        font-size: 4.8cqw;
+        font-weight: 700;
+        line-height: 1.15;
+        text-wrap: balance;
+      }
+
+      .frame-student {
+        font-size: 2.5cqw;
+        opacity: 0.75;
+      }
+
+      .frame-caption {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        bottom: 22.396%;
+        text-align: center;
+        font-size: 5.2cqw;
+        font-weight: 700;
+        line-height: 1.18;
+        text-wrap: balance;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      }
+
+      .frame-note {
+        margin: 0.5rem 0 0;
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        text-align: center;
       }
 
       .unrendered {
