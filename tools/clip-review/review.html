@@ -393,10 +393,33 @@
         color: var(--accent);
       }
 
-      .detail h2 {
+      .title-edit {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
         margin: 0 0 0.35rem;
+      }
+
+      .topic-input {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        font-weight: 700;
         font-size: 1.5rem;
         line-height: 1.2;
+        color: var(--ink);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 0.15rem 0.4rem;
+        margin-left: -0.4rem;
+      }
+
+      .topic-input:hover { border-color: var(--border); }
+      .topic-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: var(--panel);
       }
 
       .meta {
