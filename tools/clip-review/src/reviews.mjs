@@ -284,8 +284,11 @@ export function writeRenderManifest(path, clips, { lessons, transcripts, caption
       url: lesson.url,
       clipCount: picked.length,
       clips: picked.map((clip) => {
-        const captions =
-          clip.start === null || clip.end === null
+        // A reviewer's rewritten captions win over what the transcript says —
+        // that is the entire point of being able to edit them.
+        const captions = clip.captionsOverride
+          ? clip.captionsOverride
+          : clip.start === null || clip.end === null
             ? []
             : captionsFor(transcript, clip.start, clip.end);
 
