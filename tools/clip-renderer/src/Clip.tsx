@@ -84,7 +84,7 @@ export const Clip: React.FC<ClipProps> = ({
             position: 'absolute',
             top: layout.videoTop,
             width: layout.width,
-            height: Math.round((layout.width * 9) / 16),
+            height: layout.videoHeight,
             overflow: 'hidden',
             boxShadow: `0 30px 80px rgba(0,0,0,0.5), 0 0 0 2px ${brand.border}`,
           }}
