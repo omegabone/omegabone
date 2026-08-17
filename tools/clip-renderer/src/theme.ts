@@ -34,6 +34,8 @@ export type BrandTokens = {
   displayWeight: number;
   /** Uppercase the small label and CTA. */
   uppercaseLabels: boolean;
+  /** The presenter name, shown as "{presents} presents" on the title's top line. */
+  presents: string;
 };
 
 export const BRANDS: Record<string, BrandTokens> = {
@@ -50,6 +52,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: 'Inter, system-ui, sans-serif',
     displayWeight: 700,
     uppercaseLabels: true,
+    presents: 'Vocal Mastery for Entrepreneurs',
   },
 
   /** The Frequency series. */
@@ -65,6 +68,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: "'EB Garamond', Georgia, serif",
     displayWeight: 600,
     uppercaseLabels: false,
+    presents: 'Vocal Mastery for Entrepreneurs: Frequency Series',
   },
 
   /** Learn 2 Sing. */
@@ -80,6 +84,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: 'Inter, system-ui, sans-serif',
     displayWeight: 700,
     uppercaseLabels: true,
+    presents: 'Learn 2 Sing',
   },
 
   /**
@@ -99,6 +104,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: 'Inter, system-ui, sans-serif',
     displayWeight: 700,
     uppercaseLabels: true,
+    presents: 'MusicRoom 33',
   },
 };
 
