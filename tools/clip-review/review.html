@@ -1891,6 +1891,29 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           commitTrim({ start: null, end: null });
         });
 
+        el.topic.addEventListener('change', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { topic: el.topic.value }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+        el.resetTopic.addEventListener('click', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { topic: null }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
+        el.resetCaptions.addEventListener('click', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { captions: null }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
         [el.start, el.end].forEach(function (input) {
           input.addEventListener('change', function () {
             var value = parseTime(input.value);
