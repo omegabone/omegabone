@@ -1429,7 +1429,8 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           if (!clip) return;
 
           el.eyebrow.textContent = [clip.awareness, clip.highValueType].filter(Boolean).join(' · ');
-          el.topic.textContent = clip.topic || clip.id;
+          if (document.activeElement !== el.topic) el.topic.value = clip.topic || clip.id;
+          el.resetTopic.hidden = !clip.topicEdited;
           el.meta.textContent = [clip.student, clip.date].filter(Boolean).join(' · ') +
             (clip.trimmed ? ' · trimmed' : '') +
             (clip.renderStale ? ' · rendered file is the old cut' : '');
@@ -1437,6 +1438,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           renderFrameBrand(clip);
           showVideo(clip);
           renderTrim(clip);
+          renderCaptionsEditor(clip);
           renderBrands(clip);
 
           var buttons = document.querySelectorAll('.verdict button');
