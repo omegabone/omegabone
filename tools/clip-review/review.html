@@ -792,13 +792,51 @@
 
       /* ---------- trim editor ---------- */
 
-      .trim {
+      .trim,
+      .captions-edit {
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 0.9rem;
         margin: 1.25rem 0;
         background: rgba(0, 0, 0, 0.15);
       }
+
+      .caption-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        padding: 0.35rem 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .caption-row:first-child { border-top: 0; }
+
+      .caption-row .caption-time {
+        flex: none;
+        width: 3.6rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+        padding-top: 0.4rem;
+      }
+
+      .caption-row textarea {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        font-size: 0.92rem;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.4rem 0.6rem;
+        resize: vertical;
+        min-height: 2.4rem;
+      }
+
+      .caption-row textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+      .captions-empty { color: var(--ink-faint); font-size: 0.88rem; }
 
       .trim-head {
         display: flex;
