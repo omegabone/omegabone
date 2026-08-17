@@ -159,8 +159,18 @@ function decorate(entry, render, review, sources) {
   const trimmed =
     start !== entry.originalStart || end !== entry.originalEnd;
 
+  // A rewritten title/captions win over the extractor's own words, same
+  // pattern as the trim above: kept on the record so the edit is visible and
+  // reversible, not baked over the original.
+  const topic = review?.topic ?? entry.topic;
+  const topicEdited = review?.topic !== undefined && review.topic !== null;
+  const captionsOverride = review?.captions ?? null;
+
   return {
     ...entry,
+    topic,
+    topicEdited,
+    captionsOverride,
     start,
     end,
     durationSeconds: start === null || end === null ? null : Math.round((end - start) * 10) / 10,
@@ -169,7 +179,7 @@ function decorate(entry, render, review, sources) {
     bytes: render?.bytes ?? null,
     rendered: Boolean(render),
     // Stale once trimmed: the file on disk is the old cut.
-    renderStale: Boolean(render) && trimmed,
+    renderStale: Boolean(render) && (trimmed || topicEdited || Boolean(captionsOverride)),
     hasSource: sources.has(entry.lessonId),
     // The reviewer's choice wins; otherwise the lesson title decides.
     brand: review?.brand ?? brandFromTitle(entry.lesson).brand,
