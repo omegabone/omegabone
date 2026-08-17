@@ -1388,6 +1388,10 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
         function renderFrameBrand(clip) {
           var brand = brandFor(clip.brand);
           el.frame.style.background = brand.bg;
+          el.framePresents.style.fontFamily = brand.font;
+          el.framePresents.style.color = brand.accent;
+          el.framePresents.style.textTransform = brand.uppercase ? 'uppercase' : 'none';
+          el.framePresents.textContent = brand.presents + ' presents';
           el.frameTopic.style.fontFamily = brand.font;
           el.frameTopic.style.fontWeight = brand.weight;
           el.frameTopic.style.color = brand.ink;
