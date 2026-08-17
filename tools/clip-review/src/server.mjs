@@ -162,16 +162,22 @@ export function createReviewServer(config) {
     const clip = library().find((c) => c.id === clipId);
     if (!clip) return json(res, 404, { error: 'no such clip' });
 
+    // A reviewer's rewrite (also in the lesson's absolute timeline) wins over
+    // what the transcript says.
+    if (clip.captionsOverride) {
+      return json(res, 200, { cues: clip.captionsOverride, edited: true });
+    }
+
     const transcript = transcripts.get(clip.lessonId);
     if (!transcript || clip.start === null || clip.end === null) {
-      return json(res, 200, { cues: [] });
+      return json(res, 200, { cues: [], edited: false });
     }
 
     const cues = (transcript.cues ?? [])
       .filter((cue) => cue.end > clip.start && cue.start < clip.end)
       .map((cue) => ({ start: cue.start, end: cue.end, text: cue.text }));
 
-    return json(res, 200, { cues });
+    return json(res, 200, { cues, edited: false });
   }
 
   async function patchClip(id, req, res) {
