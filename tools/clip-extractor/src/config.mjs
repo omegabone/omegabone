@@ -47,6 +47,9 @@ export const HIGH_VALUE_TYPES = {
   performance_coaching: 'Guidance on stage presence, expression, or confidence.',
   mistake_reveal: 'Identification of a vocal issue.',
   authority_clip: 'The instructor explains a concept with clarity and authority.',
+  testimonial:
+    'The student, in their own words, praises the coaching, the results, or the program — ' +
+    'unprompted enthusiasm worth posting as social proof, not a moment of technique.',
 };
 
 /** Goal / CTA column — exact values already in use in the clip sheet. */
