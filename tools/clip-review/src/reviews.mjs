@@ -133,6 +133,18 @@ function coerceTime(value, which) {
   return Math.round(seconds * 100) / 100;
 }
 
+function captionsShapeOk(value) {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (c) =>
+        c && typeof c === 'object' &&
+        Number.isFinite(c.start) && Number.isFinite(c.end) && c.end > c.start &&
+        typeof c.text === 'string',
+    )
+  );
+}
+
 /**
  * Make the approved folder agree with a clip's status.
  *
