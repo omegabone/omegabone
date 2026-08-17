@@ -135,6 +135,6 @@ export const layout = {
   videoHeight: VIDEO_HEIGHT,
   /** Captions sit directly beneath the footage. */
   captionBottom: 430,
-  headerTop: 96,
+  headerTop: 260,
   footerBottom: 96,
 };
