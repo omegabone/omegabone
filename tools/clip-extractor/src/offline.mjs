@@ -109,15 +109,18 @@ export function selectOffline(lesson, segment, opts = {}) {
   const scored = windows.map(({ text, start, end }) => {
     const cat = pickBest(SIGNALS, text, 'solution_aware');
     const topic = pickBest(TOPIC_SIGNALS, text, 'General Inspiration & Coaching');
-    const base = 45 + cat.score * 8 + topic.score * 3;
+    const testimonial = scoreText(text, TESTIMONIAL_SIGNALS);
+    const base = 45 + cat.score * 8 + topic.score * 3 + testimonial * 8;
     const complete = /[.!?]["')\]]?\s*$/.test(text.trim()) ? 10 : -15;
 
     return {
       full_quote: text,
-      why_it_hooks: `Heuristic match on ${cat.key.replace(/_/g, ' ')} signals (offline mode — not model-judged).`,
+      why_it_hooks: testimonial > 0
+        ? 'Heuristic match on testimonial signals — student praise worth posting as social proof (offline mode — not model-judged).'
+        : `Heuristic match on ${cat.key.replace(/_/g, ' ')} signals (offline mode — not model-judged).`,
       suggested_caption: text.split(/(?<=[.!?])\s+/)[0].slice(0, 90),
       primary_category: cat.key,
-      high_value_type: null,
+      high_value_type: testimonial > 0 ? 'testimonial' : null,
       topic: TOPICS.includes(topic.key) ? topic.key : 'General Inspiration & Coaching',
       cta: CTA_BY_AWARENESS[cat.key],
       start_time: start,
