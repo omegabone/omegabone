@@ -1084,21 +1084,25 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             id: 'vme', label: 'VME', accent: '#7CE8A0',
             bg: '#081812', panel: '#122d1e', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
             font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'Vocal Mastery for Entrepreneurs',
           },
           {
             id: 'frequency', label: 'Frequency', accent: '#C42A40',
             bg: '#33090E', panel: '#3F0D12', ink: '#F1F0CC', inkDim: '#BAB09A',
             font: "'EB Garamond', Georgia, serif", weight: 600, uppercase: false,
+            presents: 'Vocal Mastery for Entrepreneurs: Frequency Series',
           },
           {
             id: 'learn2sing', label: 'Learn 2 Sing', accent: '#C9A9F0',
             bg: '#130a1e', panel: '#241636', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
             font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'Learn 2 Sing',
           },
           {
             id: 'mr33', label: 'Music 33', accent: '#6FA3FF',
             bg: '#07142c', panel: '#0f2146', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
             font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'MusicRoom 33',
           },
         ];
         function brandFor(id) {
@@ -1106,8 +1110,12 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           return BRANDS[0];
         }
         // tools/clip-renderer/src/theme.ts → layout, expressed as a share of the
-        // canvas so the same numbers work at any on-screen size.
-        var FRAME = { videoTop: 430 / 1920, videoHeight: (1080 * 9 / 16) / 1920, captionBottom: 430 / 1920, headerTop: 96 / 1920 };
+        // canvas so the same numbers work at any on-screen size. Video is
+        // centered vertically: equal space above and below the footage.
+        var FRAME = (function () {
+          var videoHeight = (1080 * 9 / 16) / 1920;
+          return { videoTop: (1 - videoHeight) / 2, videoHeight: videoHeight, captionBottom: 430 / 1920, headerTop: 96 / 1920 };
+        })();
 
         var state = {
           clips: [], counts: {}, rules: {}, lessons: {}, filter: 'pending',
