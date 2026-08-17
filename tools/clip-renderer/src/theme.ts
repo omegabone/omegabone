@@ -115,14 +115,18 @@ export const BRAND_CHOICES = [
 export const brandFor = (name: string): BrandTokens =>
   BRANDS[name] ?? BRANDS[DEFAULT_BRAND];
 
+/** Footage band. 16:9 at full width is 607.5px tall. */
+const VIDEO_HEIGHT = (1080 * 9) / 16;
+
 export const layout = {
   width: 1080,
   height: 1920,
   fps: 30,
   safeX: 72,
 
-  /** Footage band. 16:9 at full width is 608px tall. */
-  videoTop: 430,
+  /** Centered vertically: equal space above and below the footage. */
+  videoTop: (1920 - VIDEO_HEIGHT) / 2,
+  videoHeight: VIDEO_HEIGHT,
   /** Captions sit directly beneath the footage. */
   captionBottom: 430,
   headerTop: 96,
