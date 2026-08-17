@@ -40,11 +40,12 @@ const SIGNALS = {
 // its own.
 const TESTIMONIAL_SIGNALS = [
   'best decision', 'changed my life', 'life changing', 'life-changing',
-  'so grateful', 'i love this', 'i love your', 'highly recommend',
-  'recommend this', 'recommend you', 'worth every', 'best class', 'best coach',
-  "i'm so glad", 'thank you so much', 'amazing experience', 'exceeded my',
-  'game changer', 'game-changer', 'transformed my', "can't thank you enough",
-  'best investment', 'best class i', 'so happy i', 'glad i did this',
+  'i love this class', 'i love your teaching', 'highly recommend',
+  'recommend this class', 'recommend this course', 'recommend you',
+  'worth every', 'best class i', 'best coach i', 'amazing experience',
+  'exceeded my', 'game changer', 'game-changer', 'transformed my',
+  "can't thank you enough", 'best investment', 'so happy i signed up',
+  'so glad i did this', 'glad i signed up', 'wish i had done this sooner',
 ];
 
 const TOPIC_SIGNALS = {
