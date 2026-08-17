@@ -76,11 +76,24 @@ export function applyVerdict(store, id, patch, options) {
     throw new Error(`unknown brand: ${patch.brand}`);
   }
 
+  if (patch.topic !== undefined && patch.topic !== null && typeof patch.topic !== 'string') {
+    throw new Error('topic must be a string');
+  }
+
+  if (patch.captions !== undefined && patch.captions !== null && !captionsShapeOk(patch.captions)) {
+    throw new Error('captions must be an array of {start, end, text}');
+  }
+
   const before = store[id] ?? { status: 'pending', feedback: '' };
   const after = {
     status: patch.status ?? before.status,
     feedback: patch.feedback ?? before.feedback,
     ...('brand' in patch ? { brand: patch.brand } : before.brand ? { brand: before.brand } : {}),
+    // A written title/caption edit persists across trims; null is the
+    // reviewer's own "go back to what the extractor/transcript said" — same
+    // convention as the trim's start/end below.
+    ...('topic' in patch ? { topic: patch.topic } : before.topic !== undefined ? { topic: before.topic } : {}),
+    ...('captions' in patch ? { captions: patch.captions } : before.captions !== undefined ? { captions: before.captions } : {}),
     ...trimFrom(patch, before),
     updatedAt: new Date().toISOString(),
   };
