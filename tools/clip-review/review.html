@@ -1516,13 +1516,61 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           el.frame.dataset.windowed = String(source.windowed);
           if (source.windowed && clip.start !== null) seekTo(clip.start);
 
-          state.currentCaptions = [];
           el.frameCaption.textContent = '';
-          if (source.windowed) {
-            captionsFor(clip).then(function (cues) {
-              if (state.currentId === clip.id) state.currentCaptions = cues;
+        }
+
+        // Captions are loaded once here — for both the live playback overlay
+        // (state.currentCaptions, read by the timeupdate handler) and the
+        // editable list below it — rather than twice, so an edit and the
+        // preview can never show two different versions of the same clip.
+        function renderCaptionsEditor(clip) {
+          state.currentCaptions = [];
+          el.captionsList.replaceChildren();
+          el.resetCaptions.hidden = true;
+
+          captionsForEdit(clip).then(function (data) {
+            if (state.currentId !== clip.id) return;
+            state.currentCaptions = data.cues;
+            el.resetCaptions.hidden = !data.edited;
+
+            if (!data.cues.length) {
+              var empty = document.createElement('p');
+              empty.className = 'captions-empty';
+              empty.textContent = clip.start === null
+                ? 'No timecodes on this clip yet.'
+                : 'No transcript cues fall inside this clip.';
+              el.captionsList.appendChild(empty);
+              return;
+            }
+
+            var rows = data.cues.map(function (cue, i) {
+              var row = document.createElement('div');
+              row.className = 'caption-row';
+
+              var time = document.createElement('span');
+              time.className = 'caption-time';
+              time.textContent = clock(cue.start);
+
+              var box = document.createElement('textarea');
+              box.rows = 1;
+              box.value = cue.text;
+              box.addEventListener('change', function () { commitCaptionEdit(clip, i, box.value); });
+
+              row.appendChild(time);
+              row.appendChild(box);
+              return row;
             });
-          }
+            el.captionsList.replaceChildren.apply(el.captionsList, rows);
+          });
+        }
+
+        function commitCaptionEdit(clip, index, text) {
+          var next = (state.currentCaptions || []).map(function (cue, i) {
+            return i === index ? { start: cue.start, end: cue.end, text: text } : cue;
+          });
+          save(clip.id, { captions: next }).then(function (saved) {
+            if (saved) renderDetail();
+          });
         }
 
         function seekTo(time) {
