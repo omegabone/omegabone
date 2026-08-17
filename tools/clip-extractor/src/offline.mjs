@@ -34,6 +34,19 @@ const SIGNALS = {
   ],
 };
 
+// Unprompted student praise — social proof, not a teaching moment. Checked
+// separately from SIGNALS: a testimonial can land inside any awareness
+// category, so it is the optional high_value_type tag, not a category of
+// its own.
+const TESTIMONIAL_SIGNALS = [
+  'best decision', 'changed my life', 'life changing', 'life-changing',
+  'so grateful', 'i love this', 'i love your', 'highly recommend',
+  'recommend this', 'recommend you', 'worth every', 'best class', 'best coach',
+  "i'm so glad", 'thank you so much', 'amazing experience', 'exceeded my',
+  'game changer', 'game-changer', 'transformed my', "can't thank you enough",
+  'best investment', 'best class i', 'so happy i', 'glad i did this',
+];
+
 const TOPIC_SIGNALS = {
   'Vocal Technique & Breath': ['breath', 'palate', 'vowel', 'buzz', 'diaphragm', 'pitch'],
   'Audience Connection & Stage Presence': ['audience', 'stage', 'perform', 'room'],
