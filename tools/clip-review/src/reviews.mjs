@@ -285,9 +285,18 @@ export function writeRenderManifest(path, clips, { lessons, transcripts, caption
       clipCount: picked.length,
       clips: picked.map((clip) => {
         // A reviewer's rewritten captions win over what the transcript says —
-        // that is the entire point of being able to edit them.
+        // that is the entire point of being able to edit them. The override
+        // is kept in the lesson's absolute timeline (same as what the review
+        // page displays and edits against), so it is rebased to the clip's
+        // own 0-start timeline here exactly the way captionsFor() would.
         const captions = clip.captionsOverride
           ? clip.captionsOverride
+              .map((c) => ({
+                start: Math.max(0, c.start - clip.start),
+                end: Math.min(clip.end, c.end) - clip.start,
+                text: c.text,
+              }))
+              .filter((c) => c.end > c.start)
           : clip.start === null || clip.end === null
             ? []
             : captionsFor(transcript, clip.start, clip.end);
