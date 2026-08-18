@@ -11,6 +11,7 @@ import { createServer } from 'node:http';
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { join, extname, resolve, sep, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawn } from 'node:child_process';
 import { buildLibrary, countStatuses, readLessons, ID_PATTERN } from './library.mjs';
 import {
   loadReviews,
