@@ -21,6 +21,66 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { brandFromTitle } from './brand-from-title.mjs';
 
+// Short, human names for filenames — distinct from theme.ts's full "presents"
+// line ("Vocal Mastery for Entrepreneurs"), which is too long for a filename.
+const BRAND_FILE_NAMES = {
+  vme: 'Vocal_Mastery',
+  frequency: 'Frequency',
+  learn2sing: 'Learn_2_Sing',
+  mr33: 'MusicRoom_33',
+};
+
+/** Words only — strips punctuation rather than replacing it with underscores,
+ * so "Vocal Technique & Breath" becomes "Vocal_Technique_Breath" and not
+ * "Vocal_Technique_&_Breath" or "Vocal_Technique__Breath". */
+function sanitizeForFilename(text) {
+  return String(text || '')
+    .replace(/[^\p{L}\p{N}\s]+/gu, '')
+    .trim()
+    .replace(/\s+/g, '_');
+}
+
+/**
+ * Brand_Title_Student, disambiguated against every name already claimed in
+ * this run: an offline-mode topic like "Vocal Technique & Breath" repeats
+ * across most clips in a lesson, so the same three inputs recur constantly
+ * and a bare join would have later clips overwrite earlier ones.
+ */
+function outputFilename(brand, topic, student, claimed) {
+  const base = [BRAND_FILE_NAMES[brand] || sanitizeForFilename(brand), sanitizeForFilename(topic), sanitizeForFilename(student)]
+    .filter(Boolean)
+    .join('_') || 'clip';
+
+  let name = base;
+  let n = 2;
+  while (claimed.has(name.toLowerCase())) {
+    name = `${base}_${n}`;
+    n += 1;
+  }
+  claimed.add(name.toLowerCase());
+  return `${name}.mp4`;
+}
+
+/**
+ * clip.id -> rendered filename, so the review page can find a clip's file
+ * without the filename having to encode the id. Merged rather than
+ * overwritten: a partial re-render (--id, or a failure) must not forget
+ * where every other clip's file already is.
+ */
+function loadRenderIndex(outDir) {
+  const path = join(outDir, 'render-index.json');
+  if (!existsSync(path)) return {};
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+function saveRenderIndex(outDir, index) {
+  writeFileSync(join(outDir, 'render-index.json'), `${JSON.stringify(index, null, 2)}\n`, 'utf8');
+}
+
 const { values: args } = parseArgs({
   options: {
     manifest: { type: 'string', default: '../clip-extractor/clips-out/manifest.json' },
