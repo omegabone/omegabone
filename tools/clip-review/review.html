@@ -1047,6 +1047,13 @@
             <div class="words" id="words" aria-label="Transcript"></div>
           </section>
 
+          <div class="verdict" role="group" aria-label="Verdict">
+            <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
+            <button type="button" class="reject" data-status="rejected">Reject <kbd>R</kbd></button>
+            <button type="button" class="reset" data-status="pending">Undecided <kbd>U</kbd></button>
+            <span class="saved" id="saved" aria-live="polite"></span>
+          </div>
+
           <section class="captions-edit" id="captions-edit" aria-label="Captions">
             <header class="trim-head">
               <span class="trim-title">On-screen captions</span>
@@ -1058,13 +1065,6 @@
 
           <div class="brands" id="brands" role="group" aria-label="Brand">
             <span class="brand-label">Caption highlight</span>
-          </div>
-
-          <div class="verdict" role="group" aria-label="Verdict">
-            <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
-            <button type="button" class="reject" data-status="rejected">Reject <kbd>R</kbd></button>
-            <button type="button" class="reset" data-status="pending">Undecided <kbd>U</kbd></button>
-            <span class="saved" id="saved" aria-live="polite"></span>
           </div>
 
           <label class="field">
