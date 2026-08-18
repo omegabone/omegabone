@@ -82,6 +82,7 @@ const near = (path) => fileURLToPath(new URL(path, import.meta.url));
 const args = {
   manifest: near('../../clip-extractor/clips-out/manifest.json'),
   clips: near('../../clip-renderer/out'),
+  rendererDir: near('../../clip-renderer'),
   port: '4321',
   ...saved,
   ...Object.fromEntries(Object.entries(passed).filter(([, v]) => v !== undefined && v !== false)),
