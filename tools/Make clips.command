@@ -126,7 +126,7 @@ if [ -n "$URL" ]; then
     --paths "$LESSONS" \
     --output '%(title)s.%(ext)s' \
     --download-archive "$LESSONS/.downloaded.txt" \
-    --no-overwrites \
+    --no-overwrites --no-continue \
     --write-subs --write-auto-subs \
     --sub-langs 'en' --convert-subs srt \
     --format 'bv*[height<=1080]+ba/b[height<=1080]' \
