@@ -227,10 +227,11 @@ function decorate(entry, render, review, sources) {
 
 /** Tally for the filter bar. */
 export function countStatuses(clips) {
-  const counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, unrendered: 0, trimmed: 0 };
+  const counts = { all: clips.length, pending: 0, approved: 0, rejected: 0, rendered: 0, unrendered: 0, trimmed: 0 };
   for (const clip of clips) {
     counts[clip.status] = (counts[clip.status] ?? 0) + 1;
-    if (!clip.rendered) counts.unrendered++;
+    if (clip.rendered) counts.rendered++;
+    else counts.unrendered++;
     if (clip.trimmed) counts.trimmed++;
   }
   return counts;
