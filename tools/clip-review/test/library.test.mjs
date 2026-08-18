@@ -89,6 +89,7 @@ test('saved reviews are attached to their clips', () => {
     pending: 1,
     approved: 1,
     rejected: 0,
+    rendered: 1,
     unrendered: 1,
     trimmed: 0,
   });
