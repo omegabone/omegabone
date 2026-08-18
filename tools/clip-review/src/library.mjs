@@ -27,19 +27,53 @@ export const ID_PATTERN = /^(?!\.\.?$)[^/\\\0]+$/;
 
 const VIDEO_EXT = new Set(['.mp4', '.mov', '.webm', '.m4v']);
 
-/** Rendered files in a directory, keyed by clip id (the filename stem). */
+/**
+ * Rendered files in a directory, keyed by clip id.
+ *
+ * The renderer names files for a person, not a program — Brand_Title_Student,
+ * not the clip id — so the id can no longer be read off the filename. It
+ * writes render-index.json alongside the files to say which clip each one
+ * is; that index is authoritative. Anything on disk but missing from the
+ * index (a hand-dropped file, or a render from before the index existed)
+ * still falls back to the old id.ext filename convention, so it is not
+ * silently dropped from the review.
+ */
 export function scanRenders(dir) {
   if (!existsSync(dir)) return new Map();
 
+  let index = {};
+  const indexPath = join(dir, 'render-index.json');
+  if (existsSync(indexPath)) {
+    try {
+      index = JSON.parse(readFileSync(indexPath, 'utf8'));
+    } catch {
+      index = {};
+    }
+  }
+
   const found = new Map();
+  const claimed = new Set();
+
+  for (const [id, name] of Object.entries(index)) {
+    if (!ID_PATTERN.test(id) || typeof name !== 'string') continue;
+    const path = join(dir, name);
+    if (!existsSync(path)) continue;
+    const stat = statSync(path);
+    if (!stat.isFile()) continue;
+
+    found.set(id, { file: name, bytes: stat.size, modified: stat.mtime.toISOString() });
+    claimed.add(name);
+  }
+
   for (const name of readdirSync(dir)) {
+    if (claimed.has(name)) continue;
     const ext = extname(name);
     if (!VIDEO_EXT.has(ext.toLowerCase())) continue;
 
     // Strip the extension as it is actually spelled — stripping a lowercased
     // ".mp4" off a file named ".MP4" leaves the extension in the id.
     const id = basename(name, ext);
-    if (!ID_PATTERN.test(id)) continue;
+    if (!ID_PATTERN.test(id) || found.has(id)) continue;
 
     const path = join(dir, name);
     const stat = statSync(path);
@@ -47,6 +81,7 @@ export function scanRenders(dir) {
 
     found.set(id, { file: name, bytes: stat.size, modified: stat.mtime.toISOString() });
   }
+
   return found;
 }
 
