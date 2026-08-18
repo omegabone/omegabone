@@ -174,6 +174,14 @@ export function createReviewServer(config) {
         return await patchClip(path.slice('/api/clips/'.length), req, res);
       }
 
+      if (path === '/api/render' && req.method === 'POST') {
+        return startRender(res);
+      }
+
+      if (path === '/api/render' && req.method === 'GET') {
+        return json(res, 200, renderStatus());
+      }
+
       if (path.startsWith('/source/') && (req.method === 'GET' || req.method === 'HEAD')) {
         return sourceVideo(path.slice('/source/'.length), req, res);
       }
