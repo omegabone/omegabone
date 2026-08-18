@@ -253,15 +253,24 @@ if (!jobs.length) {
   process.exit(1);
 }
 
+const renderIndex = loadRenderIndex(outDir);
+const claimed = new Set(
+  Object.values(renderIndex).map((f) => f.replace(/\.mp4$/i, '').toLowerCase()),
+);
+
 let ok = 0;
 let failed = 0;
 
 for (const [i, job] of jobs.entries()) {
-  const outFile = join(outDir, `${job.clip.id}.mp4`);
+  const priorFile = renderIndex[job.clip.id];
+  if (priorFile) claimed.delete(priorFile.replace(/\.mp4$/i, '').toLowerCase());
+
+  const filename = outputFilename(job.props.brand, job.clip.topic, job.lesson.student, claimed);
+  const outFile = join(outDir, filename);
   const propsFile = join(tmpdir(), `clip-props-${job.clip.id}-${process.pid}.json`);
   writeFileSync(propsFile, JSON.stringify(job.props), 'utf8');
 
-  console.log(`[${i + 1}/${jobs.length}] ${job.clip.id} (${job.clip.durationSeconds}s)`);
+  console.log(`[${i + 1}/${jobs.length}] ${filename} (${job.clip.durationSeconds}s)`);
 
   const res = spawnSync(
     'npx',
@@ -271,8 +280,17 @@ for (const [i, job] of jobs.entries()) {
 
   if (res.status === 0) {
     ok++;
+    renderIndex[job.clip.id] = filename;
+    // The topic/brand/student changed since the last render — the old file
+    // under the old name is stale and would otherwise sit there unlinked
+    // from any clip, cluttering the folder with a name nothing points to.
+    if (priorFile && priorFile !== filename) {
+      try { rmSync(join(outDir, priorFile)); } catch { /* already gone */ }
+    }
+    saveRenderIndex(outDir, renderIndex);
   } else {
     failed++;
+    claimed.delete(filename.replace(/\.mp4$/i, '').toLowerCase());
     console.error(`  failed: ${job.clip.id}`);
   }
 }
