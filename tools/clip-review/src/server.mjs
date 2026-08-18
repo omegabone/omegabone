@@ -48,6 +48,8 @@ export function createReviewServer(config) {
     videoDir,
     video,
     move,
+    rendererScript,
+    rendererCwd,
   } = config;
 
   const { lessons, rules } = readLessons(manifestPath);
