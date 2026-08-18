@@ -703,6 +703,30 @@
         color: var(--ink);
         border-color: var(--accent);
       }
+
+      .render-btn {
+        font-weight: 650;
+        color: var(--bg) !important;
+        background: var(--accent);
+        border-color: var(--accent) !important;
+      }
+
+      .render-btn:hover { background: var(--accent-bright); border-color: var(--accent-bright) !important; }
+      .render-btn:disabled { opacity: 0.5; cursor: default; }
+      .render-btn:disabled:hover { background: var(--accent); border-color: var(--accent) !important; }
+
+      .render-status {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        max-width: 22rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .render-status.error { color: var(--reject); }
+      .render-status.ok { color: var(--accent); }
+
       /* ---------- transport ---------- */
 
       .transport {
