@@ -1309,9 +1309,11 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
         /* ================= selectors ================= */
 
         function visible() {
-          return state.filter === 'all'
-            ? state.clips
-            : state.clips.filter(function (c) { return c.status === state.filter; });
+          if (state.filter === 'all') return state.clips;
+          // Rendered is a fact about the file, not a verdict, so it filters
+          // on clip.rendered rather than clip.status like the other tabs.
+          if (state.filter === 'rendered') return state.clips.filter(function (c) { return c.rendered; });
+          return state.clips.filter(function (c) { return c.status === state.filter; });
         }
 
         function current() {
