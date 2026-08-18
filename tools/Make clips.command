@@ -131,6 +131,8 @@ if [ -n "$URL" ]; then
     --sub-langs 'en' --convert-subs srt \
     --format 'bv*[height<=1080]+ba/b[height<=1080]' \
     --merge-output-format mp4 \
+    --impersonate chrome \
+    --retries 10 --fragment-retries 10 \
     "$URL" || warn "yt-dlp stopped early — carrying on with whatever it got."
 fi
 
