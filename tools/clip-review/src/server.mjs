@@ -72,6 +72,61 @@ export function createReviewServer(config) {
     return clips;
   }
 
+  // One render job at a time, tracked in memory — a second click while it is
+  // already running would spawn a competing renderer writing to the same
+  // output folder, which is exactly the race this guards against.
+  const renderJob = { running: false, startedAt: null, finishedAt: null, exitCode: null, log: '', error: null };
+
+  function renderStatus() {
+    return {
+      running: renderJob.running,
+      startedAt: renderJob.startedAt,
+      finishedAt: renderJob.finishedAt,
+      exitCode: renderJob.exitCode,
+      error: renderJob.error,
+      // Enough to show recent progress without the response growing without
+      // bound over a long render.
+      log: renderJob.log.slice(-4000),
+    };
+  }
+
+  function startRender(res) {
+    if (renderJob.running) return json(res, 409, { error: 'a render is already running', ...renderStatus() });
+    if (!rendererScript || !existsSync(rendererScript)) {
+      return json(res, 500, { error: 'renderer not configured on this server' });
+    }
+
+    const approvedCount = library().filter((c) => c.status === 'approved').length;
+    if (!approvedCount) return json(res, 400, { error: 'nothing is approved yet' });
+
+    const rendererArgs = [rendererScript, '--manifest', renderManifestPath, '--out', renderDir];
+    if (video) rendererArgs.push('--video', video);
+    else if (videoDir) rendererArgs.push('--video-dir', videoDir);
+
+    renderJob.running = true;
+    renderJob.startedAt = new Date().toISOString();
+    renderJob.finishedAt = null;
+    renderJob.exitCode = null;
+    renderJob.error = null;
+    renderJob.log = '';
+
+    const child = spawn('node', rendererArgs, { cwd: rendererCwd });
+    child.stdout.on('data', (d) => { renderJob.log += d.toString(); });
+    child.stderr.on('data', (d) => { renderJob.log += d.toString(); });
+    child.on('error', (err) => {
+      renderJob.running = false;
+      renderJob.finishedAt = new Date().toISOString();
+      renderJob.error = err.message;
+    });
+    child.on('close', (code) => {
+      renderJob.running = false;
+      renderJob.finishedAt = new Date().toISOString();
+      renderJob.exitCode = code;
+    });
+
+    return json(res, 200, { started: true, approvedCount });
+  }
+
   const server = createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');
