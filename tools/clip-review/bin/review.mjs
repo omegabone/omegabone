@@ -122,6 +122,8 @@ if (!clipCount) {
   process.exit(1);
 }
 
+const rendererScript = join(args.rendererDir, 'scripts', 'render-all.mjs');
+
 const server = createReviewServer({
   manifestPath,
   transcriptsPath,
@@ -131,6 +133,8 @@ const server = createReviewServer({
   videoDir: args['video-dir'],
   video: args.video,
   move: args.move,
+  rendererScript: existsSync(rendererScript) ? rendererScript : null,
+  rendererCwd: args.rendererDir,
 });
 
 server.on('error', (err) => {
