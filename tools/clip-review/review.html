@@ -1965,6 +1965,77 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
 
         el.hint.addEventListener('click', function () { el.keys.showModal(); });
 
+        /* ---------- render approved clips ---------- */
+
+        var renderPoll = null;
+
+        function pollRender() {
+          getJson('/api/render').then(function (data) {
+            if (data.running) {
+              el.renderStatus.className = 'render-status';
+              el.renderStatus.textContent = 'Rendering… ' + lastLogLine(data.log);
+              return;
+            }
+
+            clearInterval(renderPoll);
+            renderPoll = null;
+            el.renderBtn.disabled = false;
+
+            if (data.error) {
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = 'Render failed to start: ' + data.error;
+            } else if (data.exitCode === 0) {
+              el.renderStatus.className = 'render-status ok';
+              el.renderStatus.textContent = 'Render finished.';
+            } else if (data.exitCode !== null) {
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = 'Render exited with an error — ' + lastLogLine(data.log);
+            }
+
+            // Picks up freshly rendered files and clears renderStale flags.
+            load();
+          });
+        }
+
+        function lastLogLine(log) {
+          var lines = String(log || '').trim().split('\n').filter(Boolean);
+          return lines.length ? lines[lines.length - 1].trim().slice(0, 90) : '';
+        }
+
+        el.renderBtn.addEventListener('click', function () {
+          el.renderBtn.disabled = true;
+          el.renderStatus.className = 'render-status';
+          el.renderStatus.textContent = 'Starting render…';
+
+          fetch('/api/render', { method: 'POST' }).then(function (res) {
+            return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+          }).then(function (result) {
+            if (!result.ok) {
+              el.renderBtn.disabled = false;
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = result.data.error || 'Could not start the render';
+              return;
+            }
+            clearInterval(renderPoll);
+            renderPoll = setInterval(pollRender, 1500);
+            pollRender();
+          }).catch(function (err) {
+            el.renderBtn.disabled = false;
+            el.renderStatus.className = 'render-status error';
+            el.renderStatus.textContent = 'Could not start the render: ' + err.message;
+          });
+        });
+
+        // A render already running when the page loads (started from another
+        // tab, or this page was reloaded mid-render) still shows progress.
+        getJson('/api/render').then(function (data) {
+          if (data.running) {
+            el.renderBtn.disabled = true;
+            renderPoll = setInterval(pollRender, 1500);
+            pollRender();
+          }
+        }).catch(function () {});
+
         document.addEventListener('keydown', function (e) {
           if (!state.loaded || e.metaKey || e.ctrlKey || e.altKey) return;
           if (e.target && e.target.matches && e.target.matches('textarea, input')) return;
