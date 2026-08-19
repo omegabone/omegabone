@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
+import { SiteHeader } from "../components/SiteHeader";
 
 /*
   THE FREQUENCY FUNNEL — VME Landing Page
   Ported from the standalone HTML/CSS mock exactly as authored (Vintage Charm
   palette: Oxblood / Crimson / Cream / Vintage Gold / Taupe, Cinzel Decorative
   + Cinzel + EB Garamond). This page is intentionally styled differently from
-  the rest of the site — the same way /music-education (cream) and /comewithme
+  the rest of the site — the same way /Professional_Experience (cream) and /Come_with_Me
   (black) are their own worlds. No shared Navbar/Footer here on purpose.
 
   CSS custom properties are prefixed --freq- so they don't collide with the
@@ -16,7 +17,7 @@ import { useEffect, useRef } from "react";
     /videos/free-lesson.mp4         (+ /videos/free-lesson-poster.jpg)  — not yet supplied, shows the graceful fallback below
     /images/omega-bw-portrait.png
   Primary CTA points to /apply (the live intake route). The fork CTA points
-  to /practice (redirects to /vocalmastery/practice).
+  to /practice (redirects to /Vocal_Mastery/practice).
 */
 
 const FREQUENCY_CSS = `
