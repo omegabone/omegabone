@@ -14,6 +14,7 @@ import { buzzNote, howToPractice, repCues } from "../data/warmupManifest";
 import { useStreak } from "../hooks/useStreak";
 import logoImg from "../../assets/omegabone-logo-trimmed.png";
 import { ExerciseNotation } from "../components/ExerciseNotation";
+import { SiteHeader } from "../components/SiteHeader";
 
 declare const __BUILD_DATE__: string;
 
@@ -696,12 +697,12 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
   );
 }
 
-/** Vocal Mastery practice portal — omegabone.com/vocalmastery/practice */
+/** Vocal Mastery practice portal — omegabone.com/Vocal_Mastery/practice */
 export function PracticePage() {
   return <PracticePortal colors={FOREST_GREEN} />;
 }
 
-/** Learn-2-Sing practice portal — omegabone.com/learn2sing/practice */
+/** Learn-2-Sing practice portal — omegabone.com/Learn_2_Sing/practice */
 export function Learn2SingPracticePage() {
   return <PracticePortal colors={LAVENDER} />;
 }
