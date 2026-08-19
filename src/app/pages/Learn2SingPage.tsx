@@ -9,7 +9,7 @@ import {
   Headphones, Video, Star, Mic, Music, Guitar, Users,
   ChevronLeft, ChevronRight, Quote, Trophy, Gift, ChevronDown, ChevronUp, Sparkles,
 } from "lucide-react";
-import { L2CNavbar } from "../components/L2CNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { LogoCarousel } from "../components/LogoCarousel";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
