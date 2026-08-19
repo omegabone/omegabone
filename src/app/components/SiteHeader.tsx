@@ -4,11 +4,11 @@ import logoImage from "figma:asset/c203af8148e96bab0b430f3321aa301dbae6cef3.png"
 
 const NAV_LINKS = [
   { label: "About",                  href: "/about" },
-  { label: "Professional Experience", href: "/music-education" },
-  { label: "Vocal Mastery",          href: "/vocalmastery" },
-  { label: "Learn 2 Sing",           href: "/learn2sing" },
-  { label: "Music Room 33",          href: "/music-room-33" },
-  { label: "Come with Me",           href: "/comewithme" },
+  { label: "Professional Experience", href: "/Professional_Experience" },
+  { label: "Vocal Mastery",          href: "/Vocal_Mastery" },
+  { label: "Learn 2 Sing",           href: "/Learn_2_Sing" },
+  { label: "Music Room 33",          href: "/Music_Room_33" },
+  { label: "Come with Me",           href: "/Come_with_Me" },
 ];
 
 type Theme = "light" | "dark";
@@ -24,8 +24,24 @@ type Theme = "light" | "dark";
   each page's own palette: "light" (default) for light-background pages —
   dark logo/icon; "dark" for dark-background pages (e.g. the oxblood
   Frequency/Vocal Mastery pages) — logo inverted to white, light icon.
+
+  `hideLogo` drops the floating logo for the rare page that already shows
+  its own wordmark in a top bar (e.g. Professional Experience's in-page
+  section nav) — showing two logos would be redundant.
+
+  `topOffsetPx` shifts the whole floating header down, for the same kind
+  of page: it has its own sticky top bar for in-page section links, so our
+  hamburger is pushed below it instead of overlapping those links.
 */
-export function SiteHeader({ theme = "light" }: { theme?: Theme }) {
+export function SiteHeader({
+  theme = "light",
+  hideLogo = false,
+  topOffsetPx = 0,
+}: {
+  theme?: Theme;
+  hideLogo?: boolean;
+  topOffsetPx?: number;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const isDark = theme === "dark";
 
@@ -40,16 +56,21 @@ export function SiteHeader({ theme = "light" }: { theme?: Theme }) {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-[100] pointer-events-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-          <a href="/" aria-label="Omega Bone home" className="shrink-0 pointer-events-auto">
-            <img
-              src={logoImage}
-              alt="Omega Bone"
-              className="h-7 sm:h-9 w-auto object-contain"
-              style={isDark ? { filter: "invert(1) brightness(2)" } : undefined}
-            />
-          </a>
+      <div
+        className="fixed left-0 right-0 z-[100] pointer-events-none"
+        style={{ top: topOffsetPx }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-end">
+          {!hideLogo && (
+            <a href="/" aria-label="Omega Bone home" className="shrink-0 pointer-events-auto mr-auto">
+              <img
+                src={logoImage}
+                alt="Omega Bone"
+                className="h-7 sm:h-9 w-auto object-contain"
+                style={isDark ? { filter: "invert(1) brightness(2)" } : undefined}
+              />
+            </a>
+          )}
 
           <button
             onClick={() => setIsOpen((v) => !v)}
