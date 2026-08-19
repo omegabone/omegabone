@@ -59,9 +59,9 @@ const teachingRoles = [
 export function AboutPage() {
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <AboutNavbar />
+      <SiteHeader theme="light" />
 
-      <div className="mt-28 sm:mt-36 lg:mt-40 px-4 sm:px-6 pt-4 pb-2">
+      <div className="mt-16 sm:mt-20 px-4 sm:px-6 pt-4 pb-2">
         <ForSchoolsBlock />
       </div>
 
