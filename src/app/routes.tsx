@@ -47,39 +47,48 @@ function NotFound() {
 // Old hyphenated blog URLs → new spelling, preserving the post slug
 function VocalMasteryBlogPostRedirect() {
   const { slug } = useParams();
-  return <Navigate to={`/vocalmastery/blog/${slug}`} replace />;
+  return <Navigate to={`/Vocal_Mastery/blog/${slug}`} replace />;
+}
+
+// Old lowercase page URLs (pre naming-convention pass) → new Title_Case
+// paths, preserving any :slug param, so old bookmarks/indexed links keep working
+function slugRedirect(base: string) {
+  return function SlugRedirect() {
+    const { slug } = useParams();
+    return <Navigate to={`${base}/${slug}`} replace />;
+  };
 }
 
 export const router = createBrowserRouter([
   { path: "/",                                  Component: wrap(FrequencyPage) },
   { path: "/about",                             Component: wrap(AboutPage) },
-  { path: "/music-room-33",                     Component: wrap(Music33Page) },
-  { path: "/vocalmastery",              Component: wrap(Learn2SingPage) },
-  { path: "/comewithme",                         Component: wrap(ComeWithMePage) },
+  { path: "/Music_Room_33",                     Component: wrap(Music33Page) },
+  { path: "/Vocal_Mastery",              Component: wrap(Learn2SingPage) },
+  { path: "/Come_with_Me",                         Component: wrap(ComeWithMePage) },
   { path: "/contact",                           Component: wrap(ContactPage) },
-  { path: "/learn2sing",                        Component: wrap(VocalPresencePage) },
-  { path: "/learn2sing/blog",                   Component: wrap(BlogPage) },
-  { path: "/learn2sing/blog/:slug",             Component: wrap(BlogPostPage) },
+  { path: "/Learn_2_Sing",                        Component: wrap(VocalPresencePage) },
+  { path: "/Learn_2_Sing/blog",                   Component: wrap(BlogPage) },
+  { path: "/Learn_2_Sing/blog/:slug",             Component: wrap(BlogPostPage) },
   { path: "/blogspot/:slug",                    Component: wrap(BlogspotPostPage) },
-  { path: "/vocalmastery/blog",         Component: wrap(L2SBlogPage) },
-  { path: "/vocalmastery/blog/:slug",   Component: wrap(L2SBlogPostPage) },
-  { path: "/music-room-33/blog",                Component: wrap(Music33BlogPage) },
-  { path: "/music-room-33/blog/:slug",          Component: wrap(Music33BlogPostPage) },
-  { path: "/comewithme/blog",                    Component: wrap(AlbumReleaseBlogPage) },
+  { path: "/Vocal_Mastery/blog",         Component: wrap(L2SBlogPage) },
+  { path: "/Vocal_Mastery/blog/:slug",   Component: wrap(L2SBlogPostPage) },
+  { path: "/Music_Room_33/blog",                Component: wrap(Music33BlogPage) },
+  { path: "/Music_Room_33/blog/:slug",          Component: wrap(Music33BlogPostPage) },
+  { path: "/Come_with_Me/blog",                    Component: wrap(AlbumReleaseBlogPage) },
   { path: "/privacy",                           Component: wrap(PrivacyPolicyPage) },
   { path: "/terms",                             Component: wrap(TermsOfServicePage) },
   { path: "/cookies",                           Component: wrap(CookiePolicyPage) },
   { path: "/disclaimer",                        Component: wrap(DisclaimerPage) },
   { path: "/apply",                             Component: wrap(ApplyPage) },
-  { path: "/music-education",                   Component: wrap(MusicEducationLandingPage) },
+  { path: "/Professional_Experience",                   Component: wrap(MusicEducationLandingPage) },
   { path: "/frequency",                         Component: wrap(FrequencyPage) },
   { path: "/frequency/vault",                   Component: wrap(CourseVaultPage) },
-  { path: "/vocalmastery/practice",             Component: wrap(PracticePage) },
-  { path: "/learn2sing/practice",               Component: wrap(Learn2SingPracticePage) },
+  { path: "/Vocal_Mastery/practice",             Component: wrap(PracticePage) },
+  { path: "/Learn_2_Sing/practice",               Component: wrap(Learn2SingPracticePage) },
   // Old addresses — keep shared links and indexed URLs working
-  { path: "/practice",                          Component: () => <Navigate to="/vocalmastery/practice" replace /> },
-  { path: "/vocal-mastery",                     Component: () => <Navigate to="/vocalmastery" replace /> },
-  { path: "/vocal-mastery/blog",                Component: () => <Navigate to="/vocalmastery/blog" replace /> },
+  { path: "/practice",                          Component: () => <Navigate to="/Vocal_Mastery/practice" replace /> },
+  { path: "/vocal-mastery",                     Component: () => <Navigate to="/Vocal_Mastery" replace /> },
+  { path: "/vocal-mastery/blog",                Component: () => <Navigate to="/Vocal_Mastery/blog" replace /> },
   { path: "/vocal-mastery/blog/:slug",          Component: VocalMasteryBlogPostRedirect },
   { path: "*",                                  Component: NotFound },
 ]);
