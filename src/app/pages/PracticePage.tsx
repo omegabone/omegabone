@@ -218,6 +218,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
 
   return (
     <div style={{ background: colors.bg, minHeight: "100vh", color: colors.white, overflowX: "hidden" }}>
+      <SiteHeader theme="dark" />
       {/* Noise texture, same treatment as the rest of the dark pages */}
       <div
         style={{
