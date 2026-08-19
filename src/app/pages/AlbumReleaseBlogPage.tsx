@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navbar } from "../components/Navbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { useBlogspotFeed } from "../hooks/useBlogspotFeed";
 
