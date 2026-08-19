@@ -94,7 +94,10 @@ export function SiteHeader({
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
-          <div className="fixed top-14 sm:top-16 right-0 z-[100] w-full sm:w-80 bg-white shadow-xl sm:rounded-bl-lg overflow-hidden">
+          <div
+            className="fixed right-0 z-[100] w-full sm:w-80 bg-white shadow-xl sm:rounded-bl-lg overflow-hidden"
+            style={{ top: topOffsetPx + 56 }}
+          >
             <nav aria-label="Site navigation">
               {NAV_LINKS.map((link) => (
                 <a
