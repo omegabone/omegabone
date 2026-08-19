@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Play, Pause, ArrowRight, ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useBlogspotFeed } from "../hooks/useBlogspotFeed";
+import { SiteHeader } from "../components/SiteHeader";
 
 // Uploaded artwork - only these, zero generics
 import polyptychPacksImg   from "figma:asset/bf71ccf46e206af137a469fa3a9b57c222a4dffc.png";
