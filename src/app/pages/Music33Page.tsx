@@ -1,4 +1,4 @@
-import { Music33Navbar } from "../components/Music33Navbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { Hero } from "../components/Hero";
 import { StatsBar } from "../components/StatsBar";
