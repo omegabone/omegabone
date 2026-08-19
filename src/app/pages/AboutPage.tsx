@@ -8,7 +8,7 @@ import image_1c57b253b147937aa36d4f7dbedaba9e269c9d51 from 'figma:asset/1c57b253
 import { ArrowRight, MapPin, Music, Globe, Mic2, MessageSquare } from "lucide-react";
 import { Link } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { AboutNavbar } from "../components/AboutNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { ForSchoolsBlock } from "../components/ForSchoolsBlock";
 import { LogoCarousel } from "../components/LogoCarousel";
