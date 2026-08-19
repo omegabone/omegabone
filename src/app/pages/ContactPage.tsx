@@ -53,11 +53,11 @@ export function ContactPage() {
 
   return (
     <>
-      <AboutNavbar />
+      <SiteHeader theme="light" />
       <main className="min-h-screen bg-white">
 
         {/* Hero */}
-        <section className="bg-[#f7f9ff] pt-44 pb-20 px-6">
+        <section className="bg-[#f7f9ff] pt-24 sm:pt-28 pb-20 px-6">
           <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
             {/* Text — left */}
