@@ -16,7 +16,7 @@ import { CTASection } from "../components/CTASection";
 export function Music33Page() {
   return (
     <>
-      <Music33Navbar />
+      <SiteHeader theme="light" />
       <Hero />
       <StatsBar />
       <About />
