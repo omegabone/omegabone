@@ -825,7 +825,7 @@ function L2SCTASection() {
 export function Learn2SingPage() {
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <L2CNavbar />
+      <SiteHeader theme="light" />
       <L2SHero />
       <L2SStatsBar />
       <L2SAbout />
