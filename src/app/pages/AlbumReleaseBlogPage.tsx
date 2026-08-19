@@ -43,7 +43,7 @@ export function AlbumReleaseBlogPage() {
 
   return (
     <div style={{ background: BG, minHeight: "100vh", color: CREAM, overflowX: "hidden" }}>
-      <SiteHeader theme="dark" />
+      <SiteHeader theme="cwm" />
 
       {/* ── PAGE HEADER ── */}
       <header style={{ paddingTop: "9rem", paddingBottom: "3rem", borderBottom: `1px solid ${BORDER}` }}>
