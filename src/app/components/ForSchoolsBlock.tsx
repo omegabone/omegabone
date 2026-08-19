@@ -37,7 +37,7 @@ export function ForSchoolsBlock() {
 
       <div className="fsb-inner">
         <p>Hiring for a school or program?</p>
-        <a className="fsb-btn" href="/music-education">
+        <a className="fsb-btn" href="/Professional_Experience">
           See My Education Work
         </a>
       </div>

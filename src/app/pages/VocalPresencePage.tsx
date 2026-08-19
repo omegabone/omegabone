@@ -654,7 +654,7 @@ function VPBlogSection() {
               The voice you've been holding back. The dream you quietly filed away. The ripple effect that follows when you finally set it free.
             </p>
           </div>
-          <a href="/learn2sing/blog" className="flex items-center gap-2 text-[#554274] hover:text-[#432f5c] transition-colors whitespace-nowrap" style={{ fontWeight: 700 }}>
+          <a href="/Learn_2_Sing/blog" className="flex items-center gap-2 text-[#554274] hover:text-[#432f5c] transition-colors whitespace-nowrap" style={{ fontWeight: 700 }}>
             Read all articles <ArrowRight size={18} />
           </a>
         </div>

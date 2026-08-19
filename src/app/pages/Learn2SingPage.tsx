@@ -720,7 +720,7 @@ function L2SBlogSection() {
               No music theory. No stage fright clichés. Just practical voice training insight for people who communicate for a living.
             </p>
           </div>
-          <a href="/vocalmastery/blog" className="flex items-center gap-2 text-[#166534] hover:text-[#14532d] transition-colors whitespace-nowrap" style={{ fontWeight: 700 }}>
+          <a href="/Vocal_Mastery/blog" className="flex items-center gap-2 text-[#166534] hover:text-[#14532d] transition-colors whitespace-nowrap" style={{ fontWeight: 700 }}>
             Read all articles <ArrowRight size={18} />
           </a>
         </div>
@@ -739,7 +739,7 @@ function L2SBlogSection() {
             ))
           ) : (
             posts.map((post) => (
-            <a key={post.slug} href={`/vocalmastery/blog/${post.slug}`} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col">
+            <a key={post.slug} href={`/Vocal_Mastery/blog/${post.slug}`} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col">
               {post.image && (
               <div className="overflow-hidden h-52">
                 <ImageWithFallback src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />

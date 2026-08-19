@@ -1,11 +1,11 @@
-import { AboutNavbar } from "../components/AboutNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 
 export function TermsOfServicePage() {
   return (
     <>
-      <AboutNavbar />
-      <main className="min-h-screen bg-white pt-40 pb-24 px-4 sm:px-6">
+      <SiteHeader theme="light" />
+      <main className="min-h-screen bg-white pt-24 sm:pt-28 pb-24 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-[#1a56db] text-sm uppercase tracking-widest mb-3" style={{ fontWeight: 700 }}>Legal</p>
           <h1 className="text-black mb-2" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em" }}>

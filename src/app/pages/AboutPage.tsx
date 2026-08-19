@@ -135,7 +135,7 @@ export function AboutPage() {
               <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>The most important stage a child will ever stand on is inside their own home. Music Room 33 helps parents and children unlock their musical potential together, building confidence, connection, and creativity in the everyday moments that matter most.</p>
               <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>A child who grows up singing grows up knowing they have something to say.</p>
               <Link
-                to="/music-room-33"
+                to="/Music_Room_33"
                 className="inline-flex items-center justify-center gap-2 bg-[#1a56db] text-white px-8 py-4 rounded-full hover:bg-[#1649c0] transition-all hover:shadow-lg group mt-auto text-[14px]"
                 style={{ fontWeight: 700 }}
                 onClick={() => window.scrollTo(0, 0)}
@@ -155,7 +155,7 @@ export function AboutPage() {
               <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>You already have the message. What's missing is a voice that makes people stop, lean in, and feel it. Learn 2 Sing is for entrepreneurs, coaches, and creators who know their ideas are worth hearing and are done letting a flat, forgettable delivery get in the way.</p>
               <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>When your voice carries authority, your words carry weight.</p>
               <a
-                href="/learn2sing#top"
+                href="/Learn_2_Sing#top"
                 className="inline-flex items-center justify-center gap-2 bg-[#554274] text-white px-8 py-4 rounded-full hover:bg-[#443360] transition-all hover:shadow-lg group mt-auto text-[14px]"
                 style={{ fontWeight: 700 }}
               >
@@ -174,7 +174,7 @@ export function AboutPage() {
               <p className="text-gray-600 mb-4 flex-1" style={{ lineHeight: 1.8 }}>Communication is not just what you say, it is how your voice makes people feel. Vocal Mastery trains you to speak with clarity, resonance, and conviction, so every room you walk into already knows you mean it.</p>
               <p className="text-gray-500 text-sm italic mb-8" style={{ lineHeight: 1.6 }}>The voice is the instrument. The message is the music.</p>
               <Link
-                to="/vocalmastery"
+                to="/Vocal_Mastery"
                 className="inline-flex items-center justify-center gap-2 bg-[#166534] text-white px-8 py-4 rounded-full hover:bg-[#14532d] transition-all hover:shadow-lg group mt-auto text-[14px]"
                 style={{ fontWeight: 700 }}
                 onClick={() => window.scrollTo(0, 0)}

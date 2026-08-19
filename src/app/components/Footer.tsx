@@ -14,21 +14,21 @@ export function Footer() {
 
   const links: Record<string, { label: string; href: string }[]> = {
     Programs: [
-      { label: "Vocal Mastery", href: "/vocalmastery" },
-      { label: "Learn 2 Sing", href: "/learn2sing" },
-      { label: "Music Room 33", href: "/music-room-33" },
-      { label: "For Schools", href: "/music-education" },
+      { label: "Vocal Mastery", href: "/Vocal_Mastery" },
+      { label: "Learn 2 Sing", href: "/Learn_2_Sing" },
+      { label: "Music Room 33", href: "/Music_Room_33" },
+      { label: "For Schools", href: "/Professional_Experience" },
       { label: "Private Sessions", href: "/contact" },
       { label: "Group Workshops", href: "/contact" },
       { label: "Corporate Workshops", href: "/contact" },
     ],
     Resources: [
-      { label: "Vocal Warm-Up Series", href: "/vocalmastery#resources" },
-      { label: "Singer's Handbook", href: "/vocalmastery#resources" },
+      { label: "Vocal Warm-Up Series", href: "/Vocal_Mastery#resources" },
+      { label: "Singer's Handbook", href: "/Vocal_Mastery#resources" },
     ],
     Company: [
       { label: "About Omega Bone", href: "/about" },
-      { label: "Album Release", href: "/comewithme" },
+      { label: "Album Release", href: "/Come_with_Me" },
       { label: "Contact", href: "/contact" },
     ],
     Legal: [

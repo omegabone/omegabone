@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { ArrowLeft, Clock, Calendar, ExternalLink } from "lucide-react";
-import { L2SingNavbar } from "../components/L2SingNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useBlogspot } from "../context/BlogspotContext";
@@ -15,7 +15,7 @@ export function BlogspotPostPage() {
   if (isLoading) {
     return (
       <div className="bg-white min-h-screen">
-        <L2SingNavbar />
+        <SiteHeader theme="light" />
         <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
           <div className="animate-pulse text-gray-400">Loading article...</div>
         </div>
@@ -27,10 +27,10 @@ export function BlogspotPostPage() {
   if (!post) {
     return (
       <div className="bg-white min-h-screen">
-        <L2SingNavbar />
+        <SiteHeader theme="light" />
         <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
           <h1 className="text-black" style={{ fontSize: "2rem", fontWeight: 800 }}>Article not found</h1>
-          <a href="/learn2sing/blog" className="text-[#1a56db] flex items-center gap-2" style={{ fontWeight: 700 }}>
+          <a href="/Learn_2_Sing/blog" className="text-[#1a56db] flex items-center gap-2" style={{ fontWeight: 700 }}>
             <ArrowLeft size={18} /> Back to Blog
           </a>
         </div>
@@ -41,7 +41,7 @@ export function BlogspotPostPage() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <L2SingNavbar />
+      <SiteHeader theme="light" />
 
       {/* HERO IMAGE */}
       <div className="w-full pt-28 sm:pt-32 overflow-hidden">
@@ -67,7 +67,7 @@ export function BlogspotPostPage() {
       {/* ARTICLE HEADER */}
       <div className="max-w-3xl mx-auto px-6 pt-12 pb-2">
         <a
-          href="/learn2sing/blog"
+          href="/Learn_2_Sing/blog"
           className="inline-flex items-center gap-2 text-sm mb-8 transition-colors hover:opacity-70"
           style={{ color: accent, fontWeight: 600 }}
         >

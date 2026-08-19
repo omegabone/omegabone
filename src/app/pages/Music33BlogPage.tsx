@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Clock, Calendar, Search, Star, ChevronRight } from "lucide-react";
-import { Music33Navbar } from "../components/Music33Navbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useBlogspotFeed } from "../hooks/useBlogspotFeed";
@@ -25,7 +25,7 @@ export function Music33BlogPage() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <Music33Navbar />
+      <SiteHeader theme="light" />
 
       {/* HERO */}
       <section style={{ background: accentLight, paddingTop: "11rem", paddingBottom: "5rem" }}>
@@ -94,7 +94,7 @@ export function Music33BlogPage() {
                 {[featured, second].filter(Boolean).map((post) => (
                   <a
                     key={post!.slug}
-                    href={`/music-room-33/blog/${post!.slug}`}
+                    href={`/Music_Room_33/blog/${post!.slug}`}
                     className="group block rounded-3xl overflow-hidden border hover:shadow-2xl transition-all duration-500"
                     style={{ borderColor: accentMid }}
                   >
@@ -136,7 +136,7 @@ export function Music33BlogPage() {
                 {rest.map((post) => (
                   <a
                     key={post.slug}
-                    href={`/music-room-33/blog/${post.slug}`}
+                    href={`/Music_Room_33/blog/${post.slug}`}
                     className="group bg-white rounded-3xl overflow-hidden border hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                     style={{ borderColor: accentMid }}
                   >

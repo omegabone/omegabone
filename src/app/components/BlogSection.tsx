@@ -21,7 +21,7 @@ export function BlogSection() {
             >Insights for parents raising confident young singers</h2>
           </div>
           <a
-            href="/music-room-33/blog"
+            href="/Music_Room_33/blog"
             className="flex items-center gap-2 text-[#1a56db] hover:text-[#1649c0] transition-colors whitespace-nowrap"
             style={{ fontWeight: 700 }}
           >
@@ -53,7 +53,7 @@ export function BlogSection() {
             {posts.map((post) => (
               <a
                 key={post.slug}
-                href={`/music-room-33/blog/${post.slug}`}
+                href={`/Music_Room_33/blog/${post.slug}`}
                 className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col"
               >
                 {post.image && (

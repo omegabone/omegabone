@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Clock, Calendar, Search, ChevronRight } from "lucide-react";
-import { L2SingNavbar } from "../components/L2SingNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useBlogspot } from "../context/BlogspotContext";
@@ -26,7 +26,7 @@ export function BlogPage() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <L2SingNavbar />
+      <SiteHeader theme="light" />
 
       {/* ── HERO ── */}
       <section className="pt-44 pb-16 bg-[#f7f9ff]">
@@ -193,7 +193,7 @@ export function BlogPage() {
           <p className="text-gray-600 mb-8 max-w-lg mx-auto" style={{ lineHeight: 1.75 }}>The Learn 2 Sing program is built for your inner child who always wanted to sing. Work 1-on-1 with Omega Bone.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/learn2sing"
+              href="/Learn_2_Sing"
               className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-full hover:opacity-90 transition-all group"
               style={{ background: accentColor, fontWeight: 700 }}
             >
