@@ -1,0 +1,21 @@
+{
+  "name": "@omegabone/clip-extractor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Selects short-form social clips from vocal lesson transcripts under a fixed awareness-category rubric.",
+  "bin": {
+    "extract-clips": "./bin/extract-clips.mjs"
+  },
+  "scripts": {
+    "start": "node bin/extract-clips.mjs",
+    "smoke": "node bin/extract-clips.mjs --library fixtures/sample-library.md --offline --out .smoke-out --min-clips 1",
+    "test": "node --test 'test/*.test.mjs'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.72.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
