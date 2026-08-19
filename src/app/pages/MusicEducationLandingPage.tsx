@@ -179,6 +179,7 @@ export function MusicEducationLandingPage() {
 
   return (
     <div className="ed">
+      <SiteHeader theme="light" />
       <style>{`
         .ed {
           --royal: #1e3a8a;
