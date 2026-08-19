@@ -275,7 +275,7 @@ export function AlbumReleaseBlogPage() {
               The album. The novel. The comic. One story. Three objects. No compromises.
             </p>
             <a
-              href="/comewithme"
+              href="/Come_with_Me"
               style={{
                 ...cinzel,
                 display: "inline-flex",
