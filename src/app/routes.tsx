@@ -51,7 +51,7 @@ function VocalMasteryBlogPostRedirect() {
 }
 
 export const router = createBrowserRouter([
-  { path: "/",                                  Component: wrap(AboutPage) },
+  { path: "/",                                  Component: wrap(FrequencyPage) },
   { path: "/about",                             Component: wrap(AboutPage) },
   { path: "/music-room-33",                     Component: wrap(Music33Page) },
   { path: "/vocalmastery",              Component: wrap(Learn2SingPage) },
