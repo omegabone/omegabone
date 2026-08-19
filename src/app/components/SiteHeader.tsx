@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "Come with Me",           href: "/Come_with_Me" },
 ];
 
-type Theme = "light" | "dark" | "vintage";
+type Theme = "light" | "dark" | "vintage" | "cwm";
 
 /*
   SiteHeader — the single, consistent header used across every page on the
@@ -22,10 +22,12 @@ type Theme = "light" | "dark" | "vintage";
 
   `theme` picks icon/logo coloring so the header reads correctly against
   each page's own palette: "light" (default) for light-background pages —
-  dark logo/icon; "dark" for dark-background pages (e.g. Come with Me,
-  the warmup portals) — white logo/icon on a subtle glass button;
-  "vintage" for the Frequency page's Vintage Charm brand (oxblood/gold) —
-  bright red button, gold icon, matching its own bold plate/button styling.
+  dark logo/icon; "dark" for dark-background pages (e.g. the warmup
+  portals) — white logo/icon on a subtle glass button; "vintage" for the
+  Frequency page's Vintage Charm brand (oxblood/gold) — bright red button,
+  gold icon, matching its own bold plate/button styling; "cwm" for Come
+  with Me's brand (black/red/cream) — same red-on-cream pill used by its
+  own CTA buttons, same size/spacing as the standard "dark"/"light" button.
 
   `hideLogo` drops the floating logo for the rare page that already shows
   its own wordmark in a top bar (e.g. Professional Experience's in-page
