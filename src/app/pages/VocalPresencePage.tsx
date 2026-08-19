@@ -754,7 +754,7 @@ function VPCTASection() {
 export function VocalPresencePage() {
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      <L2SingNavbar />
+      <SiteHeader theme="light" />
       <VPHero />
       <VPStatsBar />
       <VPAbout />
