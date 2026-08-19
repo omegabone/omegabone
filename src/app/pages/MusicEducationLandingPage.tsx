@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SiteHeader } from "../components/SiteHeader";
 
 export function MusicEducationLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -468,7 +469,7 @@ export function MusicEducationLandingPage() {
 
       {/* Navigation */}
       <nav className="ed-nav">
-        <a className="ed-wordmark" href="/music-education">Omega Bone</a>
+        <a className="ed-wordmark" href="/Professional_Experience">Omega Bone</a>
         <button
           className="ed-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
