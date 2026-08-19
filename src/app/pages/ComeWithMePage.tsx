@@ -171,6 +171,7 @@ export function ComeWithMePage() {
 
   return (
     <div style={{ background: "#0c0c0c", minHeight: "100vh", color: "#f0ead8", overflowX: "hidden" }}>
+      <SiteHeader theme="dark" />
 
       {/* ══ HERO ═══════════════════════════════════════════════ */}
       <section style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "5rem 1.5rem 4rem" }}>
