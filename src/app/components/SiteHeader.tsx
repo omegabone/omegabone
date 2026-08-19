@@ -46,6 +46,7 @@ export function SiteHeader({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const isDark = theme === "dark";
+  const isVintage = theme === "vintage";
 
   useEffect(() => {
     if (!isOpen) return;
