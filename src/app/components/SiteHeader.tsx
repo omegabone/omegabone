@@ -79,13 +79,15 @@ export function SiteHeader({
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
-            className={`pointer-events-auto p-2 rounded-full backdrop-blur-md transition-colors ${
-              isDark
-                ? "bg-white/10 text-white hover:bg-white/20"
-                : "bg-black/5 text-gray-800 hover:bg-black/10"
+            className={`pointer-events-auto rounded-full backdrop-blur-md transition-colors ${
+              isVintage
+                ? "p-3 bg-[#C42A40] text-[#D5BF86] border border-[#D5BF86] hover:bg-[#A71D31]"
+                : isDark
+                ? "p-2 bg-white/10 text-white hover:bg-white/20"
+                : "p-2 bg-black/5 text-gray-800 hover:bg-black/10"
             }`}
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? <X size={isVintage ? 24 : 20} /> : <Menu size={isVintage ? 24 : 20} />}
           </button>
         </div>
       </div>
