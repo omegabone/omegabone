@@ -73,7 +73,7 @@ export function SiteHeader({
                 src={logoImage}
                 alt="Omega Bone"
                 className="h-7 sm:h-9 w-auto object-contain"
-                style={isDark ? { filter: "invert(1) brightness(2)" } : undefined}
+                style={isDark || isCwm ? { filter: "invert(1) brightness(2)" } : undefined}
               />
             </a>
           )}
