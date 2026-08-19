@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import logoImage from "figma:asset/c203af8148e96bab0b430f3321aa301dbae6cef3.png";
 
@@ -11,16 +11,23 @@ const NAV_LINKS = [
   { label: "Come with Me",           href: "/comewithme" },
 ];
 
+type Theme = "light" | "dark";
+
 /*
   SiteHeader — the single, consistent header used across every page on the
-  site. Deliberately minimal: logo (links home) + a hamburger menu in the
-  top right that reveals every other page. Replaces the old set of
-  per-page bespoke navbars (AboutNavbar, Music33Navbar, L2CNavbar,
-  L2SingNavbar, Navbar) so the chrome no longer changes shape page to page.
+  site. Deliberately minimal: a small logo (links home) and a hamburger
+  menu, both floating with no background bar, revealing every other page.
+  Replaces the old set of per-page bespoke navbars (AboutNavbar,
+  Music33Navbar, L2CNavbar, L2SingNavbar, Navbar).
+
+  `theme` picks icon/logo coloring so the header reads correctly against
+  each page's own palette: "light" (default) for light-background pages —
+  dark logo/icon; "dark" for dark-background pages (e.g. the oxblood
+  Frequency/Vocal Mastery pages) — logo inverted to white, light icon.
 */
-export function SiteHeader() {
+export function SiteHeader({ theme = "light" }: { theme?: Theme }) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const isDark = theme === "dark";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -33,13 +40,14 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md shadow-sm">
+      <div className="fixed top-0 left-0 right-0 z-[100] pointer-events-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-          <a href="/" className="shrink-0" aria-label="Omega Bone home">
+          <a href="/" aria-label="Omega Bone home" className="shrink-0 pointer-events-auto">
             <img
               src={logoImage}
               alt="Omega Bone"
-              className="h-8 sm:h-10 w-auto object-contain"
+              className="h-7 sm:h-9 w-auto object-contain"
+              style={isDark ? { filter: "invert(1) brightness(2)" } : undefined}
             />
           </a>
 
@@ -47,12 +55,16 @@ export function SiteHeader() {
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
-            className="p-2 -mr-2 text-gray-700 hover:text-gray-900 transition-colors"
+            className={`pointer-events-auto p-2 rounded-full backdrop-blur-md transition-colors ${
+              isDark
+                ? "bg-white/10 text-white hover:bg-white/20"
+                : "bg-black/5 text-gray-800 hover:bg-black/10"
+            }`}
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </header>
+      </div>
 
       {isOpen && (
         <>
@@ -61,10 +73,7 @@ export function SiteHeader() {
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
-          <div
-            ref={menuRef}
-            className="fixed top-14 sm:top-16 right-0 z-[100] w-full sm:w-80 bg-white shadow-xl sm:rounded-bl-lg overflow-hidden"
-          >
+          <div className="fixed top-14 sm:top-16 right-0 z-[100] w-full sm:w-80 bg-white shadow-xl sm:rounded-bl-lg overflow-hidden">
             <nav aria-label="Site navigation">
               {NAV_LINKS.map((link) => (
                 <a
