@@ -470,7 +470,7 @@ export function MusicEducationLandingPage() {
 
       {/* Navigation */}
       <nav className="ed-nav">
-        <a className="ed-wordmark" href="/Professional_Experience">Omega Bone</a>
+        <a className="ed-wordmark" href="/">Omega Bone</a>
         <button
           className="ed-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
