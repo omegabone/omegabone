@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle, Mail, MessageSquare } from "lucide-react";
-import { AboutNavbar } from "../components/AboutNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import omegaPhoto from "figma:asset/cefc03b51ff0f74449c11ed438e006c7c6c8e515.png";
 
