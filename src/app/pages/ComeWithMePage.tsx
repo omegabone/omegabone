@@ -862,7 +862,7 @@ export function ComeWithMePage() {
                 {blogPosts.slice(0, 6).map((post) => (
                   <a
                     key={post.slug}
-                    href={`/comewithme/blog`}
+                    href={`/Come_with_Me/blog`}
                     style={{
                       background: "#111111",
                       border: "1px solid #1e1e1e",
@@ -915,7 +915,7 @@ export function ComeWithMePage() {
               {blogPosts.length > 6 && (
                 <div style={{ textAlign: "center", marginTop: "3rem" }}>
                   <a
-                    href="/comewithme/blog"
+                    href="/Come_with_Me/blog"
                     style={{
                       ...cinzel,
                       display: "inline-flex",
@@ -955,7 +955,7 @@ export function ComeWithMePage() {
             Omega Bone teaches what he practices. Start your own vocal journey.
           </p>
           <a
-            href="/learn2sing"
+            href="/Learn_2_Sing"
             style={{
               ...cinzel,
               display: "inline-flex",
