@@ -13,7 +13,7 @@ import {
 import vpProgramThumbImg from "../../assets/vp-program-thumb.png";
 import vpProgramThumb2Img from "../../assets/vp-program-thumb-2.png";
 import vpProgramThumb3Img from "../../assets/vp-program-thumb-3.png";
-import { L2SingNavbar } from "../components/L2SingNavbar";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { LogoCarousel } from "../components/LogoCarousel";
 import { Testimonials } from "../components/Testimonials";
