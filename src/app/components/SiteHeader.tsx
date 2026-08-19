@@ -85,6 +85,8 @@ export function SiteHeader({
             className={`pointer-events-auto rounded-full backdrop-blur-md transition-colors ${
               isVintage
                 ? "p-3 bg-[#C42A40] text-[#D5BF86] border border-[#D5BF86] hover:bg-[#A71D31]"
+                : isCwm
+                ? "p-2 bg-[#ef4444] text-[#f0ead8] hover:bg-[#dc2626]"
                 : isDark
                 ? "p-2 bg-white/10 text-white hover:bg-white/20"
                 : "p-2 bg-black/5 text-gray-800 hover:bg-black/10"
