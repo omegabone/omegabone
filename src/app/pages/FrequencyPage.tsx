@@ -797,7 +797,7 @@ export function FrequencyPage() {
       <section className="band-deep fork fade">
         <div className="wrap">
           <span className="plate">Not ready to talk yet</span>
-          <p>Start with one free lesson from the Frequency Series. If it resonates, the full five-module course is yours to keep.</p>
+          <p>Start with one free lesson from the Frequency Series.</p>
 
           {/* FREE VIDEO — /public/videos/free-lesson.mp4 */}
           <div className="fork-video">
