@@ -430,16 +430,9 @@ export function FrequencyPage() {
       {/* ================= HERO / ANCHOR ================= */}
       <header className="hero" id="freq-top">
         <div className="wrap">
-          <div className="hero-grid">
-            <div>
-              <span className="plate">Vocal Mastery for Entrepreneurs</span>
-              <h1>Your voice is not the obstacle. It is the <span className="accent-word">answer</span>.</h1>
-              <p className="subline">I am a singer from Los Angeles, with a team of musicians, engineers, and producers behind me. We take artists and messengers who carry something the world needs to hear, and clear everything between them and the sound they were born to make.</p>
-              <div className="hero-cta-row">
-                <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
-                <span className="cta-trust">Private. Twenty minutes. No pitch you have to sit through.</span>
-              </div>
-            </div>
+          <div className="hero-stack">
+            <span className="plate">Vocal Mastery for Entrepreneurs</span>
+            <h1>Your voice is not the obstacle. It is the <span className="accent-word">answer</span>.</h1>
 
             {/* THE TRANSMISSION — main VSL, hosted on YouTube (unlisted) */}
             <div className="vsl" style={{ aspectRatio: "1920 / 1246" }}>
@@ -450,6 +443,12 @@ export function FrequencyPage() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
+            </div>
+
+            <p className="subline">I am a singer from Los Angeles, with a team of musicians, engineers, and producers behind me. We take artists and messengers who carry something the world needs to hear, and clear everything between them and the sound they were born to make.</p>
+            <div className="hero-cta-row">
+              <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
+              <span className="cta-trust">Private. Twenty minutes. No pitch you have to sit through.</span>
             </div>
           </div>
         </div>
