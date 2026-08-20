@@ -13,7 +13,9 @@ import { SiteHeader } from "../components/SiteHeader";
   shadcn/tailwind theme tokens defined globally in src/styles/theme.css.
 
   VIDEO FILES live in /public/videos and /public/images:
-    /videos/antoine-testimonial.mp4 (+ /videos/antoine-poster.jpg)
+    /videos/testimonial-sreynan-learn2sing.mp4      — Sreynan Pheap, Learn 2 Sing
+    /videos/testimonial-antoine-vme.mp4             — Antoine Riendeau, Vocal Mastery for Entrepreneurs
+    /videos/testimonial-irina-concert-program.mp4   — Irina Sergeeva, Live Room Concert Program
     /videos/free-lesson.mp4         (+ /videos/free-lesson-poster.jpg)  — not yet supplied, shows the graceful fallback below
     /images/omega-bw-portrait.png
   Primary CTA points to /apply (the live intake route). The fork CTA points
