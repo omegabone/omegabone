@@ -424,7 +424,7 @@ export function FrequencyPage() {
   return (
     <div className="freq-root" ref={rootRef}>
       <style>{FREQUENCY_CSS}</style>
-      <SiteHeader theme="cwm" hideLogo />
+      <SiteHeader theme="cwm" />
 
       {/* ================= HERO / ANCHOR ================= */}
       <header className="hero" id="freq-top">

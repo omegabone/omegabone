@@ -179,7 +179,7 @@ export function MusicEducationLandingPage() {
 
   return (
     <div className="ed">
-      <SiteHeader theme="dark" hideLogo topOffsetPx={56} />
+      <SiteHeader theme="dark" topOffsetPx={56} />
       <style>{`
         .ed {
           --royal: #1e3a8a;
