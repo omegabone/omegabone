@@ -106,7 +106,7 @@ export function SiteHeader({
           />
           <div
             className={`fixed right-0 z-[100] w-full sm:w-80 shadow-xl sm:rounded-bl-lg overflow-hidden ${
-              isCwm ? "bg-[#ef4444]" : "bg-white"
+              isVintage ? "bg-[#C42A40]" : isCwm ? "bg-[#ef4444]" : "bg-white"
             }`}
             style={{ top: topOffsetPx + 56 }}
           >
@@ -117,11 +117,19 @@ export function SiteHeader({
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={
-                    isCwm
+                    isVintage
+                      ? "block px-6 py-5 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors"
+                      : isCwm
                       ? "block px-6 py-4 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors border-b border-black/15 last:border-0"
                       : "block px-6 py-4 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#1a56db] transition-colors border-b border-gray-100 last:border-0"
                   }
-                  style={isCwm ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" } : { fontWeight: 600 }}
+                  style={
+                    isVintage
+                      ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.08em", textTransform: "uppercase" }
+                      : isCwm
+                      ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" }
+                      : { fontWeight: 600 }
+                  }
                 >
                   {link.label}
                 </a>
