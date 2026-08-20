@@ -209,6 +209,9 @@ const FREQUENCY_CSS = `
 
   .freq-root .proof-head { text-align: center; margin-bottom: 46px; }
   .freq-root .proof-video { max-width: 760px; margin: 0 auto 44px; }
+  .freq-root .proof-videos { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; max-width: 900px; margin: 0 auto 44px; }
+  .freq-root .proof-videos .videoframe { aspect-ratio: 9/16; }
+  @media (max-width: 860px) { .freq-root .proof-videos { grid-template-columns: 1fr; max-width: 340px; } }
   .freq-root .videoframe {
     position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden;
     border: 1px solid var(--freq-bronze); background: #33090E;
