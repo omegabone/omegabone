@@ -128,10 +128,14 @@ export function SiteHeader({
                   onClick={() => setIsOpen(false)}
                   className={
                     isCwm
-                      ? "block px-6 py-5 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors"
+                      ? "block text-sm text-[#D5BF86] hover:bg-black/10 transition-colors"
                       : "block px-6 py-4 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#1a56db] transition-colors border-b border-gray-100 last:border-0"
                   }
-                  style={isCwm ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" } : { fontWeight: 600 }}
+                  style={
+                    isCwm
+                      ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em", paddingLeft: 24, paddingRight: 24, paddingTop: 20, paddingBottom: 20 }
+                      : { fontWeight: 600 }
+                  }
                 >
                   {link.label}
                 </a>
