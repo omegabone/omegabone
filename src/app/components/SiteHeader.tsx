@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "Come with Me",           href: "/Come_with_Me" },
 ];
 
-type Theme = "light" | "dark" | "vintage" | "cwm";
+type Theme = "light" | "dark" | "cwm";
 
 /*
   SiteHeader — the single, consistent header used across every page on the
@@ -23,11 +23,9 @@ type Theme = "light" | "dark" | "vintage" | "cwm";
   `theme` picks icon/logo coloring so the header reads correctly against
   each page's own palette: "light" (default) for light-background pages —
   dark logo/icon; "dark" for dark-background pages (e.g. the warmup
-  portals) — white logo/icon on a subtle glass button; "vintage" for the
-  Frequency page's Vintage Charm brand (oxblood/gold) — bright red button,
-  gold icon, matching its own bold plate/button styling; "cwm" for Come
-  with Me's brand (black/red/cream) — same red-on-cream pill used by its
-  own CTA buttons, same size/spacing as the standard "dark"/"light" button.
+  portals) — white logo/icon on a subtle glass button; "cwm" for the
+  Come with Me / Frequency brand (black/red/gold) — bright red button and
+  dropdown with gold text, no divider lines, extra spacing between items.
 
   `hideLogo` drops the floating logo for the rare page that already shows
   its own wordmark in a top bar (e.g. Professional Experience's in-page
@@ -48,7 +46,6 @@ export function SiteHeader({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const isDark = theme === "dark";
-  const isVintage = theme === "vintage";
   const isCwm = theme === "cwm";
 
   useEffect(() => {
@@ -82,17 +79,15 @@ export function SiteHeader({
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
-            className={`pointer-events-auto rounded-full backdrop-blur-md transition-colors ${
-              isVintage
-                ? "p-3 bg-[#C42A40] text-[#D5BF86] border border-[#D5BF86] hover:bg-[#A71D31]"
-                : isCwm
-                ? "p-2 bg-[#ef4444] text-[#f0ead8] hover:bg-[#dc2626]"
+            className={`pointer-events-auto p-2 rounded-full backdrop-blur-md transition-colors ${
+              isCwm
+                ? "bg-[#ef4444] text-[#f0ead8] hover:bg-[#dc2626]"
                 : isDark
-                ? "p-2 bg-white/10 text-white hover:bg-white/20"
-                : "p-2 bg-black/5 text-gray-800 hover:bg-black/10"
+                ? "bg-white/10 text-white hover:bg-white/20"
+                : "bg-black/5 text-gray-800 hover:bg-black/10"
             }`}
           >
-            {isOpen ? <X size={isVintage ? 24 : 20} /> : <Menu size={isVintage ? 24 : 20} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
@@ -106,7 +101,7 @@ export function SiteHeader({
           />
           <div
             className={`fixed right-0 z-[100] w-full sm:w-80 shadow-xl sm:rounded-bl-lg overflow-hidden ${
-              isVintage ? "bg-[#C42A40]" : isCwm ? "bg-[#ef4444]" : "bg-white"
+              isCwm ? "bg-[#ef4444]" : "bg-white"
             }`}
             style={{ top: topOffsetPx + 56 }}
           >
@@ -117,19 +112,11 @@ export function SiteHeader({
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={
-                    isVintage
-                      ? "block px-6 py-5 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors"
-                      : isCwm
+                    isCwm
                       ? "block px-6 py-4 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors border-b border-black/15 last:border-0"
                       : "block px-6 py-4 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#1a56db] transition-colors border-b border-gray-100 last:border-0"
                   }
-                  style={
-                    isVintage
-                      ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.08em", textTransform: "uppercase" }
-                      : isCwm
-                      ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" }
-                      : { fontWeight: 600 }
-                  }
+                  style={isCwm ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" } : { fontWeight: 600 }}
                 >
                   {link.label}
                 </a>
