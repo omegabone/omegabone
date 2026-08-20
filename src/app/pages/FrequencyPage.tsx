@@ -148,12 +148,13 @@ const FREQUENCY_CSS = `
       var(--freq-obsidian);
     border-bottom: 1px solid rgba(141,119,95,0.35);
   }
-  .freq-root .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 64px); align-items: center; width: 100%; }
-  .freq-root .hero h1 { margin: 18px 0 22px; }
+  .freq-root .hero-stack { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+  .freq-root .hero h1 { margin: 18px 0 0; max-width: 22ch; }
   .freq-root .hero .accent-word { color: var(--freq-gold); font-style: italic; }
-  .freq-root .hero-cta-row { margin-top: 34px; display: flex; flex-direction: column; align-items: flex-start; }
+  .freq-root .hero .vsl { width: 100%; max-width: 900px; margin: 40px auto 0; }
+  .freq-root .hero .subline { max-width: 680px; margin: 34px auto 0; }
+  .freq-root .hero-cta-row { margin-top: 34px; display: flex; flex-direction: column; align-items: center; }
   @media (max-width: 860px) {
-    .freq-root .hero-grid { grid-template-columns: 1fr; }
     .freq-root .hero { min-height: auto; padding-top: 96px; padding-bottom: 64px; }
   }
 
