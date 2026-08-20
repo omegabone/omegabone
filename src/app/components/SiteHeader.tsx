@@ -113,7 +113,7 @@ export function SiteHeader({
                   onClick={() => setIsOpen(false)}
                   className={
                     isCwm
-                      ? "block px-6 py-4 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors border-b border-black/15 last:border-0"
+                      ? "block px-6 py-5 text-sm text-[#D5BF86] hover:bg-black/10 transition-colors"
                       : "block px-6 py-4 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#1a56db] transition-colors border-b border-gray-100 last:border-0"
                   }
                   style={isCwm ? { fontWeight: 600, fontFamily: "'Cinzel', serif", letterSpacing: "0.04em" } : { fontWeight: 600 }}
