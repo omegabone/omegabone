@@ -817,18 +817,45 @@ export function FrequencyPage() {
           <span className="plate">Not ready to talk yet</span>
           <p>Start with one free lesson from the Frequency Series.</p>
 
-          {/* FREE VIDEO — /public/videos/free-lesson.mp4 */}
           <div className="fork-video">
-            <div className="videoframe" data-name="Free lesson">
-              <video controls preload="metadata" poster="/videos/free-lesson-poster.jpg">
-                <source src="/videos/free-lesson.mp4" type="video/mp4" />
-              </video>
-              <div className="video-fallback">
-                <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
-                <div className="plate" style={{ color: "var(--freq-gold)" }}>Free lesson</div>
-                <div className="subline" style={{ fontSize: 14 }}>Drop free-lesson.mp4 into /public/videos</div>
-              </div>
-            </div>
+            {status === "success" ? (
+              <p className="subline" style={{ color: "var(--freq-gold)" }}>
+                Check your inbox — the lesson is on its way.
+              </p>
+            ) : (
+              <form
+                onSubmit={handleFreeLessonSubmit}
+                style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}
+              >
+                <input
+                  type="email"
+                  required
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    flex: "1 1 260px",
+                    minWidth: 0,
+                    padding: "15px 20px",
+                    fontFamily: "var(--freq-font-body)",
+                    fontSize: 16,
+                    color: "var(--freq-bone)",
+                    background: "#33090E",
+                    border: "1px solid var(--freq-bronze)",
+                    borderRadius: 2,
+                    outline: "none",
+                  }}
+                />
+                <button type="submit" className="btn-primary" disabled={status === "submitting"}>
+                  {status === "submitting" ? "Sending…" : "Send Me the Free Lesson"}
+                </button>
+                {status === "error" && (
+                  <p className="subline" style={{ width: "100%", color: "var(--freq-gold)", fontSize: 14 }}>
+                    Something went wrong — try again in a moment.
+                  </p>
+                )}
+              </form>
+            )}
           </div>
 
           <div style={{ marginTop: 28 }}>
