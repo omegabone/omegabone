@@ -322,6 +322,24 @@ const FREQUENCY_CSS = `
 
 export function FrequencyPage() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleFreeLessonSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Subscribe failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   // Title / meta, restored on unmount
   useEffect(() => {
