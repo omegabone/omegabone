@@ -16,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
     },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email, groups: [process.env.MAILERLITE_FREQUENCY_GROUP_ID] }),
   });
 
   const data = await response.json();
