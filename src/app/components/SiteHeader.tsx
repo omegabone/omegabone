@@ -69,9 +69,17 @@ export function SiteHeader({
         className="fixed left-0 right-0 z-[100] pointer-events-none"
         style={{ top: topOffsetPx }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-end">
+        <div
+          className="max-w-7xl h-14 sm:h-16 flex items-center justify-end"
+          style={{ marginLeft: "auto", marginRight: "auto", paddingLeft: 20, paddingRight: 20 }}
+        >
           {!hideLogo && (
-            <a href="/" aria-label="Omega Bone home" className="shrink-0 pointer-events-auto mr-auto">
+            <a
+              href="/"
+              aria-label="Omega Bone home"
+              className="shrink-0 pointer-events-auto"
+              style={{ marginRight: "auto" }}
+            >
               <img
                 src={logoImage}
                 alt="Omega Bone"
@@ -85,13 +93,14 @@ export function SiteHeader({
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
-            className={`pointer-events-auto p-2 rounded-full backdrop-blur-md transition-colors ${
+            className={`pointer-events-auto rounded-full backdrop-blur-md transition-colors ${
               isCwm
                 ? "bg-[#ef4444] text-[#f0ead8] hover:bg-[#dc2626]"
                 : isDark
                 ? "bg-white/10 text-white hover:bg-white/20"
                 : "bg-black/5 text-gray-800 hover:bg-black/10"
             }`}
+            style={{ padding: 8 }}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
