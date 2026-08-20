@@ -588,7 +588,7 @@ export function FrequencyPage() {
               <span className="name">Richie Chong</span>
             </div>
             <div className="qcard">
-              <p>"I am no longer camera shy and I am finally having the confidence to sing in front of my family and sharing video of me singing. I am surprised that buzzing the melody of the song improved the song delivery. I have never heard of this technique until now."</p>
+              <p>"I am no longer camera shy and I am finally having the confidence to sing in front of my family and sharing video of me singing."</p>
               <span className="name">Amirah Mustaffa</span>
             </div>
           </div>
