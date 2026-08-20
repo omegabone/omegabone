@@ -38,11 +38,9 @@ type Theme = "light" | "dark" | "cwm";
 */
 export function SiteHeader({
   theme = "light",
-  hideLogo = false,
   topOffsetPx = 0,
 }: {
   theme?: Theme;
-  hideLogo?: boolean;
   topOffsetPx?: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);
