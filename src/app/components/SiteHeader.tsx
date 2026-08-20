@@ -26,10 +26,6 @@ type Theme = "light" | "dark" | "cwm";
   Come with Me / Frequency brand (black/red/gold) — bright red button and
   dropdown with gold text, no divider lines, extra spacing between items.
 
-  `hideLogo` drops the floating logo for the rare page that already shows
-  its own wordmark in a top bar (e.g. Professional Experience's in-page
-  section nav) — showing two logos would be redundant.
-
   `topOffsetPx` shifts the whole floating header down, for the same kind
   of page: it has its own sticky top bar for in-page section links, so our
   hamburger is pushed below it instead of overlapping those links.
