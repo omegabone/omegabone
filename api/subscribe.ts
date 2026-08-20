@@ -10,17 +10,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Email is required" });
   }
 
-  const response = await fetch(
-    `https://api.convertkit.com/v3/forms/${process.env.KIT_FORM_ID}/subscribe`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        api_key: process.env.KIT_API_KEY,
-        email,
-      }),
-    }
-  );
+  const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
+    },
+    body: JSON.stringify({ email }),
+  });
 
   const data = await response.json();
   return res.status(response.status).json(data);
