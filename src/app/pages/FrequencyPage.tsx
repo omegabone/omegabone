@@ -230,7 +230,7 @@ const FREQUENCY_CSS = `
   .freq-root .video-caption { text-align: center; margin-top: 16px; }
   .freq-root .video-caption .name { font-family: var(--freq-font-caps); letter-spacing: 0.18em; text-transform: uppercase; color: var(--freq-gold); font-size: 14px; }
 
-  .freq-root .quotes { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; max-width: 700px; margin: 0 auto; }
+  .freq-root .quotes { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; max-width: 900px; margin: 0 auto; }
   .freq-root .qcard { background: #33090E; border-left: 2px solid var(--freq-accent); padding: 26px 24px; border-radius: 3px; }
   .freq-root .qcard p { font-style: italic; color: var(--freq-bone); font-size: 17px; line-height: 1.55; }
   .freq-root .qcard .name { font-family: var(--freq-font-caps); letter-spacing: 0.16em; text-transform: uppercase; color: var(--freq-gold); font-size: 13px; margin-top: 18px; display: block; }
