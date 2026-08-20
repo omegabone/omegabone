@@ -34,6 +34,12 @@ type Theme = "light" | "dark" | "cwm";
   `topOffsetPx` shifts the whole floating header down, for the same kind
   of page: it has its own sticky top bar for in-page section links, so our
   hamburger is pushed below it instead of overlapping those links.
+
+  Padding/margin here are set via inline `style`, not Tailwind classes.
+  Some pages (e.g. Frequency) scope a `* { margin: 0; padding: 0 }` reset
+  under their own root class, which — being equal specificity and mounted
+  later in the DOM — wins over Tailwind's utility classes and silently
+  crushes the header's spacing. Inline styles can't be overridden that way.
 */
 export function SiteHeader({
   theme = "light",
