@@ -66,22 +66,6 @@ export function SiteHeader({
           className="max-w-7xl h-14 sm:h-16 flex items-center justify-end"
           style={{ marginLeft: "auto", marginRight: "auto", paddingLeft: 20, paddingRight: 20 }}
         >
-          {!hideLogo && (
-            <a
-              href="/"
-              aria-label="Omega Bone home"
-              className="shrink-0 pointer-events-auto"
-              style={{ marginRight: "auto" }}
-            >
-              <img
-                src={logoImage}
-                alt="Omega Bone"
-                className="h-7 sm:h-9 w-auto object-contain"
-                style={isDark || isCwm ? { filter: "invert(1) brightness(2)" } : undefined}
-              />
-            </a>
-          )}
-
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle navigation menu"
