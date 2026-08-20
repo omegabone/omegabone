@@ -580,12 +580,16 @@ export function FrequencyPage() {
 
           <div className="quotes">
             <div className="qcard">
-              <p>"I have become confident in singing after I joined the class. Yes, I am no longer camera shy and I am finally having the confidence to sing in front of my family and sharing video of me singing. I am surprised that buzzing the melody of the song improved the song delivery. I have never heard of this technique until now."</p>
-              <span className="name">Amirah Mustaffa</span>
+              <p>"Within this class, within the past six weeks, my voice has definitely improved. I'm more inspired to practice every single day."</p>
+              <span className="name">Desiree Haussler</span>
             </div>
             <div className="qcard">
               <p>"The significant changes would be how to control the top voices, the breath, the diction, and the emotion, to be accurate and projected."</p>
               <span className="name">Richie Chong</span>
+            </div>
+            <div className="qcard">
+              <p>"I am no longer camera shy and I am finally having the confidence to sing in front of my family and sharing video of me singing. I am surprised that buzzing the melody of the song improved the song delivery. I have never heard of this technique until now."</p>
+              <span className="name">Amirah Mustaffa</span>
             </div>
           </div>
 
