@@ -525,26 +525,58 @@ export function FrequencyPage() {
             <h2 style={{ marginTop: 16 }}>It changes people. In their own words.</h2>
           </div>
 
-          {/* ANTOINE VIDEO TESTIMONIAL — /public/videos/antoine-testimonial.mp4 */}
-          <div className="proof-video">
-            <div className="videoframe" data-name="Antoine Riendeau">
-              <video controls playsInline preload="metadata" poster="/videos/antoine-poster.jpg">
-                <source src="/videos/antoine-testimonial.mp4" type="video/mp4" />
-              </video>
-              <div className="video-fallback">
-                <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
-                <div className="plate" style={{ color: "var(--freq-gold)" }}>Antoine Riendeau, video testimonial</div>
-                <div className="subline" style={{ fontSize: 14 }}>Drop antoine-testimonial.mp4 into /public/videos</div>
+          {/* VIDEO TESTIMONIALS — /public/videos/testimonial-*.mp4 (vertical 9:16) */}
+          <div className="proof-videos">
+            <div className="proof-video-item">
+              <div className="videoframe" data-name="Sreynan Pheap">
+                <video controls playsInline preload="metadata">
+                  <source src="/videos/testimonial-sreynan-learn2sing.mp4" type="video/mp4" />
+                </video>
+                <div className="video-fallback">
+                  <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
+                  <div className="plate" style={{ color: "var(--freq-gold)" }}>Sreynan Pheap, video testimonial</div>
+                </div>
+              </div>
+              <div className="video-caption">
+                <span className="name">Sreynan Pheap</span>
+                <div className="subline" style={{ fontSize: 13, marginTop: 4 }}>Learn 2 Sing</div>
               </div>
             </div>
-            <div className="video-caption"><span className="name">Antoine Riendeau</span></div>
+
+            <div className="proof-video-item">
+              <div className="videoframe" data-name="Antoine Riendeau">
+                <video controls playsInline preload="metadata">
+                  <source src="/videos/testimonial-antoine-vme.mp4" type="video/mp4" />
+                </video>
+                <div className="video-fallback">
+                  <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
+                  <div className="plate" style={{ color: "var(--freq-gold)" }}>Antoine Riendeau, video testimonial</div>
+                </div>
+              </div>
+              <div className="video-caption">
+                <span className="name">Antoine Riendeau</span>
+                <div className="subline" style={{ fontSize: 13, marginTop: 4 }}>Vocal Mastery for Entrepreneurs</div>
+              </div>
+            </div>
+
+            <div className="proof-video-item">
+              <div className="videoframe" data-name="Irina Sergeeva">
+                <video controls playsInline preload="metadata">
+                  <source src="/videos/testimonial-irina-concert-program.mp4" type="video/mp4" />
+                </video>
+                <div className="video-fallback">
+                  <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
+                  <div className="plate" style={{ color: "var(--freq-gold)" }}>Irina Sergeeva, video testimonial</div>
+                </div>
+              </div>
+              <div className="video-caption">
+                <span className="name">Irina Sergeeva</span>
+                <div className="subline" style={{ fontSize: 13, marginTop: 4 }}>Live Room Concert Program</div>
+              </div>
+            </div>
           </div>
 
           <div className="quotes">
-            <div className="qcard">
-              <p>"Just do it. I mean, it's worth it 100%, because Omega is a great teacher, and I keep saying it."</p>
-              <span className="name">Irina Sergeeva</span>
-            </div>
             <div className="qcard">
               <p>"Within this class, within the past six weeks, my voice has definitely improved. I'm more inspired to practice every single day."</p>
               <span className="name">Desiree Haussler</span>
