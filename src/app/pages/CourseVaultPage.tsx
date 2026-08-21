@@ -240,22 +240,24 @@ export function CourseVaultPage() {
         </p>
       </section>
 
-      <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
-          THE BOOKS
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "1.75rem",
-          }}
-        >
-          {BOOKS.map((b) => (
-            <BookCard key={b.title} {...b} />
-          ))}
-        </div>
-      </section>
+      {unlocked && (
+        <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
+            THE BOOKS
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "1.75rem",
+            }}
+          >
+            {BOOKS.map((b) => (
+              <BookCard key={b.title} {...b} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section style={{ padding: "0 1.5rem 5rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
@@ -269,9 +271,10 @@ export function CourseVaultPage() {
           }}
         >
           {VIDEOS.map((v) => (
-            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} />
+            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} locked={!unlocked && v.n !== 1} />
           ))}
         </div>
+        {!unlocked && <InlineUnlock onUnlock={() => setUnlocked(true)} />}
       </section>
 
       <section style={{ padding: "1rem 1.5rem 6rem", textAlign: "center" }}>
