@@ -111,6 +111,10 @@ export const DEFAULTS = {
 
   // A clip is "short" at or below this, "long" above it (Clip Type column).
   shortMaxSeconds: 60,
+
+  // Never clip inside this many seconds from the start of a lesson — Omega
+  // Bone's sessions open on a fixed music theme before any teaching begins.
+  introGuardSeconds: 60,
 };
 
 export const AWARENESS_KEYS = Object.keys(AWARENESS_CATEGORIES);
