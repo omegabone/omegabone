@@ -238,6 +238,20 @@ export function enforce(lesson, candidates, opts = {}) {
       reject('quote not grounded in segment transcript');
       continue;
     }
+    // Rule: no instrumental/backing-track passages — singing or vocalising
+    // over music is not a teaching moment.
+    if (isMusicOrInstrumental(c.full_quote)) {
+      reject('instrumental/music passage, not spoken coaching');
+      continue;
+    }
+    // Rule: never the opening theme song. The first segment covers the start
+    // of the lesson, and sessions open on a fixed music intro before any
+    // teaching begins.
+    const introGuard = opts.introGuardSeconds ?? DEFAULTS.introGuardSeconds;
+    if (c.segment.index === 1 && (c.segment.start ?? 0) < introGuard) {
+      reject('opening theme song / lesson-open window');
+      continue;
+    }
 
     const fitted = c.segment.timed
       ? snapToCues(c, c.segment, opts)
