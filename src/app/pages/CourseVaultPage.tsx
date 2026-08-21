@@ -21,7 +21,7 @@ const GOLD_DIM = "#b8922a";
 const CREAM = "#f0ead8";
 
 const VIDEOS = [
-  { n: 1, title: "The Warmup", youtubeId: "" },
+  { n: 1, title: "The Warmup", youtubeId: "9mUzYjbEd_E" },
   { n: 2, title: "The Speaking Voice", youtubeId: "" },
   { n: 3, title: "Diction", youtubeId: "" },
   { n: 4, title: "Emotional Delivery", youtubeId: "" },
