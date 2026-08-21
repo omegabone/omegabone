@@ -113,7 +113,7 @@ function InlineUnlock({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
-function VideoCard({ n, title, youtubeId }: { n: number; title: string; youtubeId: string }) {
+function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; youtubeId: string; locked: boolean }) {
   return (
     <div
       style={{
@@ -124,7 +124,23 @@ function VideoCard({ n, title, youtubeId }: { n: number; title: string; youtubeI
       }}
     >
       <div style={{ position: "relative", width: "100%", aspectRatio: "1920 / 1246", background: "#000" }}>
-        {youtubeId ? (
+        {locked ? (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              color: GOLD_DIM,
+            }}
+          >
+            <div style={{ fontSize: "1.5rem" }}>🔒</div>
+            <div style={{ ...cinzel, fontSize: "0.72rem", letterSpacing: "0.14em" }}>LOCKED</div>
+          </div>
+        ) : youtubeId ? (
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}`}
             title={`Video ${n} — ${title}`}
@@ -153,9 +169,9 @@ function VideoCard({ n, title, youtubeId }: { n: number; title: string; youtubeI
       </div>
       <div style={{ padding: "1.25rem 1.5rem" }}>
         <div style={{ ...cinzel, fontSize: "0.68rem", letterSpacing: "0.14em", color: GOLD_DIM, marginBottom: "0.35rem" }}>
-          VIDEO {n}
+          VIDEO {n}{locked ? " — LOCKED" : ""}
         </div>
-        <div style={{ ...garamond, fontSize: "1.25rem", color: CREAM }}>{title}</div>
+        <div style={{ ...garamond, fontSize: "1.25rem", color: locked ? "#5a5a5a" : CREAM }}>{title}</div>
       </div>
     </div>
   );
