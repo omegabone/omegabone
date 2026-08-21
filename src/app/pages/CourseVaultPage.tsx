@@ -225,7 +225,6 @@ export function CourseVaultPage() {
   }, []);
 
   if (!checked) return null;
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
   return (
     <div style={{ background: "#0c0c0c", minHeight: "100vh", color: CREAM }}>
