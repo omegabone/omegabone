@@ -11,17 +11,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Email is required" });
   }
 
-  const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
-    },
-    body: JSON.stringify({ email, groups: [process.env.MAILERLITE_FREQUENCY_GROUP_ID] }),
-  });
-
-  const data = await response.json();
-
   // Notify GMAIL_USER's inbox with the subscriber set as Reply-To, so a Gmail
   // filter on the subject below can auto-send the free lesson video back to them.
   if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
@@ -42,5 +31,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  return res.status(response.status).json(data);
+  return res.status(200).json({ ok: true });
 }
