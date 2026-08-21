@@ -12,6 +12,8 @@
  *   - clips must not overlap each other
  *   - one clip per segment (the best surviving candidate)
  *   - 5-8 clips total, with a cap per awareness category
+ *   - no instrumental/backing-track passages (singing or vocalising over music)
+ *   - never the opening theme song / lesson-open music window
  */
 
 import {
