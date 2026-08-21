@@ -307,12 +307,6 @@ export function CourseVaultPage() {
             padding: "3rem 2rem",
           }}
         >
-          <div style={{ ...cinzel, fontSize: "0.72rem", letterSpacing: "0.18em", color: GOLD_DIM, marginBottom: "0.75rem" }}>
-            THANK YOU
-          </div>
-          <h2 style={{ ...cinzelDec, fontSize: "1.6rem", margin: "0 0 1rem", color: CREAM }}>
-            Thank you for doing this work.
-          </h2>
           <p style={{ ...garamond, fontSize: "1.05rem", color: "#a89f8f", maxWidth: 480, margin: "0 auto 2rem" }}>
             Once you've watched all five videos, book your free 30-minute lesson with Omega and let's take the next step together.
           </p>
