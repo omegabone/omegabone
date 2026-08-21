@@ -64,6 +64,32 @@ function quoteIsGrounded(quote, segmentText, threshold = 0.8) {
   return hits / shingles.length >= threshold;
 }
 
+const MUSIC_MARKERS = /\[\s*music\s*\]|\[\s*instrumental\s*\]|\(\s*music\s*\)|\(\s*singing\s*\)|♪|🎵|🎶/i;
+
+/**
+ * A clip that's mostly the coach (or a student) singing or vocalising along
+ * with an instrumental track, rather than teaching. Two signals:
+ *   - explicit transcript markers ("[Music]", "♪", etc.)
+ *   - a short phrase repeated over and over — how Whisper hallucinates when
+ *     transcribing sustained singing/vocal exercises over backing music, and
+ *     also how an actual repeated chorus line reads in a transcript.
+ */
+function isMusicOrInstrumental(text) {
+  if (!text) return false;
+  if (MUSIC_MARKERS.test(text)) return true;
+
+  const lines = text
+    .split(/\n|(?<=[.!?])\s+/)
+    .map((l) => l.trim().toLowerCase())
+    .filter(Boolean);
+  if (lines.length < 6) return false;
+
+  const counts = new Map();
+  for (const l of lines) counts.set(l, (counts.get(l) || 0) + 1);
+  const maxRepeat = Math.max(...counts.values());
+  return maxRepeat / lines.length >= 0.5;
+}
+
 /** Trim a quote to end on a sentence boundary at or before `maxWords`. */
 function trimToNaturalEnd(quote, maxWords) {
   const words = quote.trim().split(/\s+/);
