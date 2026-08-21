@@ -41,7 +41,7 @@ const BOOKS = [
   },
 ];
 
-function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
+function InlineUnlock({ onUnlock }: { onUnlock: () => void }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
@@ -56,85 +56,60 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   }
 
   return (
-    <div
+    <form
+      onSubmit={submit}
       style={{
-        background: "#0c0c0c",
-        minHeight: "100vh",
-        color: CREAM,
         display: "flex",
-        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 10,
         justifyContent: "center",
-        padding: "1.5rem",
+        marginTop: "1.25rem",
       }}
     >
-      <form
-        onSubmit={submit}
+      <input
+        type="password"
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          setError(false);
+        }}
+        placeholder="Have the password? Unlock all 5"
         style={{
-          background: "#131313",
+          flex: "1 1 220px",
+          minWidth: 0,
+          boxSizing: "border-box",
+          background: "#0f0f0f",
           border: `1px solid ${error ? "#ef4444" : "#2a2a2a"}`,
-          borderRadius: 20,
-          padding: "2.5rem 2rem",
-          maxWidth: 420,
-          width: "100%",
-          textAlign: "center",
+          borderRadius: 10,
+          padding: "0.85rem 1rem",
+          color: CREAM,
+          fontSize: "1rem",
+          ...garamond,
+        }}
+      />
+      <button
+        type="submit"
+        style={{
+          ...cinzel,
+          background: `linear-gradient(135deg, ${GOLD_DIM}, ${GOLD})`,
+          color: "#0f0d09",
+          border: "none",
+          borderRadius: 99,
+          padding: "0.9rem 1.5rem",
+          fontSize: "0.78rem",
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          cursor: "pointer",
         }}
       >
-        <div style={{ ...cinzel, fontSize: "0.72rem", letterSpacing: "0.18em", color: GOLD_DIM, marginBottom: "0.75rem" }}>
-          VOCAL MASTERY FOR ENTREPRENEURS
+        UNLOCK
+      </button>
+      {error && (
+        <div style={{ width: "100%", color: "#ef4444", fontSize: "0.85rem", ...garamond }}>
+          That password isn't right — try again.
         </div>
-        <h1 style={{ ...cinzelDec, fontSize: "1.6rem", margin: "0 0 1.5rem", color: CREAM }}>
-          The Frequency Series
-        </h1>
-        <p style={{ ...garamond, fontSize: "1rem", color: "#a89f8f", margin: "0 0 1.5rem" }}>
-          Enter your access password to view the course and downloads.
-        </p>
-        <input
-          type="password"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-            setError(false);
-          }}
-          placeholder="Password"
-          autoFocus
-          style={{
-            width: "100%",
-            boxSizing: "border-box",
-            background: "#0f0f0f",
-            border: `1px solid ${error ? "#ef4444" : "#2a2a2a"}`,
-            borderRadius: 10,
-            padding: "0.85rem 1rem",
-            color: CREAM,
-            fontSize: "1rem",
-            marginBottom: "1rem",
-            ...garamond,
-          }}
-        />
-        {error && (
-          <div style={{ color: "#ef4444", fontSize: "0.85rem", marginBottom: "1rem", ...garamond }}>
-            That password isn't right — try again.
-          </div>
-        )}
-        <button
-          type="submit"
-          style={{
-            ...cinzel,
-            width: "100%",
-            background: `linear-gradient(135deg, ${GOLD_DIM}, ${GOLD})`,
-            color: "#0f0d09",
-            border: "none",
-            borderRadius: 99,
-            padding: "0.9rem 1.5rem",
-            fontSize: "0.78rem",
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-            cursor: "pointer",
-          }}
-        >
-          ENTER
-        </button>
-      </form>
-    </div>
+      )}
+    </form>
   );
 }
 
