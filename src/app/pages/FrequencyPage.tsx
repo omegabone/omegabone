@@ -335,6 +335,7 @@ export function FrequencyPage() {
       });
       if (!res.ok) throw new Error("Subscribe failed");
       setStatus("success");
+      window.location.href = "/frequency/vault?preview=1";
     } catch {
       setStatus("error");
     }
