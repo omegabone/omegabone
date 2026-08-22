@@ -40,6 +40,7 @@ export function Footer() {
   };
 
   const socials = [
+    { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/omegabone?igsi=MTRkbHhoYW9tajR2cg%3D%3D&utm_source=qr" },
     { icon: <Youtube size={20} />, label: "YouTube", href: "https://www.youtube.com/omegabone" },
     { icon: <Facebook size={20} />, label: "Facebook", href: "https://www.facebook.com/groups/266096668213824/about" },
     { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/in/omegabone/" },
