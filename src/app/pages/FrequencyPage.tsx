@@ -884,6 +884,7 @@ export function FrequencyPage() {
         <span className="plate">Omega Bone &middot; Vocal Mastery for Entrepreneurs</span>
         <p className="fine">Your voice is not the obstacle. It is the answer.</p>
       </footer>
+      <Footer />
 
       {/* Sticky mobile CTA */}
       <div className="sticky-cta" id="freq-sticky-cta">
