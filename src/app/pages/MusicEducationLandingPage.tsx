@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SiteHeader } from "../components/SiteHeader";
+import { Footer } from "../components/Footer";
 
 export function MusicEducationLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
