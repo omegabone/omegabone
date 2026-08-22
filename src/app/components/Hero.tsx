@@ -16,10 +16,12 @@ export function Hero() {
           {/* Left Content */}
           <div className="flex-1 max-w-xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e8f0fe] text-[#1a56db] px-4 py-2 rounded-full text-sm mb-6" style={{ fontWeight: 600 }}>
+            <div className="inline-flex items-center gap-2 bg-[#e8f0fe] text-[#1a56db] px-4 py-2 rounded-full text-sm mb-3" style={{ fontWeight: 600 }}>
               <span className="w-2 h-2 rounded-full bg-[#1a56db] animate-pulse" />
-              Now Enrolling
+              <span className="animate-pulse">Now Enrolling</span>
             </div>
+
+            <p className="text-gray-600 mb-6 text-base italic">A child who learns to play music learns to lead.</p>
 
             {/* Headline */}
             <h1 className="text-black mb-6" style={{ fontSize: "clamp(2.4rem, 5vw, 3.8rem)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em" }}>Your child has a  <span className="text-[#1a56db]">voice </span>worth hearing</h1>
