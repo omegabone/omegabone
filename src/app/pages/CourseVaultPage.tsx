@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Footer } from "../components/Footer";
 
 /*
   Password-gated vault for "Vocal Mastery for Entrepreneurs: The Frequency Series".
