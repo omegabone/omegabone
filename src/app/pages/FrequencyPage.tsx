@@ -336,15 +336,13 @@ export function FrequencyPage() {
       if (!res.ok) throw new Error("Subscribe failed");
 
       // Feeds the Frequency Free Lesson Signup Google Sheet/auto-email flow.
-      // sendBeacon (not fetch) so the request survives the redirect below —
-      // a fire-and-forget fetch gets cancelled mid-flight by the navigation.
+      // sendBeacon so it reliably completes even though we stay on this page.
       navigator.sendBeacon(
         "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfdpMAhMcjke6tKkeoFDPjCtlsAAXaHFslczSixw2iKF8LgLQ/formResponse",
         new URLSearchParams({ "entry.105371649": email })
       );
 
       setStatus("success");
-      window.location.href = "/frequency/vault?preview=1";
     } catch {
       setStatus("error");
     }
