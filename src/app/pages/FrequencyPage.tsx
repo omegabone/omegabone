@@ -519,7 +519,7 @@ export function FrequencyPage() {
             </div>
           </div>
           <div className="centered" style={{ marginTop: 44 }}>
-            <a className="btn-primary" href="/apply">Close the gap</a>
+            <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Close the gap</a>
           </div>
         </div>
       </section>
