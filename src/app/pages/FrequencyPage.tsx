@@ -83,6 +83,7 @@ const FREQUENCY_CSS = `
   .freq-root h1 { font-size: clamp(40px, 7vw, 76px); }
   .freq-root h2 { font-size: clamp(30px, 4.6vw, 52px); }
   .freq-root h3 { font-size: clamp(22px, 2.6vw, 30px); }
+  .freq-root h2.hook-lg { font-size: clamp(40px, 7vw, 76px); }
   .freq-root .subline { font-style: italic; color: var(--freq-bone-dim); font-size: clamp(18px, 2.1vw, 23px); line-height: 1.5; }
 
   .freq-root .divider {
