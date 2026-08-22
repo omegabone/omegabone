@@ -336,15 +336,11 @@ export function FrequencyPage() {
       if (!res.ok) throw new Error("Subscribe failed");
 
       // Feeds the Frequency Free Lesson Signup Google Sheet/auto-email flow.
-      // no-cors: fire-and-forget, response can't be read.
-      fetch(
+      // sendBeacon (not fetch) so the request survives the redirect below —
+      // a fire-and-forget fetch gets cancelled mid-flight by the navigation.
+      navigator.sendBeacon(
         "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfdpMAhMcjke6tKkeoFDPjCtlsAAXaHFslczSixw2iKF8LgLQ/formResponse",
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ "entry.105371649": email }),
-        }
+        new URLSearchParams({ "entry.105371649": email })
       );
 
       setStatus("success");
