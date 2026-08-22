@@ -458,7 +458,7 @@ export function FrequencyPage() {
         <div className="wrap">
           <div className="hero-stack">
             <span className="plate">Vocal Mastery for Entrepreneurs</span>
-            <h1>Your voice is not the obstacle. It is the <span className="accent-word">answer</span>.</h1>
+            <h1>Your voice is not the obstacle.<br />It is the <span className="accent-word">answer</span>.</h1>
 
             {/* THE TRANSMISSION — main VSL, hosted on YouTube (unlisted) */}
             <div className="vsl" style={{ aspectRatio: "1920 / 1246" }}>
