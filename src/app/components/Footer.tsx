@@ -4,6 +4,14 @@ import { Linkedin, Youtube, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
 import { ResourceDownloadModal } from "./ResourceDownloadModal";
 
+function TikTokIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.6 5.82c-.9-.98-1.4-2.26-1.4-3.61h-3.05v13.7a3.28 3.28 0 1 1-3.28-3.28c.36 0 .7.06 1.02.16V9.7a6.32 6.32 0 0 0-1.02-.08 6.35 6.35 0 1 0 6.35 6.35V8.94a8.35 8.35 0 0 0 4.88 1.56V7.45a5.3 5.3 0 0 1-3.5-1.63z" />
+    </svg>
+  );
+}
+
 const downloadableResources: Record<string, { label: string; file: string }> = {
   "Vocal Warm-Up Series": { label: "7-Day Vocal Warm-Up Series", file: "vocal-warmup-series.zip" },
   "Singer's Handbook": { label: "The Singer's Technique Handbook", file: "singers-handbook.pdf" },
