@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: "Vocal Mastery",          href: "/Vocal_Mastery" },
   { label: "Learn 2 Sing",           href: "/Learn_2_Sing" },
   { label: "Music Room 33",          href: "/Music_Room_33" },
+  { label: "The Frequency Series",   href: "/frequency" },
   { label: "Come with Me",           href: "/Come_with_Me" },
 ];
 
