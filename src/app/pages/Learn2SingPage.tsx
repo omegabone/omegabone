@@ -816,6 +816,11 @@ function L2SCTASection() {
           Book a Free 30-Min Vocal Analysis
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
         </a>
+
+        <p className="text-green-200 text-[14px] mt-10 italic">
+          <a href="mailto:singer@omegabone.com" className="text-inherit">singer@omegabone.com</a>
+          {" "}&middot;{" "}WhatsApp: <a href="tel:+13239614050" className="text-inherit">+1.323.961.4050</a>
+        </p>
       </div>
     </section>
   );
