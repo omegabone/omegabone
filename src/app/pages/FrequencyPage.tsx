@@ -528,7 +528,7 @@ export function FrequencyPage() {
       <section className="band-deep fade">
         <div className="wrap">
           <div className="centered"><span className="plate">Why this is different</span></div>
-          <h2 className="mech-head centered">Most coaching teaches technique. Technique is not the problem.</h2>
+          <h2 className="mech-head centered hook-lg">Most coaching teaches technique. Technique is not the problem.</h2>
           <div className="mech-grid">
             <div className="mech-card">
               <p>Your voice stores everything. Every room where you made yourself small is still running as interference.</p>
