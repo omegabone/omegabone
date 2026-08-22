@@ -297,6 +297,7 @@ export function AlbumReleaseBlogPage() {
           </div>
         </main>
       </div>
+      <Footer />
     </div>
   );
 }
