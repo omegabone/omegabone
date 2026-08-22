@@ -988,6 +988,7 @@ export function ComeWithMePage() {
           Come With Me &nbsp;✦&nbsp; A Polyptych &nbsp;✦&nbsp; © 2026 Omega Bone
         </p>
       </footer>
+      <Footer />
     </div>
   );
 }
