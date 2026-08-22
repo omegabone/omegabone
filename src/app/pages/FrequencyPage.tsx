@@ -884,13 +884,18 @@ export function FrequencyPage() {
       <footer>
         <span className="plate">Omega Bone &middot; Vocal Mastery for Entrepreneurs</span>
         <p className="fine">Your voice is not the obstacle. It is the answer.</p>
+        <p className="fine">
+          <a href="mailto:singer@omegabone.com" style={{ color: "inherit" }}>singer@omegabone.com</a>
+          &nbsp;&middot;&nbsp;WhatsApp: <a href="tel:+13239614050" style={{ color: "inherit" }}>+1.323.961.4050</a>
+        </p>
       </footer>
-      <Footer />
 
       {/* Sticky mobile CTA */}
       <div className="sticky-cta" id="freq-sticky-cta">
         <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
