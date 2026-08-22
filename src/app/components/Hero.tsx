@@ -25,7 +25,7 @@ export function Hero() {
               <span className="enroll-flash">Now Enrolling</span>
             </div>
 
-            <div className="inline-flex items-center bg-[#e8f0fe] text-[#1a56db] px-4 py-2 rounded-full text-sm mb-6" style={{ fontWeight: 600 }}>
+            <div className="inline-block bg-[#e8f0fe] text-[#1a56db] px-4 py-3 rounded-2xl text-sm mb-6" style={{ fontWeight: 600, maxWidth: "26rem" }}>
               A child who grows up singing grows up knowing they have something to say.
             </div>
 
