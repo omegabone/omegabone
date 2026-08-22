@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 const NAV_LINKS = [
   { label: "About",                  href: "/about" },
   { label: "Professional Experience", href: "/Professional_Experience" },
-  { label: "Vocal Mastery",          href: "/Vocal_Mastery" },
+  { label: "Vocal Mastery for Entrepreneurs", href: "/Vocal_Mastery" },
   { label: "Learn 2 Sing",           href: "/Learn_2_Sing" },
   { label: "Music Room 33",          href: "/Music_Room_33" },
   { label: "The Frequency Series",   href: "/frequency" },
