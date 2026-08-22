@@ -660,6 +660,7 @@ export function MusicEducationLandingPage() {
       <footer className="ed-footer">
         © QB1 Edutainment 2026
       </footer>
+      <Footer />
     </div>
   );
 }
