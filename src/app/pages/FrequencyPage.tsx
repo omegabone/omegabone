@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "../components/SiteHeader";
+import { Footer } from "../components/Footer";
 
 /*
   THE FREQUENCY FUNNEL — VME Landing Page
