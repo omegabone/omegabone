@@ -338,6 +338,7 @@ export function CourseVaultPage() {
           ← Back to omegabone.com
         </a>
       </footer>
+      <Footer />
     </div>
   );
 }
