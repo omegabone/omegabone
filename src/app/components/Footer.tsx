@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import image_1b40ce6fad932976877e479dbe3357976c3937d6 from 'figma:asset/1b40ce6fad932976877e479dbe3357976c3937d6.png'
-import { Linkedin, Youtube, Facebook } from "lucide-react";
+import { Linkedin, Youtube, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
 import { ResourceDownloadModal } from "./ResourceDownloadModal";
 
