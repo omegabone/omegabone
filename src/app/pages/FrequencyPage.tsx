@@ -484,7 +484,7 @@ export function FrequencyPage() {
       <section className="band-deep authority fade">
         <div className="wrap">
           <div className="big-mark">1993 &middot; The Rose Bowl &middot; Ninety thousand people</div>
-          <h2>I was on that stage with Michael Jackson.</h2>
+          <h2 className="hook-lg">I was on that stage with Michael Jackson.</h2>
           <p className="subline center-narrow" style={{ margin: "0 auto" }}>I did not just hear his frequency. I felt it in my chest before I saw him. That is the state I have spent twenty-five years learning to build in other people.</p>
         </div>
       </section>
