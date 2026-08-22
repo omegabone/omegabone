@@ -745,6 +745,11 @@ function VPCTASection() {
           Book Your Free 30-Min Lesson
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
         </a>
+
+        <p className="text-purple-200 text-[14px] mt-10 italic">
+          <a href="mailto:singer@omegabone.com" className="text-inherit">singer@omegabone.com</a>
+          {" "}&middot;{" "}WhatsApp: <a href="tel:+13239614050" className="text-inherit">+1.323.961.4050</a>
+        </p>
       </div>
     </section>
   );
