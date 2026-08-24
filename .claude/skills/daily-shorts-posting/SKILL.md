@@ -9,15 +9,16 @@ This is Omega's actual posting policy, not a suggested default. Every number her
 
 ## The daily cadence
 
-Three shorts go out most days, on three separate slots:
+Four posts go out most days, five on a "favorites" day. There are four content buckets, not three — it's easy to drop the 21 Day Challenge because it runs quietly in the background, but it's a permanent, separate daily slot, not folded into anything else:
 
-1. **Two "1–3 minute" shorts, 2x a day.** These are the longer-form lesson and technique clips — the bread-and-butter daily content.
-2. **A 3rd short whenever the day's content includes Ira, Antoine, or MetaMuse.** Testimonial and MetaMuse footage isn't a replacement for one of the two standard slots — it's additive. If a testimonial/MetaMuse video exists for that day, it becomes a 3rd post, not a swap for one of the two above.
-3. **One 10–15 second short featuring Omega herself, 1x a day**, posted separately from the two categories above. This is short-form and always has Omega on camera — don't confuse it with the 1–3 minute lesson clips.
+1. **21 Day Challenge, 1x a day, always.** Its own ongoing series — day-by-day, independent of everything below.
+2. **Two VME (Vocal Mastery Experience) clips, 2x a day, always.** The standard rotating lesson/technique shorts, 1–3 minutes long. Call these the "random" VME slots.
+3. **A 3rd VME clip whenever the day's footage includes Antoine, Ira, or MetaMuse** — Omega's favorites bucket within VME. This is additive, not a swap for one of the two random VME slots above: a favorites day has 3 VME posts total (2 random + 1 favorite), not 2. A day without favorites footage stays at 2 VME posts.
+4. **One 10–15 second short featuring Omega herself, 1x a day, always**, separate from all of the above. Short-form, always Omega on camera — don't confuse it with the 1–3 minute VME clips.
 
-So a full day is 3 posts (2 lesson clips + 1 Omega short) when there's no Ira/Antoine/MetaMuse content, or 4 when there is.
+So: **21 Day Challenge (1) + VME (2 or 3) + Omega short (1) = 4 posts on a normal day, 5 on a favorites day.** If a count comes out to 3 or 4, something's missing — check first whether the 21 Day Challenge slot or the favorites bump got dropped before assuming the day is just lighter.
 
-Space these across the day rather than firing them back to back — mirror the existing rhythm already in use for the 21 Day Challenge / Vocal Mastery rotation (roughly 12:00 / 16:00 / 20:00 UTC). The exact clock times matter less than the spacing: the grid on Instagram and TikTok reads as one post per day, and a burst of same-day posts wrecks that even if the total volume is "correct." See "Never burst-publish" below — this is the rule that has actually been violated before.
+Space these across the day rather than firing them back to back. The current rotation uses roughly 12:00 / 16:00 / 20:00 UTC for the 21 Day Challenge and the 2 random VME clips; the Omega short and (on favorites days) the 3rd VME clip need their own additional slots on top of that, not squeezed into the same three times. The exact clock times matter less than the spacing: the grid on Instagram and TikTok reads as one post per day, and a burst of same-day posts wrecks that even if the total volume is "correct." See "Never burst-publish" below — this is the rule that has actually been violated before.
 
 ## Pipeline: source video → live post
 
@@ -42,7 +43,8 @@ These are not the same action and only one of them is usually what's wanted. If 
 ## Quick reference: what "done right" looks like
 
 - Each day's posts land at different times, not clustered in one window.
-- Testimonial/MetaMuse content adds a 4th post on days it exists, rather than replacing a lesson-clip slot.
+- The 21 Day Challenge post is present every day, even though it runs quietly in the background — a day count that's missing it is wrong.
+- Antoine/Ira/MetaMuse footage adds a 3rd VME post on days it exists, rather than replacing one of the 2 random VME slots.
 - Every attachment URL traces back to a Vercel Blob upload → Postiz media URL, never a raw Drive link.
 - The AI-disclosure flag on TikTok reflects reality, not a copy-pasted default.
 - The tracker sheet has one row per post with a working ID once the post confirms, not just a schedule ID that assumes success.
