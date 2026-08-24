@@ -576,13 +576,14 @@ export function FrequencyPage() {
 
             <div className="proof-video-item">
               <div className="videoframe" data-name="Antoine Riendeau">
-                <video controls playsInline preload="metadata">
-                  <source src="/videos/testimonial-antoine-vme.mp4" type="video/mp4" />
-                </video>
-                <div className="video-fallback">
-                  <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
-                  <div className="plate" style={{ color: "var(--freq-gold)" }}>Antoine Riendeau, video testimonial</div>
-                </div>
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/NbGd446DLSU"
+                  title="Antoine Riendeau, video testimonial"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{ width: "100%", height: "100%", border: 0, display: "block" }}
+                />
               </div>
               <div className="video-caption">
                 <span className="name">Antoine Riendeau</span>
