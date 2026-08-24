@@ -559,13 +559,14 @@ export function FrequencyPage() {
           <div className="proof-videos">
             <div className="proof-video-item">
               <div className="videoframe" data-name="Sreynan Pheap">
-                <video controls playsInline preload="metadata">
-                  <source src="/videos/testimonial-sreynan-learn2sing.mp4" type="video/mp4" />
-                </video>
-                <div className="video-fallback">
-                  <div className="play" style={{ width: 60, height: 60, border: "1px solid var(--freq-gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(167,29,49,0.25)" }} />
-                  <div className="plate" style={{ color: "var(--freq-gold)" }}>Sreynan Pheap, video testimonial</div>
-                </div>
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/utxT5mi7Ayw"
+                  title="Sreynan Pheap, video testimonial"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{ width: "100%", height: "100%", border: 0, display: "block" }}
+                />
               </div>
               <div className="video-caption">
                 <span className="name">Sreynan Pheap</span>
