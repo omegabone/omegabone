@@ -397,7 +397,7 @@ export function AboutPage() {
               </h2>
               <p className="text-gray-600 mb-5" style={{ lineHeight: 1.85 }}>She knows what it costs a child to grow up believing their voice doesn't count. And she has spent her career making sure as few people as possible carry that cost into adulthood.</p>
               <p className="text-gray-600 mb-5" style={{ lineHeight: 1.85 }}>When COVID shut the world down, she didn’t. While others paused, she opened her doors wider by running free music lessons for children in communities that needed it most. In a time of isolation, she gave them connection. In a season of uncertainty, she gave them expression.</p>
-              <p className="text-gray-600 mb-8" style={{ lineHeight: 1.85 }}>Omega have taught over 7,400+ students across 25+ years. And she's not done yet.</p>
+              <p className="text-gray-600 mb-8" style={{ lineHeight: 1.85 }}>Omega has taught over 7,400+ students across 25+ years. And she's not done yet.</p>
             </div>
           </div>
         </div>
