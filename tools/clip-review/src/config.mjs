@@ -17,7 +17,7 @@ const CONFIG_PATH =
   process.env.CLIP_REVIEW_CONFIG ||
   fileURLToPath(new URL('../review.config.json', import.meta.url));
 
-const KEYS = ['manifest', 'transcripts', 'video-dir', 'video', 'clips', 'approved', 'state', 'port'];
+const KEYS = ['manifest', 'transcripts', 'video-dir', 'video', 'clips', 'approved', 'state', 'port', 'format'];
 
 export function configPath() {
   return CONFIG_PATH;

@@ -269,10 +269,11 @@
       }
 
       /*
-       * The composed preview: the same 1080x1920 canvas the renderer draws,
-       * at the same proportions (tools/clip-renderer/src/theme.ts → layout),
-       * so trimming and the caption/brand choice can be judged here instead
-       * of only after a render.
+       * The composed preview: the same canvas the renderer draws, at the same
+       * proportions (tools/clip-renderer/src/theme.ts → layoutFor), so trimming
+       * and the caption/brand choice can be judged here instead of only after
+       * a render. The shape follows the clip's output format: 9:16 for
+       * IG/TikTok, 16:9 for YouTube.
        */
       .frame {
         position: relative;
@@ -285,6 +286,16 @@
         background: #000;
         border: 1px solid var(--border);
         border-radius: 10px;
+      }
+
+      /* Wider preview column when the clip is a landscape render, so a 16:9
+         frame does not shrink to a stamp inside a portrait-sized column. */
+      .stage[data-format="horizontal"] {
+        grid-template-columns: minmax(320px, 42rem) minmax(0, 1fr);
+      }
+
+      .frame[data-format="horizontal"] {
+        aspect-ratio: 16 / 9;
       }
 
       .frame-video {
@@ -303,6 +314,12 @@
       }
 
       .frame[data-windowed="false"] .frame-video {
+        inset: 0;
+      }
+
+      /* Horizontal output: the footage fills the whole frame in both modes —
+         the render overlays its text on it, so the preview does too. */
+      .frame[data-format="horizontal"] .frame-video {
         inset: 0;
       }
 
@@ -361,6 +378,18 @@
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
       }
 
+      /* Horizontal output mirrors the renderer's horizontal layout: header
+         nearer the top edge, captions near the bottom, both over footage.
+         theme.ts → layoutFor('horizontal'). */
+      .frame[data-format="horizontal"] .frame-title { top: 6%; }
+      .frame[data-format="horizontal"] .frame-topic { font-size: 3.4cqw; }
+      .frame[data-format="horizontal"] .frame-presents { font-size: 1.7cqw; }
+      .frame[data-format="horizontal"] .frame-student { font-size: 1.8cqw; }
+      .frame[data-format="horizontal"] .frame-caption {
+        bottom: 7.8%;
+        font-size: 4cqw;
+      }
+
       .frame-note {
         margin: 0.5rem 0 0;
         font-size: 0.74rem;
@@ -378,6 +407,11 @@
         color: var(--ink-faint);
         border: 1px dashed var(--border);
         border-radius: 10px;
+      }
+
+      .frame[data-format="horizontal"] ~ .unrendered,
+      .unrendered[data-format="horizontal"] {
+        aspect-ratio: 16 / 9;
       }
 
       .detail {
@@ -727,6 +761,45 @@
       .render-status.error { color: var(--reject); }
       .render-status.ok { color: var(--accent); }
 
+      /* ---------- output-format switch (top bar) ---------- */
+
+      .format-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.14rem 0.32rem 0.14rem 0.7rem;
+      }
+
+      .format-switch .format-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-right: 0.15rem;
+      }
+
+      .format-switch button {
+        font: inherit;
+        font-size: 0.74rem;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 0.12rem 0.55rem;
+        cursor: pointer;
+      }
+
+      .format-switch button:hover { color: var(--ink); border-color: var(--border); }
+
+      .format-switch button[aria-pressed="true"] {
+        color: var(--bg);
+        background: var(--accent);
+        border-color: var(--accent);
+        font-weight: 650;
+      }
+
       /* ---------- transport ---------- */
 
       .transport {
@@ -810,6 +883,21 @@
       }
 
       .brand .auto {
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+      }
+
+      /* ---------- per-clip format override ---------- */
+
+      .clip-format {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.6rem 0 0;
+      }
+
+      .clip-format .auto-note {
         font-size: 0.66rem;
         color: var(--ink-faint);
       }
@@ -1005,6 +1093,12 @@
       <nav class="filters" id="filters" aria-label="Filter clips"></nav>
       <div class="bar-end">
         <span class="batch" id="batch"></span>
+        <div class="format-switch" id="format-switch" role="group" aria-label="Output size">
+          <span class="format-label">Output</span>
+          <button type="button" data-format="vertical">IG/TikTok 9:16</button>
+          <button type="button" data-format="horizontal">YouTube 16:9</button>
+          <button type="button" data-both="true">Both</button>
+        </div>
         <button type="button" class="render-btn" id="render-btn">Render approved</button>
         <span class="render-status" id="render-status" aria-live="polite"></span>
         <span class="hint" id="hint">? for keys</span>
@@ -1093,6 +1187,13 @@
             <span class="brand-label">Caption highlight</span>
           </div>
 
+          <div class="clip-format" id="clip-format" role="group" aria-label="This clip's output size">
+            <span class="brand-label">Output size</span>
+            <button type="button" class="brand" data-clip-format="follow">Follow the switch</button>
+            <button type="button" class="brand" data-clip-format="vertical">9:16</button>
+            <button type="button" class="brand" data-clip-format="horizontal">16:9</button>
+          </div>
+
           <label class="field">
             <span>Feedback <kbd>F</kbd></span>
             <textarea id="feedback" rows="4" placeholder="What works, what to recut, caption changes…"></textarea>
@@ -1129,6 +1230,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
       <ul>
         <li><kbd>J</kbd> / <kbd>K</kbd> next / previous clip</li>
         <li><kbd>A</kbd> approve <kbd>R</kbd> reject <kbd>U</kbd> undecided</li>
+        <li><kbd>V</kbd> output 9:16 <kbd>H</kbd> output 16:9 (the Output switch)</li>
         <li><kbd>Space</kbd> play the clip from its in-point</li>
         <li><kbd>[</kbd> / <kbd>]</kbd> nudge the in-point, <kbd>Shift</kbd> for the out-point</li>
         <li><kbd>N</kbd> jump to the next undecided clip</li>
@@ -1173,12 +1275,17 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           captionsList: $('captions-list'), resetCaptions: $('reset-captions'),
           facts: $('facts'), saved: $('saved'), batch: $('batch'), hint: $('hint'),
           renderBtn: $('render-btn'), renderStatus: $('render-status'),
-          brands: $('brands'),
+          brands: $('brands'), clipFormat: $('clip-format'), formatSwitch: $('format-switch'),
           keys: $('keys'), welcome: $('welcome'), layout: document.querySelector('.layout'),
         };
 
-        var FILTERS = [['all', 'All'], ['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected'], ['rendered', 'Rendered']];
+        /* Tabs first: the three verdicts you move clips between. All and
+           Rendered sit after them as utility views. */
+        var FILTERS = [['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected'], ['all', 'All'], ['rendered', 'Rendered']];
         var NUDGE = 0.25;
+
+        /* Output shapes, mirroring tools/clip-renderer/src/theme.ts FORMATS. */
+        var FORMAT_LABEL = { vertical: 'IG/TikTok 9:16', horizontal: 'YouTube 16:9' };
 
         /*
          * The four products, with the accent each one highlights captions in.
@@ -1229,6 +1336,8 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
         var state = {
           clips: [], counts: {}, rules: {}, lessons: {}, filter: 'pending',
           currentId: null, words: {}, currentCaptions: [], loaded: false,
+          // The run-wide output shape the render button will use.
+          formatState: { format: 'vertical', both: false },
         };
 
         /* ================= server ================= */
@@ -1241,18 +1350,21 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
         }
 
         function load() {
-          return getJson('/api/clips').then(function (data) {
+          return Promise.all([getJson('/api/clips'), getJson('/api/format')]).then(function (results) {
+            var data = results[0];
             state.clips = data.clips;
             state.counts = data.counts;
             state.rules = data.rules || {};
             state.lessons = {};
             (data.lessons || []).forEach(function (lesson) { state.lessons[lesson.id] = lesson; });
+            if (results[1] && results[1].format) state.formatState = results[1];
             state.loaded = true;
 
             el.batch.textContent = data.counts.all + ' clips · approved batch written to ' +
               shortPath(data.renderManifest);
             el.batch.title = data.renderManifest;
 
+            renderFormatSwitch();
             if (!visible().length && state.filter === 'pending') state.filter = 'all';
             if (!state.currentId) state.currentId = (visible()[0] || {}).id || null;
             render();
@@ -1464,6 +1576,7 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             (clip.trimmed ? ' · trimmed' : '') +
             (clip.renderStale ? ' · rendered file is the old cut' : '');
 
+          applyFrameFormat(clip);
           renderFrameBrand(clip);
           showVideo(clip);
           renderTrim(clip);
@@ -1486,6 +1599,63 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
          * it, and trimming moves the window. A rendered file, when one exists,
          * is only played when there is no lesson video to play instead.
          */
+
+        /*
+         * The output shape this clip renders in: its own override wins, then
+         * the run-wide switch. With Both pinned the run produces both shapes —
+         * the preview shows the portrait one and the note below the picker
+         * says so.
+         */
+        function clipFormat(clip) {
+          if (clip.formatOverride) return { shape: clip.formatOverride, overridden: true };
+          if (state.formatState.both) return { shape: 'vertical', overridden: false };
+          return { shape: state.formatState.format, overridden: false };
+        }
+
+        function applyFrameFormat(clip) {
+          var eff = clipFormat(clip);
+          el.frame.dataset.format = eff.shape;
+          el.stage.dataset.format = eff.shape;
+          el.novideo.dataset.format = eff.shape;
+          renderClipFormat(clip);
+        }
+
+        function renderClipFormat(clip) {
+          var buttons = el.clipFormat.querySelectorAll('button');
+          for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            var value = button.dataset.clipFormat;
+            var active =
+              value === 'follow' ? !clip.formatOverride : clip.formatOverride === value;
+            button.setAttribute('aria-pressed', String(active));
+            button.style.color = active ? 'var(--ink)' : '';
+          }
+
+          var old = el.clipFormat.querySelector('.auto-note');
+          if (old) old.parentNode.removeChild(old);
+
+          var note = document.createElement('span');
+          note.className = 'auto-note';
+          note.textContent = clip.formatOverride
+            ? 'this clip overrides the switch'
+            : state.formatState.both
+              ? 'follows the switch · renders both 9:16 and 16:9'
+              : 'follows the switch · ' + FORMAT_LABEL[state.formatState.format];
+          el.clipFormat.appendChild(note);
+        }
+
+        function renderFormatSwitch() {
+          var buttons = el.formatSwitch.querySelectorAll('button');
+          for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            if (button.dataset.both) {
+              button.setAttribute('aria-pressed', String(state.formatState.both));
+            } else {
+              var active = !state.formatState.both && state.formatState.format === button.dataset.format;
+              button.setAttribute('aria-pressed', String(active));
+            }
+          }
+        }
 
         // Styles the composed frame like the renderer would for this clip's
         // chosen brand — tools/clip-renderer/src/Clip.tsx, minus the footage
@@ -1943,6 +2113,62 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
           });
         });
 
+        /* ---------- output format ---------- */
+
+        // One path for the switch, the per-clip row's "follow" note, and the
+        // V / H keys — so they can never disagree about what is saved.
+        function patchFormat(patch) {
+          state.formatState = {
+            format: patch.format || state.formatState.format,
+            both: patch.both !== undefined ? patch.both : false,
+          };
+          renderFormatSwitch();
+          if (current()) applyFrameFormat(current());
+
+          return fetch('/api/format', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(patch),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('server said ' + res.status);
+            return res.json();
+          }).then(function (saved) {
+            state.formatState = saved;
+            renderFormatSwitch();
+            if (current()) applyFrameFormat(current());
+          }).catch(function () {
+            // Re-load on failure: the server's copy is the truth.
+            getJson('/api/format').then(function (data) {
+              state.formatState = data;
+              renderFormatSwitch();
+              if (current()) applyFrameFormat(current());
+            });
+          });
+        }
+
+        el.formatSwitch.addEventListener('click', function (e) {
+          var button = e.target.closest('button');
+          if (!button) return;
+
+          patchFormat(
+            button.dataset.both
+              ? { both: !(state.formatState.both) }
+              : { format: button.dataset.format, both: false },
+          );
+        });
+
+        el.clipFormat.addEventListener('click', function (e) {
+          var button = e.target.closest('button[data-clip-format]');
+          if (!button) return;
+          var clip = current();
+          if (!clip) return;
+
+          var value = button.dataset.clipFormat;
+          save(clip.id, { format: value === 'follow' ? null : value }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
         [el.start, el.end].forEach(function (input) {
           input.addEventListener('change', function () {
             var value = parseTime(input.value);
@@ -2048,6 +2274,10 @@ node bin/review.mjs --video-dir ~/Videos/lessons</pre>
             a: function () { setStatus('approved'); },
             r: function () { setStatus('rejected'); },
             u: function () { setStatus('pending'); },
+
+            v: function () { patchFormat({ format: 'vertical', both: false }); },
+            h: function () { patchFormat({ format: 'horizontal', both: false }); },
+
             n: nextUndecided,
             f: function () { el.feedback.focus(); },
             '[': function () { nudge(e.shiftKey ? 'end' : 'start', -NUDGE); },

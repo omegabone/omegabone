@@ -121,20 +121,82 @@ export const BRAND_CHOICES = [
 export const brandFor = (name: string): BrandTokens =>
   BRANDS[name] ?? BRANDS[DEFAULT_BRAND];
 
-/** Footage band. 16:9 at full width is 607.5px tall. */
-const VIDEO_HEIGHT = (1080 * 9) / 16;
+/**
+ * Output formats.
+ *
+ * vertical   1080x1920 — Instagram / TikTok. The footage sits as a centered
+ *            band with the title above it and captions below it, on the brand
+ *            ground.
+ * horizontal 1920x1080 — YouTube. The footage fills the frame; the title and
+ *            captions overlay it on scrims, the way YouTube chapter cards do.
+ */
+export type FormatId = 'vertical' | 'horizontal';
 
-export const layout = {
-  width: 1080,
-  height: 1920,
-  fps: 30,
-  safeX: 72,
-
-  /** Centered vertically: equal space above and below the footage. */
-  videoTop: (1920 - VIDEO_HEIGHT) / 2,
-  videoHeight: VIDEO_HEIGHT,
-  /** Captions sit directly beneath the footage. */
-  captionBottom: 430,
-  headerTop: 260,
-  footerBottom: 96,
+export const FORMATS: Record<FormatId, { id: FormatId; label: string; short: string; width: number; height: number }> = {
+  vertical: { id: 'vertical', label: 'IG / TikTok 9:16', short: '9:16', width: 1080, height: 1920 },
+  horizontal: { id: 'horizontal', label: 'YouTube 16:9', short: '16:9', width: 1920, height: 1080 },
 };
+
+export const DEFAULT_FORMAT: FormatId = 'vertical';
+
+/** True when the value is one of ours — render-all filters CLI input with this. */
+export const isFormatId = (value: string): value is FormatId =>
+  value === 'vertical' || value === 'horizontal';
+
+export type Layout = {
+  width: number;
+  height: number;
+  fps: number;
+  safeX: number;
+  videoTop: number;
+  videoHeight: number;
+  captionBottom: number;
+  headerTop: number;
+  footerBottom: number;
+  /** True when text sits over the footage and needs a scrim behind it. */
+  overlay: boolean;
+};
+
+const FPS = 30;
+
+/** Vertical (the original layout): footage as a centered band. */
+function verticalLayout(): Layout {
+  // Footage band. 16:9 at full width is 607.5px tall.
+  const videoHeight = (1080 * 9) / 16;
+  return {
+    width: 1080,
+    height: 1920,
+    fps: FPS,
+    safeX: 72,
+    // Centered vertically: equal space above and below the footage.
+    videoTop: (1920 - videoHeight) / 2,
+    videoHeight,
+    // Captions sit directly beneath the footage.
+    captionBottom: 430,
+    headerTop: 260,
+    footerBottom: 96,
+    overlay: false,
+  };
+}
+
+/** Horizontal: footage full-bleed, text overlaid on scrims. */
+function horizontalLayout(): Layout {
+  return {
+    width: 1920,
+    height: 1080,
+    fps: FPS,
+    safeX: 96,
+    videoTop: 0,
+    videoHeight: 1080,
+    captionBottom: 84,
+    headerTop: 64,
+    footerBottom: 48,
+    overlay: true,
+  };
+}
+
+export const layoutFor = (format: FormatId): Layout =>
+  format === 'horizontal' ? horizontalLayout() : verticalLayout();
+
+/** The original vertical canvas — kept because older callers import it. */
+export const layout = verticalLayout();

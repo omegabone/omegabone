@@ -206,6 +206,9 @@ function decorate(entry, render, review, sources) {
     topic,
     topicEdited,
     captionsOverride,
+    // The clip's own render shape, when the reviewer picked one. Null means
+    // "follow the run-wide switch" — shown as such in the page.
+    formatOverride: review?.format ?? null,
     start,
     end,
     durationSeconds: start === null || end === null ? null : Math.round((end - start) * 10) / 10,

@@ -31,6 +31,7 @@ const { values: passed } = parseArgs({
     move: { type: 'boolean', default: false },
     // parseArgs has no --no-<flag> negation, so the negative is the option.
     'no-open': { type: 'boolean', default: false },
+    format: { type: 'string' },
     help: { type: 'boolean', default: false, short: 'h' },
   },
 });
@@ -57,6 +58,9 @@ Options
                        (default beside the manifest)
   --port <n>           Port to serve on (default 4321)
   --move               Move approved renders instead of copying them
+  --format <name>      Default render shape for the run: vertical (IG/TikTok
+                       9:16) or horizontal (YouTube 16:9). Per-clip choices in
+                       the page beat this. Saved like the other settings.
   --no-open            Do not open a browser
   -h, --help           This
 
@@ -104,6 +108,11 @@ const transcriptsPath = args.transcripts
   : join(dirname(manifestPath), 'transcripts.json');
 const port = Number(args.port);
 
+// The run-wide default render shape, remembered like the paths. A value that
+// is not one of the two shapes falls back to vertical rather than refusing to
+// start — the page shows what it will do either way.
+const runFormat = args.format === 'horizontal' ? 'horizontal' : 'vertical';
+
 if (approvedDir === renderDir) {
   console.error('The approved folder cannot be the clips folder.');
   process.exit(1);
@@ -135,6 +144,7 @@ const server = createReviewServer({
   move: args.move,
   rendererScript: existsSync(rendererScript) ? rendererScript : null,
   rendererCwd: args.rendererDir,
+  runFormat,
 });
 
 server.on('error', (err) => {

@@ -39,6 +39,40 @@ function normalise(text) {
 }
 
 /**
+ * Models re-decorate "verbatim" quotes with the [MM:SS] timecode prefixes and
+ * speaker labels they saw in the prompt — even when the source text carries
+ * neither, which a local Whisper transcript never does (no speakers, no
+ * timecodes inside the cue text). Left in, the decoration breaks the grounding
+ * check and every otherwise-good candidate dies as "quote not grounded".
+ *
+ * Whether to strip labels is decided per segment: when the transcript itself
+ * speaks in speaker labels ("Omega: …"), a label in the quote is meaningful
+ * evidence and must stay — a label welded onto a span from elsewhere is how
+ * stitched fabrications announce themselves. When the source has no labels,
+ * a label in the quote is pure model invention and is stripped.
+ */
+const TIMECODE_PREFIX = /^\s*\[?\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d+)?\]?\s*/;
+const DASH_PREFIX = /^\s*-+\s+/;
+const SPEAKER_LABEL_PREFIX = /^\s*(?:>>\s*)?(?:[A-Z][\w’'.&-]*\s+){0,4}[A-Z][\w’'.&-]*:\s+/;
+
+export function sourceUsesSpeakerLabels(segmentText) {
+  return SPEAKER_LABEL_PREFIX.test(segmentText || '');
+}
+
+function stripQuoteDecoration(quote, { stripLabels }) {
+  return (quote || '')
+    .split('\n')
+    .map((line) => {
+      let out = line.replace(TIMECODE_PREFIX, '').replace(DASH_PREFIX, '');
+      if (stripLabels) out = out.replace(SPEAKER_LABEL_PREFIX, '');
+      return out;
+    })
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
  * Verify the quote actually comes from the segment. Guards against paraphrase
  * and against spans stitched together from distant passages.
  *
@@ -223,6 +257,16 @@ export function enforce(lesson, candidates, opts = {}) {
     const reject = (reason) =>
       rejected.push({ reason, segment: c.segmentIndex, quote: (c.full_quote || '').slice(0, 120) });
 
+    // Models re-decorate "verbatim" quotes with [MM:SS] timecodes and speaker
+    // labels. Timecodes and dashes are always model invention; speaker labels
+    // are invention only when the transcript itself uses none — where the
+    // source does use them, a label in the quote stays as checkable evidence.
+    if (c.full_quote) {
+      c.full_quote = stripQuoteDecoration(c.full_quote, {
+        stripLabels: !sourceUsesSpeakerLabels(c.segment?.text),
+      });
+    }
+
     // Rule: exactly one valid awareness category.
     if (!AWARENESS_KEYS.includes(c.primary_category)) {
       reject(`invalid primary_category "${c.primary_category}"`);
@@ -233,7 +277,9 @@ export function enforce(lesson, candidates, opts = {}) {
       reject('not self-contained');
       continue;
     }
-    // Rule: quote must come from the transcript.
+    // Rule: quote must come from the transcript. (The quote is already
+    // decoration-free; the segment text may still carry speaker labels, which
+    // the fuzzy containment inside treats as ordinary words on both sides.)
     if (!quoteIsGrounded(c.full_quote, c.segment.text)) {
       reject('quote not grounded in segment transcript');
       continue;

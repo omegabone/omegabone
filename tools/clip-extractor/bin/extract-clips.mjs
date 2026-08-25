@@ -47,6 +47,7 @@ const { values: args } = parseArgs({
     wpm: { type: 'string' },
     'segment-words': { type: 'string' },
     'segment-seconds': { type: 'string' },
+    'max-tokens': { type: 'string' },
     concurrency: { type: 'string', default: '3' },
 
     title: { type: 'string' },
@@ -80,6 +81,9 @@ Source
 Model
   --provider <name>       claude (default), kimi, chatgpt, hermes, openrouter
   --model <id>            Override the provider's default model.
+  --max-tokens <n>        Cap the model response size (default ${DEFAULTS.maxTokens}).
+                          Lower it when a pay-as-you-go balance cannot cover
+                          the full reservation (OpenRouter 402).
   --offline               Skip the API entirely and use the keyword heuristic.
                           For smoke-testing the pipeline, not for real selection.
   --providers             Show provider status and which API keys are present.
@@ -154,6 +158,7 @@ const opts = {
   minSegmentWords: DEFAULTS.minSegmentWords,
   shortMaxSeconds: DEFAULTS.shortMaxSeconds,
   maxTokens: DEFAULTS.maxTokens,
+  ...(args['max-tokens'] ? { maxTokens: num(args['max-tokens'], DEFAULTS.maxTokens) } : {}),
   effort: DEFAULTS.effort,
   model: args.model || PROVIDERS[args.provider].defaultModel,
   offline: args.offline,

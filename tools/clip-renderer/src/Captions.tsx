@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
 import type { CaptionCue } from './schema';
-import { layout, type BrandTokens } from './theme';
+import { layoutFor, type BrandTokens } from './theme';
 
 /**
  * Cue-level captions, seated directly below the footage in brand type.
@@ -13,14 +13,22 @@ import { layout, type BrandTokens } from './theme';
  * Highlighting is per cue, not per word: the source gives cue-level timings
  * only, and inventing word timings by dividing the cue evenly desynchronises
  * against real speech. Better an honest cue than a confident wrong word.
+ *
+ * Vertical: captions sit on the brand ground beneath the footage band.
+ * Horizontal: they overlay the footage near the bottom, on a soft scrim pill,
+ * the way YouTube subtitles do.
  */
 export const Captions: React.FC<{
   cues: CaptionCue[];
   brand: BrandTokens;
-}> = ({ cues, brand }) => {
+  /** Defaults to 'vertical' so callers that predate formats still typecheck. */
+  format?: 'vertical' | 'horizontal';
+}> = ({ cues, brand, format = 'vertical' }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
+  const layout = layoutFor(format);
+  const overlay = layout.overlay;
 
   const active = cues.find((c) => t >= c.start && t < c.end);
   if (!active) return null;
@@ -52,7 +60,7 @@ export const Captions: React.FC<{
           position: 'relative',
           opacity: fade,
           transform: `translateY(${rise}px)`,
-          padding: '10px 26px',
+          padding: overlay ? '8px 24px' : '10px 26px',
           borderRadius: 14,
           /*
            * The highlight is where the brand shows. A marker swipe behind the
@@ -62,8 +70,11 @@ export const Captions: React.FC<{
            *
            * Swap the brand and this is what changes: green for VME, red for
            * Frequency, purple for Learn 2 Sing, blue for Music 33.
+           *
+           * Over footage (horizontal) the accent alpha is doubled so the
+           * highlight survives sitting on moving video instead of flat ground.
            */
-          background: `${brand.accent}2E`,
+          background: overlay ? `${brand.accent}5C` : `${brand.accent}2E`,
           boxShadow: `inset 0 -6px 0 0 ${brand.accent}`,
         }}
       >
@@ -71,15 +82,16 @@ export const Captions: React.FC<{
           style={{
             fontFamily: brand.display,
             fontWeight: brand.displayWeight,
-            fontSize: 66,
+            fontSize: overlay ? 52 : 66,
             lineHeight: 1.2,
             letterSpacing: '-0.015em',
             textAlign: 'center',
             textWrap: 'balance',
             color: brand.ink,
-            // Captions sit on the brand ground rather than over the footage, so
-            // they need lift rather than a scrim.
-            textShadow: `0 2px 18px rgba(0,0,0,0.55), 0 0 44px ${brand.accent}44`,
+            // Over footage needs lift rather than a ground behind it.
+            textShadow: overlay
+              ? `0 2px 14px rgba(0,0,0,0.75), 0 0 30px rgba(0,0,0,0.5)`
+              : `0 2px 18px rgba(0,0,0,0.55), 0 0 44px ${brand.accent}44`,
           }}
         >
           {active.text}

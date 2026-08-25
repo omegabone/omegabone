@@ -31,6 +31,13 @@ export const STATUSES = new Set(['pending', 'approved', 'rejected']);
  */
 export const BRANDS = new Set(['vme', 'frequency', 'learn2sing', 'mr33']);
 
+/**
+ * Output shapes a clip can be rendered in — same list as the renderer's
+ * FORMATS. vertical is 1080x1920 (IG/TikTok); horizontal is 1920x1080
+ * (YouTube).
+ */
+export const FORMATS = new Set(['vertical', 'horizontal']);
+
 const STATE_VERSION = 1;
 
 export function statePath(renderDir) {
@@ -76,6 +83,11 @@ export function applyVerdict(store, id, patch, options) {
     throw new Error(`unknown brand: ${patch.brand}`);
   }
 
+  // A per-clip format choice. null puts it back on the run-wide default.
+  if (patch.format !== undefined && patch.format !== null && !FORMATS.has(patch.format)) {
+    throw new Error(`unknown format: ${patch.format}`);
+  }
+
   if (patch.topic !== undefined && patch.topic !== null && typeof patch.topic !== 'string') {
     throw new Error('topic must be a string');
   }
@@ -94,6 +106,7 @@ export function applyVerdict(store, id, patch, options) {
     // convention as the trim's start/end below.
     ...('topic' in patch ? { topic: patch.topic } : before.topic !== undefined ? { topic: before.topic } : {}),
     ...('captions' in patch ? { captions: patch.captions } : before.captions !== undefined ? { captions: before.captions } : {}),
+    ...('format' in patch ? { format: patch.format } : before.format !== undefined ? { format: before.format } : {}),
     ...trimFrom(patch, before),
     updatedAt: new Date().toISOString(),
   };
@@ -256,7 +269,7 @@ function deepLink(url, start) {
   return url.includes('?') ? `${url}&t=${t}s` : `${url}?t=${t}s`;
 }
 
-export function writeRenderManifest(path, clips, { lessons, transcripts, captionsFor }) {
+export function writeRenderManifest(path, clips, { lessons, transcripts, captionsFor, formatState }) {
   const approved = clips.filter((c) => c.status === 'approved');
   const byLesson = new Map();
 
@@ -268,6 +281,13 @@ export function writeRenderManifest(path, clips, { lessons, transcripts, caption
   const out = {
     generatedAt: new Date().toISOString(),
     source: 'clip-review',
+    // The run-wide output shape from the review page, so a render started
+    // outside the page (MAKE CLIPS.command) still honors what was picked
+    // there. Per-clip `format` entries below beat this; a CLI --format or
+    // --both flag beats everything. 'both' means render every clip twice.
+    ...(formatState
+      ? { renderFormat: formatState.both ? 'both' : formatState.format || 'vertical' }
+      : {}),
     lessons: [],
   };
 
@@ -323,6 +343,10 @@ export function writeRenderManifest(path, clips, { lessons, transcripts, caption
           trimmed: clip.trimmed,
           reviewNote: clip.feedback,
           brand: clip.brand,
+          // A per-clip choice beats the run-wide one; the renderer's own
+          // --format/--both beats both of them. Absent here means "no clip
+          // override", which lets the CLI flag decide.
+          ...(clip.formatOverride ? { format: clip.formatOverride } : {}),
           captions,
           // The renderer needs an in-point and cues to cut against. A clip
           // approved without either is carried here but marked unrenderable,

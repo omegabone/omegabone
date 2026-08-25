@@ -8,7 +8,7 @@
  */
 
 import { createServer } from 'node:http';
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, extname, resolve, sep, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
@@ -19,6 +19,7 @@ import {
   applyVerdict,
   writeApprovedIndex,
   writeRenderManifest,
+  FORMATS,
 } from './reviews.mjs';
 import { loadTranscripts, windowFor, captionsFor } from './transcript.mjs';
 import { resolveSources } from './sources.mjs';
@@ -50,6 +51,8 @@ export function createReviewServer(config) {
     move,
     rendererScript,
     rendererCwd,
+    // The run-wide default output shape; each clip can override its own.
+    runFormat,
   } = config;
 
   const { lessons, rules } = readLessons(manifestPath);
@@ -61,6 +64,18 @@ export function createReviewServer(config) {
   const reviews = loadReviews(stateDir);
   const renderManifestPath = join(stateDir, 'approved-manifest.json');
 
+  // The run-wide format lives in its own small file beside the reviews, so it
+  // survives restarts without touching per-clip decisions.
+  const runFormatPath = join(stateDir, 'run-format.json');
+  let formatState = { format: FORMATS.has(runFormat) ? runFormat : 'vertical', both: false };
+  try {
+    const saved = JSON.parse(readFileSync(runFormatPath, 'utf8'));
+    if (FORMATS.has(saved.format)) formatState.format = saved.format;
+    if (typeof saved.both === 'boolean') formatState.both = saved.both;
+  } catch {
+    // First run for this state dir — keep the defaults.
+  }
+
   const library = () => buildLibrary({ manifestPath, renderDir, reviews, sources });
 
   /** Everything derived from a change, written in one go. */
@@ -68,7 +83,7 @@ export function createReviewServer(config) {
     const clips = library();
     saveReviews(stateDir, reviews);
     writeApprovedIndex(approvedDir, clips);
-    writeRenderManifest(renderManifestPath, clips, { lessons, transcripts, captionsFor });
+    writeRenderManifest(renderManifestPath, clips, { lessons, transcripts, captionsFor, formatState });
     return clips;
   }
 
@@ -102,6 +117,16 @@ export function createReviewServer(config) {
     const rendererArgs = [rendererScript, '--manifest', renderManifestPath, '--out', renderDir];
     if (video) rendererArgs.push('--video', video);
     else if (videoDir) rendererArgs.push('--video-dir', videoDir);
+
+    // The format switch decides how the run renders. "Both" hands every clip
+    // to the renderer twice; otherwise one flag covers the run — per-clip
+    // overrides in the manifest are the renderer's own concern (and are
+    // ignored while a run-wide choice is pinned).
+    if (formatState.both) {
+      rendererArgs.push('--both');
+    } else if (formatState.format) {
+      rendererArgs.push('--format', formatState.format);
+    }
 
     renderJob.running = true;
     renderJob.startedAt = new Date().toISOString();
@@ -168,6 +193,35 @@ export function createReviewServer(config) {
 
       if (path.startsWith('/api/captions/') && req.method === 'GET') {
         return captions(path.slice('/api/captions/'.length), res);
+      }
+
+      if (path === '/api/format' && req.method === 'GET') {
+        return json(res, 200, formatState);
+      }
+
+      if (path === '/api/format' && (req.method === 'PATCH' || req.method === 'POST')) {
+        let patch;
+        try {
+          patch = JSON.parse((await readBody(req)) || '{}');
+        } catch {
+          return json(res, 400, { error: 'body is not JSON' });
+        }
+
+        if (patch.format !== undefined) {
+          if (!FORMATS.has(patch.format)) return json(res, 400, { error: 'unknown format: use vertical or horizontal' });
+          formatState.format = patch.format;
+        }
+        if (patch.both !== undefined) {
+          if (typeof patch.both !== 'boolean') return json(res, 400, { error: 'both must be a boolean' });
+          formatState.both = patch.both;
+        }
+
+        try {
+          writeFileSync(runFormatPath, `${JSON.stringify(formatState, null, 2)}\n`, 'utf8');
+        } catch (err) {
+          return json(res, 500, { error: `could not save: ${err.message}` });
+        }
+        return json(res, 200, formatState);
       }
 
       if (path.startsWith('/api/clips/') && (req.method === 'PATCH' || req.method === 'POST')) {
@@ -269,6 +323,7 @@ export function createReviewServer(config) {
     return json(res, 200, {
       clip: updated.find((c) => c.id === id) ?? clip,
       counts: countStatuses(updated),
+      formatState,
     });
   }
 

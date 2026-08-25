@@ -40,21 +40,47 @@ function sanitizeForFilename(text) {
     .replace(/\s+/g, '_');
 }
 
+const FORMAT_IDS = ['vertical', 'horizontal'];
+const FORMAT_SUFFIX = { vertical: '-vertical', horizontal: '-horizontal' };
+
+/**
+ * Which formats this run renders when the CLI pins one. --both does every
+ * clip twice; --format pins one for every clip — over a per-clip manifest
+ * choice too, because an explicit flag on the command line is the most
+ * specific thing anyone can say.
+ *
+ * With neither flag, the manifest decides: its run-wide renderFormat from the
+ * review page, each clip's own override, then vertical.
+ */
+function cliFormats() {
+  if (args.both) return [...FORMAT_IDS];
+  if (args.format) {
+    if (!FORMAT_IDS.includes(args.format)) {
+      console.error(`Unknown format "${args.format}" — use vertical or horizontal.`);
+      process.exit(1);
+    }
+    return [args.format];
+  }
+  return null;
+}
+
 /**
  * Brand_Title_Student, disambiguated against every name already claimed in
  * this run: an offline-mode topic like "Vocal Technique & Breath" repeats
  * across most clips in a lesson, so the same three inputs recur constantly
  * and a bare join would have later clips overwrite earlier ones.
  */
-function outputFilename(brand, topic, student, claimed) {
+function outputFilename(brand, topic, student, formatSuffix, claimed) {
   const base = [BRAND_FILE_NAMES[brand] || sanitizeForFilename(brand), sanitizeForFilename(topic), sanitizeForFilename(student)]
     .filter(Boolean)
     .join('_') || 'clip';
 
-  let name = base;
+  // The suffix goes on the outside of the deduplication, so the vertical and
+  // horizontal cuts of one clip can never collide with each other's names.
+  let name = base + formatSuffix;
   let n = 2;
   while (claimed.has(name.toLowerCase())) {
-    name = `${base}_${n}`;
+    name = `${base}_${n}${formatSuffix}`;
     n += 1;
   }
   claimed.add(name.toLowerCase());
@@ -91,6 +117,8 @@ const { values: args } = parseArgs({
     'dry-run': { type: 'boolean', default: false },
     'no-captions': { type: 'boolean', default: false },
     brand: { type: 'string' },
+    format: { type: 'string' },
+    both: { type: 'boolean', default: false },
     help: { type: 'boolean', default: false, short: 'h' },
   },
 });
@@ -114,6 +142,10 @@ Options
   --brand <name>       Force one brand for every clip. By default the brand is
                        read from each lesson's title: "Learn 2 Sing ..." renders
                        purple, "Vocal Mastery ..." renders green.
+  --format <name>      vertical (1080x1920, IG/TikTok) or horizontal
+                       (1920x1080, YouTube). Default vertical.
+  --both               Render every clip in BOTH formats — a "-vertical" and a
+                       "-horizontal" file each. Overrides --format.
   --dry-run            List what would render, without rendering.
 
 Only clips with real timecodes can be rendered. Clips cut from an untimed
@@ -214,24 +246,38 @@ for (const lesson of manifest.lessons) {
     // reviewer looked at the clip, the title rule only looked at a string.
     const clipBrand = clip.brand || brand;
 
-    jobs.push({
-      clip,
-      lesson,
-      props: {
-        id: clip.id,
-        videoSrc: stageVideo(video),
-        startSeconds: clip.start,
-        durationSeconds: clip.durationSeconds,
-        awarenessLabel: clip.awarenessLabel,
-        topic: clip.topic,
-        student: lesson.student || '',
-        suggestedCaption: clip.suggestedCaption,
-        cta: clip.cta,
-        captions: clip.captions ?? [],
-        showCaptions: !args['no-captions'],
-        brand: clipBrand,
-      },
-    });
+    // Format precedence, decided here once so the rest of the script just
+    // follows it. An explicit --format/--both flag pins the whole run; then
+    // the clip's own override; then the run-wide switch saved from the review
+    // page ('both' renders every clip twice); then vertical.
+    const pinned = cliFormats();
+    const clipFormat =
+      pinned ??
+      clip.formatOverride ??
+      (manifest.renderFormat === 'both' ? 'both' : manifest.renderFormat ?? 'vertical');
+    const formats = clipFormat === 'both' ? [...FORMAT_IDS] : [clipFormat];
+    for (const format of formats) {
+      jobs.push({
+        clip,
+        lesson,
+        format,
+        props: {
+          id: clip.id,
+          videoSrc: stageVideo(video),
+          startSeconds: clip.start,
+          durationSeconds: clip.durationSeconds,
+          awarenessLabel: clip.awarenessLabel,
+          topic: clip.topic,
+          student: lesson.student || '',
+          suggestedCaption: clip.suggestedCaption,
+          cta: clip.cta,
+          captions: clip.captions ?? [],
+          showCaptions: !args['no-captions'],
+          brand: clipBrand,
+          format,
+        },
+      });
+    }
   }
 }
 
@@ -242,7 +288,7 @@ console.log();
 if (args['dry-run']) {
   for (const j of jobs) {
     console.log(
-      `  would render ${j.clip.id}  [${j.props.brand}]  ${j.clip.durationSeconds}s @ ${j.clip.start}s  <- ${basename(j.props.videoSrc)}`,
+      `  would render ${j.clip.id}  [${j.props.brand} · ${j.format}]  ${j.clip.durationSeconds}s @ ${j.clip.start}s  <- ${basename(j.props.videoSrc)}`,
     );
   }
   process.exit(0);
@@ -262,12 +308,14 @@ let ok = 0;
 let failed = 0;
 
 for (const [i, job] of jobs.entries()) {
-  const priorFile = renderIndex[job.clip.id];
+  // Keyed per format: one clip can exist as a vertical and a horizontal file.
+  const indexKey = `${job.clip.id}:${job.format}`;
+  const priorFile = renderIndex[indexKey];
   if (priorFile) claimed.delete(priorFile.replace(/\.mp4$/i, '').toLowerCase());
 
-  const filename = outputFilename(job.props.brand, job.clip.topic, job.lesson.student, claimed);
+  const filename = outputFilename(job.props.brand, job.clip.topic, job.lesson.student, FORMAT_SUFFIX[job.format], claimed);
   const outFile = join(outDir, filename);
-  const propsFile = join(tmpdir(), `clip-props-${job.clip.id}-${process.pid}.json`);
+  const propsFile = join(tmpdir(), `clip-props-${job.clip.id}-${job.format}-${process.pid}.json`);
   writeFileSync(propsFile, JSON.stringify(job.props), 'utf8');
 
   console.log(`[${i + 1}/${jobs.length}] ${filename} (${job.clip.durationSeconds}s)`);
@@ -280,7 +328,7 @@ for (const [i, job] of jobs.entries()) {
 
   if (res.status === 0) {
     ok++;
-    renderIndex[job.clip.id] = filename;
+    renderIndex[indexKey] = filename;
     // The topic/brand/student changed since the last render — the old file
     // under the old name is stale and would otherwise sit there unlinked
     // from any clip, cluttering the folder with a name nothing points to.
@@ -291,7 +339,7 @@ for (const [i, job] of jobs.entries()) {
   } else {
     failed++;
     claimed.delete(filename.replace(/\.mp4$/i, '').toLowerCase());
-    console.error(`  failed: ${job.clip.id}`);
+    console.error(`  failed: ${job.clip.id} (${job.format})`);
   }
 }
 

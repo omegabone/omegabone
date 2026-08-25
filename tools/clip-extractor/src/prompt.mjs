@@ -47,6 +47,7 @@ ${typeBlock}
 - Never select a passage where the coach or a student is singing or vocalising along with an instrumental track — that is a music moment, not a teaching moment, even if it sounds compelling.
 - Never select from the lesson's opening theme song / intro music window.
 - The quote must be a faithful verbatim span from the transcript. Do not paraphrase, merge distant passages, or invent words.
+- Copy the span exactly as the transcript shows it — no added timecodes, speaker labels, or dashes. If the segment text has none, the quote has none either.
 
 ## Output fields
 
