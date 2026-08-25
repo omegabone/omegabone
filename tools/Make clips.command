@@ -115,11 +115,13 @@ yt-dlp \
   --paths "$LESSONS" \
   --output '%(title)s.%(ext)s' \
   --download-archive "$LESSONS/.downloaded.txt" \
-  --no-overwrites \
+  --no-overwrites --no-continue \
   --write-subs --write-auto-subs \
   --sub-langs 'en.*' --convert-subs srt \
   --format 'bv*[height<=1080]+ba/b[height<=1080]' \
   --merge-output-format mp4 \
+  --impersonate chrome \
+  --retries 10 --fragment-retries 10 \
   "$PLAYLIST" || warn "The downloader stopped early — carrying on with what it got."
 
 SUBS=$(count_files "$LESSONS" "$SUBS_MATCH")
