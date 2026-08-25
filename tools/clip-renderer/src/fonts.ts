@@ -1,4 +1,4 @@
-import { staticFile, delayRender, continueRender } from 'remotion';
+import { staticFile } from 'remotion';
 
 /**
  * Locally bundled typefaces.
@@ -16,8 +16,22 @@ import { staticFile, delayRender, continueRender } from 'remotion';
  * render identically. The Frequency series names real families (Cinzel,
  * EB Garamond), which are bundled as specified.
  *
- * delayRender holds the frame until the faces are ready, otherwise the first
- * frames render in a fallback font.
+ * ---
+ *
+ * This is plain CSS, with no delayRender holding the frame, and that is
+ * deliberate.
+ *
+ * Holding frames on a FontFace promise lost whole batches: one render tab in a
+ * hundred never resolved, and the run died two thirds of the way through on a
+ * typeface. Raising the deadline only moved where it died. Racing the promise
+ * against a timer does not work either — Remotion controls the clock while
+ * rendering, so a setTimeout inside a composition never fires.
+ *
+ * Declared this way the browser loads the files itself, off its own timeline,
+ * with no promise anyone can be left waiting on. The files are served by
+ * Remotion's own local server, so they arrive in the first frame or two;
+ * `font-display: swap` means the worst case is a moment in the fallback face
+ * rather than a batch that does not finish.
  */
 
 type Face = { family: string; file: string; weight: string; style: string };
@@ -39,31 +53,20 @@ export const loadFonts = (): void => {
   if (started || typeof document === 'undefined') return;
   started = true;
 
-  // Every render tab loads these, and a tab that is also decoding video can
-  // take a while to get to them. The default 28s deadline is short enough that
-  // a long batch fails on a font rather than on anything to do with the clip.
-  const handle = delayRender('Loading local fonts', { timeoutInMilliseconds: 120_000 });
+  const style = document.createElement('style');
+  style.setAttribute('data-clip-fonts', '');
+  style.textContent = FACES.map(
+    (face) =>
+      `@font-face{` +
+      `font-family:'${face.family}';` +
+      `src:url('${staticFile(`fonts/${face.file}`)}') format('woff2');` +
+      `font-weight:${face.weight};` +
+      `font-style:${face.style};` +
+      `font-display:swap;` +
+      `}`,
+  ).join('');
 
-  Promise.all(
-    FACES.map(async (face) => {
-      const f = new FontFace(
-        face.family,
-        `url(${staticFile(`fonts/${face.file}`)}) format('woff2')`,
-        { weight: face.weight, style: face.style },
-      );
-      await f.load();
-      document.fonts.add(f);
-    }),
-  )
-    .then(() => continueRender(handle))
-    .catch((err) => {
-      // A face that will not load is a cosmetic problem — the frame renders in
-      // the fallback. Losing the whole batch over it is not a trade worth
-      // making when the clips are wanted today.
-      // eslint-disable-next-line no-console
-      console.warn(`Font loading failed, rendering in a fallback face: ${err.message}`);
-      continueRender(handle);
-    });
+  document.head.appendChild(style);
 };
 
 loadFonts();
