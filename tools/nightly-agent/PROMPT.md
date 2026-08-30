@@ -115,11 +115,12 @@ social clip.
 
 ## Phase 3 — Frequency-funnel blog campaign (VME blog)
 
-**Date-gated: only run this phase on or after 2026-08-31.** Check the
-actual current date (`date +%F`) before doing anything here — if it's
-before 2026-08-31, skip Phase 3 entirely and say so in the log. This is
-deliberate: the user wants this campaign's posts to start 2026-09-01, not
-earlier.
+**Drafting starts immediately (tonight) — 2026-09-01 is the intended
+*publish* date for post #1, not when drafting begins.** The user wants
+these sitting in front of her for review well before they go live. Target
+publish date for post N = 2026-09-01 plus (N-1) days — write that date at
+the top of each draft file so she can see the intended sequence, but
+posting is entirely manual on her end regardless (see step 7).
 
 **The strategy**: Frequency is a new, not-yet-filmed program with 5
 pillars: Warmup, Speaking Voice, Diction, Emotional Delivery, The Stage.
