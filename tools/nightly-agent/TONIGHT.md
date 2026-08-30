@@ -31,16 +31,15 @@ She's capped nightly review at ~1 hour/day, which works out to **3
 source videos per singer, 6 total**.
 
 8 MetaMuse lessons and 8 Ira lessons are already downloaded locally in
-`lessons/` — but **that is not her full library**. She worked with Ira for
-5 months (sometimes daily, sometimes 2x/week), so there are almost
-certainly many more Ira lessons on the `@omegabone` YouTube channel than
-the 8 already local. Before processing Ira, find her actual playlist(s) on
-the channel and run `yt-dlp --impersonate chrome` against the full
-playlist URL (not just individual videos) — `--download-archive` makes
-re-running safe, already-downloaded ones are skipped automatically.
-**Same for MetaMuse** — she worked with the user for 2 months, so the 8
-local lessons are very likely a partial set too. Find her full playlist
-and download whatever's missing before assuming 8 is the whole library.
+`lessons/` — but **that is not either singer's full library** (Ira: 5
+months of lessons, MetaMuse: 2 months). Since tonight only needs 3 videos
+per singer, don't bulk-download entire playlists — first list each
+singer's actual playlist on the `@omegabone` channel cheaply (e.g.
+`yt-dlp --flat-playlist --print "%(title)s %(upload_date)s"` against the
+playlist URL, no video download), pick 3 good/diverse ones spread across
+their timeline (the already-local 8 count as candidates too, no download
+cost), then `yt-dlp --impersonate chrome` only those specific 3 per
+singer if they're not already local.
 
 None of the 16 already-local lessons are in
 `tools/clip-extractor/clips-out/manifest.json` yet based on tonight's
