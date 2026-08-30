@@ -86,19 +86,9 @@ Working directory: `/Users/mindyabiznazz/Desktop/omega-clips`
    an overnight job, not a batch-process-everything job). Prefer
    continuing whichever student has the most outstanding unclipped
    lessons.
-4. For every clip the extractor proposes in this new batch, generate a
-   thumbnail image via Canva (`generate-design` or
-   `generate-design-structured`, using the "OmegaBone.com" brand kit) —
-   a vertical cover frame with the clip's hook line as the headline text,
-   styled to loosely match the brand this clip's lesson belongs to (VME,
-   Frequency, Learn 2 Sing, or Music 33 — infer from the lesson title,
-   same as the review UI does). Export each as PNG and save into
-   `tools/clip-extractor/clips-out/thumbnails/<clip-id>.png`. These are a
-   convenience for the human reviewer/poster, not a required input to
-   `clip-review` — the review UI itself doesn't display them, so don't
-   worry if there's no hook to attach them there; just make sure they
-   exist on disk under a name that's obviously tied to its clip id, and
-   list them in the log.
+4. **Thumbnail generation is on hold** — no tool has been approved for
+   this yet. Do not call Canva or any other design/image tool. Skip this
+   step entirely until the user names a tool.
 5. Do **not** run `clip-review`'s interactive review or call anything
    equivalent to pressing Approve. Leave the new batch sitting in
    `manifest.json`/`report.md`, ready for the human to open
