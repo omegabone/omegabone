@@ -167,7 +167,8 @@ enough depth that the reader doesn't need the paid course.
 6. Save as
    `tools/nightly-agent/blog-drafts/vme-<postNN>-<slug>.md`, header noting
    target blog `learn2singwithomega.blogspot.com`, the pillar, the post
-   number, and which CTA tier applies.
+   number, its target publish date (2026-09-01 + (N-1) days), and which
+   CTA tier applies.
 7. **Do not attempt to actually post to Blogger** — no publishing
    connection is set up for that yet. These are drafts she pastes in
    herself (or asks to have auto-published once that's built).
