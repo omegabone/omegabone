@@ -17,6 +17,15 @@ mkdir -p logs
 DATE=$(date +%Y-%m-%d)
 RUNLOG="logs/run-$DATE.out"
 
+# A one-off TONIGHT.md, if present, overrides the standing PROMPT.md for
+# exactly one run. The prompt itself is responsible for renaming it to
+# done-<date>.md when it finishes, so it doesn't fire again tomorrow.
+if [ -f tools/nightly-agent/TONIGHT.md ]; then
+  PROMPT_FILE="tools/nightly-agent/TONIGHT.md"
+else
+  PROMPT_FILE="tools/nightly-agent/PROMPT.md"
+fi
+
 /Users/mindyabiznazz/.local/bin/claude -p "$(cat tools/nightly-agent/PROMPT.md)" \
   --restricted --tools "Bash,Read,Write,Edit,Glob,Grep" \
   --add-dir "$REPO" \
