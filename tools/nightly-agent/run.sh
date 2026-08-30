@@ -21,7 +21,7 @@ RUNLOG="logs/run-$DATE.out"
   --restricted --tools "Bash,Read,Write,Edit,Glob,Grep" \
   --add-dir "$REPO" \
   --model claude-sonnet-5 \
-  --max-budget-usd 15 \
+  --max-budget-usd 60 \
   --output-format text \
   >> "$RUNLOG" 2>&1
 
