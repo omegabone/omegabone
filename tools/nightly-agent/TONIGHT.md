@@ -49,23 +49,18 @@ None of the 16 already-local lessons are in
 check.
 
 For **MetaMuse** (all "Vocal Mastery with MetaMuse" — VME brand):
-1. Run the AI clip-picker across her lessons, working through them until
-   you have **~30 proposed clips** in the manifest (this pipeline
-   typically yields 5-8 clips/lesson, so this may not need all 8 lessons —
-   stop once you're comfortably around 30, don't force extra lessons just
-   to round the number). Leave everything for human review — do not
-   approve or render.
-2. For each MetaMuse lesson you process, write the source-video
-   description and design+rasterize the thumbnail exactly as the standing
-   process describes (`tools/nightly-agent/video-review/<lesson-stem>/`).
+1. Run the AI clip-picker on exactly **3 source videos** (pick a good
+   spread across her library, not just the first 3 chronologically).
+   Leave everything for human review — do not approve or render.
+2. For each of those 3 lessons, write the source-video description and
+   design+rasterize the thumbnail exactly as the standing process
+   describes (`tools/nightly-agent/video-review/<lesson-stem>/`).
 
 For **Ira** (mixed L2S and VME — check each lesson title):
-1. Same as above — work through her lessons (the full downloaded
-   playlist, not just the original 8) until you have **~30 proposed
-   clips**, leaving everything for review. Given 5 months of lessons,
-   there's likely far more than 30 clips' worth of material available —
-   pick a good spread rather than just the first 4-6 videos in upload
-   order.
+1. Same as above — exactly **3 source videos** from her full library
+   (not just the original 8 that happened to be local), picking a good
+   spread across her 5 months of lessons rather than the first 3
+   chronologically. Leave everything for review.
 2. Same description + thumbnail treatment per lesson, tagged with
    whichever brand that specific lesson actually is (don't assume all of
    Ira's lessons are one brand — her lessons split across both).
