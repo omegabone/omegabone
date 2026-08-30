@@ -70,9 +70,9 @@ Do this in addition to Phase 1 and Phase 2 above, not instead of them.
 
 ## Wrap up
 
-Log Phase 1 and Phase 2 results per the usual format, note actual spend,
-and send one `PushNotification`, e.g. "MetaMuse: 28 clips ready to
-review. Ira: 31 clips ready to review (mixed L2S/VME)."
+Log Phase 1, 2, and 3 results per the usual format, note actual spend,
+and send one `PushNotification`, e.g. "MetaMuse: 28 clips, Ira: 31 clips
+ready to review. Blog post #1 (Warmup) drafted for Sept 1."
 
 **Before ending the run: rename this file** —
 `mv tools/nightly-agent/TONIGHT.md tools/nightly-agent/done-2026-08-30.md`
