@@ -55,12 +55,18 @@ existing `clip-review` state-dir convention already does this
 `state-metamuse` and `state-ira` if they don't exist yet, matching how
 `state-antoine` already works, so she can review one singer at a time.
 
-## Phase 3 — no blog posts tonight
+## Phase 3 — start the Frequency-funnel VME blog campaign (post #1 tonight)
 
-Do not draft any blog posts in this run. The Frequency-funnel VME blog
-campaign (see updated `PROMPT.md`) is date-gated to start the night of
-2026-08-31 → ready for review 2026-09-01. Tonight is 2026-08-30 —
-skip Phase 3 entirely.
+The user wants drafting to start now so she has time to read these before
+anything goes live — 2026-09-01 is the target *publish* date for post #1,
+not when drafting starts. Follow the full "Frequency-funnel blog
+campaign" section in `PROMPT.md` exactly (pillar rotation, sourcing from
+already-published shorts, illustrate-don't-teach, CTA cadence, state
+file at `tools/nightly-agent/frequency-campaign-state.json`). Tonight is
+post #1 → Week 1 → **Warmup** pillar → target publish date 2026-09-01 →
+no CTA (post #1 isn't divisible by 3 or 5).
+
+Do this in addition to Phase 1 and Phase 2 above, not instead of them.
 
 ## Wrap up
 
