@@ -26,7 +26,7 @@ else
   PROMPT_FILE="tools/nightly-agent/PROMPT.md"
 fi
 
-/Users/mindyabiznazz/.local/bin/claude -p "$(cat tools/nightly-agent/PROMPT.md)" \
+/Users/mindyabiznazz/.local/bin/claude -p "$(cat "$PROMPT_FILE")" \
   --restricted --tools "Bash,Read,Write,Edit,Glob,Grep" \
   --add-dir "$REPO" \
   --model claude-sonnet-5 \
