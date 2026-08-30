@@ -132,15 +132,18 @@ enough depth that the reader doesn't need the paid course.
 
 1. Maintain `tools/nightly-agent/frequency-campaign-state.json` — tracks
    the running total post count (global, never resets) and which pillar
-   is "tonight's" focus. Pillar rotates **once per night** (not weekly):
-   Night 1 = Warmup, Night 2 = Speaking Voice, Night 3 = Diction, Night 4
-   = Emotional Delivery, Night 5 = The Stage, Night 6 = back to Warmup,
-   etc. Read the last-used pillar from the state file and advance it by
-   one each night.
-2. Write **7 posts per night**, all sharing tonight's pillar (different
-   angles/takes on the same theme, so she has real options to choose
-   from) — this is an ongoing reserve-building campaign, **not** capped
-   at 30; keep running every night indefinitely unless told to stop.
+   is the current week's focus. **Pillar rotates weekly, changing on
+   Sunday, not nightly**: compute which Sunday-to-Saturday week today
+   falls in; Week 1 (starting Sunday 2026-08-30) = Warmup, Week 2
+   (starting 2026-09-06) = Speaking Voice, Week 3 = Diction, Week 4 =
+   Emotional Delivery, Week 5 = The Stage, Week 6 = back to Warmup, etc.
+   Every night that week uses the same pillar; only recompute/advance it
+   when today is a new Sunday.
+2. Write **7 posts every night** (all 7 nights of the week, not just
+   once), all sharing that week's pillar (different angles/takes on the
+   same theme, so she has real options to choose from each day) — this
+   is an ongoing reserve-building campaign, **not** capped at 30; keep
+   running every night indefinitely unless told to stop.
 3. For each of tonight's 7 posts, pick a **different** published clip
    matching the current pillar from Postiz's post history (variety is the
    point — she's choosing among takes, not reading near-duplicates):
