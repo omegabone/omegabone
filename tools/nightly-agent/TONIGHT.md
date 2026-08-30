@@ -16,12 +16,14 @@ Working directory: `/Users/mindyabiznazz/Desktop/omega-clips`
 
 ## Phase 1 (unchanged) — publish anything already human-approved
 
-Same as the standing process: check `tools/clip-review/state-*/reviews.json`
-for approved-but-unrendered clips, render them, and for anything in
-`clips-ready/` not yet in `tools/nightly-agent/posted-ledger.json`,
-copyright-screen it, archive to Drive, and post to Postiz (cap 3/night,
-update the ledger immediately per post). This runs every night regardless
-of the special batch below.
+Same as the standing process (see `PROMPT.md`'s Phase 1): check
+`tools/clip-review/state-*/reviews.json` for approved-but-unrendered
+clips, render them, and run the Antoine/Ira/MetaMuse daily rotation logic
+— each of the three keeps their own real every-3rd-day cadence by filling
+the gap days around Antoine's already-queued schedule. Tonight this will
+likely find nothing new to post yet, since Ira and MetaMuse don't have any
+approved clips until she reviews tonight's batch — that's expected. This
+phase runs every night regardless of the special batch below.
 
 ## Phase 2 — MetaMuse and Ira, target 30 clip candidates each
 
