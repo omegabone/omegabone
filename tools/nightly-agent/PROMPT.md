@@ -62,15 +62,18 @@ social clip.
 1. Build tonight's worklist: prefer lessons already sitting in
    `lessons/` (downloaded, have subs) that have **no entry yet** in
    `tools/clip-extractor/clips-out/manifest.json` — these cost no
-   download time. Only reach for `yt-dlp --impersonate chrome` against
-   the known `@omegabone` playlists (per the skill) to pull genuinely new
-   uploads once the local backlog is exhausted. Stop at **10 videos** for
-   the night, fewer is fine if there isn't 10 worth of backlog — don't
-   pad the batch with lower-quality picks just to hit the number.
-2. For each of the up to 10 videos, do all of the following. If
-   `--max-budget-usd` is close to running out partway through the batch,
-   finish the video you're on, then stop and log how many you got through
-   rather than doing partial work on more videos.
+   download time. Once that local backlog is exhausted, reach for
+   `yt-dlp --impersonate chrome` against the known `@omegabone` playlists
+   (per the skill) to pull more. **There is no fixed video-count cap.**
+   She has a backlog of hundreds of videos and a hard deadline (YouTube
+   Partner Program by January 2027) — the goal is to clear as much of
+   that backlog as realistically fits in one night's budget, every
+   single night, not a token daily quota. Keep working through videos
+   until you're close to the run's `--max-budget-usd` ceiling.
+2. For each video, do all of the following. When you're getting close to
+   the budget ceiling, finish the video you're on, then stop and log
+   exactly which videos got done and which are still queued — don't
+   start a new video you won't have budget to finish properly.
 
    **a. Clips** — run the existing AI clip-picker
    (`extract-clips.mjs`) on this lesson exactly as the skill describes.
