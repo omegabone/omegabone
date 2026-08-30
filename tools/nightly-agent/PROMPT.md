@@ -86,21 +86,23 @@ Working directory: `/Users/mindyabiznazz/Desktop/omega-clips`
 **Unit of work here is the source lesson video**, not the individual
 social clip.
 
-1. Build tonight's worklist: prefer lessons already sitting in
+1. **Cap: 6 source videos per night, total.** This is not a compute/
+   budget limit — it's matched to how much she can actually review in a
+   day (she's capped her own review time at ~1 hour/day). Going faster
+   than this doesn't help; it just piles up an unreviewed backlog. If
+   multiple students have outstanding lessons on a given night, split
+   the 6 across them reasonably (e.g. 3/3 for two students) rather than
+   draining one student's entire backlog before starting another.
+2. Build tonight's worklist: prefer lessons already sitting in
    `lessons/` (downloaded, have subs) that have **no entry yet** in
    `tools/clip-extractor/clips-out/manifest.json` — these cost no
-   download time. Once that local backlog is exhausted, reach for
-   `yt-dlp --impersonate chrome` against the known `@omegabone` playlists
-   (per the skill) to pull more. **There is no fixed video-count cap.**
-   She has a backlog of hundreds of videos and a hard deadline (YouTube
-   Partner Program by January 2027) — the goal is to clear as much of
-   that backlog as realistically fits in one night's budget, every
-   single night, not a token daily quota. Keep working through videos
-   until you're close to the run's `--max-budget-usd` ceiling.
-2. For each video, do all of the following. When you're getting close to
-   the budget ceiling, finish the video you're on, then stop and log
-   exactly which videos got done and which are still queued — don't
-   start a new video you won't have budget to finish properly.
+   download time. Once that local backlog is exhausted for whichever
+   student(s) are due tonight, reach for `yt-dlp --impersonate chrome`
+   against the known `@omegabone` playlists (per the skill) to pull more
+   — check for the student's *full* playlist rather than assuming
+   whatever's already local is everything (past sessions undercounted
+   more than one student's real lesson history this way).
+3. For each of tonight's (up to) 6 videos, do all of the following.
 
    **a. Clips** — run the existing AI clip-picker
    (`extract-clips.mjs`) on this lesson exactly as the skill describes.
