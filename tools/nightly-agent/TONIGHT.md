@@ -34,10 +34,10 @@ certainly many more Ira lessons on the `@omegabone` YouTube channel than
 the 8 already local. Before processing Ira, find her actual playlist(s) on
 the channel and run `yt-dlp --impersonate chrome` against the full
 playlist URL (not just individual videos) — `--download-archive` makes
-re-running safe, already-downloaded ones are skipped automatically. Do
-the same sanity check for MetaMuse (8 local may also be a partial set,
-just less likely given a shorter apparent working relationship — verify,
-don't assume either way).
+re-running safe, already-downloaded ones are skipped automatically.
+**Same for MetaMuse** — she worked with the user for 2 months, so the 8
+local lessons are very likely a partial set too. Find her full playlist
+and download whatever's missing before assuming 8 is the whole library.
 
 None of the 16 already-local lessons are in
 `tools/clip-extractor/clips-out/manifest.json` yet based on tonight's
