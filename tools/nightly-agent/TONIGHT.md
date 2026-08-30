@@ -55,11 +55,15 @@ For **MetaMuse** (all "Vocal Mastery with MetaMuse" — VME brand):
    process describes (`tools/nightly-agent/video-review/<lesson-stem>/`).
 
 For **Ira** (mixed L2S and VME — check each lesson title):
-1. Same as above — work through Ira's 8 lessons until you have **~30
-   proposed clips**, leaving everything for review.
+1. Same as above — work through her lessons (the full downloaded
+   playlist, not just the original 8) until you have **~30 proposed
+   clips**, leaving everything for review. Given 5 months of lessons,
+   there's likely far more than 30 clips' worth of material available —
+   pick a good spread rather than just the first 4-6 videos in upload
+   order.
 2. Same description + thumbnail treatment per lesson, tagged with
    whichever brand that specific lesson actually is (don't assume all of
-   Ira's lessons are one brand — his lessons split across both).
+   Ira's lessons are one brand — her lessons split across both).
 
 Both singers' clips should be clearly separable in the morning — the
 existing `clip-review` state-dir convention already does this
