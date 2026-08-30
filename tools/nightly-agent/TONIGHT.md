@@ -25,7 +25,12 @@ likely find nothing new to post yet, since Ira and MetaMuse don't have any
 approved clips until she reviews tonight's batch — that's expected. This
 phase runs every night regardless of the special batch below.
 
-## Phase 2 — MetaMuse and Ira, target 30 clip candidates each
+## Phase 2 — MetaMuse and Ira, 3 source videos each (6 total tonight)
+
+She's capped nightly review at ~1 hour/day, which works out to **3
+source videos per singer, 6 total** — not 30 clips each. This replaces
+the earlier 30-clip target below; treat every "~30 proposed clips"
+reference in this file as superseded by "3 videos per singer."
 
 8 MetaMuse lessons and 8 Ira lessons are already downloaded locally in
 `lessons/` — but **that is not her full library**. She worked with Ira for
