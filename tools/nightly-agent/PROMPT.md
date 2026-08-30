@@ -40,19 +40,40 @@ Working directory: `/Users/mindyabiznazz/Desktop/omega-clips`
    (`node tools/clip-renderer/scripts/render-all.mjs ...` per the skill).
 2. Maintain `tools/nightly-agent/posted-ledger.json` (filename →
    `{postedAt, postizPostIds, driveFileId}`). Load it first.
-3. For every `clips-ready/` file not yet in the ledger:
-   a. Copyright-screen against the source transcript segment — skip and
-      log "NEEDS HUMAN INPUT" if it looks like a copyrighted song rather
-      than an original exercise.
-   b. Upload to Google Drive under `Omega Bone / Clips Archive /
-      <YYYY-MM>` (search before creating folders — don't duplicate).
-   c. Post to Postiz across all 5 channels per `omegabone-postiz`
-      SKILL.md — correct brand→link mapping, pseudonym rules, check the
-      existing queue for spacing before picking a time.
-   d. **Cap at 3 posts/night** — she posts other content separately;
-      leave room in the daily mix. Post the 3 oldest-approved first.
-   e. Write the ledger entry immediately after each successful post
-      (don't batch to the end).
+3. **Named-student rotation (Antoine / Ira / MetaMuse) — this is a real
+   existing schedule, not a generic queue.** Confirmed via the Postiz
+   queue: Antoine is posted **once every 3 days** (one clip, all 5
+   channels simultaneously), 30 topics total, already queued through
+   2026-11-25. Ira and MetaMuse now join that **same** rotation — same
+   every-3-days slot, taking turns, not three parallel every-3-days
+   tracks. Maintain
+   `tools/nightly-agent/rotation-queue.json` tracking: the name order
+   (Antoine, Ira, MetaMuse, repeat), whose turn is next, and the last
+   scheduled date in this slot. Identify this slot's posts by their
+   caption pattern (`"<topic> — with <Name>. More at omegabone.com/..."`)
+   — don't confuse it with the quote-style posts or the "21 Day
+   Challenge" series, which are separate streams this agent doesn't
+   touch.
+   - When it's a name's turn and they have an approved-and-rendered clip
+     not yet in the ledger, schedule it for the next open every-3-days
+     slot after the last one currently queued (currently 2026-11-25 —
+     always re-check the live queue rather than trusting that date is
+     still current), post to all 5 channels per the established brand/
+     pseudonym rules, advance the rotation, and write the ledger entry.
+   - If it's a name's turn but they have nothing approved yet, skip that
+     turn (log it), move to the next name, and don't stall the whole
+     rotation on one person.
+   - Copyright-screen each clip against its source transcript segment
+     before scheduling — skip and log "NEEDS HUMAN INPUT" if it looks
+     like a copyrighted song rather than an original exercise.
+4. **Everything else already publishing on its own schedule (the
+   non-named clips, quote posts, "21 Day Challenge," etc.) is untouched
+   by this agent** — don't add, cancel, or reschedule anything in those
+   streams.
+5. Also handle Google Drive archival for anything newly posted above:
+   upload to `Omega Bone / Clips Archive / <YYYY-MM>` (search before
+   creating folders — don't duplicate), record the file id in the
+   ledger entry alongside the Postiz post ids.
 
 ## Phase 2 — Prep tomorrow's review batch (up to 10 source videos)
 
