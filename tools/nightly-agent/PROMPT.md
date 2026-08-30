@@ -141,35 +141,38 @@ enough depth that the reader doesn't need the paid course.
    angles/takes on the same theme, so she has real options to choose
    from) — this is an ongoing reserve-building campaign, **not** capped
    at 30; keep running every night indefinitely unless told to stop.
-3. Pick a published clip matching the current pillar from Postiz's post
-   history:
+3. For each of tonight's 7 posts, pick a **different** published clip
+   matching the current pillar from Postiz's post history (variety is the
+   point — she's choosing among takes, not reading near-duplicates):
    - Speaking Voice → prefer Ira's clips
    - Emotional Delivery → prefer Antoine's clips
    - Warmup, Diction, The Stage → match by topic keywords in the post
      caption/content (breath/warmup terms → Warmup; vowels/articulation/
      pronunciation terms → Diction; stage presence/audience/performance
-     terms → The Stage). If nothing matches well for a given night, say
-     so in the log and pick the closest reasonable fit rather than
-     blocking — note it as a judgment call, not a NEEDS HUMAN INPUT.
-4. Write the post: title, several paragraphs in Omega Bone's voice,
-   references/embeds the chosen published clip (link to its live post or
+     terms → The Stage). If there aren't 7 distinct good matches for
+     tonight's pillar, write fewer than 7 rather than forcing weak
+     repeats, and say so in the log — don't treat this as NEEDS HUMAN
+     INPUT, just a natural limit of the published-clip library so far.
+4. Write each post: title, several paragraphs in Omega Bone's voice,
+   references/embeds its chosen published clip (link to its live post or
    the YouTube Short), a natural internal link back to the matching
    omegabone.com page. **Do not name-drop "Frequency" as a hard sell in
    every post** — this is a soft, illustrative build-up, not a landing
    page.
-5. CTA cadence by post number (1-30, tracked in the state file):
-   - Post numbers divisible by 5 (5, 10, 15, 20, 25, 30): **strong CTA** —
-     direct ask to join/buy Frequency when it's available.
-   - Post numbers divisible by 3 but not already caught above (3, 6, 9,
-     12, 18, 21, 24, 27): **soft CTA** — a lighter mention, "keep an eye
-     out for Frequency," not a hard ask.
-   - All other post numbers: no explicit CTA, just the standard
-     omegabone.com internal link.
+5. CTA cadence by the **global running post number** (never resets,
+   tracked in the state file — post 1 is the very first one ever written,
+   regardless of which night):
+   - Divisible by 5: **strong CTA** — direct ask to join/buy Frequency
+     when it's available.
+   - Divisible by 3 but not already caught above: **soft CTA** — a
+     lighter mention, "keep an eye out for Frequency," not a hard ask.
+   - Everything else: no explicit CTA, just the standard omegabone.com
+     internal link.
 6. Save as
    `tools/nightly-agent/blog-drafts/vme-<postNN>-<slug>.md`, header noting
-   target blog `learn2singwithomega.blogspot.com`, the pillar, the post
-   number, its target publish date (2026-09-01 + (N-1) days), and which
-   CTA tier applies.
+   target blog `learn2singwithomega.blogspot.com`, the pillar, the global
+   post number, which night's batch it's from, and which CTA tier
+   applies.
 7. **Do not attempt to actually post to Blogger** — no publishing
    connection is set up for that yet. These are drafts she pastes in
    herself (or asks to have auto-published once that's built).
