@@ -77,6 +77,14 @@ social clip.
    Leave the result sitting in the manifest for human review via
    `clip-review` — do not approve or render anything from this batch.
 
+   **Before (b) or (c): check what's already done.** A video's thumbnail
+   and description are tracked purely by whether their files already
+   exist — `tools/nightly-agent/video-review/<lesson-stem>/thumbnail.png`
+   and `.../description.md`. If either already exists for this lesson,
+   skip regenerating it (don't burn budget redoing finished work), but
+   still do whichever one is missing — a lesson can end up with one done
+   and not the other if a previous run died partway through.
+
    **b. Description** — using the real transcript, write a YouTube-style
    description for the *source video* (not a clip caption): a 2-4
    sentence hook/summary in Omega Bone's voice, plus the CTA link for
