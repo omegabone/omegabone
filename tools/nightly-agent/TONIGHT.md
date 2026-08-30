@@ -55,16 +55,21 @@ existing `clip-review` state-dir convention already does this
 `state-metamuse` and `state-ira` if they don't exist yet, matching how
 `state-antoine` already works, so she can review one singer at a time.
 
-## Phase 3 — start the Frequency-funnel VME blog campaign (post #1 tonight)
+## Phase 3 — start the Frequency-funnel VME blog campaign (7 posts tonight)
 
-The user wants drafting to start now so she has time to read these before
-anything goes live — 2026-09-01 is the target *publish* date for post #1,
-not when drafting starts. Follow the full "Frequency-funnel blog
-campaign" section in `PROMPT.md` exactly (pillar rotation, sourcing from
-already-published shorts, illustrate-don't-teach, CTA cadence, state
-file at `tools/nightly-agent/frequency-campaign-state.json`). Tonight is
-post #1 → Week 1 → **Warmup** pillar → target publish date 2026-09-01 →
-no CTA (post #1 isn't divisible by 3 or 5).
+The user wants drafting to start now, building a reserve pool she can
+choose from and dip into on travel days — not a fixed one-per-day
+schedule. Follow the full "Frequency-funnel blog campaign" section in
+`PROMPT.md` exactly (sourcing from already-published shorts,
+illustrate-don't-teach, CTA cadence, state file at
+`tools/nightly-agent/frequency-campaign-state.json`).
+
+Tonight is **Night 1 → Warmup pillar → posts #1-7** (global post numbers
+1 through 7; only post #3 and #5 get a CTA — post 3 soft, post 5 strong,
+per the cadence rule — the rest have no explicit CTA). Write up to 7
+distinct posts, each built around a different published Warmup-relevant
+clip if that many good matches exist; fewer is fine if they don't, per
+the campaign section's own instructions.
 
 Do this in addition to Phase 1 and Phase 2 above, not instead of them.
 
