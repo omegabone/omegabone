@@ -150,7 +150,7 @@ social clip.
    NEEDS HUMAN INPUT for that video rather than silently skipping the
    thumbnail.
 
-3. Do **not** run `clip-review`'s interactive review, and do not touch
+4. Do **not** run `clip-review`'s interactive review, and do not touch
    any `reviews.json` — that's the human's approval step, next morning.
 
 ## Phase 3 — Frequency-funnel blog campaign (VME blog)
