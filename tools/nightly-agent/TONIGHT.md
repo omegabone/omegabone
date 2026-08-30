@@ -65,6 +65,13 @@ For **Ira** (mixed L2S and VME — check each lesson title):
    whichever brand that specific lesson actually is (don't assume all of
    Ira's lessons are one brand — her lessons split across both).
 
+Downloading full playlists for two students who worked with her for 2-5
+months may take real time and eat into tonight's budget before any
+clip-picking even starts. If the ~30-clip target isn't reachable for
+either singer after downloading, that's fine — log exactly how far you
+got and why (still downloading vs. ran the numbers and picked fewer
+good clips), rather than forcing a worse batch just to hit 30.
+
 Both singers' clips should be clearly separable in the morning — the
 existing `clip-review` state-dir convention already does this
 (`tools/clip-review/state-<student>/`); create
