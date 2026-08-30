@@ -113,26 +113,61 @@ social clip.
 3. Do **not** run `clip-review`'s interactive review, and do not touch
    any `reviews.json` — that's the human's approval step, next morning.
 
-## Phase 3 — Blog post draft(s)
+## Phase 3 — Frequency-funnel blog campaign (VME blog)
 
-1. Look across tonight's batch of video transcripts/topics (or a single
-   strong video if the batch is small) for something worth a blog post —
-   a real teaching point, not just "here's a clip." Aim for **at least
-   one**, more if the material genuinely supports separate angles for
-   different blogs.
-2. Each blog is a real, separate Blogger site — write toward the right
-   one and say so in the filename:
-   - VME / main → `learn2singwithomega.blogspot.com`
-   - L2S → `learn2communicatewithsong.blogspot.com`
-   - Music33 → `musicroom33.blogspot.com`
-   - CWM/album → `comewithmeseries.blogspot.com`
-3. Write each as a genuine blog post (title, several paragraphs, a
-   natural internal link back to the matching page on omegabone.com for
-   the backlink value she wants) — not a rehash of the video description.
-   Save as
-   `tools/nightly-agent/blog-drafts/<date>/<target-blog>-<slug>.md`,
-   with the target Blogspot URL noted at the top of the file.
-4. **Do not attempt to actually post to Blogger** — no publishing
+**Date-gated: only run this phase on or after 2026-08-31.** Check the
+actual current date (`date +%F`) before doing anything here — if it's
+before 2026-08-31, skip Phase 3 entirely and say so in the log. This is
+deliberate: the user wants this campaign's posts to start 2026-09-01, not
+earlier.
+
+**The strategy**: Frequency is a new, not-yet-filmed program with 5
+pillars: Warmup, Speaking Voice, Diction, Emotional Delivery, The Stage.
+There's no dedicated Frequency footage yet — instead, these posts use
+already-published L2S/VME YouTube Shorts (check Postiz's post history,
+`GET /public/v1/posts`, for what's actually live) as proof of teaching
+quality, to build desire for the paid Frequency series. **Posts illustrate,
+they do not teach** — showcase a moment, don't explain the technique in
+enough depth that the reader doesn't need the paid course.
+
+1. Maintain `tools/nightly-agent/frequency-campaign-state.json` — tracks
+   how many of the 30 posts have been written so far and which pillar is
+   "this week's" focus. Pillar rotation is weekly starting the week of
+   2026-08-31: Week 1 = Warmup, Week 2 = Speaking Voice, Week 3 = Diction,
+   Week 4 = Emotional Delivery, Week 5 = The Stage, Week 6 = back to
+   Warmup, etc. Compute the current week from today's date.
+2. Write **one post per night** toward the running total of 30 (stop
+   automatically once 30 exist — don't overshoot). If 30 have already
+   been written, skip this phase and log that the campaign is complete.
+3. Pick a published clip matching the current pillar from Postiz's post
+   history:
+   - Speaking Voice → prefer Ira's clips
+   - Emotional Delivery → prefer Antoine's clips
+   - Warmup, Diction, The Stage → match by topic keywords in the post
+     caption/content (breath/warmup terms → Warmup; vowels/articulation/
+     pronunciation terms → Diction; stage presence/audience/performance
+     terms → The Stage). If nothing matches well for a given night, say
+     so in the log and pick the closest reasonable fit rather than
+     blocking — note it as a judgment call, not a NEEDS HUMAN INPUT.
+4. Write the post: title, several paragraphs in Omega Bone's voice,
+   references/embeds the chosen published clip (link to its live post or
+   the YouTube Short), a natural internal link back to the matching
+   omegabone.com page. **Do not name-drop "Frequency" as a hard sell in
+   every post** — this is a soft, illustrative build-up, not a landing
+   page.
+5. CTA cadence by post number (1-30, tracked in the state file):
+   - Post numbers divisible by 5 (5, 10, 15, 20, 25, 30): **strong CTA** —
+     direct ask to join/buy Frequency when it's available.
+   - Post numbers divisible by 3 but not already caught above (3, 6, 9,
+     12, 18, 21, 24, 27): **soft CTA** — a lighter mention, "keep an eye
+     out for Frequency," not a hard ask.
+   - All other post numbers: no explicit CTA, just the standard
+     omegabone.com internal link.
+6. Save as
+   `tools/nightly-agent/blog-drafts/vme-<postNN>-<slug>.md`, header noting
+   target blog `learn2singwithomega.blogspot.com`, the pillar, the post
+   number, and which CTA tier applies.
+7. **Do not attempt to actually post to Blogger** — no publishing
    connection is set up for that yet. These are drafts she pastes in
    herself (or asks to have auto-published once that's built).
 
