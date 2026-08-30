@@ -25,10 +25,20 @@ of the special batch below.
 
 ## Phase 2 — MetaMuse and Ira, target 30 clip candidates each
 
-All 8 MetaMuse lessons and all 8 Ira lessons are already downloaded locally
-in `lessons/` (no yt-dlp needed for these two unless a genuinely new upload
-exists on their playlists — check but don't block on it). None of them are
-in `tools/clip-extractor/clips-out/manifest.json` yet based on tonight's
+8 MetaMuse lessons and 8 Ira lessons are already downloaded locally in
+`lessons/` — but **that is not her full library**. She worked with Ira for
+5 months (sometimes daily, sometimes 2x/week), so there are almost
+certainly many more Ira lessons on the `@omegabone` YouTube channel than
+the 8 already local. Before processing Ira, find her actual playlist(s) on
+the channel and run `yt-dlp --impersonate chrome` against the full
+playlist URL (not just individual videos) — `--download-archive` makes
+re-running safe, already-downloaded ones are skipped automatically. Do
+the same sanity check for MetaMuse (8 local may also be a partial set,
+just less likely given a shorter apparent working relationship — verify,
+don't assume either way).
+
+None of the 16 already-local lessons are in
+`tools/clip-extractor/clips-out/manifest.json` yet based on tonight's
 check.
 
 For **MetaMuse** (all "Vocal Mastery with MetaMuse" — VME brand):
