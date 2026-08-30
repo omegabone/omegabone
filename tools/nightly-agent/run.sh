@@ -28,7 +28,7 @@ fi
 
 /Users/mindyabiznazz/.local/bin/claude -p "$(cat "$PROMPT_FILE")" \
   --restricted --tools "Bash,Read,Write,Edit,Glob,Grep" \
-  --add-dir "$REPO" \
+  --add-dir "$REPO" --add-dir "/Users/mindyabiznazz/.claude/skills" \
   --model claude-sonnet-5 \
   --max-budget-usd 250 \
   --output-format text \
