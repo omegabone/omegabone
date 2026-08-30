@@ -30,7 +30,7 @@ fi
   --restricted --tools "Bash,Read,Write,Edit,Glob,Grep" \
   --add-dir "$REPO" \
   --model claude-sonnet-5 \
-  --max-budget-usd 60 \
+  --max-budget-usd 90 \
   --output-format text \
   >> "$RUNLOG" 2>&1
 
