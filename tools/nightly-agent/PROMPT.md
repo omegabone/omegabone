@@ -42,30 +42,36 @@ Working directory: `/Users/mindyabiznazz/Desktop/omega-clips`
    `{postedAt, postizPostIds, driveFileId}`). Load it first.
 3. **Named-student rotation (Antoine / Ira / MetaMuse) — this is a real
    existing schedule, not a generic queue.** Confirmed via the Postiz
-   queue: Antoine is posted **once every 3 days** (one clip, all 5
-   channels simultaneously), 30 topics total, already queued through
-   2026-11-25. Ira and MetaMuse now join that **same** rotation — same
-   every-3-days slot, taking turns, not three parallel every-3-days
-   tracks. Maintain
-   `tools/nightly-agent/rotation-queue.json` tracking: the name order
-   (Antoine, Ira, MetaMuse, repeat), whose turn is next, and the last
-   scheduled date in this slot. Identify this slot's posts by their
-   caption pattern (`"<topic> — with <Name>. More at omegabone.com/..."`)
-   — don't confuse it with the quote-style posts or the "21 Day
-   Challenge" series, which are separate streams this agent doesn't
-   touch.
-   - When it's a name's turn and they have an approved-and-rendered clip
-     not yet in the ledger, schedule it for the next open every-3-days
-     slot after the last one currently queued (currently 2026-11-25 —
-     always re-check the live queue rather than trusting that date is
-     still current), post to all 5 channels per the established brand/
-     pseudonym rules, advance the rotation, and write the ledger entry.
-   - If it's a name's turn but they have nothing approved yet, skip that
-     turn (log it), move to the next name, and don't stall the whole
-     rotation on one person.
+   queue: Antoine is posted every 3 days (one clip, all 5 channels
+   simultaneously), 30 topics, already queued 2026-08-30 through
+   2026-11-25. Ira and MetaMuse join the **same slot pattern**, each
+   keeping their own genuine every-3rd-day cadence, by filling the two
+   currently-empty days between each of Antoine's already-queued posts:
+   Antoine's day → next day = Ira → day after that = MetaMuse → repeat.
+   Net effect: someone from this rotation posts **every single day**,
+   and each individual person still posts exactly every 3rd day —
+   Antoine's 30 already-queued slots are untouched.
+   Maintain `tools/nightly-agent/rotation-queue.json` tracking: the fixed
+   day-offset pattern (Antoine/Ira/MetaMuse), the last date scheduled for
+   each name, and which of their approved clips have already been
+   consumed. Identify the existing slot's posts by their caption pattern
+   (`"<topic> — with <Name>. More at omegabone.com/..."`) — don't confuse
+   it with the quote-style posts or the "21 Day Challenge" series, which
+   are separate streams this agent doesn't touch.
+   - For each of Ira's and MetaMuse's gap days (re-derived from Antoine's
+     live queue, not hardcoded, in case his schedule ever shifts): if
+     that person has an approved-and-rendered clip not yet in the
+     ledger, schedule it for that day across all 5 channels per the
+     established brand/pseudonym rules, and write the ledger entry.
+   - If a gap day comes up and that person has nothing approved yet,
+     leave that day's slot empty (log it) rather than stalling or
+     borrowing someone else's clip.
    - Copyright-screen each clip against its source transcript segment
      before scheduling — skip and log "NEEDS HUMAN INPUT" if it looks
      like a copyrighted song rather than an original exercise.
+   - When Antoine's 30 queued topics run out (~2026-11-25), flag this in
+     the log well before it happens (once fewer than 5 remain) rather
+     than letting the rotation silently run out of anchor days.
 4. **Everything else already publishing on its own schedule (the
    non-named clips, quote posts, "21 Day Challenge," etc.) is untouched
    by this agent** — don't add, cancel, or reschedule anything in those
