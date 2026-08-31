@@ -90,13 +90,17 @@ export const DEFAULTS = {
   // Clip length rules. Transcripts in the library sheet carry no timecodes, so
   // duration is estimated from word count at `wpm`. Timestamped sources (SRT/VTT)
   // use real times instead.
-  minSeconds: 30,
+  // 10s floor: a punchy one-liner is a usable Short and still earns watch
+  // time. An earlier 30s floor threw away roughly as many candidates as it
+  // kept, which is the wrong trade when every good clip is wanted.
+  minSeconds: 10,
   maxSeconds: 90,
   wpm: 150,
 
-  // Total clips returned per source video.
-  minClips: 5,
-  maxClips: 8,
+  // Total clips returned per source video. Deliberately wide: the reviewer
+  // discards what they don't want, but a clip never proposed can't be chosen.
+  minClips: 1,
+  maxClips: 40,
 
   // One best clip per segment; ask for a few candidates so enforcement has slack.
   candidatesPerSegment: 3,
