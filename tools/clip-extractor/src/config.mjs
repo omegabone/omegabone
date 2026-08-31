@@ -105,9 +105,10 @@ export const DEFAULTS = {
   // One best clip per segment; ask for a few candidates so enforcement has slack.
   candidatesPerSegment: 3,
 
-  // Cap on how many clips may share one awareness category, so a video does not
-  // return eight Solution Aware clips.
-  maxPerCategory: 2,
+  // Cap on how many clips may share one awareness category. Loose on purpose:
+  // a lesson that genuinely spends an hour on one category should still
+  // surface all of it rather than throw the rest away for balance.
+  maxPerCategory: 12,
 
   // Target segment size when auto-segmenting an untimed transcript.
   segmentWords: 700,
