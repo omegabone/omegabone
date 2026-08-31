@@ -333,9 +333,9 @@ export function CourseVaultPage() {
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "0.75rem" }}>
           THE BOOKS
         </div>
-        {(tier === "l2s" || tier === "vme" || tier === "books") && (
+        {tier === "books" && (
           <p style={{ ...garamond, fontSize: "0.95rem", color: "#a89f8f", textAlign: "center", maxWidth: 480, margin: "0 auto 2rem" }}>
-            Buying either book unlocks both — this one's a gift from Omega.
+            Both, as a gift from Omega — buying either book unlocks both.
           </p>
         )}
         <div
