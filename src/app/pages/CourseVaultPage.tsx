@@ -53,11 +53,13 @@ const VIDEOS = [
 
 const BOOKS = [
   {
+    id: "l2s" as const,
     title: "Learn 2 Sing",
     subtitle: "The complete method, from first breath to full performance.",
     href: "/resources/learn-2-sing.pdf",
   },
   {
+    id: "vme" as const,
     title: "Vocal Mastery for Entrepreneurs",
     subtitle: "The companion text to The Frequency Series.",
     href: "/resources/vocal-mastery-for-entrepreneurs.pdf",
