@@ -1,0 +1,4 @@
+{
+  "description": "filename -> {postedAt, postizPostIds, driveFileId}. See tools/nightly-agent/PROMPT.md Phase 1 step 2.",
+  "entries": {}
+}
