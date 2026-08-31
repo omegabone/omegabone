@@ -475,7 +475,7 @@ export function FrequencyPage() {
 
             <p className="subline">I am a singer from Los Angeles, with a team of musicians, engineers, and producers behind me. We take artists and messengers who carry something the world needs to hear, and clear everything between them and the sound they were born to make.</p>
             <div className="hero-cta-row">
-              <a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
+              <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
               <span className="cta-trust">Private. Twenty minutes. No pitch you have to sit through.</span>
             </div>
           </div>
@@ -519,7 +519,7 @@ export function FrequencyPage() {
             </div>
           </div>
           <div className="centered" style={{ marginTop: 44 }}>
-            <a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Close the gap</a>
+            <a className="btn-primary" href="/the-frequency-score.html">Close the gap</a>
           </div>
         </div>
       </section>
@@ -625,7 +625,7 @@ export function FrequencyPage() {
           </div>
 
           <div className="centered" style={{ marginTop: 44 }}>
-            <a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
+            <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
           </div>
         </div>
       </section>
@@ -726,7 +726,7 @@ export function FrequencyPage() {
                 <li>Your pre-performance state ritual</li>
                 <li>Direct access across four months</li>
               </ul>
-              <div className="tier-cta"><a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a></div>
+              <div className="tier-cta"><a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a></div>
             </div>
 
             <div className="tier">
@@ -774,7 +774,7 @@ export function FrequencyPage() {
             <div>
               <span className="plate">The why beneath the work</span>
               <p className="story-quote" style={{ marginTop: 20 }}><span className="lead">"I spent years believing I taught singing.</span> Slowly, across five countries and thousands of hours, I understood I was teaching something else. I was teaching people to stop being afraid of being heard. Your frequency is real. My whole work is clearing the interference so it finally reaches the room."</p>
-              <div style={{ marginTop: 34 }}><a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a></div>
+              <div style={{ marginTop: 34 }}><a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a></div>
             </div>
           </div>
         </div>
@@ -820,7 +820,7 @@ export function FrequencyPage() {
           <span className="plate">One last thing</span>
           <h2>Your voice is not broken. It is not behind. It is the thing you are.</h2>
           <p className="subline">When it is free, the right rooms and the right life find you. Let us free it.</p>
-          <a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
+          <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
         </div>
       </section>
 
@@ -895,7 +895,7 @@ export function FrequencyPage() {
 
       {/* Sticky mobile CTA */}
       <div className="sticky-cta" id="freq-sticky-cta">
-        <a className="btn-primary" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
+        <a className="btn-primary" href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer">Book Your Frequency Call</a>
       </div>
     </div>
     <Footer />
