@@ -2,16 +2,38 @@ import { useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 
 /*
-  Password-gated vault for "Vocal Mastery for Entrepreneurs: The Frequency Series".
+  Access-gated vault for "Vocal Mastery for Entrepreneurs: The Frequency Series".
   Casual gate only (client-side) — matches the rest of this Vite SPA, no backend.
 
   TO CHANGE THE PASSWORD: edit VAULT_PASSWORD below.
   TO ADD THE 5 COURSE VIDEOS: once each is uploaded to YouTube as "Unlisted",
   paste its video ID into the matching entry in VIDEOS below (the id is the
   part after "v=" or after "youtu.be/" in the share URL).
+
+  ACCESS TIERS: besides the "unlock all 5" password, the vault reads a
+  `?access=` query param so a purchase can land someone straight on the
+  right unlocked view with no password at all:
+    ?access=l2s    — Learn 2 Sing book only, everything else locked
+    ?access=vme    — Vocal Mastery for Entrepreneurs book only, everything else locked
+    ?access=books  — both books, all videos still locked (buying either book
+                     is a bundle — see PayPalBookButton — so this is the
+                     normal post-purchase landing tier)
+    ?access=all    — same as the password: everything unlocked
+    (no param)     — default: Video 1 free, everything else locked
+  Point a PayPal hosted button's "return to website" URL at one of these
+  (e.g. https://omegabone.com/frequency/vault?access=books) to skip the
+  password step for buyers entirely.
 */
 
 const VAULT_PASSWORD = "frequency5";
+
+type AccessTier = "free" | "l2s" | "vme" | "books" | "all";
+
+function readAccessTier(): AccessTier {
+  const raw = new URLSearchParams(window.location.search).get("access");
+  if (raw === "l2s" || raw === "vme" || raw === "books" || raw === "all") return raw;
+  return "free";
+}
 
 const cinzel = { fontFamily: "'Cinzel', serif" };
 const cinzelDec = { fontFamily: "'Cinzel Decorative', serif" };
