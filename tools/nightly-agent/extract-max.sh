@@ -38,6 +38,7 @@ node bin/extract-clips.mjs \
   --model "$MODEL" \
   --max-tokens 6000 \
   --segment-seconds 150 \
+  --min-seconds 10 \
   --min-clips 1 \
   --max-clips 40 \
   --max-per-category 12 \
