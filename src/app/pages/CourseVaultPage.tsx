@@ -343,7 +343,7 @@ export function CourseVaultPage() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "1.75rem",
-            marginTop: tier === "l2s" || tier === "vme" || tier === "books" ? 0 : "2rem",
+            marginTop: tier === "books" ? 0 : "2rem",
           }}
         >
           {BOOKS.map((b) => (
