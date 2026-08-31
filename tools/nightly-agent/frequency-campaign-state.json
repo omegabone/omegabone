@@ -1,0 +1,125 @@
+{
+  "_comment": "Frequency-funnel blog campaign state. runningPostCount is GLOBAL and NEVER resets across nights. Pillar rotates weekly, changing only on a new Sunday (see pillarRotationReference). Do not recompute week/pillar unless today is a new Sunday relative to lastRunDate.",
+  "runningPostCount": 7,
+  "currentWeek": {
+    "weekNumber": 1,
+    "sundayStart": "2026-08-30",
+    "pillar": "Warmup"
+  },
+  "pillarRotationReference": {
+    "_comment": "5-pillar rotation, one week each, repeating every 5 weeks. Week N's Sunday start date determines the pillar for that whole week (Sun-Sat); only advance on a new Sunday, not nightly.",
+    "week1": { "sundayStart": "2026-08-30", "pillar": "Warmup" },
+    "week2": { "sundayStart": "2026-09-06", "pillar": "Speaking Voice" },
+    "week3": { "sundayStart": "2026-09-13", "pillar": "Diction" },
+    "week4": { "sundayStart": "2026-09-20", "pillar": "Emotional Delivery" },
+    "week5": { "sundayStart": "2026-09-27", "pillar": "The Stage" },
+    "week6": { "sundayStart": "2026-10-04", "pillar": "Warmup", "note": "cycle repeats every 5 weeks from week1" },
+    "sourcingNotes": {
+      "Warmup": "match by topic keywords: breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill exercises",
+      "Speaking Voice": "prefer Ira's clips",
+      "Diction": "match by topic keywords: vowels, articulation, pronunciation, mouth shape",
+      "Emotional Delivery": "prefer Antoine's clips",
+      "The Stage": "match by topic keywords: stage presence, audience, performance, engaging your face, angles"
+    }
+  },
+  "ctaCadenceRule": {
+    "_comment": "Applied to the GLOBAL running post number, never resets.",
+    "divisibleBy5": "strong CTA - direct ask to join/buy Frequency when available",
+    "divisibleBy3NotAlreadyCaughtBy5": "soft CTA - light mention, keep an eye out for Frequency",
+    "otherwise": "no explicit CTA - standard omegabone.com internal link only"
+  },
+  "nights": [
+    {
+      "night": 1,
+      "date": "2026-08-30",
+      "pillar": "Warmup",
+      "postsWritten": 7,
+      "posts": [
+        {
+          "globalPostNumber": 1,
+          "filename": "vme-01-the-sound-before-the-song.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "The Buzz Exercise for Breath Support",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=uomLLilFptE"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 2,
+          "filename": "vme-02-the-biggest-breath-she-had.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Ameesha",
+            "topic": "Controlling the Biggest Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=ibknxf0GcCU"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 3,
+          "filename": "vme-03-the-breath-before-the-voice.md",
+          "ctaTier": "soft",
+          "sourceClip": {
+            "student": "Adri",
+            "topic": "Vocal Technique & Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=P08UclqAEx0"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 4,
+          "filename": "vme-04-isolating-the-instrument.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Anna",
+            "topic": "Vocal Technique: Isolating the Parts Your Instrument",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=RY2Lp7NHsck"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 5,
+          "filename": "vme-05-the-resistance-in-the-breath.md",
+          "ctaTier": "strong",
+          "sourceClip": {
+            "student": "Ameesha",
+            "topic": "Using Resistance Training on Your Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=gnYInnfEyU0"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 6,
+          "filename": "vme-06-breath-you-forgot-you-had.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Vocal Technique & Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=TMY7OpsoL5M"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 7,
+          "filename": "vme-07-what-breath-management-actually-means.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Upanisha",
+            "topic": "Breath Management",
+            "brand": "L2S",
+            "url": "https://www.youtube.com/watch?v=Vjnpwt83vXw"
+          },
+          "dateWritten": "2026-08-30"
+        }
+      ]
+    }
+  ]
+}
