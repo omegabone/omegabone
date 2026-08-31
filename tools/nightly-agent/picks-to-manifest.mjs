@@ -130,8 +130,26 @@ const manifest = {
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
 
-// clip-review reads transcripts.json to let a human drag the clip edges.
-const transcripts = { [lessonId]: cues.map((c) => ({ start: c.start, end: c.end, text: c.text })) };
+// clip-review reads transcripts.json to let a human trim clip edges by word.
+// Shape must match the extractor's: { generatedAt, lessons: [{ id, cues }] }.
+const transcripts = {
+  generatedAt: new Date().toISOString(),
+  lessons: [
+    {
+      id: lessonId,
+      videoTitle: spec.videoTitle,
+      student: spec.student,
+      date: spec.date,
+      url: spec.url || '',
+      hasWords: false,
+      cues: cues.map((c) => ({
+        start: Math.round(c.start),
+        end: Math.round(c.end),
+        text: c.text,
+      })),
+    },
+  ],
+};
 writeFileSync(join(outDir, 'transcripts.json'), JSON.stringify(transcripts, null, 2));
 
 console.log(`${clips.length} clips → ${join(outDir, 'manifest.json')}`);
