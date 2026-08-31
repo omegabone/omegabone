@@ -25,10 +25,17 @@ fi
 
 cd "$REPO/tools/clip-extractor" || exit 1
 
+# Whole-library cost at 2026-08 OpenRouter prices (~1,161 segments):
+#   openai/gpt-4o-mini ~$0.81 · qwen/qwen-2.5-72b-instruct ~$0.98
+#   deepseek/deepseek-chat ~$1.39 · nousresearch/hermes-4-405b ~$4.49
+# Override with OB_MODEL=... ; hermes is the one proven on this footage.
+MODEL="${OB_MODEL:-nousresearch/hermes-4-405b}"
+
 node bin/extract-clips.mjs \
   --transcript-dir "$TRANSCRIPTS" \
   --out "$OUT" \
   --provider openrouter \
+  --model "$MODEL" \
   --max-tokens 6000 \
   --segment-seconds 150 \
   --min-clips 1 \
