@@ -233,22 +233,42 @@ function BookCard({
       <div style={{ ...garamond, fontSize: "1.4rem", color: locked ? "#5a5a5a" : CREAM }}>{title}</div>
       <div style={{ ...garamond, fontSize: "0.95rem", color: "#a89f8f", flex: 1 }}>{subtitle}</div>
       {locked ? (
-        <div
-          style={{
-            ...cinzel,
-            background: "#0f0f0f",
-            border: "1px solid #2a2a2a",
-            color: GOLD_DIM,
-            borderRadius: 99,
-            padding: "0.85rem 1.5rem",
-            textAlign: "center",
-            fontSize: "0.78rem",
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-          }}
-        >
-          🔒 LOCKED
-        </div>
+        buyHref ? (
+          <a
+            href={buyHref}
+            style={{
+              ...cinzel,
+              background: `linear-gradient(135deg, ${GOLD_DIM}, ${GOLD})`,
+              color: "#0f0d09",
+              borderRadius: 99,
+              padding: "0.85rem 1.5rem",
+              textAlign: "center",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textDecoration: "none",
+            }}
+          >
+            🔒 UNLOCK THIS BOOK
+          </a>
+        ) : (
+          <div
+            style={{
+              ...cinzel,
+              background: "#0f0f0f",
+              border: "1px solid #2a2a2a",
+              color: GOLD_DIM,
+              borderRadius: 99,
+              padding: "0.85rem 1.5rem",
+              textAlign: "center",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+            }}
+          >
+            🔒 LOCKED
+          </div>
+        )
       ) : (
         <a
           href={href}
