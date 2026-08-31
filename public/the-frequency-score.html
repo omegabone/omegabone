@@ -971,33 +971,35 @@
       ctaHref = CONFIG.bookUrl || null;
     } else if(readiness === "ready"){
       if(band.key === "full"){
-        label = "Apply for the Frequency Tower";
-        copy = "You said you're ready, and you scored like it. This isn't a lesson you need — it's the Frequency Tower, the room built for the top of your range. Let's talk.";
+        label = "Book Your Frequency Call — the Tower";
+        copy = "You said you're ready, and you scored like it. This isn't a lesson you need — it's the Frequency Tower, the room built for the top of your range. Book a call and let's talk.";
         subject = "Frequency Tower — ready to talk — Score " + scores.overallPct;
         body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Frequency Tower.");
       } else if(band.key === "clear"){
-        label = "Apply for the Inner Circle";
-        copy = "You said you're ready, and your score backs it up. What's left is refinement, done one-on-one — that's the Inner Circle. Let's talk.";
+        label = "Book Your Frequency Call — Inner Circle";
+        copy = "You said you're ready, and your score backs it up. What's left is refinement, done one-on-one — that's the Inner Circle. Book a call and let's talk.";
         subject = "Inner Circle — ready to talk — Score " + scores.overallPct;
         body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Inner Circle.");
       } else {
-        label = "Reserve My Seat in the Live Room";
-        copy = "You said you're ready. At this score, the fastest real progress happens in community, with live coaching — that's the Live Room. Let's talk.";
+        label = "Book Your Frequency Call — Live Room";
+        copy = "You said you're ready. At this score, the fastest real progress happens in community, with live coaching — that's the Live Room. Book a call and let's talk.";
         subject = "Live Room — ready to talk — Score " + scores.overallPct;
         body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Live Room.");
       }
+      ctaHref = CONFIG.bookingUrl || null;
     } else { // invest
       if(band.key === "clear" || band.key === "full"){
-        label = "Request an Invitation to the Inner Circle";
-        copy = "This matters to you, and your score shows you're close. The highest-leverage move from here is personal, one-on-one work — the Inner Circle.";
+        label = "Book Your Frequency Call — Inner Circle";
+        copy = "This matters to you, and your score shows you're close. The highest-leverage move from here is personal, one-on-one work — the Inner Circle. Book a call to talk it through.";
         subject = "Inner Circle — tell me more — Score " + scores.overallPct;
         body = withBody("I just took the Frequency Score assessment and I'd like to know more about the Inner Circle.");
       } else {
-        label = "Join the Live Room Waitlist";
-        copy = "This matters to you. The Live Room is where the foundation gets built in community, with real coaching and real accountability.";
+        label = "Book Your Frequency Call — Live Room";
+        copy = "This matters to you. The Live Room is where the foundation gets built in community, with real coaching and real accountability. Book a call to talk it through.";
         subject = "Live Room — tell me more — Score " + scores.overallPct;
         body = withBody("I just took the Frequency Score assessment and I'd like to know more about the Live Room.");
       }
+      ctaHref = CONFIG.bookingUrl || null;
     }
 
     nextCopy.textContent = copy;
