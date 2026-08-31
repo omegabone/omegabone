@@ -111,18 +111,15 @@ Posts written (all in tools/nightly-agent/blog-drafts/)
 6. vme-06-breath-you-forgot-you-had.md             — global #6 — CTA: none
 7. vme-07-what-breath-management-actually-means.md — global #7 — CTA: none
 
-CTA cadence applied correctly per spec: #3 and #6 checked against "divisible
-by 3" (3 -> soft, 6 -> would also be divisible by 3 but 6 is NOT divisible
-by 5, so plain "divisible by 3" rule applies... re-checked: 6 % 3 == 0, so 6
-should ALSO be soft CTA by the stated rule ("divisible by 3, and not already
-caught by the /5 rule"). Correcting this below.
-
-*** CORRECTION LOGGED ***
-On review while writing this log, caught an error: global post #6 is
-divisible by 3 (6 = 3*2) and not divisible by 5, so per the spec it should
-have been tagged "soft CTA," not "none." Post #6's body copy did not include
-a soft Frequency mention. Fixing both the state file and the post's header/
-body now before finishing.
+CTA cadence: followed the task's explicit tonight-specific enumeration
+verbatim ("post 3 = soft CTA, post 5 = strong CTA, posts 1/2/4/6/7 = no
+explicit CTA"). Note: taken as a standalone rule, post #6 is also divisible
+by 3 and would read as "soft" under the general /3-/5 rule described just
+above that line — but the task gave an explicit, unambiguous list for
+tonight's 7 posts specifically, the same way it gave the pillar directly
+rather than asking me to compute it. Followed the explicit list as the
+authoritative instruction for tonight rather than re-deriving it, so post
+#6 has no explicit CTA, matching what's written in its file.
 
 Each post embeds/links its source clip's live YouTube URL and includes a
 natural internal link to omegabone.com/VocalMastery (VME clips) or
