@@ -747,6 +747,35 @@ export function FrequencyPage() {
 
       <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
 
+      {/* ================= BOOKS ================= */}
+      <section id="books" className="band-dark fade">
+        <div className="wrap">
+          <div className="centered"><span className="plate">Start on the page</span></div>
+          <h2 className="centered" style={{ marginTop: 16, maxWidth: "24ch", marginLeft: "auto", marginRight: "auto" }}>Two books. One purchase gets you both.</h2>
+          <p className="subline centered" style={{ margin: "16px auto 0", maxWidth: "50ch" }}>Buy either book below and both are yours — Learn 2 Sing and Vocal Mastery for Entrepreneurs, together, as a gift.</p>
+
+          <div className="book-buy-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 26, maxWidth: 640, margin: "44px auto 0" }}>
+            <div className="tier" style={{ textAlign: "center" }}>
+              <h3>Learn 2 Sing</h3>
+              <p className="who">The complete method, from first breath to full performance.</p>
+              <div className="price">$50</div>
+              <div style={{ marginTop: 18 }}><PayPalBookButton /></div>
+            </div>
+            <div className="tier" style={{ textAlign: "center" }}>
+              <h3>Vocal Mastery for Entrepreneurs</h3>
+              <p className="who">The companion text to The Frequency Series.</p>
+              <div className="price">$50</div>
+              <div style={{ marginTop: 18 }}><PayPalBookButton /></div>
+            </div>
+          </div>
+          <p className="subline centered" style={{ margin: "28px auto 0", fontSize: 14 }}>
+            Already bought? <a href="/frequency/vault" style={{ color: "var(--freq-gold)" }}>Go to your vault →</a>
+          </p>
+        </div>
+      </section>
+
+      <div className="divider" aria-hidden="true"><span className="star">✦</span></div>
+
       {/* ================= RISK REVERSAL ================= */}
       <section className="band-dark risk centered fade">
         <div className="wrap">
