@@ -3,7 +3,7 @@ Target blog: learn2singwithomega.blogspot.com
 Pillar: Warmup
 Global post #: 6
 Batch: Night 1 (2026-08-30)
-CTA tier: none — standard omegabone.com link only
+CTA tier: soft — light mention, "keep an eye out for Frequency" (corrected 2026-08-30: post 6 is divisible by 3, missed by an arithmetic slip in the original brief — see nightly log)
 Source clip: Varun — "Vocal Technique & Breath" (VME)
 Source URL: https://www.youtube.com/watch?v=TMY7OpsoL5M
 ---
