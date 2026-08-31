@@ -1,0 +1,1043 @@
+<title>The Frequency Score</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     THE FREQUENCY SCORE
+     Skinned in the Come With Me register of the MegaVerse Brand
+     System: obsidian ground, ruby accent, gold + bronze metallics,
+     Cinzel (titles, small caps, UI) / EB Garamond (headlines,
+     sublines italic, body).
+     Deliberate single-world design — CwM does not switch to light
+     mode, so colors are painted explicitly rather than theme-swapped.
+     ============================================================ */
+
+  :root{
+    --obsidian:     #0B0B0D;
+    --obsidian-2:   #16141A;
+    --panel:        rgba(22,20,26,0.88);
+    --bone:         #F4EFE6;
+    --ink:          #EFE7D8;
+    --ink-soft:     #BBAF98;
+    --ink-faint:    #7D7263;
+    --gold:         #C9A227;
+    --gold-bright:  #D4AF37;
+    --gold-pale:    #F0D488;
+    --bronze:       #8C6239;
+    --amber:        #E8A33D;
+    --ruby:         #9B1B30;
+    --ember:        #C8102E;
+    --emerald:      #0B3D2E;
+    --emerald-light:#3FA684;
+    --line:         rgba(212,175,55,0.20);
+    --line-soft:    rgba(212,175,55,0.10);
+    --shadow:       0 30px 90px -24px rgba(0,0,0,0.7), 0 2px 14px rgba(0,0,0,0.5);
+
+    --band-1: var(--amber);
+    --band-2: var(--gold-bright);
+    --band-3: var(--emerald-light);
+    --band-4: var(--gold-pale);
+
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 7px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1000px 560px at 88% -10%, rgba(212,175,55,0.14), transparent 60%),
+      radial-gradient(760px 520px at -8% 108%, rgba(155,27,48,0.16), transparent 55%),
+      linear-gradient(180deg, #0C0B0E 0%, #131117 55%, #0B0B0D 100%);
+    color:var(--ink);
+    font-family:'EB Garamond', Georgia, serif;
+    font-size:17px;
+    line-height:1.55;
+    padding:clamp(20px, 5vw, 56px) 16px;
+  }
+
+  h1,h2,h3{ margin:0; text-wrap:balance; }
+
+  .title{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    letter-spacing:0.07em;
+    line-height:1.16;
+    color:var(--gold-pale);
+    text-shadow:0 0 34px rgba(212,175,55,0.20);
+  }
+
+  .headline{
+    font-family:'EB Garamond', Georgia, serif;
+    font-weight:500;
+    color:var(--bone);
+    letter-spacing:0.01em;
+  }
+
+  .smallcaps{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  .subline{
+    font-family:'EB Garamond', Georgia, serif;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  button{ font-family:inherit; }
+  button:focus-visible, a:focus-visible, input:focus-visible{
+    outline:2px solid var(--gold-bright);
+    outline-offset:3px;
+  }
+
+  /* ---------- shell ---------- */
+
+  .app{ max-width:720px; margin:0 auto; }
+
+  .brandline{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin-bottom:22px;
+    font-family:'Cinzel', serif; font-weight:600; font-size:11.5px;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .brandline .dot{ width:4px; height:4px; border-radius:50%; background:var(--ruby); display:inline-block; }
+
+  .card{
+    background:var(--panel);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    padding:clamp(28px, 6vw, 56px);
+    position:relative; overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg, var(--ember), var(--gold-bright) 55%, var(--emerald-light));
+  }
+  .card::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(700px 300px at 50% -20%, rgba(212,175,55,0.06), transparent 70%);
+  }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; animation:rise 480ms cubic-bezier(.2,.8,.2,1) both; position:relative; z-index:1; }
+  @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- intro ---------- */
+
+  .intro-head{ text-align:center; margin-bottom:26px; }
+  .intro-head .smallcaps{ margin-bottom:16px; display:block; }
+  .intro-head h1{ font-size:clamp(38px, 7vw, 58px); }
+
+  .intro-sub{
+    max-width:52ch; margin:20px auto 0; text-align:center;
+    font-size:18px; color:var(--ink-soft);
+  }
+
+  .intro-quote{
+    text-align:center; max-width:42ch; margin:28px auto; font-size:20px; line-height:1.5;
+  }
+  .intro-quote::before,.intro-quote::after{ content:'"'; color:var(--ruby); font-family:'EB Garamond',serif; }
+
+  .feature-row{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;
+    margin:32px 0 36px; padding-top:28px; border-top:1px solid var(--line-soft);
+  }
+  .feature{ text-align:center; }
+  .feature b{
+    display:block; font-family:'Cinzel', serif; font-weight:600; font-size:12.5px;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--gold-pale); margin-bottom:8px;
+  }
+  .feature span{ font-size:15px; color:var(--ink-soft); }
+
+  .cta-wrap{ text-align:center; }
+
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'Cinzel', serif; font-weight:600; font-size:13px;
+    letter-spacing:0.1em; text-transform:uppercase;
+    padding:17px 32px; border-radius:999px;
+    transition:transform 160ms ease, box-shadow 160ms ease;
+    text-decoration:none;
+  }
+  .btn-primary{
+    background:linear-gradient(180deg, var(--gold-pale), var(--gold) 55%, var(--bronze));
+    color:#1A1408;
+    box-shadow:0 14px 30px -12px rgba(212,175,55,0.55);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -12px rgba(212,175,55,0.65); }
+  .btn-ghost{
+    background:transparent; color:var(--gold-pale); border:1.5px solid var(--gold);
+    padding:15px 28px;
+  }
+  .btn-ghost:hover{ background:rgba(212,175,55,0.08); }
+
+  .microcopy{
+    margin-top:16px; font-size:12.5px; color:var(--ink-faint);
+    font-family:'Cinzel', serif; letter-spacing:0.05em; text-transform:uppercase;
+  }
+
+  /* ---------- quiz ---------- */
+
+  .progress-track{
+    height:4px; width:100%; background:rgba(212,175,55,0.12);
+    border-radius:999px; overflow:hidden; margin-bottom:10px;
+  }
+  .progress-fill{
+    height:100%; background:linear-gradient(90deg, var(--ruby), var(--gold-bright));
+    border-radius:999px; transition:width 420ms cubic-bezier(.2,.8,.2,1); width:0%;
+  }
+  .progress-label{
+    display:flex; justify-content:space-between;
+    font-family:'Cinzel', serif; font-size:11px; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:32px;
+  }
+
+  .q-pillar{
+    font-family:'Cinzel', serif; font-weight:600; font-size:12px;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--amber);
+    margin-bottom:12px; min-height:16px;
+  }
+
+  .q-prompt{
+    font-family:'EB Garamond', Georgia, serif; font-weight:500; color:var(--bone);
+    font-size:clamp(24px, 4vw, 30px); line-height:1.3; margin-bottom:28px; max-width:26ch;
+  }
+
+  .options{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+
+  .option{
+    text-align:left; background:rgba(255,255,255,0.02);
+    border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:16px 18px; font-size:16px; font-family:'EB Garamond', Georgia, serif; color:var(--ink);
+    cursor:pointer; transition:border-color 150ms ease, background 150ms ease;
+    display:flex; align-items:center; gap:14px;
+  }
+  .option:hover{ border-color:var(--bronze); background:rgba(255,255,255,0.045); }
+  .option .mark{
+    flex:0 0 auto; width:19px; height:19px; border-radius:50%;
+    border:1.5px solid var(--bronze); position:relative;
+  }
+  .option[aria-pressed="true"]{
+    border-color:var(--gold-bright);
+    background:linear-gradient(180deg, rgba(212,175,55,0.10), rgba(212,175,55,0.05));
+  }
+  .option[aria-pressed="true"] .mark{ border-color:var(--gold-bright); background:var(--gold-bright); }
+  .option[aria-pressed="true"] .mark::after{
+    content:""; position:absolute; inset:4px; border-radius:50%; background:var(--obsidian);
+  }
+
+  .q-nav{ display:flex; align-items:center; justify-content:space-between; margin-top:28px; }
+  .link-btn{
+    background:none; border:none; cursor:pointer;
+    font-family:'Cinzel', serif; font-weight:600; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); padding:8px 4px;
+  }
+  .link-btn:hover{ color:var(--gold-pale); }
+  .link-btn:disabled{ opacity:0.35; cursor:default; }
+
+  /* ---------- contact gate ---------- */
+
+  .field{ margin-bottom:18px; }
+  .field label{
+    display:block; font-family:'Cinzel', serif; font-weight:600; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:9px;
+  }
+  .field input{
+    width:100%; font-family:'EB Garamond', Georgia, serif; font-size:17px;
+    padding:14px 16px; border-radius:var(--radius-sm);
+    border:1px solid var(--line); background:rgba(255,255,255,0.03); color:var(--ink);
+  }
+  .field input::placeholder{ color:var(--ink-faint); }
+  .field input:focus{ border-color:var(--gold-bright); outline:none; background:rgba(255,255,255,0.05); }
+  .field small{ display:block; margin-top:7px; color:var(--ink-faint); font-size:13px; font-style:italic; }
+
+  /* ---------- results ---------- */
+
+  .result-head{ text-align:center; margin-bottom:8px; }
+  .result-greeting{ font-size:15px; font-style:italic; color:var(--ink-soft); margin-bottom:6px; font-family:'EB Garamond',serif; }
+  .result-head h2{ font-size:clamp(30px, 6vw, 42px); }
+
+  .gauge-wrap{ display:flex; flex-direction:column; align-items:center; margin:24px 0 6px; }
+  .gauge-num{ font-family:'Cinzel', serif; fill:var(--bone); }
+  .gauge-band{
+    margin-top:10px; font-family:'Cinzel',serif; font-weight:700;
+    font-size:16px; letter-spacing:0.16em; text-transform:uppercase;
+  }
+
+  .room-badge{
+    display:block; text-align:center; font-family:'Cinzel', serif; font-size:11.5px;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:28px;
+  }
+  .room-badge b{ color:var(--amber); }
+
+  .narrative{
+    font-size:17.5px; color:var(--ink-soft); max-width:56ch; margin:0 auto 34px; text-align:center;
+  }
+
+  .section-title{
+    font-family:'Cinzel', serif; font-weight:700; font-size:12.5px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-pale); margin-bottom:18px;
+  }
+
+  .pillars{ margin-bottom:32px; }
+  .pillar-row{ margin-bottom:15px; }
+  .pillar-row:last-child{ margin-bottom:0; }
+  .pillar-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .pillar-name{ font-family:'EB Garamond', serif; font-weight:600; font-size:14.5px; color:var(--ink); }
+  .pillar-pct{ font-variant-numeric:tabular-nums; font-family:'Cinzel', serif; font-weight:700; font-size:12.5px; color:var(--ink-soft); }
+  .bar-track{ height:9px; background:rgba(212,175,55,0.10); border-radius:999px; overflow:hidden; }
+  .bar-fill{
+    height:100%; border-radius:999px;
+    background:linear-gradient(90deg, var(--bronze), var(--gold-bright));
+    width:0%; transition:width 900ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  .edge-box{
+    border:1px solid var(--line); border-left:3px solid var(--ruby);
+    border-radius:var(--radius-md); padding:20px 22px;
+    background:rgba(155,27,48,0.05); margin-bottom:32px;
+  }
+  .edge-box .smallcaps{ margin-bottom:9px; display:block; }
+  .edge-box h3{ font-family:'EB Garamond', serif; font-weight:600; font-size:17px; margin-bottom:8px; color:var(--bone); }
+  .edge-box p{ margin:0; font-size:15px; color:var(--ink-soft); }
+
+  .result-quote{ text-align:center; font-size:20px; max-width:40ch; margin:0 auto 34px; }
+  .result-quote::before,.result-quote::after{ content:'"'; color:var(--ruby); }
+
+  .next-step{
+    background:linear-gradient(180deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03));
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg); padding:30px clamp(20px,5vw,38px); text-align:center; margin-bottom:22px;
+  }
+  .next-step p{ margin:12px 0 22px; color:var(--ink-soft); font-size:16px; max-width:48ch; margin-left:auto; margin-right:auto; }
+
+  .alt-paths{
+    margin-top:22px; padding-top:20px; border-top:1px solid var(--line-soft);
+  }
+  .alt-paths .smallcaps{ display:block; margin-bottom:12px; }
+  .alt-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px 4px; font-family:'Cinzel', serif; }
+  .alt-links a{
+    font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--gold-pale); text-decoration:none; padding:6px 10px;
+    border:1px solid var(--line); border-radius:999px; transition:background 150ms ease, border-color 150ms ease;
+  }
+  .alt-links a:hover{ background:rgba(212,175,55,0.08); border-color:var(--gold); }
+
+  .fallback-email{ text-align:center; font-size:13px; font-style:italic; color:var(--ink-faint); margin-bottom:6px; }
+  .fallback-email a{ color:var(--ink-soft); }
+
+  .signature{ text-align:center; margin-top:32px; padding-top:24px; border-top:1px solid var(--line-soft); }
+  .signature .subline{ font-size:15px; display:block; margin-bottom:12px; }
+  .signature .name{
+    font-family:'Cinzel', serif; font-weight:700; font-size:12.5px;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-pale);
+  }
+  .signature .role{ font-family:'Cinzel', serif; font-size:11px; letter-spacing:0.06em; color:var(--ink-faint); margin-top:3px; }
+
+  .restart{ text-align:center; margin-top:20px; }
+
+  @media (max-width:520px){
+    .feature-row{ grid-template-columns:1fr; gap:20px; }
+    .card{ border-radius:14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+</style>
+
+<div class="app">
+
+  <div class="brandline">Vocal Mastery for Entrepreneurs <span class="dot"></span> Come With Me <span class="dot"></span> The Frequency Series</div>
+
+  <div class="card">
+
+    <!-- ===================== INTRO ===================== -->
+    <section class="screen active" id="screen-intro">
+      <div class="intro-head">
+        <span class="smallcaps">A Diagnostic, Not a Test</span>
+        <h1 class="title">THE FREQUENCY SCORE</h1>
+      </div>
+
+      <p class="intro-sub">There is a gap between what lives inside you and what the room actually receives when you open your mouth. This isn't a talent problem. It's a frequency problem &mdash; interference between who you are and how you sound &mdash; and it can be measured, and cleared.</p>
+
+      <p class="subline intro-quote">Your voice is not the thing you use to be heard. It is the thing you are.</p>
+
+      <div class="feature-row">
+        <div class="feature">
+          <b>Your Frequency Score</b>
+          <span>A number from 0&ndash;100 that shows how much interference stands between you and the room.</span>
+        </div>
+        <div class="feature">
+          <b>Your Signal by Pillar</b>
+          <span>A reading across the five pillars of the Vocal Mastery method.</span>
+        </div>
+        <div class="feature">
+          <b>Your Next Room</b>
+          <span>A specific invitation &mdash; the book, the course, or the room built for where you stand.</span>
+        </div>
+      </div>
+
+      <div class="cta-wrap">
+        <button class="btn btn-primary" id="start-btn" type="button">Begin the Assessment</button>
+        <div class="microcopy">18 questions &middot; 2&ndash;3 minutes &middot; instant results</div>
+      </div>
+    </section>
+
+    <!-- ===================== QUIZ ===================== -->
+    <section class="screen" id="screen-quiz">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label">
+        <span id="progress-text">Question 1 of 18</span>
+        <span id="progress-pillar-label"></span>
+      </div>
+
+      <div class="q-pillar" id="q-pillar"></div>
+      <h2 class="q-prompt" id="q-prompt"></h2>
+
+      <div class="options" id="q-options"></div>
+
+      <div class="q-nav">
+        <button class="link-btn" id="back-btn" type="button">&larr; Back</button>
+        <button class="link-btn" id="restart-top-btn" type="button">Start over</button>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT GATE ===================== -->
+    <section class="screen" id="screen-contact">
+      <span class="smallcaps" style="display:block;text-align:center;margin-bottom:16px;">Almost There</span>
+      <h2 class="headline" style="text-align:center;font-size:clamp(28px,5.5vw,36px);max-width:20ch;margin:0 auto 16px;">Where should we send your results?</h2>
+      <p style="text-align:center;color:var(--ink-soft);max-width:44ch;margin:0 auto 30px;">Your Frequency Score and full pillar breakdown are ready. Tell us who you are, so the results are actually yours.</p>
+
+      <form id="contact-form" style="max-width:420px;margin:0 auto;">
+        <div class="field">
+          <label for="first-name">First name</label>
+          <input type="text" id="first-name" name="first-name" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+          <small>No spam. Just your results, and a way back to Omega if you want one.</small>
+        </div>
+        <div class="cta-wrap" style="margin-top:28px;">
+          <button class="btn btn-primary" type="submit">Reveal My Frequency Score</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===================== RESULTS ===================== -->
+    <section class="screen" id="screen-results">
+      <div class="result-head">
+        <div class="result-greeting" id="result-greeting"></div>
+        <h2 class="headline">Here's Your Signal</h2>
+      </div>
+
+      <div class="gauge-wrap">
+        <svg width="220" height="220" viewBox="0 0 220 220" role="img" aria-labelledby="gauge-title">
+          <title id="gauge-title">Frequency Score gauge</title>
+          <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="14"/>
+          <circle id="gauge-progress" cx="110" cy="110" r="92" fill="none" stroke="url(#gaugeGrad)"
+                  stroke-width="14" stroke-linecap="round"
+                  transform="rotate(-90 110 110)"
+                  stroke-dasharray="578.05" stroke-dashoffset="578.05"/>
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#9B1B30"/>
+              <stop offset="100%" stop-color="#D4AF37"/>
+            </linearGradient>
+          </defs>
+          <text x="110" y="103" text-anchor="middle" class="gauge-num" id="gauge-number" style="font-size:52px;">0</text>
+          <text x="110" y="128" text-anchor="middle" class="gauge-num" style="font-size:12px;fill:var(--ink-faint);font-family:'Cinzel',serif;letter-spacing:0.08em;">OUT OF 100</text>
+        </svg>
+        <div class="gauge-band" id="gauge-band-label"></div>
+      </div>
+
+      <div class="room-badge" id="room-badge"></div>
+
+      <p class="narrative" id="result-narrative"></p>
+
+      <div class="pillars">
+        <div class="section-title">Your Signal by Pillar</div>
+        <div id="pillar-bars"></div>
+      </div>
+
+      <div class="edge-box">
+        <span class="smallcaps">Your Growth Edge</span>
+        <h3 id="edge-title"></h3>
+        <p id="edge-copy"></p>
+      </div>
+
+      <p class="subline result-quote" id="result-quote"></p>
+
+      <div class="next-step">
+        <div class="section-title" style="text-align:center;">Your Next Room</div>
+        <p id="next-step-copy"></p>
+        <a class="btn btn-primary" id="cta-btn" href="#"></a>
+
+        <div class="alt-paths">
+          <span class="smallcaps" style="text-align:center;">You can start right now</span>
+          <div class="alt-links" id="alt-links"></div>
+        </div>
+      </div>
+
+      <p class="fallback-email">Prefer to write directly? <a href="mailto:omegabonedotcom@gmail.com">omegabonedotcom@gmail.com</a></p>
+
+      <div class="signature">
+        <span class="subline">Overcoming our fears. Not celebrating them.</span>
+        <div class="name">Omega Bone</div>
+        <div class="role">Creator, the Vocal Mastery Method &middot; Come With Me</div>
+      </div>
+
+      <div class="restart">
+        <button class="link-btn" id="restart-bottom-btn" type="button">Start the assessment over</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------
+  // CONFIG — swap these once real purchase / booking links are live.
+  // Every CTA currently routes through a pre-filled email to Omega,
+  // so the tool is fully functional today with zero backend, and
+  // every link below is a single place to drop in a real URL later.
+  // ---------------------------------------------------------------
+  var CONFIG = {
+    contactEmail: "omegabonedotcom@gmail.com",
+    // Book purchase: PayPal hosted buttons don't have a plain checkout URL
+    // (they only render via PayPal's JS SDK), so this sends people to the
+    // live "Buy" buttons on the Frequency page instead of straight to PayPal.
+    bookUrl: "/frequency#books",
+    // The Frequency Series (5-video self-paced course) — PayPal Payment Link.
+    courseUrl: "https://www.paypal.com/ncp/payment/WB7JGER2N3BTU",
+    // Book Your Frequency Call — used for every "ready to talk" / "invest" result.
+    bookingUrl: "https://calendar.app.google/Y83p7Rf5idJkdzKc6"
+  };
+
+  var BOOKS = {
+    performer: { title:"Learn 2 Sing", price:"$50" },
+    entrepreneur: { title:"Vocal Mastery for Entrepreneurs (the book)", price:"$50" }
+  };
+
+  // The 5-video course. NOT free — $500.
+  var COURSE = { title:"The Frequency Series", price:"$500" };
+
+  var PILLAR_META = {
+    instrument: { name:"The Instrument", sub:"Warmup — Body & Breath",
+      edge:"Your body hasn't fully learned it's safe to take up space yet. Posture and breath are the foundation of the whole method — build these first and everything above them gets easier." },
+    signal:     { name:"The Signal", sub:"The Speaking Voice",
+      edge:"Your real frequency is still being edited on the way out — shaped by what you think a room wants instead of what's actually true. The work is coming home to your own sound, not someone else's." },
+    clarity:    { name:"The Clarity", sub:"Diction & Transmission",
+      edge:"What you feel and what the room receives aren't fully matching yet. Diction is the bridge between emotional truth and transmission — right now, some of it is getting lost in transit." },
+    state:      { name:"The State", sub:"Emotional Delivery",
+      edge:"You're likely walking into high-stakes rooms without a deliberate practice for the state you need to be in. Fear is showing up as an obstacle instead of the gateway it actually is." },
+    presence:   { name:"The Presence", sub:"The Stage",
+      edge:"Your body may be transmitting something different than your words. Presence isn't decoration — it's the frame the room reads before you say a single word." }
+  };
+
+  var PILLAR_ORDER = ["instrument","signal","clarity","state","presence"];
+
+  var ROOM_LABELS = {
+    stage:"The Stage", boardroom:"The Boardroom", camera:"The Camera",
+    relationship:"A Hard Conversation", all:"Every Room"
+  };
+
+  var LEVEL_LABELS = {
+    amateur:"Amateur", freelancer:"Freelancer (occasional paid work)",
+    semipro:"Semi-professional (~12 gigs/yr)", professional:"Professional (48+ jobs/yr)",
+    nonsinger:"Speaking voice only"
+  };
+
+  // Which $50 book fits: Learn 2 Sing is for singers still building the
+  // instrument; the VME book is for everyone whose voice is the business.
+  function pickBook(room, level){
+    var earlySinger = (level === "amateur" || level === "freelancer" || level === "semipro");
+    return (room === "stage" && earlySinger) ? BOOKS.performer : BOOKS.entrepreneur;
+  }
+
+  // ---------------------------------------------------------------
+  // QUESTIONS — 2 segmenting, 15 scored (5 pillars × 3), 1 readiness
+  //
+  // Answer order is deliberately mixed on every scored question: the
+  // 4-point answer never sits in the same slot twice in a row, so the
+  // assessment can't be pattern-answered down the last column.
+  // Scoring reads `value`, never position, so options can be
+  // re-ordered freely without touching the maths.
+  // ---------------------------------------------------------------
+  var QUESTIONS = [
+    { id:"room", type:"segment", tag:"Before we begin", prompt:"Right now, which room matters most to you?", options:[
+      { label:"The stage. I'm a singer or performer.", value:"stage" },
+      { label:"The boardroom. I'm pitching, leading, or closing.", value:"boardroom" },
+      { label:"The camera. My visibility is my business.", value:"camera" },
+      { label:"A conversation I keep avoiding.", value:"relationship" },
+      { label:"Honestly? All of it.", value:"all" }
+    ]},
+
+    { id:"level", type:"segment", tag:"Where you stand", prompt:"Where are you with singing right now?", options:[
+      { label:"Amateur. I sing for myself, or for the people who love me.", value:"amateur" },
+      { label:"Freelancer. I take the occasional paid job.", value:"freelancer" },
+      { label:"Semi-professional. Around 12 paid gigs a year.", value:"semipro" },
+      { label:"Professional. 48 or more jobs a year. This is how I earn.", value:"professional" },
+      { label:"I don't sing. My instrument is my speaking voice.", value:"nonsinger" }
+    ]},
+
+    { id:"i1", type:"score", pillar:"instrument", prompt:"Before something that matters, what do you actually do with your body?", options:[
+      { label:"I take a few quick breaths and tell myself to calm down.", value:2 },
+      { label:"I physically reset — posture, breath, the whole instrument — every time.", value:4 },
+      { label:"Nothing. I just show up and hope for the best.", value:1 },
+      { label:"I run my talking points in my head, but not my body.", value:3 }
+    ]},
+    { id:"i2", type:"score", pillar:"instrument", prompt:"Mid-sentence, in a moment that matters, what does your breath usually do?", options:[
+      { label:"It's inconsistent — full some days, shallow on others.", value:3 },
+      { label:"Runs out before the thought is finished. My voice trails off.", value:1 },
+      { label:"I hold it without realizing, then gasp for the next line.", value:2 },
+      { label:"Stays steady and full, all the way to the end of the phrase.", value:4 }
+    ]},
+    { id:"i3", type:"score", pillar:"instrument", prompt:"How would you describe your posture in a room that matters?", options:[
+      { label:"I plant myself — feet, spine, shoulders — before I say a word.", value:4 },
+      { label:"I shrink. I take up less space without meaning to.", value:1 },
+      { label:"I'm aware of it and correct when I remember.", value:3 },
+      { label:"I try to stand tall, but it feels forced.", value:2 }
+    ]},
+
+    { id:"s1", type:"score", pillar:"signal", prompt:"When you begin speaking in a high-stakes moment, what happens to your first few words?", options:[
+      { label:"I stumble, then recover a sentence or two in.", value:2 },
+      { label:"They're fine. Just not memorable.", value:3 },
+      { label:"They land exactly where I intend. The room feels it immediately.", value:4 },
+      { label:"They come out hesitant, thin, or pitched wrong.", value:1 }
+    ]},
+    { id:"s2", type:"score", pillar:"signal", prompt:"Think about the version of you that tries to sound more “confident” or “professional.” How often does she show up instead of you?", options:[
+      { label:"I catch myself doing it and course-correct mid-conversation.", value:2 },
+      { label:"Never. I sound like me. Fully. In every room.", value:4 },
+      { label:"Often. My real voice feels unsafe to use.", value:1 },
+      { label:"Rarely — mostly I sound like me, with a “work mode.”", value:3 }
+    ]},
+    { id:"s3", type:"score", pillar:"signal", prompt:"How do your important conversations or performances usually end?", options:[
+      { label:"With a close that makes the room respond, every time.", value:4 },
+      { label:"They trail off. The room isn't sure it's over.", value:1 },
+      { label:"I land the point, but it doesn't leave a mark.", value:3 },
+      { label:"I wrap up quickly, relieved it's finished.", value:2 }
+    ]},
+
+    { id:"c1", type:"score", pillar:"clarity", prompt:"You feel something powerful right before you speak — an idea, an emotion, a truth. What happens on the way out?", options:[
+      { label:"Some comes through, but it's muddled.", value:2 },
+      { label:"It gets lost. People don't feel what I felt.", value:1 },
+      { label:"Most of it lands. Occasionally something's unclear.", value:3 },
+      { label:"What I feel is exactly what they feel. Nothing is lost in translation.", value:4 }
+    ]},
+    { id:"c2", type:"score", pillar:"clarity", prompt:"If a stranger heard a recording of you with zero context, how easily would they understand every word?", options:[
+      { label:"They'd get the gist, but miss details.", value:2 },
+      { label:"Completely clear. Every word.", value:4 },
+      { label:"Honestly, probably not very well.", value:1 },
+      { label:"Mostly clear. A word or two might blur.", value:3 }
+    ]},
+    { id:"c3", type:"score", pillar:"clarity", prompt:"How often do you actually record yourself speaking or performing — and listen back?", options:[
+      { label:"Once or twice. I cringed and stopped.", value:2 },
+      { label:"Occasionally, when preparing for something big.", value:3 },
+      { label:"Regularly. It's part of how I sharpen my delivery.", value:4 },
+      { label:"Never. The idea makes me uncomfortable.", value:1 }
+    ]},
+
+    { id:"e1", type:"score", pillar:"state", prompt:"In the minutes before something that matters, what is your nervous system actually doing?", options:[
+      { label:"I have a deliberate practice that puts me in the state I need, every time.", value:4 },
+      { label:"Anxious, with no real way to redirect it.", value:2 },
+      { label:"Spiraling. I'm managing panic, not preparing.", value:1 },
+      { label:"I have a rough ritual, but it's inconsistent.", value:3 }
+    ]},
+    { id:"e2", type:"score", pillar:"state", prompt:"When fear shows up before a high-stakes moment, what's your relationship to it?", options:[
+      { label:"I push through it and hope it doesn't show.", value:2 },
+      { label:"I'm starting to notice it's just energy, but I don't redirect it yet.", value:3 },
+      { label:"I try to make it disappear. It never fully does.", value:1 },
+      { label:"I know it's the gateway, not the obstacle, and I use it on purpose.", value:4 }
+    ]},
+    { id:"e3", type:"score", pillar:"state", prompt:"How do you prepare mentally before you walk into the room?", options:[
+      { label:"I think positively about it beforehand.", value:3 },
+      { label:"I visualize the entire moment, in detail, before I ever arrive.", value:4 },
+      { label:"I don't. I just walk in.", value:1 },
+      { label:"I run through worst-case scenarios.", value:2 }
+    ]},
+
+    { id:"p1", type:"score", pillar:"presence", prompt:"When you enter a room, a stage, or a call that matters, what does your body say before you speak?", options:[
+      { label:"Nerves — even when I try to hide them.", value:2 },
+      { label:"“Please don't look at me yet.”", value:1 },
+      { label:"Ownership. I've already set the frame before I speak.", value:4 },
+      { label:"Competence, mostly.", value:3 }
+    ]},
+    { id:"p2", type:"score", pillar:"presence", prompt:"What are your hands, feet, and posture doing while someone else has the floor?", options:[
+      { label:"Exactly what I intend. Stillness and movement are both choices I make.", value:4 },
+      { label:"Probably fidgeting, or closed off.", value:2 },
+      { label:"No idea. I've never thought about it.", value:1 },
+      { label:"Neutral. I try not to distract.", value:3 }
+    ]},
+    { id:"p3", type:"score", pillar:"presence", prompt:"How do you close out a performance, a pitch, or a big moment?", options:[
+      { label:"I rush the ending, relieved it's over.", value:2 },
+      { label:"I just kind of... stop.", value:1 },
+      { label:"I wrap it up cleanly.", value:3 },
+      { label:"With full intention. The ending is as rehearsed as the opening.", value:4 }
+    ]},
+
+    { id:"readiness", type:"segment", tag:"Last thing", prompt:"If your signal were fully clear in the next 90 days, what would that be worth to you?", options:[
+      { label:"I'm exploring. Just curious where I stand.", value:"explore" },
+      { label:"This matters. I'd invest time and energy this year with the right guide.", value:"invest" },
+      { label:"I'm ready now. I want to talk about working together.", value:"ready" }
+    ]}
+  ];
+
+  var BANDS = [
+    { min:0, max:39, key:"blocked", label:"Signal Blocked",
+      narrative:"There's real interference right now between who you are and what the room receives. That isn't a talent problem — it's a frequency problem, and every person who has walked through the Vocal Mastery method started exactly here: carrying a voice with more inside it than was coming out.",
+      quote:"The wound became the wings." },
+    { min:40, max:64, key:"emerging", label:"Emerging Frequency",
+      narrative:"Your signal is breaking through — inconsistently. Some rooms you already own; in others, the interference creeps back in, usually right when the stakes get highest. You already know what clarity feels like. The work now is making it automatic.",
+      quote:"Your voice is not the thing you use to be heard. It is the thing you are." },
+    { min:65, max:84, key:"clear", label:"Clear Channel",
+      narrative:"Most of the time, your real frequency reaches the room. What's left isn't a beginner's problem — it's refinement. The gap between good and undeniable is usually the last stretch, and that's exactly where focused, personal work makes the difference.",
+      quote:"Shadow work is not the obstacle to your highest self. It is the gateway." },
+    { min:85, max:100, key:"full", label:"Full Transmission",
+      narrative:"This is a rare place to score from. Your instrument, your signal, your state, and your presence are largely already working together. What you're looking for now isn't instruction — it's a mirror, and a room built for the top of your range.",
+      quote:"You are not the shadow of anyone's electricity. You are the electricity itself." }
+  ];
+
+  // ---------------------------------------------------------------
+  // STATE
+  // ---------------------------------------------------------------
+  var state = { index:0, answers:{}, firstName:"", email:"" };
+
+  var screens = {
+    intro: document.getElementById("screen-intro"),
+    quiz: document.getElementById("screen-quiz"),
+    contact: document.getElementById("screen-contact"),
+    results: document.getElementById("screen-results")
+  };
+
+  function showScreen(name){
+    Object.keys(screens).forEach(function(k){
+      screens[k].classList.toggle("active", k === name);
+    });
+    window.scrollTo({ top:0, behavior:"smooth" });
+  }
+
+  // ---------------------------------------------------------------
+  // QUIZ RENDERING
+  // ---------------------------------------------------------------
+  var qPillarEl = document.getElementById("q-pillar");
+  var qPromptEl = document.getElementById("q-prompt");
+  var qOptionsEl = document.getElementById("q-options");
+  var progressFill = document.getElementById("progress-fill");
+  var progressText = document.getElementById("progress-text");
+  var progressPillarLabel = document.getElementById("progress-pillar-label");
+  var backBtn = document.getElementById("back-btn");
+
+  function renderQuestion(){
+    var q = QUESTIONS[state.index];
+    var total = QUESTIONS.length;
+
+    progressFill.style.width = Math.round(((state.index) / total) * 100) + "%";
+    progressText.textContent = "Question " + (state.index + 1) + " of " + total;
+
+    if(q.type === "score"){
+      var meta = PILLAR_META[q.pillar];
+      var pIdx = PILLAR_ORDER.indexOf(q.pillar) + 1;
+      qPillarEl.textContent = "Pillar " + pIdx + " of 5 — " + meta.name;
+      progressPillarLabel.textContent = meta.sub;
+    } else {
+      qPillarEl.textContent = q.tag || "";
+      progressPillarLabel.textContent = "";
+    }
+
+    qPromptEl.textContent = q.prompt;
+
+    qOptionsEl.innerHTML = "";
+    var current = state.answers[q.id];
+
+    q.options.forEach(function(opt){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option";
+      btn.setAttribute("aria-pressed", String(current === opt.value));
+      btn.innerHTML = '<span class="mark"></span><span>' + opt.label + '</span>';
+      btn.addEventListener("click", function(){
+        state.answers[q.id] = opt.value;
+        setTimeout(function(){ advance(); }, 160);
+      });
+      qOptionsEl.appendChild(btn);
+    });
+
+    backBtn.disabled = state.index === 0;
+  }
+
+  function advance(){
+    if(state.index < QUESTIONS.length - 1){
+      state.index++;
+      renderQuestion();
+    } else {
+      showScreen("contact");
+    }
+  }
+
+  document.getElementById("back-btn").addEventListener("click", function(){
+    if(state.index > 0){ state.index--; renderQuestion(); }
+  });
+
+  document.getElementById("start-btn").addEventListener("click", function(){
+    state.index = 0;
+    showScreen("quiz");
+    renderQuestion();
+  });
+
+  function resetAll(){
+    state = { index:0, answers:{}, firstName:"", email:"" };
+    document.getElementById("contact-form").reset();
+    showScreen("intro");
+  }
+  document.getElementById("restart-top-btn").addEventListener("click", resetAll);
+  document.getElementById("restart-bottom-btn").addEventListener("click", resetAll);
+
+  // ---------------------------------------------------------------
+  // CONTACT GATE
+  // ---------------------------------------------------------------
+  document.getElementById("contact-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    state.firstName = document.getElementById("first-name").value.trim() || "there";
+    state.email = document.getElementById("email").value.trim();
+    renderResults();
+    showScreen("results");
+  });
+
+  // ---------------------------------------------------------------
+  // SCORING
+  // ---------------------------------------------------------------
+  function computeScores(){
+    var pillarRaw = { instrument:0, signal:0, clarity:0, state:0, presence:0 };
+    var totalRaw = 0;
+
+    QUESTIONS.forEach(function(q){
+      if(q.type === "score"){
+        var v = state.answers[q.id] || 1;
+        pillarRaw[q.pillar] += v;
+        totalRaw += v;
+      }
+    });
+
+    var pillarPct = {};
+    PILLAR_ORDER.forEach(function(p){
+      pillarPct[p] = Math.round(((pillarRaw[p] - 3) / 9) * 100);
+    });
+
+    var overallPct = Math.round(((totalRaw - 15) / 45) * 100);
+    overallPct = Math.max(0, Math.min(100, overallPct));
+
+    return { pillarPct:pillarPct, overallPct:overallPct };
+  }
+
+  function getBand(pct){
+    for(var i=0;i<BANDS.length;i++){
+      if(pct >= BANDS[i].min && pct <= BANDS[i].max) return BANDS[i];
+    }
+    return BANDS[0];
+  }
+
+  function lowestPillar(pillarPct){
+    var lowest = PILLAR_ORDER[0];
+    PILLAR_ORDER.forEach(function(p){
+      if(pillarPct[p] < pillarPct[lowest]) lowest = p;
+    });
+    return lowest;
+  }
+
+  function mailtoHref(subject, body){
+    return "mailto:" + CONFIG.contactEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+
+  // ---------------------------------------------------------------
+  // RESULTS RENDERING
+  // ---------------------------------------------------------------
+  var gaugeCircumference = 2 * Math.PI * 92;
+
+  function renderResults(){
+    var scores = computeScores();
+    var band = getBand(scores.overallPct);
+    var edgePillar = lowestPillar(scores.pillarPct);
+    var roomAnswer = state.answers.room;
+    var levelAnswer = state.answers.level;
+    var readiness = state.answers.readiness;
+    var book = pickBook(roomAnswer, levelAnswer);
+
+    document.getElementById("result-greeting").textContent = state.firstName + ", your results are ready.";
+
+    var gaugeNum = document.getElementById("gauge-number");
+    var gaugeProgress = document.getElementById("gauge-progress");
+    var bandLabel = document.getElementById("gauge-band-label");
+
+    gaugeNum.textContent = "0";
+    bandLabel.textContent = band.label;
+    bandLabel.style.color = "var(--" + { blocked:"band-1", emerging:"band-2", clear:"band-3", full:"band-4" }[band.key] + ")";
+
+    requestAnimationFrame(function(){
+      setTimeout(function(){
+        var offset = gaugeCircumference * (1 - scores.overallPct / 100);
+        gaugeProgress.style.transition = "stroke-dashoffset 1100ms cubic-bezier(.2,.8,.2,1)";
+        gaugeProgress.style.strokeDashoffset = String(offset);
+
+        var startTime = null, dur = 1100;
+        function tick(ts){
+          if(!startTime) startTime = ts;
+          var p = Math.min(1, (ts - startTime) / dur);
+          gaugeNum.textContent = String(Math.round(p * scores.overallPct));
+          if(p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }, 80);
+    });
+
+    var badgeBits = [];
+    if(roomAnswer) badgeBits.push("The room you named: <b>" + ROOM_LABELS[roomAnswer] + "</b>");
+    if(levelAnswer) badgeBits.push("<b>" + LEVEL_LABELS[levelAnswer] + "</b>");
+    document.getElementById("room-badge").innerHTML = badgeBits.join(" &middot; ");
+
+    document.getElementById("result-narrative").textContent = band.narrative;
+
+    var barsEl = document.getElementById("pillar-bars");
+    barsEl.innerHTML = "";
+    PILLAR_ORDER.forEach(function(p){
+      var meta = PILLAR_META[p];
+      var pct = Math.max(0, Math.min(100, scores.pillarPct[p]));
+      var row = document.createElement("div");
+      row.className = "pillar-row";
+      row.innerHTML =
+        '<div class="pillar-top"><span class="pillar-name">' + meta.name + '</span>' +
+        '<span class="pillar-pct">' + pct + '%</span></div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:0%" data-target="' + pct + '"></div></div>';
+      barsEl.appendChild(row);
+    });
+    requestAnimationFrame(function(){
+      setTimeout(function(){
+        barsEl.querySelectorAll(".bar-fill").forEach(function(el){
+          el.style.width = el.getAttribute("data-target") + "%";
+        });
+      }, 120);
+    });
+
+    var edgeMeta = PILLAR_META[edgePillar];
+    document.getElementById("edge-title").textContent = edgeMeta.name + " (" + edgeMeta.sub + ")";
+    document.getElementById("edge-copy").textContent = edgeMeta.edge;
+
+    document.getElementById("result-quote").textContent = band.quote;
+
+    // -----------------------------------------------------------
+    // PRIMARY NEXT STEP — driven by readiness first, band second.
+    // Ladder: book ($50) -> Frequency Series ($500) -> Live Room ->
+    // Inner Circle -> Frequency Tower. Nobody hits a dead end:
+    // everyone also sees the lighter-entry rungs below the primary CTA.
+    // -----------------------------------------------------------
+    var ctaBtn = document.getElementById("cta-btn");
+    var nextCopy = document.getElementById("next-step-copy");
+    var subject, body, label, copy, ctaHref = null;
+
+    var breakdown = "Frequency Score: " + scores.overallPct + "/100 (" + band.label + ")\n" +
+      "Room named: " + (roomAnswer ? ROOM_LABELS[roomAnswer] : "—") + "\n" +
+      "Singing level: " + (levelAnswer ? LEVEL_LABELS[levelAnswer] : "—") + "\n" +
+      "Readiness: " + (readiness || "—") + "\n\n" +
+      "Pillar breakdown:\n" +
+      PILLAR_ORDER.map(function(p){ return "- " + PILLAR_META[p].name + ": " + scores.pillarPct[p] + "%"; }).join("\n") +
+      "\n\nGrowth edge: " + edgeMeta.name;
+
+    function withBody(intro){
+      return "Hi Omega,\n\n" + intro + "\n\nName: " + state.firstName + "\nEmail: " + state.email + "\n\n" + breakdown + "\n\n— Sent from The Frequency Score";
+    }
+
+    if(readiness === "explore"){
+      label = "Start With " + book.title + " — " + book.price;
+      copy = "You can start right now. " + book.title + " (" + book.price + ") puts the method in your hands today, and " + COURSE.title + " (" + COURSE.price + ") is the full five-pillar course, every exercise, taught on camera.";
+      subject = "I want " + book.title + " (" + book.price + ") — Score " + scores.overallPct;
+      body = withBody("I just took the Frequency Score assessment and I'd like to start with " + book.title + " (" + book.price + ").");
+      ctaHref = CONFIG.bookUrl || null;
+    } else if(readiness === "ready"){
+      if(band.key === "full"){
+        label = "Apply for the Frequency Tower";
+        copy = "You said you're ready, and you scored like it. This isn't a lesson you need — it's the Frequency Tower, the room built for the top of your range. Let's talk.";
+        subject = "Frequency Tower — ready to talk — Score " + scores.overallPct;
+        body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Frequency Tower.");
+      } else if(band.key === "clear"){
+        label = "Apply for the Inner Circle";
+        copy = "You said you're ready, and your score backs it up. What's left is refinement, done one-on-one — that's the Inner Circle. Let's talk.";
+        subject = "Inner Circle — ready to talk — Score " + scores.overallPct;
+        body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Inner Circle.");
+      } else {
+        label = "Reserve My Seat in the Live Room";
+        copy = "You said you're ready. At this score, the fastest real progress happens in community, with live coaching — that's the Live Room. Let's talk.";
+        subject = "Live Room — ready to talk — Score " + scores.overallPct;
+        body = withBody("I just took the Frequency Score assessment and I'm ready to talk about the Live Room.");
+      }
+    } else { // invest
+      if(band.key === "clear" || band.key === "full"){
+        label = "Request an Invitation to the Inner Circle";
+        copy = "This matters to you, and your score shows you're close. The highest-leverage move from here is personal, one-on-one work — the Inner Circle.";
+        subject = "Inner Circle — tell me more — Score " + scores.overallPct;
+        body = withBody("I just took the Frequency Score assessment and I'd like to know more about the Inner Circle.");
+      } else {
+        label = "Join the Live Room Waitlist";
+        copy = "This matters to you. The Live Room is where the foundation gets built in community, with real coaching and real accountability.";
+        subject = "Live Room — tell me more — Score " + scores.overallPct;
+        body = withBody("I just took the Frequency Score assessment and I'd like to know more about the Live Room.");
+      }
+    }
+
+    nextCopy.textContent = copy;
+    ctaBtn.textContent = label;
+    if(ctaHref){
+      ctaBtn.href = ctaHref;
+      ctaBtn.target = "_blank";
+      ctaBtn.rel = "noopener";
+    } else {
+      ctaBtn.href = mailtoHref(subject, body);
+      ctaBtn.removeAttribute("target");
+    }
+
+    // -----------------------------------------------------------
+    // ALTERNATE, LIGHTER-ENTRY PATHS — always shown, so a "not yet"
+    // to the primary CTA still has somewhere real to go.
+    // -----------------------------------------------------------
+    var altEl = document.getElementById("alt-links");
+    altEl.innerHTML = "";
+    var alts = [
+      { label:book.title + " — " + book.price, href:CONFIG.bookUrl,
+        subject:"I want " + book.title + " (" + book.price + ")",
+        intro:"I just took the Frequency Score assessment. I'd like to get " + book.title + " (" + book.price + ")." },
+      { label:COURSE.title + " — " + COURSE.price, href:CONFIG.courseUrl,
+        subject:"I want " + COURSE.title + " (" + COURSE.price + ")",
+        intro:"I just took the Frequency Score assessment. I'd like to enrol in " + COURSE.title + " (" + COURSE.price + ")." }
+    ];
+    alts.forEach(function(a){
+      var link = document.createElement("a");
+      link.textContent = a.label;
+      if(a.href){
+        link.href = a.href;
+        link.target = "_blank";
+        link.rel = "noopener";
+      } else {
+        link.href = mailtoHref(a.subject + " — Score " + scores.overallPct, withBody(a.intro));
+      }
+      altEl.appendChild(link);
+    });
+  }
+
+})();
+</script>
