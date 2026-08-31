@@ -358,10 +358,10 @@ export function CourseVaultPage() {
           }}
         >
           {VIDEOS.map((v) => (
-            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} locked={!unlocked && v.n !== 1} />
+            <VideoCard key={v.n} n={v.n} title={v.title} youtubeId={v.youtubeId} locked={!videoUnlocked(v.n)} />
           ))}
         </div>
-        {!unlocked && <InlineUnlock onUnlock={() => setUnlocked(true)} />}
+        {showInlineUnlock && <InlineUnlock onUnlock={() => setPasswordUnlocked(true)} />}
       </section>
 
       <section style={{ padding: "1rem 1.5rem 6rem", textAlign: "center" }}>
