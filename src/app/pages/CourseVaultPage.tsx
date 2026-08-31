@@ -294,15 +294,26 @@ function BookCard({
 }
 
 export function CourseVaultPage() {
-  const [unlocked, setUnlocked] = useState(false);
+  const [passwordUnlocked, setPasswordUnlocked] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [tier] = useState<AccessTier>(readAccessTier);
 
   useEffect(() => {
-    if (sessionStorage.getItem("vault-unlocked") === "1") setUnlocked(true);
+    if (sessionStorage.getItem("vault-unlocked") === "1") setPasswordUnlocked(true);
     setChecked(true);
   }, []);
 
   if (!checked) return null;
+
+  const unlocked = passwordUnlocked || tier === "all";
+  const bookUnlocked = (id: "l2s" | "vme") =>
+    unlocked || tier === "books" || tier === id;
+  // Any purchase tier (l2s / vme / books) is a book-only purchase — no
+  // video access comes with it. Video 1 is only free on the default,
+  // no-purchase view.
+  const videoUnlocked = (n: number) =>
+    unlocked || (tier === "free" && n === 1);
+  const showInlineUnlock = !unlocked;
 
   return (
     <div style={{ background: "#0c0c0c", minHeight: "100vh", color: CREAM }}>
