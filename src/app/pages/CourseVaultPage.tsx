@@ -202,8 +202,19 @@ function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; 
   );
 }
 
-function BookCard({ title, subtitle, href, locked }: { title: string; subtitle: string; href: string; locked: boolean }) {
-  const cinzelLocal = cinzel;
+function BookCard({
+  title,
+  subtitle,
+  href,
+  locked,
+  buyHref,
+}: {
+  title: string;
+  subtitle: string;
+  href: string;
+  locked: boolean;
+  buyHref?: string;
+}) {
   return (
     <div
       style={{
