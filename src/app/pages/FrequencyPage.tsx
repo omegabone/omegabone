@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
+import { PayPalBookButton } from "../components/PayPalBookButton";
 
 /*
   THE FREQUENCY FUNNEL — VME Landing Page
