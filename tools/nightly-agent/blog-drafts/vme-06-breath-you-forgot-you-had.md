@@ -18,6 +18,8 @@ What strikes me every time I watch a student go through this is how much it look
 
 You can see that search happening here, in real time, with nothing else going on — no song, no lyric, just Varun and his own air, finding its way back to where it used to live.
 
+This kind of unglamorous, before-the-first-note groundwork is exactly what we're building a full program around under the Frequency name — keep an eye out for it.
+
 Watch the clip here: https://www.youtube.com/watch?v=TMY7OpsoL5M
 
 More at omegabone.com/VocalMastery.
