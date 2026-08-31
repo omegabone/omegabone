@@ -330,14 +330,20 @@ export function CourseVaultPage() {
       </section>
 
       <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "2rem" }}>
+        <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "0.75rem" }}>
           THE BOOKS
         </div>
+        {(tier === "l2s" || tier === "vme" || tier === "books") && (
+          <p style={{ ...garamond, fontSize: "0.95rem", color: "#a89f8f", textAlign: "center", maxWidth: 480, margin: "0 auto 2rem" }}>
+            Buying either book unlocks both — this one's a gift from Omega.
+          </p>
+        )}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "1.75rem",
+            marginTop: tier === "l2s" || tier === "vme" || tier === "books" ? 0 : "2rem",
           }}
         >
           {BOOKS.map((b) => (
