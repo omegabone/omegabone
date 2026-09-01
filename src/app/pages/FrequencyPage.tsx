@@ -760,13 +760,13 @@ export function FrequencyPage() {
               <h3>Learn 2 Sing</h3>
               <p className="who">The complete method, from first breath to full performance.</p>
               <div className="price">$50</div>
-              <div style={{ marginTop: 18 }}><PayPalBookButton /></div>
+              <div style={{ marginTop: 18 }}><PayPalBookButton hostedButtonId="TC8PM4Y4NQJ36" /></div>
             </div>
             <div className="tier" style={{ textAlign: "center" }}>
               <h3>Vocal Mastery for Entrepreneurs</h3>
               <p className="who">The companion text to The Frequency Series.</p>
               <div className="price">$50</div>
-              <div style={{ marginTop: 18 }}><PayPalBookButton /></div>
+              <div style={{ marginTop: 18 }}><PayPalBookButton hostedButtonId="EBUP3BC8GZM8A" /></div>
             </div>
           </div>
           <p className="subline centered" style={{ margin: "28px auto 0", fontSize: 14 }}>
