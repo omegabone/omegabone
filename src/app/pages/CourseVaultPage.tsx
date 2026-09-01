@@ -219,7 +219,7 @@ function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; 
       </div>
       <div style={{ padding: "1.25rem 1.5rem" }}>
         <div style={{ ...cinzel, fontSize: "0.68rem", letterSpacing: "0.14em", color: GOLD_DIM, marginBottom: "0.35rem" }}>
-          VIDEO {n}{locked ? " — LOCKED" : ""}
+          VIDEO {n}{locked ? " — LOCKED" : n === 1 ? " — FREE LESSON" : ""}
         </div>
         <div style={{ ...garamond, fontSize: "1.25rem", color: locked ? "#5a5a5a" : CREAM }}>{title}</div>
       </div>
