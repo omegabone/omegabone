@@ -354,6 +354,28 @@ export function CourseVaultPage() {
         </p>
       </section>
 
+      {tier === "l2s" && (
+        <section style={{ padding: "0 1.5rem 3rem", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ background: "#131313", border: `1px solid ${GOLD_DIM}55`, borderRadius: 20, padding: "2.5rem 2rem" }}>
+            <div style={{ ...garamond, fontSize: "1.05rem", color: "#d8d0bd", lineHeight: 1.7, textAlign: "left" }}>
+              <p style={{ margin: "0 0 1rem" }}>Thank you for getting Learn 2 Sing.</p>
+              <p style={{ margin: "0 0 1rem" }}>Open it today. Not someday.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                What you do with the exercises over the next few weeks will matter far more than the book itself. The method only works when you work it, and the change does not happen in the reading. It happens in the sound you make in the room, alone, before anyone claps.
+              </p>
+              <p style={{ margin: "0 0 1rem" }}>Your voice is not the thing you use to be heard. It is the thing you are.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                When you are ready to go further, I want to hear where you are starting from. Book a free call with me here:{" "}
+                <a href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer" style={{ color: GOLD }}>
+                  https://calendar.app.google/Y83p7Rf5idJkdzKc6
+                </a>
+              </p>
+              <p style={{ margin: 0 }}>Musically Yours,<br />Omega</p>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "0.75rem" }}>
           THE BOOKS
