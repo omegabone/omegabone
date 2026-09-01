@@ -13,16 +13,20 @@ import { Footer } from "../components/Footer";
   ACCESS TIERS: besides the "unlock all 5" password, the vault reads a
   `?access=` query param so a purchase can land someone straight on the
   right unlocked view with no password at all:
-    ?access=l2s    — Learn 2 Sing book only, everything else locked
-    ?access=vme    — Vocal Mastery for Entrepreneurs book only, everything else locked
-    ?access=books  — both books, all videos still locked (buying either book
-                     is a bundle — see PayPalBookButton — so this is the
-                     normal post-purchase landing tier)
+    ?access=l2s    — Learn 2 Sing book + Video 1 (the free lesson), rest locked.
+                     This is where the L2S PayPal button (TC8PM4Y4NQJ36 — see
+                     the Frequency page's Books section) should send buyers.
+    ?access=vme    — Vocal Mastery for Entrepreneurs book + Video 1, rest
+                     locked. Where the VME PayPal button (EBUP3BC8GZM8A)
+                     should send buyers.
+    ?access=books  — both books, no video bonus (all videos locked). Not
+                     currently tied to a purchase — a bundle tier for
+                     manual/future use.
     ?access=all    — same as the password: everything unlocked
     (no param)     — default: Video 1 free, everything else locked
-  Point a PayPal hosted button's "return to website" URL at one of these
-  (e.g. https://omegabone.com/frequency/vault?access=books) to skip the
-  password step for buyers entirely.
+  Point a PayPal hosted button's "return to website" URL at the matching
+  one of these (e.g. https://omegabone.com/frequency/vault?access=l2s) to
+  skip the password step for that buyer entirely.
 */
 
 const VAULT_PASSWORD = "frequency5";
