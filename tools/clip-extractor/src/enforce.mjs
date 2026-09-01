@@ -290,11 +290,14 @@ export function enforce(lesson, candidates, opts = {}) {
       reject('instrumental/music passage, not spoken coaching');
       continue;
     }
-    // Rule: never the opening theme song. The first segment covers the start
-    // of the lesson, and sessions open on a fixed music intro before any
-    // teaching begins.
+    // Rule: never the opening theme song. Segment 1 can run for several
+    // minutes past the intro (it's the first auto-segmented chunk, not just
+    // the theme song), so this must gate on the candidate's own start time,
+    // not the segment's — otherwise every candidate anywhere in segment 1
+    // is wrongly rejected, including ones long after the music intro ends.
     const introGuard = opts.introGuardSeconds ?? DEFAULTS.introGuardSeconds;
-    if (c.segment.index === 1 && (c.segment.start ?? 0) < introGuard) {
+    const candidateStart = c.start_time ?? c.segment.start ?? 0;
+    if (c.segment.index === 1 && candidateStart < introGuard) {
       reject('opening theme song / lesson-open window');
       continue;
     }
