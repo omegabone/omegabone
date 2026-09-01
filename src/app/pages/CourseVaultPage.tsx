@@ -142,6 +142,8 @@ function InlineUnlock({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
+const COURSE_BUY_HREF = "https://www.paypal.com/ncp/payment/WB7JGER2N3BTU";
+
 function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; youtubeId: string; locked: boolean }) {
   return (
     <div
