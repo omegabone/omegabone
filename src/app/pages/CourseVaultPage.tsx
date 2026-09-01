@@ -400,6 +400,30 @@ export function CourseVaultPage() {
         </section>
       )}
 
+      {tier === "all" && (
+        <section style={{ padding: "0 1.5rem 3rem", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ background: "#131313", border: `1px solid ${GOLD_DIM}55`, borderRadius: 20, padding: "2.5rem 2rem" }}>
+            <div style={{ ...garamond, fontSize: "1.05rem", color: "#d8d0bd", lineHeight: 1.7, textAlign: "left" }}>
+              <p style={{ margin: "0 0 1rem" }}>Thank you for stepping into The Frequency Series.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                This is the full body of work. Twenty five years of method, tested on five continents, with thousands of voices, now in your hands. You did not buy lessons. You bought a way back to your own signal.
+              </p>
+              <p style={{ margin: "0 0 1rem" }}>
+                Here is the one thing I ask. Do not binge it. Take one lesson at a time and let your body catch up to what you are learning. This work is physical, and it goes deeper than technique. The voice holds everything you have lived through. As the voice opens, so does the rest of it.
+              </p>
+              <p style={{ margin: "0 0 1rem" }}>Overcoming our fears. Not celebrating them. That is the whole method in seven words.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                And you are not doing this alone. Book your welcome call with me here, and tell me where you are starting from and where you want this to take you:{" "}
+                <a href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer" style={{ color: GOLD }}>
+                  https://calendar.app.google/Y83p7Rf5idJkdzKc6
+                </a>
+              </p>
+              <p style={{ margin: 0 }}>Musically Yours,<br />Omega</p>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "0.75rem" }}>
           THE BOOKS
