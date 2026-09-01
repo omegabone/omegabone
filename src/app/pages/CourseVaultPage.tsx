@@ -170,6 +170,25 @@ function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; 
           >
             <div style={{ fontSize: "1.5rem" }}>🔒</div>
             <div style={{ ...cinzel, fontSize: "0.72rem", letterSpacing: "0.14em" }}>LOCKED</div>
+            <a
+              href={COURSE_BUY_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                ...cinzel,
+                marginTop: "0.5rem",
+                background: `linear-gradient(135deg, ${GOLD_DIM}, ${GOLD})`,
+                color: "#0f0d09",
+                borderRadius: 99,
+                padding: "0.65rem 1.25rem",
+                fontSize: "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textDecoration: "none",
+              }}
+            >
+              UNLOCK THE FREQUENCY SERIES — $500
+            </a>
           </div>
         ) : youtubeId ? (
           <iframe
