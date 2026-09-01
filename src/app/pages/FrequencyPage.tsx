@@ -712,7 +712,7 @@ export function FrequencyPage() {
                 <li>Weekly live work, every voice still heard</li>
                 <li>The Six-Song Standard as the finish line</li>
               </ul>
-              <div className="tier-cta"><a className="btn-ghost" href="https://forms.gle/s94aL21E5iStdGoF6" target="_blank" rel="noopener noreferrer">Enter the room</a></div>
+              <div className="tier-cta"><PayPalBookButton hostedButtonId="YQ8CNK2ACJ26U" /></div>
             </div>
 
             <div className="tier featured">
