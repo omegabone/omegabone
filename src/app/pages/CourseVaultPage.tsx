@@ -308,11 +308,11 @@ export function CourseVaultPage() {
   const unlocked = passwordUnlocked || tier === "all";
   const bookUnlocked = (id: "l2s" | "vme") =>
     unlocked || tier === "books" || tier === id;
-  // Any purchase tier (l2s / vme / books) is a book-only purchase — no
-  // video access comes with it. Video 1 is only free on the default,
-  // no-purchase view.
+  // Buying a single book (l2s / vme) also unlocks Video 1, same as the
+  // default no-purchase view. The "books" bundle tier is books only — no
+  // video bonus attached.
   const videoUnlocked = (n: number) =>
-    unlocked || (tier === "free" && n === 1);
+    unlocked || ((tier === "free" || tier === "l2s" || tier === "vme") && n === 1);
   const showInlineUnlock = !unlocked;
 
   return (
