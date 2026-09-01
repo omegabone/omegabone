@@ -376,6 +376,30 @@ export function CourseVaultPage() {
         </section>
       )}
 
+      {tier === "vme" && (
+        <section style={{ padding: "0 1.5rem 3rem", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ background: "#131313", border: `1px solid ${GOLD_DIM}55`, borderRadius: 20, padding: "2.5rem 2rem" }}>
+            <div style={{ ...garamond, fontSize: "1.05rem", color: "#d8d0bd", lineHeight: 1.7, textAlign: "left" }}>
+              <p style={{ margin: "0 0 1rem" }}>Thank you for getting Vocal Mastery for Entrepreneurs.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                You did not buy a book about singing. You bought the operating manual for the instrument you already use every single day, in every pitch, every room, and every conversation that decides something.
+              </p>
+              <p style={{ margin: "0 0 1rem" }}>Most people work on the message. Almost nobody works on the transmission.</p>
+              <p style={{ margin: "0 0 1rem" }}>
+                So read it, then use it. What you practice in the next few weeks will matter more than what you underline. Your presence changes when your signal gets clear, and people feel that long before they can explain it.
+              </p>
+              <p style={{ margin: "0 0 1rem" }}>
+                I would love to hear where you are starting from and what you are building. Book a free call with me here:{" "}
+                <a href="https://calendar.app.google/Y83p7Rf5idJkdzKc6" target="_blank" rel="noopener noreferrer" style={{ color: GOLD }}>
+                  https://calendar.app.google/Y83p7Rf5idJkdzKc6
+                </a>
+              </p>
+              <p style={{ margin: 0 }}>Musically Yours,<br />Omega</p>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section style={{ padding: "0 1.5rem 6rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ ...cinzel, fontSize: "0.75rem", letterSpacing: "0.18em", color: GOLD_DIM, textAlign: "center", marginBottom: "0.75rem" }}>
           THE BOOKS
