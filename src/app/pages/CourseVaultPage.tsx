@@ -442,7 +442,7 @@ export function CourseVaultPage() {
           }}
         >
           {BOOKS.map((b) => (
-            <BookCard key={b.title} {...b} locked={!bookUnlocked(b.id)} buyHref="/frequency#books" />
+            <BookCard key={b.title} {...b} locked={!bookUnlocked(b.id)} buyHref={`/frequency#books-${b.id}`} />
           ))}
         </div>
       </section>
