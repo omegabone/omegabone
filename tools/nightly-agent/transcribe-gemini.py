@@ -233,6 +233,7 @@ def main() -> None:
         sys.exit("no cues produced — nothing written")
 
     cues.sort(key=lambda c: c[0])
+    cues = [piece for c in cues for piece in split_cue(*c)]
     body = "\n".join(
         f"{i}\n{fmt(s)} --> {fmt(e)}\n{t}\n"
         for i, (s, e, t) in enumerate(cues, 1)
