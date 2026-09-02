@@ -130,6 +130,60 @@ def parse_cues(srt: str, offset: float) -> list[tuple[float, float, str]]:
     return cues
 
 
+MAX_LINE_CHARS = 46  # one readable line burned over a vertical video
+
+
+def split_cue(start: float, end: float, text: str) -> list[tuple[float, float, str]]:
+    """
+    Break one cue into single-line pieces, timed proportionally.
+
+    Gemini returns a whole exchange as one cue — occasionally 500+ characters —
+    and the renderer burns a cue as one block, so an unsplit cue covers the
+    video. Speaker turns break first (they are separate lines to a viewer),
+    then any remaining run is wrapped at word boundaries.
+    """
+    text = text.strip()
+    if not text:
+        return []
+
+    # "- A. - B." is two speakers; keep each turn on its own line.
+    turns = [t.strip() for t in re.split(r"\s+-\s+(?=[A-Z\"'‘“])", text) if t.strip()]
+    if len(turns) == 1:
+        turns = [text]
+
+    pieces: list[str] = []
+    for turn in turns:
+        if len(turn) <= MAX_LINE_CHARS:
+            pieces.append(turn)
+            continue
+        line = ""
+        for word in turn.split():
+            if line and len(line) + 1 + len(word) > MAX_LINE_CHARS:
+                pieces.append(line)
+                line = word
+            else:
+                line = f"{line} {word}".strip()
+        if line:
+            pieces.append(line)
+
+    if len(pieces) <= 1:
+        return [(start, end, pieces[0] if pieces else text)]
+
+    # Share the cue's span out by character count so long lines hold longer.
+    total = sum(len(p) for p in pieces) or 1
+    span = max(end - start, 0.001)
+    out: list[tuple[float, float, str]] = []
+    at = start
+    for i, piece in enumerate(pieces):
+        share = span * (len(piece) / total)
+        finish = end if i == len(pieces) - 1 else min(at + share, end)
+        if finish - at < 0.25:  # never flash a line too fast to read
+            finish = min(at + 0.25, end)
+        out.append((at, finish, piece))
+        at = finish
+    return out
+
+
 def fmt(t: float) -> str:
     ms = int(round((t - int(t)) * 1000))
     t = int(t)
