@@ -1,0 +1,226 @@
+{
+  "description": "Antoine/Ira/MetaMuse every-3rd-day rotation. Antoine day -> next day = Ira -> day after = MetaMuse -> repeat, filling gaps around Antoines already-queued 30 slots (2026-08-30 to 2026-11-25). See tools/nightly-agent/PROMPT.md Phase 1 step 3.",
+  "antoineQueueRange": {
+    "first": "2026-08-30",
+    "last": "2026-11-25",
+    "count": 30
+  },
+  "lastScheduled": {
+    "Antoine": "2026-11-25T12:00:00.000Z",
+    "Ira": "2026-10-09T17:00:00.000Z",
+    "MetaMuse": "2026-09-10T17:00:00.000Z"
+  },
+  "consumedApprovedClips": {
+    "Ira": "unknown count, ~13 distinct topics scheduled 2026-09-03 through 2026-10-09 (see Postiz GET /public/v1/posts) - not individually itemized here, see 2026-09-02 note",
+    "MetaMuse": "unknown count, ~5 distinct topics scheduled 2026-08-30 through 2026-09-10 (see Postiz GET /public/v1/posts) - not individually itemized here, see 2026-09-02 note"
+  },
+  "gapDays": [
+    {
+      "antoineDay": "2026-08-30",
+      "iraDay": "2026-08-31",
+      "metaMuseDay": "2026-09-01",
+      "nextAntoineDay": "2026-09-02",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-02",
+      "iraDay": "2026-09-03",
+      "metaMuseDay": "2026-09-04",
+      "nextAntoineDay": "2026-09-05",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-05",
+      "iraDay": "2026-09-06",
+      "metaMuseDay": "2026-09-07",
+      "nextAntoineDay": "2026-09-08",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-08",
+      "iraDay": "2026-09-09",
+      "metaMuseDay": "2026-09-10",
+      "nextAntoineDay": "2026-09-11",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-11",
+      "iraDay": "2026-09-12",
+      "metaMuseDay": "2026-09-13",
+      "nextAntoineDay": "2026-09-14",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-14",
+      "iraDay": "2026-09-15",
+      "metaMuseDay": "2026-09-16",
+      "nextAntoineDay": "2026-09-17",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-17",
+      "iraDay": "2026-09-18",
+      "metaMuseDay": "2026-09-19",
+      "nextAntoineDay": "2026-09-20",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-20",
+      "iraDay": "2026-09-21",
+      "metaMuseDay": "2026-09-22",
+      "nextAntoineDay": "2026-09-23",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-23",
+      "iraDay": "2026-09-24",
+      "metaMuseDay": "2026-09-25",
+      "nextAntoineDay": "2026-09-26",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-26",
+      "iraDay": "2026-09-27",
+      "metaMuseDay": "2026-09-28",
+      "nextAntoineDay": "2026-09-29",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-09-29",
+      "iraDay": "2026-09-30",
+      "metaMuseDay": "2026-10-01",
+      "nextAntoineDay": "2026-10-02",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-02",
+      "iraDay": "2026-10-03",
+      "metaMuseDay": "2026-10-04",
+      "nextAntoineDay": "2026-10-05",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-05",
+      "iraDay": "2026-10-06",
+      "metaMuseDay": "2026-10-07",
+      "nextAntoineDay": "2026-10-08",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-08",
+      "iraDay": "2026-10-09",
+      "metaMuseDay": "2026-10-10",
+      "nextAntoineDay": "2026-10-11",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-11",
+      "iraDay": "2026-10-12",
+      "metaMuseDay": "2026-10-13",
+      "nextAntoineDay": "2026-10-14",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-14",
+      "iraDay": "2026-10-15",
+      "metaMuseDay": "2026-10-16",
+      "nextAntoineDay": "2026-10-17",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-17",
+      "iraDay": "2026-10-18",
+      "metaMuseDay": "2026-10-19",
+      "nextAntoineDay": "2026-10-20",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-20",
+      "iraDay": "2026-10-21",
+      "metaMuseDay": "2026-10-22",
+      "nextAntoineDay": "2026-10-23",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-23",
+      "iraDay": "2026-10-24",
+      "metaMuseDay": "2026-10-25",
+      "nextAntoineDay": "2026-10-26",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-26",
+      "iraDay": "2026-10-27",
+      "metaMuseDay": "2026-10-28",
+      "nextAntoineDay": "2026-10-29",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-10-29",
+      "iraDay": "2026-10-30",
+      "metaMuseDay": "2026-10-31",
+      "nextAntoineDay": "2026-11-01",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-01",
+      "iraDay": "2026-11-02",
+      "metaMuseDay": "2026-11-03",
+      "nextAntoineDay": "2026-11-04",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-04",
+      "iraDay": "2026-11-05",
+      "metaMuseDay": "2026-11-06",
+      "nextAntoineDay": "2026-11-07",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-07",
+      "iraDay": "2026-11-08",
+      "metaMuseDay": "2026-11-09",
+      "nextAntoineDay": "2026-11-10",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-10",
+      "iraDay": "2026-11-11",
+      "metaMuseDay": "2026-11-12",
+      "nextAntoineDay": "2026-11-13",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-13",
+      "iraDay": "2026-11-14",
+      "metaMuseDay": "2026-11-15",
+      "nextAntoineDay": "2026-11-16",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-16",
+      "iraDay": "2026-11-17",
+      "metaMuseDay": "2026-11-18",
+      "nextAntoineDay": "2026-11-19",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-19",
+      "iraDay": "2026-11-20",
+      "metaMuseDay": "2026-11-21",
+      "nextAntoineDay": "2026-11-22",
+      "deltaDays": 3
+    },
+    {
+      "antoineDay": "2026-11-22",
+      "iraDay": "2026-11-23",
+      "metaMuseDay": "2026-11-24",
+      "nextAntoineDay": "2026-11-25",
+      "deltaDays": 3
+    }
+  ],
+  "notes": [
+    "2026-08-30: found ONE pre-existing post already live/queued matching the rotation caption pattern for MetaMuse (\"Memorization Method for Performers \u2014 with Meta Muse. More at omegabone.com\", publishDate 2026-08-30T12:00:00Z, note spelling \"Meta Muse\" two words) that does NOT fit this gap pattern (it lands on Antoines own day, not a gap day: first gap day for MetaMuse per this pattern is 2026-09-01). Left untouched, not counted as part of this rotation-queue system, not duplicated. Flagging for human review in case it was a manual one-off or an earlier, different scheduling approach that this file should reconcile with.",
+    "2026-08-30: Ira and MetaMuse have zero approved+rendered clips yet (no tools/clip-review/state-ira or state-metamuse dirs existed before tonight; created empty tonight). Gap days 2026-08-31 (Ira) and 2026-09-01 (MetaMuse) left empty tonight per PROMPT.md Phase 1 step 3 (do not stall or borrow)."
+  ]
+}
