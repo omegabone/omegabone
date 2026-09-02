@@ -120,6 +120,40 @@
           "dateWritten": "2026-08-30"
         }
       ]
+    },
+    {
+      "night": 2,
+      "date": "2026-09-02",
+      "pillar": "Warmup",
+      "_comment": "Nights 2 (08-31) and 3 (09-01) were skipped due to an unrelated scheduling mixup; this is the 09-02 catch-up batch, still Week 1 / Warmup. Only 2 of the targeted 7 posts (#8-14) were written -- of the 19 unique PUBLISHED named-rotation clips found in the full Postiz post history, only 2 were both genuinely new (not used in Night 1) and topically Warmup with a valid /VocalMastery or /Learn2Sing path (bare 'omegabone.com' with no path was excluded per convention, e.g. Olivia's 'If You Can Buzz You Can Sing' was otherwise a strong Warmup match but had no path). Wrote fewer rather than forcing weak repeats or reusing a clip, per the spec.",
+      "postsWritten": 2,
+      "posts": [
+        {
+          "globalPostNumber": 8,
+          "filename": "vme-08-a-sound-with-no-song-in-it-yet.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Vocal Technique: How to Buzz",
+            "brand": "VME",
+            "url": "https://www.instagram.com/reel/DcOku5pgCpN/",
+            "note": "YouTube upload for this clip errored (state=ERROR, no releaseURL); linked the live Instagram reel instead, per 'live YouTube URL or Postiz post link'."
+          },
+          "dateWritten": "2026-09-02"
+        },
+        {
+          "globalPostNumber": 9,
+          "filename": "vme-09-vowels-riding-on-air.md",
+          "ctaTier": "soft",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Connecting Vowels with the Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=5APVlWU9jdY"
+          },
+          "dateWritten": "2026-09-02"
+        }
+      ]
     }
   ]
 }
