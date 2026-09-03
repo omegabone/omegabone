@@ -154,6 +154,14 @@
           "dateWritten": "2026-09-02"
         }
       ]
+    },
+    {
+      "night": 3,
+      "date": "2026-09-03",
+      "pillar": "Warmup",
+      "_comment": "Queried the full Postiz PUBLISHED post history again (GET /public/v1/posts, 2026-01-01 through 2026-09-04, 353 rows / 112 unique-content posts after dedup across simultaneous multi-channel releases). Of those, 21 unique posts carry a valid /VocalMastery or /Learn2Sing path. Checked each against the Warmup keyword list (breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill): every single breath/buzz-topic match among the 21 (Breath Management/Upanisha, Connecting Vowels with the Breath/Varun, Vocal Technique & Breath x2/Adri+Varun, Isolating the Parts Your Instrument/Anna, How to Buzz/Varun, The Buzz Exercise for Breath Support/Varun, Controlling the Biggest Breath/Ameesha, Using Resistance Training on Your Breath/Ameesha) was already consumed in Night 1 or Night 2 -- see their sourceClip.url entries above. The remaining 12 path-having posts are off-pillar (vowels/mouth-shape = Diction, vowels-deliver-emotion/Be Emotional = Emotional Delivery, testimonials/logistics/coaching-advice = no topic match). Two additional Warmup-topic matches turned up ('Breathing Exercise for Performance -- with Ashley' and 'If You Can Buzz You Can Sing -- with Olivia') but both use bare 'omegabone.com' with no /VocalMastery or /Learn2Sing path, so per the Nights 1-2 convention they're excluded as ambiguous/Frequency-only. Net result: zero genuinely-new, unambiguous Warmup-pillar candidates existed tonight. Wrote 0 posts rather than forcing repeats or bending the path/keyword rules -- a natural limit of the published-clip library so far, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 9; next post written (whenever a new distinct Warmup or Week-2 Speaking-Voice clip publishes) will still be #10.",
+      "postsWritten": 0,
+      "posts": []
     }
   ]
 }
