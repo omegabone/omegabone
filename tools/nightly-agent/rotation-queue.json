@@ -11,8 +11,8 @@
     "MetaMuse": "2026-09-10T17:00:00.000Z"
   },
   "consumedApprovedClips": {
-    "Ira": "unknown count, ~13 distinct topics scheduled 2026-09-03 through 2026-10-09 (see Postiz GET /public/v1/posts) - not individually itemized here, see 2026-09-02 note",
-    "MetaMuse": "unknown count, ~5 distinct topics scheduled 2026-08-30 through 2026-09-10 (see Postiz GET /public/v1/posts) - not individually itemized here, see 2026-09-02 note"
+    "Ira": "13 distinct topics scheduled 2026-09-03 through 2026-10-09 (confirmed via Postiz GET /public/v1/posts 2026-09-04) - all of Ira's rendered clips in clips-ready/ that were ever approved are now consumed; state-ira/reviews.json currently has ZERO approved clips (the ira-2026-09-01 3-lesson batch is still unreviewed as of tonight) so no more can be scheduled until she reviews it",
+    "MetaMuse": "4 distinct topics scheduled 2026-09-01, 09-04, 09-07, 09-10 (confirmed via Postiz GET /public/v1/posts 2026-09-04), matching exactly the 4 MetaMuse files in clips-ready/ - i.e. ALL of MetaMuse's approved+rendered clips are now consumed, zero remain. state-metamuse/ review dir does not even exist yet (metamuse-2026-09-01 3-lesson batch, ready since 2026-09-01, still unreviewed as of tonight)"
   },
   "gapDays": [
     {
