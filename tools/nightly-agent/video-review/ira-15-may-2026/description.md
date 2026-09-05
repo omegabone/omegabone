@@ -1,0 +1,3 @@
+Ira's got the songs down cold — the real work today is closing the gap between her singing voice and her speaking voice, because right now her story between songs disappears the second the music comes back up. Omega gives her the homework: buzz every talking part over the track all weekend, same breath support as singing, louder and slower, because "your speaking voice has to be on par with your singing voice." It clicks when Ira admits she survived a nerve-wracking wedding toast the night before by hearing Omega's voice in her head telling her to just go ahead — proof the training already works off stage, not just on it.
+
+omegabone.com/Learn2Sing
