@@ -1,0 +1,172 @@
+Nightly Omega Bone agent — 2026-09-02
+========================================
+
+Read ~/.claude/skills/omegabone-clip/SKILL.md and omegabone-postiz/SKILL.md,
+and tools/nightly-agent/PROMPT.md in full before starting.
+
+IMPORTANT CONTEXT — why tonight looked different from a normal run
+--------------------------------------------------------------------
+tools/nightly-agent/TONIGHT.md (a one-off override written for the night of
+2026-08-30, covering: Phase 2 = exactly 3 source videos each for Ira and
+MetaMuse instead of the standing up-to-6/night cap, Phase 3 = a fixed
+Night-1-only batch of 7 Warmup posts) was never renamed to
+done-2026-08-30.md after that night, because the session(s) that ran on
+08-30/08-31/09-01 kept hitting session-length/usage limits mid-task (see
+logs/run-2026-08-30.out, run-2026-08-31.out, run-2026-09-01.out — each
+ends with "session limit" or a background-wait timeout, not a clean
+finish). As a result this override was still sitting there tonight and
+got fed to me again. Rather than blindly re-running Phase 2/3 from
+scratch (which would have re-picked clips and re-spent budget on already-
+done work), I spent the first part of tonight auditing exactly what those
+three interrupted nights actually produced versus what they claimed/
+logged, since the tracking files (rotation-queue.json, posted-ledger.json,
+logs/nightly-2026-08-30.log) had NOT been kept in sync with reality.
+
+Renamed tools/nightly-agent/TONIGHT.md -> done-2026-08-30.md at the end of
+this run (see Wrap-up) now that its Phase 2 and Phase 3 asks are actually
+complete, so tomorrow night correctly falls back to the standing
+PROMPT.md.
+
+--- Phase 1 — publish anything already human-approved ---
+
+Audited actual Postiz state (GET /public/v1/posts, full 2026 range) rather
+than trusting the stale local tracking files:
+
+- Antoine's 30-slot rotation is running fine on its own, untouched by this
+  agent, confirmed live through 2026-11-25 (today's post, "Logistics of
+  Online Lessons — with Antoine," published on schedule at 2026-09-02T12:00Z).
+- MAJOR FINDING: contrary to what tools/nightly-agent/rotation-queue.json
+  and posted-ledger.json still said (lastScheduled: null for everyone,
+  zero ledger entries), Ira's and MetaMuse's gap-day rotation slots are
+  ALSO already fully scheduled in Postiz — Ira from 2026-09-03 through
+  2026-10-09, MetaMuse from 2026-08-30 through 2026-09-10 — exactly
+  matching this file's own precomputed gapDays pattern. This almost
+  certainly happened during the interrupted 08-31/09-01 sessions but was
+  never written back to the tracking files or logged. I did NOT find or
+  attempt to reconstruct a full per-post-id ledger for the ~85 already-
+  scheduled slots (low value, large effort); instead I corrected
+  rotation-queue.json's lastScheduled/consumedApprovedClips fields to
+  match reality and left dated notes in both files explaining the
+  discrepancy and what I did about it. posted-ledger.json's granular
+  tracking (incl. Drive archival) resumes from here going forward.
+- **RUNWAY FLAG (the important part):** MetaMuse's rotation runs OUT after
+  2026-09-10 — her next gap day, 2026-09-13, and every one after it, has
+  NOTHING queued until more of her clips get approved. Ira runs out after
+  2026-10-09 (more runway, same underlying fix needed eventually). This is
+  exactly what tonight's Phase 2 batch (see below) is for — it's sitting
+  ready for review specifically to extend both queues before they go dry,
+  MetaMuse especially urgently (~1 week of runway left as of tonight).
+- Found two approved-but-not-properly-filed clips and fixed both:
+  - 26 clips (13 lessons' worth: Ira, MetaMuse, Anastasia, Kris, Olivia,
+    Vega) from an 2026-08-31 approval pass had been rendered to
+    tools/clip-renderer/out/approved/ but never moved into clips-ready/ —
+    moved all 26 into clips-ready/ (no filename collisions). Many of these
+    are the same clips already showing up live/queued in Postiz above, so
+    they'd evidently been uploaded to Postiz directly from that folder
+    rather than from clips-ready/ — functionally fine (Postiz keeps its
+    own copy once uploaded) but now correctly filed for future runs.
+  - state-antoine's one truly-approved-but-unrendered clip ("Speech
+    Pacing," antoine-13-may-2026-2) turned out to already have a render
+    sitting in tools/clip-renderer/out/ under a broken filename
+    ("...Antoineundefined.mp4" — a one-off render-all.mjs bug where
+    FORMAT_SUFFIX[job.format] resolved to undefined for this single job;
+    didn't reproduce elsewhere in the same batch, not investigated further
+    tonight). Verified the video itself is valid (53.8s, real MP4) and
+    renamed/moved it to clips-ready/Vocal_Mastery_Speech_Pacing_Antoine-vertical.mp4.
+  - Remaining state-antoine clip (antoine-4-may-2026-2) is genuinely
+    pending human review — left alone.
+- Noticed a small (~7%), long-running, account-wide pattern of Postiz
+  ERROR states on facebook/instagram-standalone/youtube/tiktok posts
+  (zero errors on linkedin) going back to at least 2026-08-19, affecting
+  many different content streams roughly proportionally — not something
+  new tonight or specific to the named-student rotation, and not
+  something I can fix (looks like an intermittent platform/auth issue on
+  Postiz's side for those 4 channels). Two named-rotation posts were hit
+  by it: "General Inspiration Coaching — with Antoine" (2026-08-30,
+  facebook only) and "Opera Dreams — with Meta Muse" (2026-09-01,
+  instagram-standalone AND tiktok). NEEDS HUMAN INPUT: worth a look at
+  Postiz's channel connections for facebook/instagram/youtube/tiktok next
+  time she's in there — not urgent (other channels for the same posts
+  went out fine), just an efficiency/reach loss accumulating quietly.
+- Nothing new posted/scheduled by this agent tonight (no new approved
+  clips outside what's described above).
+
+--- Phase 2 — finish last override's 6-video batch (Ira x3, MetaMuse x3) ---
+
+Did NOT run the clip-picker again or touch any reviews.json. The segments,
+candidates, and built manifests for all 6 lessons already existed from the
+interrupted 09-01 session (tools/nightly-agent/batches/ira-2026-09-01/ and
+.../metamuse-2026-09-01/, each with manifest.json, transcripts.json,
+clips.csv, report.md) — what was actually missing was the per-video
+thumbnail + description step, which a background agent completed tonight:
+
+  tools/nightly-agent/video-review/ira-4-jun-2026/        (VME)
+  tools/nightly-agent/video-review/ira-7-mar-2026/        (L2S)
+  tools/nightly-agent/video-review/ira-23-apr-2026/       (L2S)
+  tools/nightly-agent/video-review/metamuse-17-jun-2026/  (VME)
+  tools/nightly-agent/video-review/metamuse-6-jul-2026/   (VME)
+  tools/nightly-agent/video-review/metamuse-17-jul-2026/  (VME)
+
+Each has a real description.md (grounded in that lesson's transcript, with
+the correct brand's CTA link) and a rasterized 1280x720 thumbnail.png
+(220-241KB each, verified as real images, not blank/0-byte). No NEEDS
+HUMAN INPUT flags came back from that pass.
+
+Because there are two SEPARATE batches to review (not merged into the
+"full" 55-lesson batch that review.config.json currently points the
+double-click launcher at), here's exactly how to open each one tomorrow:
+
+  Ira's 3 lessons:
+    cd tools/clip-review
+    node bin/review.mjs \
+      --manifest ../nightly-agent/batches/ira-2026-09-01/manifest.json \
+      --transcripts ../nightly-agent/batches/ira-2026-09-01/transcripts.json \
+      --state ../clip-review/state-ira --video-dir ../../lessons --port 4331
+
+  MetaMuse's 3 lessons:
+    cd tools/clip-review
+    node bin/review.mjs \
+      --manifest ../nightly-agent/batches/metamuse-2026-09-01/manifest.json \
+      --transcripts ../nightly-agent/batches/metamuse-2026-09-01/transcripts.json \
+      --state ../clip-review/state-metamuse --video-dir ../../lessons --port 4332
+
+Did not add any NEW source videos to Phase 2 tonight (no 7th+ lesson) —
+she hasn't reviewed these 6 yet, and piling on more before she's cleared
+this batch works against the "don't build an unreviewed backlog" point of
+the 6/night cap. Standing Phase 2 (new videos, up to 6/night) resumes
+tomorrow night per PROMPT.md now that TONIGHT.md's one-off scope is done.
+
+--- Phase 3 — Frequency-funnel blog campaign ---
+
+Night 1 (2026-08-30) already wrote posts #1-7 (Warmup pillar). Nights 2
+and 3 were skipped (same session-interruption issue as above) — this is
+tonight's Night 2 batch, posts #8-14, still Week 1 / Warmup (Week 1 runs
+through Saturday 2026-09-05).
+
+Only 2 of 7 written — a background agent queried Postiz's full post
+history and found just 2 genuinely new (not used in Night 1), unambiguous
+(/VocalMastery or /Learn2Sing path, not bare omegabone.com), Warmup-
+matching published clips available. Several strong-looking candidates
+(Olivia's "If You Can Buzz You Can Sing," a few others from 2026-08-29
+onward) use the bare omegabone.com convention, which the campaign
+treats as Frequency-brand-only/ambiguous — same call Night 1 made, not a
+new problem, just a natural limit of the published-clip library so far.
+Per PROMPT.md this is expected, not a NEEDS HUMAN INPUT case.
+
+  vme-08-a-sound-with-no-song-in-it-yet.md   — global #8  — CTA: none
+  vme-09-vowels-riding-on-air.md             — global #9  — CTA: soft
+
+tools/nightly-agent/frequency-campaign-state.json updated: runningPostCount
+7 -> 9, nights[1] appended (night 2, 2026-09-02, Warmup, postsWritten: 2).
+Pillar/week unchanged (still Week 1). No posting/publishing occurred.
+
+--- Spend ---
+
+Roughly $3-4 of session cost by the end of this run (two background
+agents plus this session's own tool calls) — see the harness's own cost
+accounting for the exact figure at the time this log was written.
+
+--- Wrap-up ---
+
+Renamed tools/nightly-agent/TONIGHT.md -> tools/nightly-agent/done-2026-08-30.md.
+Sent one PushNotification summarizing tonight's counts.

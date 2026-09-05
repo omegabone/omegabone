@@ -1,0 +1,175 @@
+{
+  "_comment": "Frequency-funnel blog campaign state. runningPostCount is GLOBAL and NEVER resets across nights. Pillar rotates weekly, changing only on a new Sunday (see pillarRotationReference). Do not recompute week/pillar unless today is a new Sunday relative to lastRunDate.",
+  "runningPostCount": 9,
+  "currentWeek": {
+    "weekNumber": 1,
+    "sundayStart": "2026-08-30",
+    "pillar": "Warmup"
+  },
+  "pillarRotationReference": {
+    "_comment": "5-pillar rotation, one week each, repeating every 5 weeks. Week N's Sunday start date determines the pillar for that whole week (Sun-Sat); only advance on a new Sunday, not nightly.",
+    "week1": { "sundayStart": "2026-08-30", "pillar": "Warmup" },
+    "week2": { "sundayStart": "2026-09-06", "pillar": "Speaking Voice" },
+    "week3": { "sundayStart": "2026-09-13", "pillar": "Diction" },
+    "week4": { "sundayStart": "2026-09-20", "pillar": "Emotional Delivery" },
+    "week5": { "sundayStart": "2026-09-27", "pillar": "The Stage" },
+    "week6": { "sundayStart": "2026-10-04", "pillar": "Warmup", "note": "cycle repeats every 5 weeks from week1" },
+    "sourcingNotes": {
+      "Warmup": "match by topic keywords: breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill exercises",
+      "Speaking Voice": "prefer Ira's clips",
+      "Diction": "match by topic keywords: vowels, articulation, pronunciation, mouth shape",
+      "Emotional Delivery": "prefer Antoine's clips",
+      "The Stage": "match by topic keywords: stage presence, audience, performance, engaging your face, angles"
+    }
+  },
+  "ctaCadenceRule": {
+    "_comment": "Applied to the GLOBAL running post number, never resets.",
+    "divisibleBy5": "strong CTA - direct ask to join/buy Frequency when available",
+    "divisibleBy3NotAlreadyCaughtBy5": "soft CTA - light mention, keep an eye out for Frequency",
+    "otherwise": "no explicit CTA - standard omegabone.com internal link only"
+  },
+  "nights": [
+    {
+      "night": 1,
+      "date": "2026-08-30",
+      "pillar": "Warmup",
+      "postsWritten": 7,
+      "posts": [
+        {
+          "globalPostNumber": 1,
+          "filename": "vme-01-the-sound-before-the-song.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "The Buzz Exercise for Breath Support",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=uomLLilFptE"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 2,
+          "filename": "vme-02-the-biggest-breath-she-had.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Ameesha",
+            "topic": "Controlling the Biggest Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=ibknxf0GcCU"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 3,
+          "filename": "vme-03-the-breath-before-the-voice.md",
+          "ctaTier": "soft",
+          "sourceClip": {
+            "student": "Adri",
+            "topic": "Vocal Technique & Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=P08UclqAEx0"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 4,
+          "filename": "vme-04-isolating-the-instrument.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Anna",
+            "topic": "Vocal Technique: Isolating the Parts Your Instrument",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=RY2Lp7NHsck"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 5,
+          "filename": "vme-05-the-resistance-in-the-breath.md",
+          "ctaTier": "strong",
+          "sourceClip": {
+            "student": "Ameesha",
+            "topic": "Using Resistance Training on Your Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=gnYInnfEyU0"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 6,
+          "filename": "vme-06-breath-you-forgot-you-had.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Vocal Technique & Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=TMY7OpsoL5M"
+          },
+          "dateWritten": "2026-08-30"
+        },
+        {
+          "globalPostNumber": 7,
+          "filename": "vme-07-what-breath-management-actually-means.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Upanisha",
+            "topic": "Breath Management",
+            "brand": "L2S",
+            "url": "https://www.youtube.com/watch?v=Vjnpwt83vXw"
+          },
+          "dateWritten": "2026-08-30"
+        }
+      ]
+    },
+    {
+      "night": 2,
+      "date": "2026-09-02",
+      "pillar": "Warmup",
+      "_comment": "Nights 2 (08-31) and 3 (09-01) were skipped due to an unrelated scheduling mixup; this is the 09-02 catch-up batch, still Week 1 / Warmup. Only 2 of the targeted 7 posts (#8-14) were written -- of the 19 unique PUBLISHED named-rotation clips found in the full Postiz post history, only 2 were both genuinely new (not used in Night 1) and topically Warmup with a valid /VocalMastery or /Learn2Sing path (bare 'omegabone.com' with no path was excluded per convention, e.g. Olivia's 'If You Can Buzz You Can Sing' was otherwise a strong Warmup match but had no path). Wrote fewer rather than forcing weak repeats or reusing a clip, per the spec.",
+      "postsWritten": 2,
+      "posts": [
+        {
+          "globalPostNumber": 8,
+          "filename": "vme-08-a-sound-with-no-song-in-it-yet.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Vocal Technique: How to Buzz",
+            "brand": "VME",
+            "url": "https://www.instagram.com/reel/DcOku5pgCpN/",
+            "note": "YouTube upload for this clip errored (state=ERROR, no releaseURL); linked the live Instagram reel instead, per 'live YouTube URL or Postiz post link'."
+          },
+          "dateWritten": "2026-09-02"
+        },
+        {
+          "globalPostNumber": 9,
+          "filename": "vme-09-vowels-riding-on-air.md",
+          "ctaTier": "soft",
+          "sourceClip": {
+            "student": "Varun",
+            "topic": "Connecting Vowels with the Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=5APVlWU9jdY"
+          },
+          "dateWritten": "2026-09-02"
+        }
+      ]
+    },
+    {
+      "night": 3,
+      "date": "2026-09-03",
+      "pillar": "Warmup",
+      "_comment": "Queried the full Postiz PUBLISHED post history again (GET /public/v1/posts, 2026-01-01 through 2026-09-04, 353 rows / 112 unique-content posts after dedup across simultaneous multi-channel releases). Of those, 21 unique posts carry a valid /VocalMastery or /Learn2Sing path. Checked each against the Warmup keyword list (breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill): every single breath/buzz-topic match among the 21 (Breath Management/Upanisha, Connecting Vowels with the Breath/Varun, Vocal Technique & Breath x2/Adri+Varun, Isolating the Parts Your Instrument/Anna, How to Buzz/Varun, The Buzz Exercise for Breath Support/Varun, Controlling the Biggest Breath/Ameesha, Using Resistance Training on Your Breath/Ameesha) was already consumed in Night 1 or Night 2 -- see their sourceClip.url entries above. The remaining 12 path-having posts are off-pillar (vowels/mouth-shape = Diction, vowels-deliver-emotion/Be Emotional = Emotional Delivery, testimonials/logistics/coaching-advice = no topic match). Two additional Warmup-topic matches turned up ('Breathing Exercise for Performance -- with Ashley' and 'If You Can Buzz You Can Sing -- with Olivia') but both use bare 'omegabone.com' with no /VocalMastery or /Learn2Sing path, so per the Nights 1-2 convention they're excluded as ambiguous/Frequency-only. Net result: zero genuinely-new, unambiguous Warmup-pillar candidates existed tonight. Wrote 0 posts rather than forcing repeats or bending the path/keyword rules -- a natural limit of the published-clip library so far, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 9; next post written (whenever a new distinct Warmup or Week-2 Speaking-Voice clip publishes) will still be #10.",
+      "postsWritten": 0,
+      "posts": []
+    },
+    {
+      "night": 4,
+      "date": "2026-09-04",
+      "pillar": "Warmup",
+      "_comment": "Re-queried the full Postiz PUBLISHED post history fresh tonight (GET /public/v1/posts, 2026-01-01 through 2026-12-31, 683 rows / 344 PUBLISHED rows). Deduped simultaneous multi-channel releases by matching (content, publishDate) -- 132 unique published posts, of which exactly 21 carry a valid /VocalMastery or /Learn2Sing path (identical set to Night 3's 21, confirming no drift). All 21 were re-checked against Nights 1-2's consumed-URL list and the Warmup keyword list (breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill): the same 9 Warmup-topic matches as before are already consumed (posts #1-9), and the remaining 12 are still off-pillar (Diction/Emotional Delivery/testimonial/logistics topics). Specifically checked everything published since Night 3's cutoff (2026-09-02T12:00Z through tonight 2026-09-04T12:00Z, 7 new distinct posts): 'If You Can Buzz You Can Sing -- with Olivia', 'Self Acceptance -- with Anastasia', 'Book Your Free Vocal Analysis -- with Kris', 'A Moment of Appreciation -- with Ira', 'Singing in the Shower for a Good Sound -- with Kris', 'Taking Advantage of Your Body to Make Your Best Sound -- with Kris', plus two new '21 Day Challenge' quote-style entries and a new breathing/nervous-system quote post. None of these carry a /VocalMastery or /Learn2Sing path (all bare 'omegabone.com', or belong to the separate 21-Day-Challenge/quote-style stream this agent doesn't touch per Phase 1), so per the Nights 1-3 convention every one is excluded. Net result: zero genuinely-new, unambiguous Warmup-pillar candidates existed tonight -- same conclusion as Night 3, confirmed independently rather than assumed stale. Wrote 0 posts rather than forcing repeats or bending the path/keyword rules -- a natural limit of the published-clip library so far, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 9; next post written (whenever a new distinct Warmup, or Week-2 Speaking-Voice once the pillar rotates on 2026-09-06, clip publishes) will still be #10.",
+      "postsWritten": 0,
+      "posts": []
+    }
+  ]
+}

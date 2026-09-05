@@ -47,6 +47,9 @@ export const HIGH_VALUE_TYPES = {
   performance_coaching: 'Guidance on stage presence, expression, or confidence.',
   mistake_reveal: 'Identification of a vocal issue.',
   authority_clip: 'The instructor explains a concept with clarity and authority.',
+  testimonial:
+    'The student, in their own words, praises the coaching, the results, or the program — ' +
+    'unprompted enthusiasm worth posting as social proof, not a moment of technique.',
 };
 
 /** Goal / CTA column — exact values already in use in the clip sheet. */
@@ -87,20 +90,25 @@ export const DEFAULTS = {
   // Clip length rules. Transcripts in the library sheet carry no timecodes, so
   // duration is estimated from word count at `wpm`. Timestamped sources (SRT/VTT)
   // use real times instead.
-  minSeconds: 30,
+  // 10s floor: a punchy one-liner is a usable Short and still earns watch
+  // time. An earlier 30s floor threw away roughly as many candidates as it
+  // kept, which is the wrong trade when every good clip is wanted.
+  minSeconds: 10,
   maxSeconds: 90,
   wpm: 150,
 
-  // Total clips returned per source video.
-  minClips: 5,
-  maxClips: 8,
+  // Total clips returned per source video. Deliberately wide: the reviewer
+  // discards what they don't want, but a clip never proposed can't be chosen.
+  minClips: 1,
+  maxClips: 40,
 
   // One best clip per segment; ask for a few candidates so enforcement has slack.
   candidatesPerSegment: 3,
 
-  // Cap on how many clips may share one awareness category, so a video does not
-  // return eight Solution Aware clips.
-  maxPerCategory: 2,
+  // Cap on how many clips may share one awareness category. Loose on purpose:
+  // a lesson that genuinely spends an hour on one category should still
+  // surface all of it rather than throw the rest away for balance.
+  maxPerCategory: 12,
 
   // Target segment size when auto-segmenting an untimed transcript.
   segmentWords: 700,
@@ -108,6 +116,10 @@ export const DEFAULTS = {
 
   // A clip is "short" at or below this, "long" above it (Clip Type column).
   shortMaxSeconds: 60,
+
+  // Never clip inside this many seconds from the start of a lesson — Omega
+  // Bone's sessions open on a fixed music theme before any teaching begins.
+  introGuardSeconds: 60,
 };
 
 export const AWARENESS_KEYS = Object.keys(AWARENESS_CATEGORIES);

@@ -34,6 +34,20 @@ const SIGNALS = {
   ],
 };
 
+// Unprompted student praise — social proof, not a teaching moment. Checked
+// separately from SIGNALS: a testimonial can land inside any awareness
+// category, so it is the optional high_value_type tag, not a category of
+// its own.
+const TESTIMONIAL_SIGNALS = [
+  'best decision', 'changed my life', 'life changing', 'life-changing',
+  'i love this class', 'i love your teaching', 'highly recommend',
+  'recommend this class', 'recommend this course', 'recommend you',
+  'worth every', 'best class i', 'best coach i', 'amazing experience',
+  'exceeded my', 'game changer', 'game-changer', 'transformed my',
+  "can't thank you enough", 'best investment', 'so happy i signed up',
+  'so glad i did this', 'glad i signed up', 'wish i had done this sooner',
+];
+
 const TOPIC_SIGNALS = {
   'Vocal Technique & Breath': ['breath', 'palate', 'vowel', 'buzz', 'diaphragm', 'pitch'],
   'Audience Connection & Stage Presence': ['audience', 'stage', 'perform', 'room'],
@@ -96,15 +110,18 @@ export function selectOffline(lesson, segment, opts = {}) {
   const scored = windows.map(({ text, start, end }) => {
     const cat = pickBest(SIGNALS, text, 'solution_aware');
     const topic = pickBest(TOPIC_SIGNALS, text, 'General Inspiration & Coaching');
-    const base = 45 + cat.score * 8 + topic.score * 3;
+    const testimonial = scoreText(text, TESTIMONIAL_SIGNALS);
+    const base = 45 + cat.score * 8 + topic.score * 3 + testimonial * 8;
     const complete = /[.!?]["')\]]?\s*$/.test(text.trim()) ? 10 : -15;
 
     return {
       full_quote: text,
-      why_it_hooks: `Heuristic match on ${cat.key.replace(/_/g, ' ')} signals (offline mode — not model-judged).`,
+      why_it_hooks: testimonial > 0
+        ? 'Heuristic match on testimonial signals — student praise worth posting as social proof (offline mode — not model-judged).'
+        : `Heuristic match on ${cat.key.replace(/_/g, ' ')} signals (offline mode — not model-judged).`,
       suggested_caption: text.split(/(?<=[.!?])\s+/)[0].slice(0, 90),
       primary_category: cat.key,
-      high_value_type: null,
+      high_value_type: testimonial > 0 ? 'testimonial' : null,
       topic: TOPICS.includes(topic.key) ? topic.key : 'General Inspiration & Coaching',
       cta: CTA_BY_AWARENESS[cat.key],
       start_time: start,

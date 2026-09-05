@@ -34,6 +34,8 @@ export type BrandTokens = {
   displayWeight: number;
   /** Uppercase the small label and CTA. */
   uppercaseLabels: boolean;
+  /** The presenter name, shown as "{presents} presents" on the title's top line. */
+  presents: string;
 };
 
 export const BRANDS: Record<string, BrandTokens> = {
@@ -50,6 +52,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: 'Inter, system-ui, sans-serif',
     displayWeight: 700,
     uppercaseLabels: true,
+    presents: 'Vocal Mastery for Entrepreneurs',
   },
 
   /** The Frequency series. */
@@ -65,6 +68,7 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: "'EB Garamond', Georgia, serif",
     displayWeight: 600,
     uppercaseLabels: false,
+    presents: 'Vocal Mastery for Entrepreneurs: Frequency Series',
   },
 
   /** Learn 2 Sing. */
@@ -80,24 +84,119 @@ export const BRANDS: Record<string, BrandTokens> = {
     text: 'Inter, system-ui, sans-serif',
     displayWeight: 700,
     uppercaseLabels: true,
+    presents: 'Learn 2 Sing',
+  },
+
+  /**
+   * Music 33. The site blue is #1a56db on white (M33Programs.tsx); on a dark
+   * ground that reads as a hole rather than an accent, so the accent here is
+   * that hue lifted to sit on the panel, the way the mint and lavender do.
+   */
+  mr33: {
+    bg: '#07142c',
+    panel: '#0f2146',
+    border: '#1f3c73',
+    accent: '#6FA3FF',
+    accentBright: '#9CC3FF',
+    ink: '#ffffff',
+    inkDim: 'rgba(255,255,255,0.65)',
+    display: 'Inter, system-ui, sans-serif',
+    text: 'Inter, system-ui, sans-serif',
+    displayWeight: 700,
+    uppercaseLabels: true,
+    presents: 'MusicRoom 33',
   },
 };
 
 export const DEFAULT_BRAND = 'vme';
 
+/** The brands a reviewer can pick between, in the order they are offered. */
+export const BRAND_CHOICES = [
+  { id: 'vme', label: 'VME', swatch: BRANDS.vme.accent },
+  { id: 'frequency', label: 'Frequency', swatch: BRANDS.frequency.accent },
+  { id: 'learn2sing', label: 'Learn 2 Sing', swatch: BRANDS.learn2sing.accent },
+  { id: 'mr33', label: 'Music 33', swatch: BRANDS.mr33.accent },
+];
+
 export const brandFor = (name: string): BrandTokens =>
   BRANDS[name] ?? BRANDS[DEFAULT_BRAND];
 
-export const layout = {
-  width: 1080,
-  height: 1920,
-  fps: 30,
-  safeX: 72,
+/**
+ * Output formats.
+ *
+ * vertical   1080x1920 — Instagram / TikTok. The footage sits as a centered
+ *            band with the title above it and captions below it, on the brand
+ *            ground.
+ * horizontal 1920x1080 — YouTube. The footage fills the frame; the title and
+ *            captions overlay it on scrims, the way YouTube chapter cards do.
+ */
+export type FormatId = 'vertical' | 'horizontal';
 
-  /** Footage band. 16:9 at full width is 608px tall. */
-  videoTop: 430,
-  /** Captions sit directly beneath the footage. */
-  captionBottom: 430,
-  headerTop: 96,
-  footerBottom: 96,
+export const FORMATS: Record<FormatId, { id: FormatId; label: string; short: string; width: number; height: number }> = {
+  vertical: { id: 'vertical', label: 'IG / TikTok 9:16', short: '9:16', width: 1080, height: 1920 },
+  horizontal: { id: 'horizontal', label: 'YouTube 16:9', short: '16:9', width: 1920, height: 1080 },
 };
+
+export const DEFAULT_FORMAT: FormatId = 'vertical';
+
+/** True when the value is one of ours — render-all filters CLI input with this. */
+export const isFormatId = (value: string): value is FormatId =>
+  value === 'vertical' || value === 'horizontal';
+
+export type Layout = {
+  width: number;
+  height: number;
+  fps: number;
+  safeX: number;
+  videoTop: number;
+  videoHeight: number;
+  captionBottom: number;
+  headerTop: number;
+  footerBottom: number;
+  /** True when text sits over the footage and needs a scrim behind it. */
+  overlay: boolean;
+};
+
+const FPS = 30;
+
+/** Vertical (the original layout): footage as a centered band. */
+function verticalLayout(): Layout {
+  // Footage band. 16:9 at full width is 607.5px tall.
+  const videoHeight = (1080 * 9) / 16;
+  return {
+    width: 1080,
+    height: 1920,
+    fps: FPS,
+    safeX: 72,
+    // Centered vertically: equal space above and below the footage.
+    videoTop: (1920 - videoHeight) / 2,
+    videoHeight,
+    // Captions sit directly beneath the footage.
+    captionBottom: 430,
+    headerTop: 260,
+    footerBottom: 96,
+    overlay: false,
+  };
+}
+
+/** Horizontal: footage full-bleed, text overlaid on scrims. */
+function horizontalLayout(): Layout {
+  return {
+    width: 1920,
+    height: 1080,
+    fps: FPS,
+    safeX: 96,
+    videoTop: 0,
+    videoHeight: 1080,
+    captionBottom: 84,
+    headerTop: 64,
+    footerBottom: 48,
+    overlay: true,
+  };
+}
+
+export const layoutFor = (format: FormatId): Layout =>
+  format === 'horizontal' ? horizontalLayout() : verticalLayout();
+
+/** The original vertical canvas — kept because older callers import it. */
+export const layout = verticalLayout();

@@ -1,0 +1,6 @@
+{
+  "description": "filename -> {postedAt, postizPostIds, driveFileId}. See tools/nightly-agent/PROMPT.md Phase 1 step 2.",
+  "note_2026-09-02": "Left empty tonight on purpose, not by oversight: the Antoine/Ira/MetaMuse rotation is already live in Postiz through 2026-09-10 (MetaMuse) / 2026-10-09 (Ira) / 2026-11-25 (Antoine) -- see tools/nightly-agent/rotation-queue.json notes for how that was confirmed. Backfilling per-post ledger entries (incl. Drive archival) for the ~85 already-scheduled slots would be a large low-value retroactive exercise; this ledger resumes tracking from whatever this agent schedules going forward.",
+  "note_2026-09-04": "Still empty, still on purpose: fresh audit tonight found nothing new to post -- every open rotation gap day through 2026-09-11 is already scheduled, and Ira/MetaMuse have zero unconsumed approved clips left (both are blocked on human review of their 2026-09-01 batches, see tools/nightly-agent/rotation-queue.json). No Drive archival needed either since nothing new went out.",
+  "entries": {}
+}
