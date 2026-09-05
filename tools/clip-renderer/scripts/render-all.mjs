@@ -252,10 +252,9 @@ for (const lesson of manifest.lessons) {
     // page ('both' renders every clip twice); then vertical.
     const pinned = cliFormats();
     const clipFormat =
-      pinned ??
       clip.formatOverride ??
       (manifest.renderFormat === 'both' ? 'both' : manifest.renderFormat ?? 'vertical');
-    const formats = clipFormat === 'both' ? [...FORMAT_IDS] : [clipFormat];
+    const formats = pinned ?? (clipFormat === 'both' ? [...FORMAT_IDS] : [clipFormat]);
     for (const format of formats) {
       jobs.push({
         clip,
