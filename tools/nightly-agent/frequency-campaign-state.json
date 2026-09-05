@@ -170,6 +170,28 @@
       "_comment": "Re-queried the full Postiz PUBLISHED post history fresh tonight (GET /public/v1/posts, 2026-01-01 through 2026-12-31, 683 rows / 344 PUBLISHED rows). Deduped simultaneous multi-channel releases by matching (content, publishDate) -- 132 unique published posts, of which exactly 21 carry a valid /VocalMastery or /Learn2Sing path (identical set to Night 3's 21, confirming no drift). All 21 were re-checked against Nights 1-2's consumed-URL list and the Warmup keyword list (breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill): the same 9 Warmup-topic matches as before are already consumed (posts #1-9), and the remaining 12 are still off-pillar (Diction/Emotional Delivery/testimonial/logistics topics). Specifically checked everything published since Night 3's cutoff (2026-09-02T12:00Z through tonight 2026-09-04T12:00Z, 7 new distinct posts): 'If You Can Buzz You Can Sing -- with Olivia', 'Self Acceptance -- with Anastasia', 'Book Your Free Vocal Analysis -- with Kris', 'A Moment of Appreciation -- with Ira', 'Singing in the Shower for a Good Sound -- with Kris', 'Taking Advantage of Your Body to Make Your Best Sound -- with Kris', plus two new '21 Day Challenge' quote-style entries and a new breathing/nervous-system quote post. None of these carry a /VocalMastery or /Learn2Sing path (all bare 'omegabone.com', or belong to the separate 21-Day-Challenge/quote-style stream this agent doesn't touch per Phase 1), so per the Nights 1-3 convention every one is excluded. Net result: zero genuinely-new, unambiguous Warmup-pillar candidates existed tonight -- same conclusion as Night 3, confirmed independently rather than assumed stale. Wrote 0 posts rather than forcing repeats or bending the path/keyword rules -- a natural limit of the published-clip library so far, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 9; next post written (whenever a new distinct Warmup, or Week-2 Speaking-Voice once the pillar rotates on 2026-09-06, clip publishes) will still be #10.",
       "postsWritten": 0,
       "posts": []
+    },
+    {
+      "night": 5,
+      "date": "2026-09-05",
+      "pillar": "Warmup",
+      "_comment": "Today (2026-09-05, Saturday) is still the last day of Week 1 / Warmup -- Week 2 (Speaking Voice) starts tomorrow, Sunday 2026-09-06, so pillar correctly left unchanged one more night. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-01-01 through 2026-12-31, 683 rows / 138 unique published posts after dedup). 25 unique posts now carry a valid /VocalMastery or /Learn2Sing path (up from 21 at Night 4) -- checked all 25 against the Warmup keyword list and the Nights 1-4 consumed-URL list. Found exactly ONE genuinely new, unambiguous Warmup-pillar candidate: a SECOND, distinct 'Vocal Technique & Breath -- with Adri' clip published 2026-08-21T20:00Z (youtube=9FcmKdy_e0w) -- caption-identical to the already-consumed 2026-08-20 Adri clip (youtube=P08UclqAEx0, post #3) but a genuinely different underlying video/clip (different YouTube ID, different Facebook/Instagram/LinkedIn release IDs). Easy to have missed as a false duplicate -- confirmed distinct by comparing releaseURLs per platform, not just caption text. The other 3 new-since-Night-4 path-having posts (Antoine 'Logistics of Online Lessons' 09-02, Antoine 'Raise Your Eyebrows' 09-05, plus one more Adri repeat-caption pair already accounted for) are off-pillar or already-consumed topics. No transcript/caption data exists locally for this Adri clip (not in lessons/ or tools/clip-extractor/clips-out/captions/ -- likely produced by an earlier pipeline pass before this repo's current lesson set) so the post draws on the clip's public topic/caption rather than inventing a specific quote, consistent with 'illustrate, don't teach' but honest about not having source transcript access. Wrote 1 post (not the full 7) -- a real natural limit, not a bug: only one genuinely new match existed. globalPostNumber 10 is divisible by 5 -> strong CTA per the cadence rule.",
+      "postsWritten": 1,
+      "posts": [
+        {
+          "globalPostNumber": 10,
+          "filename": "vme-10-breath-is-a-technique-not-a-mood.md",
+          "ctaTier": "strong",
+          "sourceClip": {
+            "student": "Adri",
+            "topic": "Vocal Technique & Breath",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=9FcmKdy_e0w",
+            "note": "Second, distinct clip from the same-titled Adri clip already consumed as post #3 (P08UclqAEx0) -- confirmed different via releaseURL, not a duplicate."
+          },
+          "dateWritten": "2026-09-05"
+        }
+      ]
     }
   ]
 }
