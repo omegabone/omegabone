@@ -1,0 +1,3 @@
+Something shifts for Ira in this lesson — for the first time she can consistently feel where a note resonates and lean into it instead of chasing it, and by the second song Omega has stopped giving notes because there's nothing left to fix. It's last week's "buzz the story over the music" homework finally paying off, and it uncovers something else worth saying out loud: Omega tells her to never lose her Russian accent, because it's "far more beautiful than what most Americans do" mumbling through their words. By the closing song they both land on it together — "this was our apex," Omega says. "It sounds like you, it feels like you, nothing about this feels forced."
+
+omegabone.com/Learn2Sing
