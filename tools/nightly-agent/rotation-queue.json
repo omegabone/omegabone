@@ -7,12 +7,12 @@
   },
   "lastScheduled": {
     "Antoine": "2026-11-25T12:00:00.000Z",
-    "Ira": "2026-10-09T17:00:00.000Z",
-    "MetaMuse": "2026-09-10T17:00:00.000Z"
+    "Ira": "2026-11-14T17:00:00.000Z",
+    "MetaMuse": "2026-09-25T17:00:00.000Z"
   },
   "consumedApprovedClips": {
-    "Ira": "13 distinct topics scheduled 2026-09-03 through 2026-10-09 (confirmed via Postiz GET /public/v1/posts 2026-09-04) - all of Ira's rendered clips in clips-ready/ that were ever approved are now consumed; state-ira/reviews.json currently has ZERO approved clips (the ira-2026-09-01 3-lesson batch is still unreviewed as of tonight) so no more can be scheduled until she reviews it",
-    "MetaMuse": "4 distinct topics scheduled 2026-09-01, 09-04, 09-07, 09-10 (confirmed via Postiz GET /public/v1/posts 2026-09-04), matching exactly the 4 MetaMuse files in clips-ready/ - i.e. ALL of MetaMuse's approved+rendered clips are now consumed, zero remain. state-metamuse/ review dir does not even exist yet (metamuse-2026-09-01 3-lesson batch, ready since 2026-09-01, still unreviewed as of tonight)"
+    "Ira": "As of tonight (2026-09-06), 25 distinct topics now scheduled 2026-09-03 through 2026-11-14 -- 21 of those (through 2026-11-02) were already live in Postiz before tonight, scheduled by some other process outside this agent's own nightly runs (a large human review-all sweep on 2026-09-05 rendered ~23 new Ira clips straight into clips-ready/ and something/someone bulk-scheduled 21 of those topics already, far beyond this file's last-known state of 13 topics through 2026-10-09 -- see the 2026-09-06 note below). Tonight this agent added the 4 remaining unconsumed+screened Ira clips (Communicate Your Heart, Major Tom Introduction Practice, Say Thank You After the Music Stops, Telling Your Authentic Story) into the next 4 open Ira gap days after 2026-11-02. Zero unconsumed Ira clips remain in clips-ready/ as of tonight.",
+    "MetaMuse": "As of tonight (2026-09-06), 9 distinct topics now scheduled 2026-09-01 through 2026-09-25 (4 pre-existing: Opera Dreams, Practicing Your Own New Song, Writing A New Song, Writing Songs with Ai; 5 added tonight: If You Can See It You Can Achieve It, Song Writing to Process Stress, Song Writing with Ai, Using Space to Intensify Passion, Writing Lyrics and Melodies for Ai Generated Music). Three more MetaMuse clips exist in clips-ready/ from the 2026-09-05 sweep but were deliberately NOT scheduled -- see the 2026-09-06 copyright-screening note below."
   },
   "gapDays": [
     {
