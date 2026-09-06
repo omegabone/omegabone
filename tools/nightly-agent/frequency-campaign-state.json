@@ -1,10 +1,10 @@
 {
   "_comment": "Frequency-funnel blog campaign state. runningPostCount is GLOBAL and NEVER resets across nights. Pillar rotates weekly, changing only on a new Sunday (see pillarRotationReference). Do not recompute week/pillar unless today is a new Sunday relative to lastRunDate.",
-  "runningPostCount": 10,
+  "runningPostCount": 11,
   "currentWeek": {
-    "weekNumber": 1,
-    "sundayStart": "2026-08-30",
-    "pillar": "Warmup"
+    "weekNumber": 2,
+    "sundayStart": "2026-09-06",
+    "pillar": "Speaking Voice"
   },
   "pillarRotationReference": {
     "_comment": "5-pillar rotation, one week each, repeating every 5 weeks. Week N's Sunday start date determines the pillar for that whole week (Sun-Sat); only advance on a new Sunday, not nightly.",
