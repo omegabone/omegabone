@@ -192,6 +192,27 @@
           "dateWritten": "2026-09-05"
         }
       ]
+    },
+    {
+      "night": 6,
+      "date": "2026-09-06",
+      "pillar": "Speaking Voice",
+      "_comment": "Today is Sunday 2026-09-06, confirmed via date calc -- pillar correctly advanced from Week 1/Warmup to Week 2/Speaking Voice per pillarRotationReference. Speaking Voice's sourcing rule is 'prefer Ira's clips' (a person-preference rule, not a topic-keyword rule like Warmup/Diction/Stage). Checked all-time PUBLISHED Postiz posts mentioning Ira (GET /public/v1/posts, 2026-01-01 through 2026-09-06): only 2 exist. One ('Ira on the Inner Circle Concert Program', 2026-08-22) is a testimonial-style post, not an illustrative lesson-clip moment, and doesn't fit this campaign's format -- excluded. The other, 'A Moment of Appreciation -- with Ira' (2026-09-03), is a genuine lesson clip -- but like every other Ira post, it publishes under bare 'omegabone.com' with no /VocalMastery or /Learn2Sing path, which the Nights 1-5 convention would normally exclude. Deliberately relaxed that specific rule for this one clip: the path requirement existed to resolve brand ambiguity for keyword-matched general sourcing, but Ira's posts are NEVER going to carry a path (confirmed: 100% of her live/queued posts are bare-domain), so enforcing it here would make the explicit 'prefer Ira' instruction permanently unsatisfiable. Resolved brand a different, equally reliable way instead: the clip's own file in clips-ready/ is prefixed 'Vocal_Mastery_...' (confirmed via tools/clip-extractor/clips-out/approved-manifest-frequency.json, clip id ira-19-may-2026-5), i.e. VME was the brand actually chosen at review time regardless of the source lesson's own L2S-titled video -- used that. Live YouTube URL pulled via a direct Postiz REST call (releaseURL field, not exposed by the summarized MCP list tool): https://www.youtube.com/watch?v=3XSa8ntCyQ4. Wrote exactly 1 post (not 7) -- a real natural limit of Ira's currently-published library (she has plenty more *approved* clips now per tonight's Phase 1 rotation work, but they won't be live/publishable-from until their scheduled dates arrive, e.g. 2026-09-13 onward), not a NEEDS HUMAN INPUT case. globalPostNumber 11 is not divisible by 3 or 5 -> no CTA.",
+      "postsWritten": 1,
+      "posts": [
+        {
+          "globalPostNumber": 11,
+          "filename": "vme-11-the-moment-someone-notices.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Ira",
+            "topic": "A Moment of Appreciation",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=3XSa8ntCyQ4"
+          },
+          "dateWritten": "2026-09-06"
+        }
+      ]
     }
   ]
 }
