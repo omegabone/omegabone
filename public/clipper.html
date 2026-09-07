@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clipper — Omega Bone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f7f9fd; --ink:#14171f; --muted:#5b6270;
+    --line:#dde3ef; --accent:#1a56db; --accent-hover:#1649c0; --accent-tint:#f0f5ff;
+    --good:#166534; --good-bg:#dcfce7; --warn:#a16207; --warn-bg:#fef3c7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1116; --panel:#161a22; --ink:#eef1f7; --muted:#9aa3b5;
+      --line:#2a3040; --accent:#4d7fff; --accent-hover:#6f97ff; --accent-tint:#16223f;
+      --good:#4ade80; --good-bg:#12321f; --warn:#fbbf24; --warn-bg:#3a2c0c;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Poppins',system-ui,sans-serif;font-size:15px;line-height:1.6;
+    display:flex;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px}
+  .card{max-width:560px;width:100%;background:var(--panel);border:1px solid var(--line);
+    border-radius:16px;padding:36px 34px}
+  .eyebrow{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:0 0 10px}
+  h1{font-family:'Cinzel',Georgia,serif;font-size:1.8rem;margin:0 0 10px}
+  p{margin:0 0 16px;color:var(--muted)}
+  .go{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+    font-weight:600;font-size:1rem;padding:14px 26px;border-radius:10px;margin:6px 0 20px}
+  .go:hover{background:var(--accent-hover)}
+  .status{display:flex;align-items:center;gap:10px;font-size:.88rem;
+    border-radius:10px;padding:12px 15px;margin-bottom:18px}
+  .status.checking{background:var(--accent-tint);color:var(--accent)}
+  .status.up{background:var(--good-bg);color:var(--good)}
+  .status.down{background:var(--warn-bg);color:var(--warn)}
+  .note{font-size:.86rem;border-top:1px solid var(--line);padding-top:18px;margin-top:4px}
+  .note b{color:var(--ink)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;
+    background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:2px 6px}
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .links a{font-size:.85rem;color:var(--accent);text-decoration:none;
+    border:1px solid var(--line);border-radius:8px;padding:8px 14px}
+  .links a:hover{border-color:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">Omega Bone</p>
+    <h1>Clip Review</h1>
+
+    <div class="status checking" id="status">Checking whether the clipper is running&hellip;</div>
+
+    <a class="go" id="open" href="http://localhost:4331/">Open the clipper</a>
+
+    <p>This one is different from your other pages. The clipper is a program running
+      <b>on your Mac</b>, not on the internet, so this link only opens it on that machine
+      and only while the program is running.</p>
+
+    <div class="note">
+      <p><b>If it says the clipper is not running,</b> start it on your Mac and reload this page:</p>
+      <p><code>cd ~/vocal-clipper &amp;&amp; ./start.sh</code></p>
+    </div>
+
+    <div class="links">
+      <a href="/todos">Command Desk</a>
+      <a href="/files">File Map</a>
+      <a href="/">omegabone.com</a>
+    </div>
+  </div>
+
+<script>
+  var el = document.getElementById('status');
+  var done = false;
+  function set(cls, text){
+    if (done) return;
+    done = true;
+    el.className = 'status ' + cls;
+    el.textContent = text;
+  }
+  // A no-cors ping: it cannot read the answer, but it can tell reachable from not.
+  var timer = setTimeout(function(){
+    set('down', 'The clipper is not answering on this machine.');
+  }, 2500);
+  fetch('http://localhost:4331/', {mode: 'no-cors', cache: 'no-store'})
+    .then(function(){ clearTimeout(timer); set('up', 'The clipper is running. The button below opens it.'); })
+    .catch(function(){ clearTimeout(timer); set('down', 'The clipper is not answering on this machine.'); });
+</script>
+</body>
+</html>
