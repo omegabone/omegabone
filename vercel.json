@@ -1,23 +1,53 @@
 {
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "redirects": [
+    {
+      "source": "/todos",
+      "destination": "https://claude.ai/code/artifact/cb27b87a-df22-442d-83b3-606d52e5008d",
+      "permanent": false
+    },
+    {
+      "source": "/files",
+      "destination": "https://claude.ai/code/artifact/9e26c22b-0d4d-41d8-a66a-d0d7fc60811e",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/clipper",
+      "destination": "/clipper.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/audio/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
       ]
     }
   ]
