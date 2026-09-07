@@ -1,0 +1,53 @@
+{
+  "description": "filename -> {postedAt, postizPostIds, driveFileId}. See tools/nightly-agent/PROMPT.md Phase 1 step 2.",
+  "note_2026-09-02": "Left empty tonight on purpose, not by oversight: the Antoine/Ira/MetaMuse rotation is already live in Postiz through 2026-09-10 (MetaMuse) / 2026-10-09 (Ira) / 2026-11-25 (Antoine) -- see tools/nightly-agent/rotation-queue.json notes for how that was confirmed. Backfilling per-post ledger entries (incl. Drive archival) for the ~85 already-scheduled slots would be a large low-value retroactive exercise; this ledger resumes tracking from whatever this agent schedules going forward.",
+  "note_2026-09-04": "Still empty, still on purpose: fresh audit tonight found nothing new to post -- every open rotation gap day through 2026-09-11 is already scheduled, and Ira/MetaMuse have zero unconsumed approved clips left (both are blocked on human review of their 2026-09-01 batches, see tools/nightly-agent/rotation-queue.json). No Drive archival needed either since nothing new went out.",
+  "note_2026-09-06_drive_archival": "Attempted Google Drive archival for tonight's 9 new posts (see entries below) and could not do it: the only Drive connector available in this session (mcp Google_Drive create_file) only accepts inline base64/text content in the tool call itself, with no separate large-binary upload path. These clip files are 3-61MB; base64-encoding even the smallest still produces a payload far past this session's per-call token ceiling (confirmed: a 295KB API response already hit that ceiling). No 'Clips Archive' folder exists yet in Drive either (searched, zero results). Did not attempt a workaround (hosting the file elsewhere first to get a URL) since the omegabone-postiz skill explicitly warns off that pattern for this pipeline and it would add real cost/risk for an archival nice-to-have. driveFileId left null on every entry below -- flagging so a human can either wire up a real Drive upload path (e.g. `gdrive`/`rclone` CLI, or the desktop sync app, neither of which is installed/mounted on this machine) or confirm archival isn't actually needed.",
+  "entries": {
+    "Vocal_Mastery_If_You_Can_See_It_You_Can_Achieve_It_MetaMuse-vertical.mp4": {
+      "postedAt": "2026-09-13T17:00:00.000Z",
+      "postizPostIds": ["cmtptumc507tnpj0ymowh1f4i", "cmtptumgr07topj0ysn0k4wqu", "cmtptumlu07tppj0yzlp5xru9", "cmtptumqd07tqpj0ym5qzunbh", "cmtptumtg07trpj0yyy37ea1r"],
+      "driveFileId": null
+    },
+    "Vocal_Mastery_Song_Writing_to_Process_Stress_MetaMuse-vertical.mp4": {
+      "postedAt": "2026-09-16T17:00:00.000Z",
+      "postizPostIds": ["cmtptux0v07tspj0ytwrpiml1", "cmtptux3t07ttpj0ykg6r7tu4", "cmtptux7307tupj0ybsgns8kd", "cmtptuxb107tvpj0yb82zh6pn", "cmtptuxed07twpj0yiokyvwl7"],
+      "driveFileId": null
+    },
+    "Vocal_Mastery_Song_Writing_with_Ai_MetaMuse-vertical.mp4": {
+      "postedAt": "2026-09-19T17:00:00.000Z",
+      "postizPostIds": ["cmtptv5y607txpj0yuy0mgwnh", "cmtptv61307typj0ysi1q8iaq", "cmtptv64b07tzpj0yiemjtgin", "cmtptv68b07u0pj0yva95nz72", "cmtptv6c807u1pj0y19h6psd6"],
+      "driveFileId": null
+    },
+    "Vocal_Mastery_Using_Space_to_Intensify_Passion_MetaMuse-vertical.mp4": {
+      "postedAt": "2026-09-22T17:00:00.000Z",
+      "postizPostIds": ["cmtptvetv07u2pj0y1okopalh", "cmtptvexe07u3pj0yt62dzkbs", "cmtptvf2b07u4pj0yh77wu9eg", "cmtptvf8807u5pj0ydn2sdjen", "cmtptvfbm07u6pj0yblsynz5r"],
+      "driveFileId": null
+    },
+    "Vocal_Mastery_Writing_Lyrics_and_Melodies_for_Ai_Generated_Music_MetaMuse-vertical.mp4": {
+      "postedAt": "2026-09-25T17:00:00.000Z",
+      "postizPostIds": ["cmtptvnyt07u7pj0yno1k2znf", "cmtptvo1t07u8pj0yaq2i2ii8", "cmtptvo4y07u9pj0y4zkqegil", "cmtptvo8s07uapj0yx6ldlszt", "cmtptvod607ubpj0yet2n77bv"],
+      "driveFileId": null
+    },
+    "Learn_2_Sing_Communicate_Your_Heart_Ira-vertical.mp4": {
+      "postedAt": "2026-11-05T17:00:00.000Z",
+      "postizPostIds": ["cmtptvxck07ucpj0y3jqddrju", "cmtptvxft07udpj0ytfnr123a", "cmtptvxje07uepj0ykablfg1h", "cmtptvxmp07ufpj0y382fs5y8", "cmtptvxpr07ugpj0yng3swt23"],
+      "driveFileId": null
+    },
+    "Learn_2_Sing_Major_Tom_Introduction_Practice_Ira-vertical.mp4": {
+      "postedAt": "2026-11-08T17:00:00.000Z",
+      "postizPostIds": ["cmtptw6z907uhpj0yf1ouy6lc", "cmtptw7a007uipj0y84i49m4h", "cmtptw7dk07ujpj0ym2xchbrh", "cmtptw7go07ukpj0yul7eqadt", "cmtptw7mr07ulpj0ypzwarzcw"],
+      "driveFileId": null
+    },
+    "Learn_2_Sing_Say_Thank_You_After_the_Music_Stops_Ira-vertical.mp4": {
+      "postedAt": "2026-11-11T17:00:00.000Z",
+      "postizPostIds": ["cmtptwg4b07uqpj0ygo92b468", "cmtptwgat07urpj0ytn2n7o1k", "cmtptwgeu07uspj0y2vhph3xl", "cmtptwgis07utpj0ygpykn917", "cmtptwgom07uupj0ysn6nt3x5"],
+      "driveFileId": null
+    },
+    "Learn_2_Sing_Telling_Your_Authentic_Story_Ira-vertical.mp4": {
+      "postedAt": "2026-11-14T17:00:00.000Z",
+      "postizPostIds": ["cmtptwpcq07uvpj0ya63rmrlz", "cmtptwpg307uwpj0y3d28qknm", "cmtptwpp807uxpj0y7y6uerx9", "cmtptwpsz07uypj0y2t1r1oxv", "cmtptwq0c07uzpj0yhe7t6l8f"],
+      "driveFileId": null
+    }
+  }
+}

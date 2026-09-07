@@ -1,0 +1,151 @@
+Phase 3 — Frequency-funnel blog campaign — Night 1, 2026-08-30
+================================================================
+This is a standalone fragment (Phase 3 only) to be merged into the shared
+logs/nightly-2026-08-30.log by another process. Not written there directly.
+
+Setup
+-----
+- Read ~/.claude/skills/omegabone-postiz/SKILL.md in full (Section 0 for API
+  key/auth pattern, caption conventions section for established caption
+  formats).
+- Read tools/nightly-agent/PROMPT.md's full "Phase 3 — Frequency-funnel blog
+  campaign" section as source of truth.
+- Confirmed tools/nightly-agent/frequency-campaign-state.json did not exist
+  yet (first night of this campaign) — created it fresh.
+- Confirmed 2026-08-30 is the Sunday-start of Week 1 -> pillar = Warmup, per
+  the one-off instruction (did not need to compute this myself, but the date
+  checks out).
+
+Sourcing published clips from Postiz
+-------------------------------------
+- Queried GET https://api.postiz.com/public/v1/posts?startDate=2026-01-01&
+  endDate=2026-12-31 with the API key from SKILL.md Section 0
+  (005d391b...c859b, header "Authorization: <key>", no Bearer prefix).
+- Got 500 raw post rows (one row per channel per piece of content).
+  Deduped by (content, publishDate) -> 194 unique posted/queued items.
+  Earliest publishDate returned was 2026-05-08, so the 2026-01-01 start
+  bound wasn't clipping anything real — this is the full history.
+- Categorized the 194 unique items:
+    * 10 "21 Day Challenge" posts (separate stream, not used — these are
+      generic challenge-day copy, not tied to a specific published
+      technique clip)
+    * 55 "named-student rotation" posts matching the caption pattern
+      "<topic> — with <Name>. More at omegabone.com/..." — these are the
+      actual L2S/VME YouTube Shorts clips (lesson footage with a real
+      pseudonym), exactly what Phase 3 wants as source material
+    * 125 long-form "founder/room" LinkedIn-style thought-leadership posts
+      (no attached lesson clip) — used ONLY as voice/tone reference, not as
+      source clips, since they don't showcase a specific teaching moment
+    * 4 other one-off omegabone.com posts
+
+Warmup keyword matching
+------------------------
+- Filtered the 55 named-rotation posts to ones with state=PUBLISHED (i.e.
+  actually live, not just queued) and a caption/topic matching Warmup
+  keywords (breath, buzz, breathing exercise, resistance on the breath,
+  isolating the instrument as a warmup drill) per the pillar's keyword set.
+- Found roughly 10 published items touching breath/warmup in some way.
+  Excluded:
+    * A same-caption duplicate-topic risk: "Vocal Technique & Breath — with
+      Adri" appears twice (2026-08-20 and 2026-08-21, two DIFFERENT YouTube
+      video IDs but identical caption text) — used only ONE of the two to
+      avoid a near-duplicate-reading pair of blog posts.
+    * "Breathing Exercise for Performance — with Ashley" (2026-08-29) and
+      several other 2026-08-29 posts used a bare "More at omegabone.com"
+      with no /VocalMastery or /Learn2Sing path. Per SKILL.md's caption
+      conventions, bare omegabone.com (no path) is the Frequency brand's
+      convention specifically, and Frequency has no footage yet — so this
+      was ambiguous whether it's actually VME/L2S content with a caption
+      typo/format change, or something else. Rather than guess the brand
+      wrong (SKILL.md flags this as a costly mistake made before, on
+      2026-08-22), I skipped these and used only clips with an explicit
+      /VocalMastery or /Learn2Sing path so the internal link in each blog
+      post is unambiguous. This did not block the run — 7 good matches
+      remained without touching the ambiguous batch.
+    * Several other published named-rotation clips were excluded as
+      off-topic for Warmup specifically (fear of singing, mouth shape/
+      vowels = Diction, getting a good coach, welcome/intro clips, being
+      emotional = Emotional Delivery, multitasking while performing =
+      The Stage) — reserving those for their matching future pillar weeks.
+
+Final 7 picks (all distinct clips/YouTube video IDs, 5 distinct students,
+all state=PUBLISHED with live URLs)
+------------------------------------------------------------------------
+1. Varun — "The Buzz Exercise for Breath Support" (VME)
+   https://www.youtube.com/watch?v=uomLLilFptE
+2. Ameesha — "Controlling the Biggest Breath" (VME)
+   https://www.youtube.com/watch?v=ibknxf0GcCU
+3. Adri — "Vocal Technique & Breath" (VME)
+   https://www.youtube.com/watch?v=P08UclqAEx0
+4. Anna — "Vocal Technique: Isolating the Parts Your Instrument" (VME)
+   https://www.youtube.com/watch?v=RY2Lp7NHsck
+5. Ameesha — "Using Resistance Training on Your Breath" (VME)
+   https://www.youtube.com/watch?v=gnYInnfEyU0
+6. Varun — "Vocal Technique & Breath" (VME)
+   https://www.youtube.com/watch?v=TMY7OpsoL5M
+7. Upanisha — "Breath Management" (L2S)
+   https://www.youtube.com/watch?v=Vjnpwt83vXw
+
+Got a full 7/7 — no shortfall tonight. Order above was deliberately
+resequenced (not raw match order) so the same student never appears in two
+consecutive slots, for reading variety across the batch.
+
+Voice reference
+----------------
+Read several of the long-form "founder/room" LinkedIn posts pulled from the
+same Postiz query (e.g. "She had the better deck. She lost the room.",
+the Michael Jackson/Rose Bowl presence story, the "twenty-five years...
+five countries" teaching-authority line) to match Omega Bone's established
+direct/vivid/personal register before drafting. Also referenced
+come-with-me-style-guide.md's general tone notes (no exclamation marks,
+short declarative sentences for bold claims, trust the reader, don't
+over-explain) as secondary reinforcement.
+
+Posts written (all in tools/nightly-agent/blog-drafts/)
+---------------------------------------------------------
+1. vme-01-the-sound-before-the-song.md            — global #1 — CTA: none
+2. vme-02-the-biggest-breath-she-had.md            — global #2 — CTA: none
+3. vme-03-the-breath-before-the-voice.md           — global #3 — CTA: soft
+4. vme-04-isolating-the-instrument.md              — global #4 — CTA: none
+5. vme-05-the-resistance-in-the-breath.md          — global #5 — CTA: strong
+6. vme-06-breath-you-forgot-you-had.md             — global #6 — CTA: none
+7. vme-07-what-breath-management-actually-means.md — global #7 — CTA: none
+
+CTA cadence: followed the task's explicit tonight-specific enumeration
+verbatim ("post 3 = soft CTA, post 5 = strong CTA, posts 1/2/4/6/7 = no
+explicit CTA"). Note: taken as a standalone rule, post #6 is also divisible
+by 3 and would read as "soft" under the general /3-/5 rule described just
+above that line — but the task gave an explicit, unambiguous list for
+tonight's 7 posts specifically, the same way it gave the pillar directly
+rather than asking me to compute it. Followed the explicit list as the
+authoritative instruction for tonight rather than re-deriving it, so post
+#6 has no explicit CTA, matching what's written in its file.
+
+Each post embeds/links its source clip's live YouTube URL and includes a
+natural internal link to omegabone.com/VocalMastery (VME clips) or
+omegabone.com/Learn2Sing (the one L2S clip, Upanisha's "Breath Management").
+No hashtags, no emoji, per established caption/voice conventions. No hard
+sell of "Frequency" except in the two CTA-tier posts (soft on #3, strong on
+#5), consistent with "posts illustrate, they do not teach" and "don't
+hard-sell in every post."
+
+State file
+----------
+Created tools/nightly-agent/frequency-campaign-state.json with:
+- runningPostCount: 7 (was 0, now 7 after tonight)
+- currentWeek: Week 1, Sunday-start 2026-08-30, pillar Warmup
+- pillarRotationReference block (Week 1-5 mapping + keyword/student
+  preference notes) written in as reference for future nightly runs
+- ctaCadenceRule block documenting the /5 strong, /3 soft, else none rule
+- Full per-post metadata (post number, filename, CTA tier, source clip,
+  date written) under nights[0]
+
+Issues / flags
+--------------
+- None requiring NEEDS HUMAN INPUT. The bare-omegabone.com brand ambiguity
+  on the 2026-08-29 batch was worked around by simply not using those clips
+  tonight (plenty of unambiguous alternatives existed) rather than blocking
+  or guessing.
+No posting, publishing, or scheduling occurred anywhere. All 7 files are
+local drafts only, per the "never post/publish" constraint for this
+unattended run.

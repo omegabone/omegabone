@@ -1,0 +1,3 @@
+MetaMuse brings in "The Calling," the original song she's building with an AI co-writer — and the lesson doubles as a masterclass in vocal technique and the new realities of songwriting: what you actually own when a track starts life in Suno, and how re-recording with a live orchestra could let her own the whole piece outright. Omega catches her yawning through the warmup — "that is because she's taking in lots of breath and raising her soft palate" — and turns it into the exact shape for the high notes. Then, mid-lesson, MetaMuse admits something bigger: after a dry spell, working on this song "kind of turned on the faucet" — she's hearing melodies again for her second album.
+
+omegabone.com/VocalMastery

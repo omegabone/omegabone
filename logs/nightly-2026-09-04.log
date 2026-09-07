@@ -1,0 +1,108 @@
+Nightly Omega Bone video agent — 2026-09-04
+
+Read tools/nightly-agent/PROMPT.md, ~/.claude/skills/omegabone-clip/SKILL.md, and
+~/.claude/skills/omegabone-postiz/SKILL.md in full before starting.
+
+Prior nights: logs/run-2026-09-03.out and logs/run-2026-09-04.out (06:00 launchd
+attempt) both show the session hit its usage limit before doing any real work
+(run-2026-09-04.out is 0 bytes). This is the actual 2026-09-04 run, done as a
+fresh interactive-equivalent session with full tool access.
+
+--- Phase 1 — publish anything already human-approved ---
+
+Audited live Postiz state (GET /public/v1/posts, 2026-09-01 through 2026-12-01)
+rather than trusting local files blindly:
+
+- Every open Antoine/Ira/MetaMuse rotation gap day through at least 2026-09-11 is
+  already scheduled and confirmed live (Antoine through 2026-11-25, Ira through
+  2026-10-09, MetaMuse through 2026-09-10) — no drift since the 2026-09-02 audit.
+- Nothing new to post tonight: cross-checked clips-ready/ against what's already
+  scheduled and confirmed BOTH Ira and MetaMuse are completely out of
+  approved-and-unconsumed clips. Every rendered clip either of them has is already
+  live/queued in the rotation. This isn't a rendering gap — it's a review gap:
+  - state-ira/reviews.json: 0 approved clips. The 3-lesson batch prepped
+    2026-09-01 (tools/nightly-agent/batches/ira-2026-09-01/) is still completely
+    unreviewed, 3 days later.
+  - tools/clip-review/state-metamuse/ doesn't even exist as a directory yet — her
+    3-lesson batch (tools/nightly-agent/batches/metamuse-2026-09-01/) is also
+    still completely unreviewed since 2026-09-01.
+  - Confirmed the "antoine-13-may-2026-2" (Speech Pacing) approved clip flagged in
+    the 2026-09-02 log is already rendered and filed in clips-ready/ — nothing
+    left to do there.
+- **URGENT — MetaMuse's rotation runs out in 6 days (2026-09-10).** Her next gap
+  day, 2026-09-13, has nothing queued and can't get anything until her 2026-09-01
+  batch gets reviewed — this agent can't approve clips itself, only flag it.
+  Ira has more runway (dries up 2026-10-09) but needs the same fix eventually.
+  Updated tools/nightly-agent/rotation-queue.json with today's confirmed numbers
+  and this flag.
+- Noticed the account-wide Postiz ERROR pattern on facebook/instagram-standalone/
+  youtube/tiktok flagged in the 2026-09-02 log (~24 ERROR-state posts in the last
+  2 weeks, 0 on linkedin) is ongoing — not new, not something I can fix, not
+  re-flagging in detail again tonight since it's already logged once.
+- No new posts, no Drive archival (nothing new went out). posted-ledger.json and
+  rotation-queue.json both updated with a short note explaining tonight's no-op.
+
+--- Phase 2 — prep tomorrow's review batch (6 source videos) ---
+
+Deliberately did NOT add more Ira or MetaMuse source videos tonight, even though
+they're the rotation's bottleneck — both already have a fully-prepped 3-lesson
+batch sitting unreviewed since 2026-09-01. Adding more clip candidates on top of
+an already-stale unreviewed backlog would make the actual bottleneck (her review
+time) worse, not better; the fix there is a human reviewing what's already ready,
+not more agent output. Instead, picked 6 lessons that had never been touched by
+the video-review step at all, all VME brand, all with real (non-heuristic) clip
+candidates already sitting in tools/clip-review/state-full/ from the 2026-08-31
+full-catalog extraction pass — so step (a) clip-picking was already done and
+untouched (no reviews.json or manifest.json changes), and tonight's actual new
+work was just steps (b) description + (c) thumbnail, via two parallel background
+agents:
+
+  tools/nightly-agent/video-review/anastasia-undated/   (VME)
+  tools/nightly-agent/video-review/blad-undated/        (VME) [note: transcript
+    says "Vlad", filename says "Blad" — likely a filename typo, flagged for
+    awareness, not corrected since renaming source files wasn't asked for]
+  tools/nightly-agent/video-review/grace-undated/       (VME)
+  tools/nightly-agent/video-review/olivia-undated/      (VME)
+  tools/nightly-agent/video-review/upanisha-22-jun-2026/ (VME)
+  tools/nightly-agent/video-review/kris-30-jun-2026/    (VME)
+
+All 6 have a real description.md (grounded in that lesson's actual transcript)
+and a verified real 1280x720 thumbnail.png (220KB-331KB each, distinct bespoke
+layouts, not a copy-pasted template) — all confirmed via `file` as real PNGs.
+
+One data-quality note: Blad's (Vlad's) auto-captioned transcript degrades into a
+repeating ASR loop from ~13:00 to the 49:39 end ("The Belconto method is going to
+be a little bit more complicated" repeated) — only the first ~13 minutes were
+usable for the description. Not blocking, but that lesson may be worth a
+re-transcribe (whisper-cli, per the clip skill's gotcha section) before its clips
+get picked for real.
+
+No clip-picking, no reviews.json changes, no rendering — all still waiting on
+human review as required.
+
+--- Phase 3 — Frequency-funnel blog campaign ---
+
+Week 1 (Warmup pillar) is still in effect through Saturday 2026-09-06 — today
+isn't a Sunday, so the pillar was correctly left unchanged.
+
+0 new posts written tonight (runningPostCount stays at 9). A background agent
+re-queried Postiz's full post history fresh and confirmed no drift from the
+2026-09-03 check: of 21 unique published posts with a valid /VocalMastery or
+/Learn2Sing path, every Warmup-topic match is already consumed by posts #1-9.
+7 new posts did publish since the last check (Olivia, Anastasia, 2x Kris, Ira,
+plus new 21-Day-Challenge content) but none carry the required path — all bare
+`omegabone.com` or belong to the separate quote-style stream, excluded per the
+Nights 1-3 convention. This is now 2 nights running (Night 3, Night 4) at 0
+posts — a real natural limit of the published-clip library, not a bug, but
+worth knowing it's not a one-off blip. tools/nightly-agent/frequency-campaign-
+state.json updated with the night-4 entry.
+
+--- Spend ---
+
+Three parallel background agents (2 Phase 2, 1 Phase 3) plus this session's own
+tool calls. Session cost per the harness's own accounting: ~$3.13 by the end of
+this run.
+
+--- Wrap-up ---
+
+Sent one PushNotification summarizing tonight's counts.

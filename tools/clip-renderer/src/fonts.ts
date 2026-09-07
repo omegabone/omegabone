@@ -1,4 +1,4 @@
-import { staticFile, delayRender, continueRender, cancelRender } from 'remotion';
+import { staticFile } from 'remotion';
 
 /**
  * Locally bundled typefaces.
@@ -16,8 +16,22 @@ import { staticFile, delayRender, continueRender, cancelRender } from 'remotion'
  * render identically. The Frequency series names real families (Cinzel,
  * EB Garamond), which are bundled as specified.
  *
- * delayRender holds the frame until the faces are ready, otherwise the first
- * frames render in a fallback font.
+ * ---
+ *
+ * This is plain CSS, with no delayRender holding the frame, and that is
+ * deliberate.
+ *
+ * Holding frames on a FontFace promise lost whole batches: one render tab in a
+ * hundred never resolved, and the run died two thirds of the way through on a
+ * typeface. Raising the deadline only moved where it died. Racing the promise
+ * against a timer does not work either — Remotion controls the clock while
+ * rendering, so a setTimeout inside a composition never fires.
+ *
+ * Declared this way the browser loads the files itself, off its own timeline,
+ * with no promise anyone can be left waiting on. The files are served by
+ * Remotion's own local server, so they arrive in the first frame or two;
+ * `font-display: swap` means the worst case is a moment in the fallback face
+ * rather than a batch that does not finish.
  */
 
 type Face = { family: string; file: string; weight: string; style: string };
@@ -39,21 +53,20 @@ export const loadFonts = (): void => {
   if (started || typeof document === 'undefined') return;
   started = true;
 
-  const handle = delayRender('Loading local fonts');
+  const style = document.createElement('style');
+  style.setAttribute('data-clip-fonts', '');
+  style.textContent = FACES.map(
+    (face) =>
+      `@font-face{` +
+      `font-family:'${face.family}';` +
+      `src:url('${staticFile(`fonts/${face.file}`)}') format('woff2');` +
+      `font-weight:${face.weight};` +
+      `font-style:${face.style};` +
+      `font-display:swap;` +
+      `}`,
+  ).join('');
 
-  Promise.all(
-    FACES.map(async (face) => {
-      const f = new FontFace(
-        face.family,
-        `url(${staticFile(`fonts/${face.file}`)}) format('woff2')`,
-        { weight: face.weight, style: face.style },
-      );
-      await f.load();
-      document.fonts.add(f);
-    }),
-  )
-    .then(() => continueRender(handle))
-    .catch((err) => cancelRender(err));
+  document.head.appendChild(style);
 };
 
 loadFonts();

@@ -159,6 +159,14 @@ node bin/extract-clips.mjs \
 | `clips.csv` | Paste-ready rows in the live clip-sheet column order |
 | `manifest.json` | Full structured record, including every rejected candidate and why |
 | `report.md` | Readable review sheet, clips grouped by lesson |
+| `captions/*.srt` | Per-clip subtitles, for timed lessons |
+| `transcripts.json` | Each timed lesson's own transcript, for trimming clips in the review page |
+
+`transcripts.json` holds the whole lesson, not only the clipped parts: trimming
+a clip means reaching for the words on either side of it. Word-level timings are
+carried through when the transcript has them — Whisper writes them with
+`word_timestamps=True` — and the review page falls back to estimating them from
+subtitle lines when it does not.
 
 `clips.csv` leads with the eleven existing sheet columns in their current order —
 Goal / CTA, Rank, Student, Topic, Clip Type, Video Title, Date, Video URL, Full

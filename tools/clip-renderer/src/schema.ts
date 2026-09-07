@@ -32,6 +32,13 @@ export const clipSchema = z.object({
 
   /** Brand system: vme (default), frequency, or learn2sing. */
   brand: z.string(),
+
+  /**
+   * Output format: 'vertical' (1080x1920, IG/TikTok) or 'horizontal'
+   * (1920x1080, YouTube). Optional so older prop files still validate —
+   * the default matches what this renderer did before formats existed.
+   */
+  format: z.enum(['vertical', 'horizontal']).optional(),
 });
 
 export type ClipProps = z.infer<typeof clipSchema>;

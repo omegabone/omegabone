@@ -174,6 +174,39 @@ function timeToSeconds(stamp) {
   return parts[0];
 }
 
+/**
+ * YouTube's auto-generated captions are a rolling window, not discrete
+ * lines: each cue repeats the tail of the previous cue's text alongside
+ * whatever is new, so consecutive cues overlap ("I am I am" / "I am I am
+ * [music]" / "[music] I am I am" ...). Read naively, every word gets
+ * counted as many times as it scrolls through the window. This strips the
+ * overlap by comparing each cue's leading words against the previous cue's
+ * trailing words and keeping only what is actually new.
+ */
+function dedupeRollingCaptions(cues) {
+  const out = [];
+  let tailWords = [];
+
+  for (const cue of cues) {
+    const words = cue.text.split(/\s+/).filter(Boolean);
+    const maxCheck = Math.min(words.length, tailWords.length, 30);
+    let overlap = 0;
+    for (let len = maxCheck; len > 0; len--) {
+      const suffix = tailWords.slice(tailWords.length - len).join(' ').toLowerCase();
+      const prefix = words.slice(0, len).join(' ').toLowerCase();
+      if (suffix === prefix) {
+        overlap = len;
+        break;
+      }
+    }
+    tailWords = words;
+
+    const newWords = words.slice(overlap);
+    if (newWords.length) out.push({ start: cue.start, end: cue.end, text: newWords.join(' ') });
+  }
+  return out;
+}
+
 function parseSrtVtt(text) {
   const cues = [];
   const blocks = text.replace(/\r/g, '').split(/\n{2,}/);
@@ -194,7 +227,30 @@ function parseSrtVtt(text) {
       .trim();
     if (body) cues.push({ start, end, text: body });
   }
-  return cues;
+  return dedupeRollingCaptions(cues);
+}
+
+/**
+ * Word timings, when the transcriber recorded them.
+ *
+ * Whisper writes these under `words` with `word_timestamps=True`; other tools
+ * spell the key `word` or `text`. They are worth carrying because the review
+ * tool trims clips by clicking a word, and a real word boundary beats one
+ * guessed by dividing a cue up.
+ */
+function parseWords(segment) {
+  const raw = segment.words || segment.word_timestamps;
+  if (!Array.isArray(raw)) return null;
+
+  const words = raw
+    .map((w) => ({
+      word: String(w.word ?? w.text ?? '').trim(),
+      start: w.start ?? w.timestamp?.[0] ?? null,
+      end: w.end ?? w.timestamp?.[1] ?? null,
+    }))
+    .filter((w) => w.word && w.start !== null && w.end !== null);
+
+  return words.length ? words : null;
 }
 
 function parseWhisperJson(text) {
@@ -206,6 +262,7 @@ function parseWhisperJson(text) {
       start: s.start ?? s.timestamp?.[0] ?? null,
       end: s.end ?? s.timestamp?.[1] ?? null,
       text: (s.text || '').trim(),
+      words: parseWords(s),
     }))
     .filter((c) => c.start !== null && c.end !== null && c.text);
 }

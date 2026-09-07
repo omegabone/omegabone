@@ -1,0 +1,4 @@
+{
+  "video-dir": "~/Videos/lessons",
+  "manifest": "../clip-extractor/clips-out/manifest.json"
+}

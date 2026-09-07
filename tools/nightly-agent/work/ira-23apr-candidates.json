@@ -1,0 +1,58 @@
+{
+  "1": [
+    {
+      "full_quote": "Ladies and gentlemen, he's getting that ready. If you would like to book a 30 minute diagnostic, click the link in the comments or the description, and I will help you. And please subscribe. I don't know why I don't think to say, please subscribe to the channel — you should be saying that everybody watching should be subscribing.",
+      "why_it_hooks": "A candid, funny aside where she catches herself mid-CTA — reads as a real person, not a script.",
+      "suggested_caption": "Even the coach forgets to ask you to subscribe sometimes.",
+      "primary_category": "product_aware",
+      "high_value_type": null,
+      "topic": "General Inspiration & Coaching",
+      "cta": "🟢 Book Private Lessons",
+      "start_time": 540,
+      "end_time": 587,
+      "self_contained": true,
+      "authority": 60,
+      "clarity": 70,
+      "emotional_impact": 40,
+      "standalone_value": 55,
+      "filler_risk": 30,
+      "score": 68
+    },
+    {
+      "full_quote": "I need you to stay forward. Okay, no, it's not your neck, it's not your head, it's just your tongue. But like, I don't know, I don't like how my face looks when I look straight to the camera. Well, what is the hope for the rest of us mere mortals? Like you're so beautiful — if you don't like the way you look, what are we supposed to be? What are we? Okay, because right now the picture was you stopped on the camera — watch, when you look back, you're so stunning, every time it freezes it's like these gorgeous model shots, and you're talking about, I don't like the way I look. Okay, thank you so much.",
+      "why_it_hooks": "A student's on-camera self-consciousness gets met with real proof — a frozen frame she can't argue with — instead of just a compliment.",
+      "suggested_caption": "\"You're talking about not liking how you look, and every freeze-frame is a model shot.\"",
+      "primary_category": "problem_aware",
+      "high_value_type": "emotional_unlock",
+      "topic": "Empowerment & Confidence",
+      "cta": "🔵 Watch Lessons",
+      "start_time": 881,
+      "end_time": 954,
+      "self_contained": true,
+      "authority": 65,
+      "clarity": 75,
+      "emotional_impact": 78,
+      "standalone_value": 80,
+      "filler_risk": 20,
+      "score": 82
+    },
+    {
+      "full_quote": "That's the whole thing — you have to be a whole big girl and say it with your whole chest, I'm not falling in love with you. It's a loving thing to say, because you love yourself. I was saying that during the whole song, the idea of the song for me is that the character is singing, I don't want to fall in love, but by the end it's clear to everybody that the character fell in love — he's just refusing the obvious thing.",
+      "why_it_hooks": "Shows how a coach reads the subtext underneath a lyric — the character's denial, not just the words — which is the actual skill of interpreting a song.",
+      "suggested_caption": "The character says one thing. The song means another. Your job is to know which.",
+      "primary_category": "solution_aware",
+      "high_value_type": "performance_coaching",
+      "topic": "The Role of the Singer / Performer Identity",
+      "cta": "🟠 Buy Course",
+      "start_time": 1006,
+      "end_time": 1067,
+      "self_contained": true,
+      "authority": 78,
+      "clarity": 72,
+      "emotional_impact": 55,
+      "standalone_value": 75,
+      "filler_risk": 20,
+      "score": 78
+    }
+  ]
+}

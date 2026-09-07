@@ -4,7 +4,7 @@ import { Composition } from 'remotion';
 import './fonts';
 import { Clip } from './Clip';
 import { clipSchema, type ClipProps } from './schema';
-import { layout, DEFAULT_BRAND } from './theme';
+import { layoutFor, DEFAULT_BRAND, DEFAULT_FORMAT } from './theme';
 
 /**
  * Stand-in props so the composition opens in Studio and renders a still
@@ -23,6 +23,7 @@ const preview: ClipProps = {
   cta: '🟠 Buy Course',
   showCaptions: true,
   brand: DEFAULT_BRAND,
+  format: DEFAULT_FORMAT,
   captions: [
     { start: 0, end: 3.2, text: 'Raise your eyebrows' },
     { start: 3.2, end: 7.4, text: 'not for expression, for architecture' },
@@ -37,15 +38,20 @@ export const RemotionRoot: React.FC = () => (
       component={Clip}
       schema={clipSchema}
       defaultProps={preview}
-      width={layout.width}
-      height={layout.height}
-      fps={layout.fps}
-      durationInFrames={Math.round(preview.durationSeconds * layout.fps)}
-      // Length follows the clip, so each render is exactly as long as the
-      // moment it was cut from.
-      calculateMetadata={({ props }) => ({
-        durationInFrames: Math.max(1, Math.round(props.durationSeconds * layout.fps)),
-      })}
+      width={layoutFor(preview.format).width}
+      height={layoutFor(preview.format).height}
+      fps={layoutFor(preview.format).fps}
+      durationInFrames={Math.round(preview.durationSeconds * layoutFor(preview.format).fps)}
+      // Length AND canvas follow the clip's format: each render comes out
+      // exactly as long and exactly as shaped as the moment it was cut from.
+      calculateMetadata={({ props }) => {
+        const layout = layoutFor(props.format ?? DEFAULT_FORMAT);
+        return {
+          width: layout.width,
+          height: layout.height,
+          durationInFrames: Math.max(1, Math.round(props.durationSeconds * layout.fps)),
+        };
+      }}
     />
   </>
 );

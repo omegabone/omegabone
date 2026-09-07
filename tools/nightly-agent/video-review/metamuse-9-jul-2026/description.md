@@ -1,0 +1,3 @@
+MetaMuse comes in with a song trapped inside her own computer — "we are working on getting MetaMuse's song released from bondage," Omega says, only half joking, while they troubleshoot a stalled AI-assisted instrumental and land on the real fix: real musicians, "because you want real energy on it." Before they touch the production problem they run the warmup that opens the lesson, words she wrote herself — "I am, I am, grow from the seed that I am, scribe from the song that I am, sung from the light that I am" — worked over and over until the key sits right and the vocal-only guide track is strong enough to build the rest of the record around.
+
+omegabone.com/VocalMastery

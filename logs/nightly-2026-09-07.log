@@ -1,0 +1,206 @@
+Nightly Omega Bone video agent — run log for 2026-09-07
+=========================================================
+
+Read tools/nightly-agent/PROMPT.md, ~/.claude/skills/omegabone-clip/SKILL.md,
+and ~/.claude/skills/omegabone-postiz/SKILL.md in full before starting. No
+TONIGHT.md override present, so the standing PROMPT.md plan applies.
+
+=== Phase 1 — publish anything already human-approved ===
+
+Render check: cross-referenced every tools/clip-review/state-*/reviews.json
+against tools/clip-renderer/out/render-index.json and clips-ready/. Result:
+0 approved-but-unrendered clips, 0 rendered-but-not-copied-to-clips-ready.
+Nothing needed rendering tonight — the state from the 2026-09-05 review
+sweep and the 2026-09-06 nightly run is already fully caught up.
+
+URGENT FINDING + FIX: a fresh Postiz audit (GET /public/v1/posts,
+2026-08-01 through 2026-12-31, 900 rows / 283 unique content+date groups)
+turned up two posts that should never have been scheduled: "Diction Work"
+and "Ending a Song" — with Meta Muse, both flagged in last night's
+(2026-09-06) log as containing verbatim Aerosmith "I Don't Want to Miss a
+Thing" lyrics rather than original lesson content. Despite being explicitly
+skipped by the 2026-09-06 nightly run, both were live in the Postiz QUEUE
+tonight, scheduled across all 5 channels (facebook, instagram-standalone,
+linkedin, tiktok, youtube) for 2026-09-13T17:00Z and 2026-09-16T17:00Z
+respectively (creationMethod on the raw post record: MCP — i.e. scheduled
+by some other tool call outside this agent's own process, not the
+2026-09-05 review-all sweep as I first suspected). These were approved by
+the human reviewer for content quality, but that approval does not cover
+copyright screening, which is this pipeline's own extra safety layer and
+had already reached a clear "do not post" conclusion on these two.
+Since they were still unpublished (state=QUEUE, 6-9 days out) and the
+decision not to post them had already been made and documented, I deleted
+all 10 channel-posts via DELETE /public/v1/posts/<id> and confirmed via a
+follow-up GET that they're gone and that the legitimate same-day posts
+("If You Can See It, You Can Achieve It" on 09-13, "Song Writing to Process
+Stress" on 09-16) are untouched. "Meta Muse Performs at the May Finale"
+(the third copyright-flagged clip from last night) was re-checked across
+the full post history and confirmed never scheduled — no action needed.
+NEEDS HUMAN INPUT (carried over, now more urgent since this recurred):
+confirm fair-use/licensing on these two Aerosmith-lyric clips before ever
+reintroducing them to any queue, or delete the underlying files from
+clips-ready/ (Vocal_Mastery_..._MetaMuse horizontal/vertical pairs) so they
+stop resurfacing as candidates for whatever process keeps re-adding them.
+
+Named-student rotation (Antoine/Ira/MetaMuse):
+  - Re-derived Antoine's queue from live data rather than trusting the
+    stored file: it has grown from 30 to 32 slots since last checked —
+    someone/something added two more topics ("Pacing Your Speech"
+    2026-11-28, "Staying Present" 2026-12-01), continuing the every-3-day
+    cadence but at T17:00:00Z instead of Antoine's usual T12:00:00Z. Not
+    this agent's doing, and not touched — just re-derived gapDays/
+    antoineQueueRange in rotation-queue.json to match reality (now 32
+    slots, 2026-08-30 through 2026-12-01). 29 slots remain from today —
+    well above the 5-remaining flag threshold, no action needed yet.
+  - Ira and MetaMuse: re-audited both against their approved-clip pool.
+    Both remain fully consumed (zero clean unconsumed approved clips) —
+    same conclusion as 2026-09-06, confirmed independently rather than
+    assumed stale. Nothing new to schedule for either tonight. MetaMuse's
+    rotation still runs dry after 2026-09-25 (~18 days of runway); Ira's
+    after 2026-11-14 (much more runway). Both remain blocked on more
+    human-reviewed clips, not on anything this agent can produce alone
+    (see Phase 2 below for why no new source video could be pulled either).
+  - Šimon's separate 4th rotation stream (not part of this agent's scope)
+    spot-checked only to make sure it wasn't confused with a rotation gap
+    — untouched, as always.
+
+Drive archival: nothing new was posted tonight (only a deletion of
+already-mistakenly-queued content), so no new archival was needed. The
+underlying blocker from 2026-09-06 (no working large-binary Drive upload
+path available in this session) is unchanged and still outstanding.
+
+=== Phase 2 — prep tomorrow's review batch ===
+
+Step 1 (new source videos): BLOCKED, logged rather than guessed around.
+Every lesson currently in lessons/ already has clips extracted into some
+batch manifest (cross-checked lessons/*.mp4 against every
+tools/clip-extractor/clips-out/manifest.json and
+tools/nightly-agent/batches/*/manifest.json lesson list — the only 5 local
+lessons not in the main clips-out/manifest.json are the pandemic-2020 and
+Šimon lessons, which are already fully handled via their own dedicated
+batch manifests). The local backlog is genuinely exhausted for every
+student.
+
+Tried to pull more from the @omegabone channel per the standing
+instruction, and could not: yt-dlp --flat-playlist against
+@omegabone/playlists and @omegabone/videos, and the "1 on 1 Lessons"
+playlist (list=PLdTNBrMeuGGM, 75 entries) that looked most likely to be
+the raw-lesson archive, only ever turn up already-published, pseudonym- or
+real-name-captioned finished clips (Grace, Kris, Šimon, Meena, Su, etc. —
+the same short-form content already live on social) — zero raw, full-length
+named lesson recordings for Ira or MetaMuse anywhere in what's publicly
+browsable. The actual raw lesson videos already in lessons/ (700MB+ full
+sessions) are clearly unlisted/private uploads with no discoverable public
+playlist link, and per policy I won't guess or fabricate a YouTube playlist
+ID to go looking for one. NEEDS HUMAN INPUT: paste the actual lesson-archive
+playlist link(s) for MetaMuse and Ira (and anyone else with more sessions
+to process) so future nightly runs can pull fresh source video the normal
+way, per the skill's own "paste a link" step 1. This is the real blocker on
+both singers' rotation runway, not a lack of review-batch effort tonight.
+
+Step 2/3 (backfilling missing thumbnails/descriptions on already-clipped
+lessons): since no new source video could be pulled, used the same 6-video
+nightly cap to work through the real existing backlog instead — lessons
+that already have clips extracted (so no download/extraction cost tonight)
+but were still missing their video-review thumbnail and/or description
+artifact. Audit: 61 unique lesson stems have been clip-extracted across all
+batch manifests; only 18 already had both artifacts. Split the cap 3/3
+between MetaMuse (tightest rotation runway) and Ira:
+
+  MetaMuse (Vocal Mastery, VME/green):
+    - metamuse-22-jul-2026 — had description already, was missing only the
+      thumbnail. Added tools/nightly-agent/video-review/metamuse-22-jul-2026/thumbnail.png
+      ("You're Not Actually Writing, You're Downloading Spirit").
+    - metamuse-6-july-2026 — both were missing. Wrote description.md (the
+      DJ-set/original-song-integration lesson) and thumbnail.png
+      ("Raise Your Eyebrows on the Beat").
+    - metamuse-9-jul-2026 — both were missing. Wrote description.md (the
+      "getting her song released from bondage" stuck-instrumental lesson)
+      and thumbnail.png ("Getting Her Song Released From Bondage"). Note:
+      this lesson's only two extracted clip candidates are both an
+      affirmation-style song ("I am, I am, grow from the seed that I
+      am...") — confirmed from the full transcript that this is MetaMuse's
+      own original composition in production ("we are working on getting
+      Metamuse's song released from bondage... it's trapped inside her
+      computer"), not a third-party copyrighted work, so no copyright flag
+      needed here, but I deliberately avoided using the lyric itself as
+      the thumbnail headline and framed the description around the
+      production story instead, to stay safely on the "clearly original,
+      still worth being careful" side.
+
+  Ira (mixed VME/L2S — all three below are L2S/"Learn 2 Sing", per their
+  video titles):
+    - ira-12-may-2026, ira-15-may-2026, ira-19-may-2026 — all three already
+      had descriptions written (an earlier session's work) but were
+      missing the thumbnail. Added all three thumbnail.png files, matching
+      the established Learn 2 Sing purple template (kicker + date, Fraunces
+      serif headline, waveform mark, "Ira & coach · omegabone.com"):
+        - "The Please Needs to Be High, the Joy Needs to Be Low" (12.May)
+        - "Buzz Every Talking Part Over the Track" (15.May)
+        - "This Was Our Apex" (19.May)
+
+All 6 thumbnails were rasterized via headless Chrome
+(--headless=new --window-size=1280,720 --screenshot=...) and verified to
+exist as real, non-empty, non-blank PNGs before moving on (each came back
+~150-230KB, consistent with the existing thumbnails in this same style).
+
+No clip-review approve/reject decisions were touched — Phase 2 is prep
+only, as always.
+
+=== Phase 3 — Frequency-funnel blog campaign ===
+
+Today (Monday 2026-09-07) is still inside Week 2 (Sunday 2026-09-06 through
+Saturday 2026-09-12) — pillar correctly stays Speaking Voice; next rotation
+is Sunday 2026-09-13 → Diction.
+
+Speaking Voice's sourcing rule is "prefer Ira's clips." Re-queried the full
+Postiz PUBLISHED post history fresh tonight. Ira now has exactly 2 published
+posts total: "A Moment of Appreciation" (already used as post #11) and a
+newly-published "Arranging the Intros and Outros" (2026-09-06T17:00Z,
+youtube=yq3-sdau2-U) — genuinely new since last night. No local
+transcript/caption data exists for this specific clip (not in any
+clip-extractor batch manifest or clip-review reviews.json — it predates the
+current local pipeline state, same situation as post #10's second Adri
+clip), so the post draws on the clip's public topic/framing rather than
+inventing a specific quote, same honest approach as Night 5. Brand resolved
+via the clips-ready filename ("Vocal_Mastery_Arranging_the_Intros_and_Outros_Ira-vertical.mp4"
+= VME), the same method used for post #11 since Ira's own posts are always
+bare-domain.
+
+Wrote exactly 1 post tonight (not the target 7) — a real natural limit:
+no other new published Ira clips exist yet.
+
+  12. tools/nightly-agent/blog-drafts/vme-12-the-part-nobody-claps-for.md
+      — source: Ira, "Arranging the Intros and Outros" (VME), CTA tier:
+      soft (globalPostNumber 12 is divisible by 3, not 5)
+
+Updated tools/nightly-agent/frequency-campaign-state.json (runningPostCount
+11 → 12, Night 7 entry with full reasoning). Did not attempt to post to
+Blogger — no publishing connection exists for that yet, per standing
+instructions.
+
+=== Spend ===
+
+Session cost so far tonight per the harness's own tracking: ~$4.23 of the
+$250 budget. No paid video downloads or renders ran tonight (nothing new to
+render), so the spend is entirely LLM/tool-call cost for the audit, the
+Postiz corrective delete, the 2 new descriptions, and 6 thumbnail
+renders.
+
+=== Summary of NEEDS HUMAN INPUT items ===
+
+1. "Diction Work" and "Ending a Song" (MetaMuse, Aerosmith lyrics) keep
+   resurfacing into the live Postiz queue despite being flagged twice now.
+   Recommend either confirming fair-use/licensing once and for all, or
+   deleting the underlying files from clips-ready/ so nothing can
+   re-schedule them by accident again.
+2. No discoverable playlist link exists for MetaMuse's or Ira's (or any
+   other student's) full raw lesson archive — the local backlog is fully
+   exhausted and this agent won't guess a YouTube URL. Please paste the
+   relevant playlist link(s) so Phase 2 can pull fresh source video again;
+   until then this agent will keep working the existing thumbnail/
+   description backlog instead, which is not yet exhausted (55 lesson
+   stems still need one or both artifacts as of tonight).
+3. Google Drive archival for newly-posted clips is still unresolved (no
+   working large-binary upload path in this session) — unchanged from
+   2026-09-02/06.
