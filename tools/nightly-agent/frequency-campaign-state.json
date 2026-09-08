@@ -1,6 +1,6 @@
 {
   "_comment": "Frequency-funnel blog campaign state. runningPostCount is GLOBAL and NEVER resets across nights. Pillar rotates weekly, changing only on a new Sunday (see pillarRotationReference). Do not recompute week/pillar unless today is a new Sunday relative to lastRunDate.",
-  "runningPostCount": 11,
+  "runningPostCount": 12,
   "currentWeek": {
     "weekNumber": 2,
     "sundayStart": "2026-09-06",
@@ -8,12 +8,31 @@
   },
   "pillarRotationReference": {
     "_comment": "5-pillar rotation, one week each, repeating every 5 weeks. Week N's Sunday start date determines the pillar for that whole week (Sun-Sat); only advance on a new Sunday, not nightly.",
-    "week1": { "sundayStart": "2026-08-30", "pillar": "Warmup" },
-    "week2": { "sundayStart": "2026-09-06", "pillar": "Speaking Voice" },
-    "week3": { "sundayStart": "2026-09-13", "pillar": "Diction" },
-    "week4": { "sundayStart": "2026-09-20", "pillar": "Emotional Delivery" },
-    "week5": { "sundayStart": "2026-09-27", "pillar": "The Stage" },
-    "week6": { "sundayStart": "2026-10-04", "pillar": "Warmup", "note": "cycle repeats every 5 weeks from week1" },
+    "week1": {
+      "sundayStart": "2026-08-30",
+      "pillar": "Warmup"
+    },
+    "week2": {
+      "sundayStart": "2026-09-06",
+      "pillar": "Speaking Voice"
+    },
+    "week3": {
+      "sundayStart": "2026-09-13",
+      "pillar": "Diction"
+    },
+    "week4": {
+      "sundayStart": "2026-09-20",
+      "pillar": "Emotional Delivery"
+    },
+    "week5": {
+      "sundayStart": "2026-09-27",
+      "pillar": "The Stage"
+    },
+    "week6": {
+      "sundayStart": "2026-10-04",
+      "pillar": "Warmup",
+      "note": "cycle repeats every 5 weeks from week1"
+    },
     "sourcingNotes": {
       "Warmup": "match by topic keywords: breath, warmup, warm-up, vocal exercise, stretching the voice, before-you-sing, buzz/lip trill exercises",
       "Speaking Voice": "prefer Ira's clips",
@@ -213,6 +232,36 @@
           "dateWritten": "2026-09-06"
         }
       ]
+    },
+    {
+      "night": 7,
+      "date": "2026-09-07",
+      "pillar": "Speaking Voice",
+      "_comment": "Today is Monday 2026-09-07, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-queried Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-08-01 through 2026-12-31). Ira now has exactly 2 PUBLISHED posts total mentioning her by name: 'A Moment of Appreciation' (2026-09-03, already used as post #11) and a newly-published 'Arranging the Intros and Outros' (2026-09-06T17:00Z, youtube=yq3-sdau2-U) -- genuinely new since last night's check. No transcript/caption data exists locally for this clip (not in any tools/clip-extractor batch manifest or tools/clip-review/state-*/reviews.json) -- likely produced by an earlier pipeline pass, same situation as post #10's second Adri clip -- so the post draws on the clip's public topic/framing rather than inventing a specific quote, same approach as Night 5. Brand resolved via clips-ready filename ('Vocal_Mastery_Arranging_the_Intros_and_Outros_Ira-vertical.mp4' = VME), same method as post #11 since Ira's posts are always bare-domain. Wrote exactly 1 post (not 7) -- a real natural limit, not a bug: no other new published Ira clips exist yet. globalPostNumber 12 is divisible by 3 (not 5) -> soft CTA per the cadence rule.",
+      "postsWritten": 1,
+      "posts": [
+        {
+          "globalPostNumber": 12,
+          "filename": "vme-12-the-part-nobody-claps-for.md",
+          "ctaTier": "soft",
+          "sourceClip": {
+            "student": "Ira",
+            "topic": "Arranging the Intros and Outros",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=yq3-sdau2-U",
+            "note": "No local transcript/caption data available for this clip; post draws on public topic/framing only."
+          },
+          "dateWritten": "2026-09-07"
+        }
+      ]
+    },
+    {
+      "night": 8,
+      "date": "2026-09-08",
+      "pillar": "Speaking Voice",
+      "_comment": "Today is Tuesday 2026-09-08, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-08-01 through 2026-12-31, 997 rows) and filtered for every post mentioning Ira by name: still exactly the same 3 posts as last night (Inner Circle testimonial 2026-08-22, excluded as not illustrative; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12) -- zero genuinely new published Ira clips since last night's check. A large batch of new Ira clips WAS approved and rendered tonight via Phase 1 (state-review-all sweep) and several are being newly scheduled into the Ira/MetaMuse rotation gap days, but per this campaign's own sourcing rule only already-*published* clips count as proof-of-teaching-quality sources -- scheduled-but-not-yet-live clips aren't eligible until their actual publish date arrives. Wrote 0 posts tonight -- a real natural limit of Ira's currently-published library, not a NEEDS HUMAN INPUT case, same conclusion as Nights 3-4. runningPostCount unchanged at 12; next post written will still be #13.",
+      "postsWritten": 0,
+      "posts": []
     }
   ]
 }
