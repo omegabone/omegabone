@@ -1,6 +1,7 @@
 #!/bin/bash
 set -u
-cd "$(dirname "$0")/../.." || exit 1
+REPO="$(cd "$(dirname "$0")/../.." && pwd)"
+cd "$REPO/tools/clip-renderer" || exit 1
 
 IDS=(
   simon-passaggio-7
@@ -17,14 +18,14 @@ IDS=(
 
 for id in "${IDS[@]}"; do
   echo "=== rendering $id ==="
-  node tools/clip-renderer/scripts/render-all.mjs \
-    --manifest tools/clip-review/state-review-all/approved-manifest.json \
-    --video-dir lessons \
-    --out tools/clip-renderer/out \
+  node scripts/render-all.mjs \
+    --manifest "$REPO/tools/clip-review/state-review-all/approved-manifest.json" \
+    --video-dir "$REPO/lessons" \
+    --out out \
     --both \
     --id "$id"
 done
 
-mkdir -p clips-ready
-find tools/clip-renderer/out -maxdepth 1 -iname '*.mp4' -newer tools/clip-review/state-review-all/approved-manifest.json -exec cp {} clips-ready/ \;
+mkdir -p "$REPO/clips-ready"
+find out -maxdepth 1 -iname '*.mp4' -newer "$REPO/tools/clip-review/state-review-all/approved-manifest.json" -exec cp {} "$REPO/clips-ready"/ \;
 echo "RENDER BATCH DONE"
