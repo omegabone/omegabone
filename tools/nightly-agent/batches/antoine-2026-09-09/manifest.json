@@ -1,0 +1,207 @@
+{
+  "generatedAt": "2026-09-09T15:51:33.583Z",
+  "rules": {
+    "minSeconds": 10,
+    "maxSeconds": 90,
+    "minClips": 1,
+    "maxClips": 40,
+    "maxPerCategory": 12,
+    "wpm": 150,
+    "model": "claude-sonnet-5 (in-agent reasoning, no clip-extractor API key configured — see nightly log)"
+  },
+  "lessons": [
+    {
+      "id": "antoine-2026-05-11-vocal-mastery-with-antoine-11-may-2026",
+      "videoTitle": "Vocal Mastery with Antoine 11.May.2026",
+      "student": "Antoine",
+      "date": "2026-05-11",
+      "url": "https://www.youtube.com/watch?v=-_dlPHA9hx0",
+      "clipCount": 2,
+      "shortfall": 0,
+      "clips": [
+        {
+          "id": "antoine-2026-05-11-1",
+          "rank": 1,
+          "awarenessCategory": "brand_aware",
+          "awarenessLabel": "Brand Aware",
+          "highValueType": "authority_clip",
+          "topic": "Not Good, But Not Terrible Is a Huge Improvement",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 2691,
+          "end": 2737,
+          "durationSeconds": 46,
+          "durationEstimated": false,
+          "clipUrl": "https://www.youtube.com/watch?v=-_dlPHA9hx0&t=2691s",
+          "quote": "Your tone wasn't there. The rhythm wasn't there. There wasn't any emotion. But it wasn't as bad as when you started other songs. >> Okay. >> Right? So there's definitely improvement. Like the bottom of this song is nowhere near as low as what it was when it first started. >> Okay. >> Singing, right? Bottom of \"Hey, Hey, My, My\" was rough. Right? But like that's to be expected. And so this is at least manageable. >> Right. >> Right? So it's not good, but it's not terrible. Not that \"Hey, Hey, My, My\" was terrible, but it wasn't -- it's relative. And the improvement from day one of \"Hey, Hey, My, My\" and day one of this is a huge improvement.",
+          "whyItHooks": "Blunt, specific, honest coaching feedback that still lands as encouraging -- showing exactly how progress gets measured session over session rather than with empty praise.",
+          "suggestedCaption": "\"Not good, but not terrible\" — and that's a huge improvement.",
+          "score": 77,
+          "segment": 6,
+          "captions": [
+            {
+              "start": 0,
+              "end": 2,
+              "text": "Your tone wasn't there."
+            },
+            {
+              "start": 2,
+              "end": 4,
+              "text": "The rhythm wasn't there."
+            },
+            {
+              "start": 4,
+              "end": 6,
+              "text": "There wasn't any emotion."
+            },
+            {
+              "start": 6,
+              "end": 8,
+              "text": "But it wasn't as bad as when you started other songs."
+            },
+            {
+              "start": 8,
+              "end": 10,
+              "text": ">> Okay."
+            },
+            {
+              "start": 10,
+              "end": 12,
+              "text": ">> Right?"
+            },
+            {
+              "start": 12,
+              "end": 14,
+              "text": "So there's definitely improvement."
+            },
+            {
+              "start": 14,
+              "end": 16,
+              "text": "Like the bottom of this song is nowhere near as low as"
+            },
+            {
+              "start": 16,
+              "end": 18,
+              "text": "what it was when it first started."
+            },
+            {
+              "start": 18,
+              "end": 20,
+              "text": ">> Okay."
+            },
+            {
+              "start": 20,
+              "end": 22,
+              "text": ">> Singing, right?"
+            },
+            {
+              "start": 22,
+              "end": 25,
+              "text": "Bottom of \"Hey, Hey, My, My\" was rough."
+            },
+            {
+              "start": 25,
+              "end": 27,
+              "text": "Right?"
+            },
+            {
+              "start": 27,
+              "end": 29,
+              "text": "But like that's to be expected."
+            },
+            {
+              "start": 29,
+              "end": 31,
+              "text": "And so this is at least manageable."
+            },
+            {
+              "start": 31,
+              "end": 33,
+              "text": ">> Right."
+            },
+            {
+              "start": 33,
+              "end": 35,
+              "text": ">> Right?"
+            },
+            {
+              "start": 35,
+              "end": 37,
+              "text": "So it's not good, but it's not terrible."
+            },
+            {
+              "start": 37,
+              "end": 39,
+              "text": "Not that \"Hey, Hey, My, My\" was terrible, but it wasn't"
+            },
+            {
+              "start": 39,
+              "end": 41,
+              "text": "-- it's relative."
+            },
+            {
+              "start": 41,
+              "end": 44,
+              "text": "And the improvement from day one of \"Hey, Hey, My, My\""
+            },
+            {
+              "start": 44,
+              "end": 46,
+              "text": "and day one of this is a huge improvement."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-2026-05-11-2",
+          "rank": 2,
+          "awarenessCategory": "unaware",
+          "awarenessLabel": "Unaware",
+          "highValueType": "mistake_reveal",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 1007,
+          "end": 1058,
+          "durationSeconds": 51,
+          "durationEstimated": false,
+          "clipUrl": "https://www.youtube.com/watch?v=-_dlPHA9hx0&t=1007s",
+          "quote": "Menthol changes your breath. In what way? Menthol in all smells. Like if you wear cologne or perfume. But you don't really wear cologne, do you? Like your brain is working to process that, right? Instead of just you -- because all of this is very important to your singing, right? And so if you're constantly putting stuff in here, you're going to change your sound.",
+          "whyItHooks": "A cause of vocal change most singers never suspect: scent itself, not just posture or breath support, changes your sound because the brain is busy processing it instead of singing.",
+          "suggestedCaption": "Wearing cologne before you sing? It's changing your voice.",
+          "score": 74,
+          "segment": 3,
+          "captions": [
+            {
+              "start": 0,
+              "end": 10,
+              "text": "Menthol changes your breath."
+            },
+            {
+              "start": 10,
+              "end": 16,
+              "text": "In what way?"
+            },
+            {
+              "start": 16,
+              "end": 28,
+              "text": "Menthol in all smells. Like if you wear cologne or perfume. But you don't really wear cologne, do you?"
+            },
+            {
+              "start": 28,
+              "end": 41,
+              "text": "Like your brain is working to process that, right? Instead of just you -- because all of this is very important to your singing, right?"
+            },
+            {
+              "start": 41,
+              "end": 51,
+              "text": "And so if you're constantly putting stuff in here, you're going to change your sound."
+            }
+          ],
+          "renderable": true
+        }
+      ],
+      "rejected": []
+    }
+  ]
+}
