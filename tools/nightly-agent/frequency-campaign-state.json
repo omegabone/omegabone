@@ -262,6 +262,14 @@
       "_comment": "Today is Tuesday 2026-09-08, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-08-01 through 2026-12-31, 997 rows) and filtered for every post mentioning Ira by name: still exactly the same 3 posts as last night (Inner Circle testimonial 2026-08-22, excluded as not illustrative; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12) -- zero genuinely new published Ira clips since last night's check. A large batch of new Ira clips WAS approved and rendered tonight via Phase 1 (state-review-all sweep) and several are being newly scheduled into the Ira/MetaMuse rotation gap days, but per this campaign's own sourcing rule only already-*published* clips count as proof-of-teaching-quality sources -- scheduled-but-not-yet-live clips aren't eligible until their actual publish date arrives. Wrote 0 posts tonight -- a real natural limit of Ira's currently-published library, not a NEEDS HUMAN INPUT case, same conclusion as Nights 3-4. runningPostCount unchanged at 12; next post written will still be #13.",
       "postsWritten": 0,
       "posts": []
+    },
+    {
+      "night": 9,
+      "date": "2026-09-09",
+      "pillar": "Speaking Voice",
+      "_comment": "Today is Wednesday 2026-09-09, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-08-01 through 2026-09-09) and filtered for every PUBLISHED post mentioning Ira by name: still exactly the same 3 posts as nights 7-8 (Inner Circle testimonial 2026-08-22, excluded; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12). Today's own rotation slot for Ira ('Buzzing Your Speeches', 2026-09-09T17:00Z) is still in QUEUE state, not yet PUBLISHED, at the time of tonight's run -- not eligible yet per the published-only sourcing rule. Zero genuinely new published Ira clips since last night. Wrote 0 posts tonight -- same natural limit as Nights 3, 4 and 8, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 12; next post written will still be #13.",
+      "postsWritten": 0,
+      "posts": []
     }
   ]
 }
