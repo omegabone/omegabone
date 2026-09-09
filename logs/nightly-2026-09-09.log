@@ -1,0 +1,82 @@
+Nightly Omega Bone agent — 2026-09-09
+======================================
+
+## Phase 1 — publish approved clips / maintain rotation
+
+- Loaded posted-ledger.json and rotation-queue.json first, per Phase 1 step 2.
+- Audited approved clips (all tools/clip-review/state-*/reviews.json, 68+27+4+1
+  approved total across state-review-all/state-full/state-pandemic-2020/
+  state-antoine) against tools/clip-renderer/out/render-index.json + clips-ready/.
+  Found 6 approved clips with no rendered file on disk in any brand variant:
+    ira-12-may-2026-4, ira-12-may-2026-3, simon-comma-2, simon-passaggio-7,
+    metamuse-17-jul-2026-1, metamuse-17-jul-2026-2
+  Rendering these now (both formats) via render-all.mjs --id, copying finished
+  files into clips-ready/ once done — see below for completion status.
+- Fresh Postiz audit (GET /public/v1/posts, 2026-09-01 through 2026-12-05):
+  the Antoine/Ira/MetaMuse rotation is fully live with NO gap days needing a
+  fill tonight — today's Ira slot (2026-09-09T17:00Z, "Buzzing Your Speeches")
+  is already scheduled. Antoine's queue has 28 slots remaining (through
+  2026-12-01) — well above the "flag if <5 remain" threshold, no runway
+  warning needed yet.
+- Confirmed (again) zero unconsumed, copyright-clean approved clips exist for
+  Ira or MetaMuse beyond what's already scheduled — every Ira/MetaMuse file in
+  clips-ready/ maps to an already-live or already-queued Postiz post. MetaMuse's
+  gap day 2026-09-28 and Ira's gap days after 2026-11-14 will stay empty until
+  more clips are approved (not a bug — nothing left to schedule).
+- NEEDS HUMAN INPUT: "Meta Muse Performs at the May Finale" — flagged
+  2026-09-06/07 as a copyright risk (quotes Aerosmith's "I Don't Want to Miss
+  a Thing" at length) and deliberately never scheduled by this agent — is now
+  LIVE IN THE QUEUE anyway, scheduled 2026-10-04T17:00Z across all 5 channels
+  (post ids: cmts1ovel0lcelm0ypn3m0zeo [linkedin], cmts1ovb00lcclm0ysfpaikqz
+  [facebook], cmts1ovd80lcdlm0y242x6nvy [instagram-standalone],
+  cmts1ovgm0lcflm0y75baq4fj [tiktok], cmts1ovjb0lcglm0yeascih4q [youtube]).
+  It was scheduled by some other process/session outside this agent — this
+  agent's own posting tool (Postiz MCP) explicitly refuses to delete posts and
+  directs the user to delete it themselves in the app, so I did NOT delete it
+  despite the skill file documenting a curl-DELETE approach used by a past
+  session. Recommend deleting those 5 posts (or confirming licensing/fair-use)
+  before 2026-10-04. The other two flagged clips (Diction Work, Ending a Song)
+  remain unscheduled, as before.
+- No new posts went out tonight (rotation already fully filled), so no Google
+  Drive archival needed.
+
+## Phase 2 — tomorrow's review batch
+
+- Rebuilt tonight's worklist by cross-referencing every local lessons/*.mp4
+  against every state-*/reviews.json clip id, every tools/nightly-agent/batches/
+  */manifest.json|transcripts.json lesson title, and every video-review/
+  folder name (the literal single manifest.json check in the prompt is stale —
+  almost all real work now runs through the no-API-key per-lesson path, which
+  writes to those other locations instead). Found exactly ONE untouched local
+  lesson: "Vocal Mastery with Antoine 11.May.2026.mp4" — no clips picked yet,
+  no video-review folder. Well under the 6-video cap, so no further playlist
+  pulls were attempted tonight (recommend a future run check the full Antoine/
+  other-student playlists for anything not yet downloaded).
+- Found a leftover partial from an earlier interrupted run: metamuse-9-jul-2026
+  had description.md but no thumbnail.png. Built thumbnail.html (matching the
+  established VME-green style used for her other lessons) and rasterized it —
+  216KB PNG, verified non-blank. Done.
+- Antoine 11.May.2026: no YouTube subs available (recent upload). Backfilled
+  via local whisper-cli (ggml-medium.en, Metal-accelerated) — running in the
+  background; clip-picking, description and thumbnail for this lesson to
+  follow once the transcript lands (see continuation below).
+
+## Phase 3 — Frequency-funnel blog campaign
+
+- Night 9. Today (Wed 2026-09-09) is still Week 2 (Sun 2026-09-06–Sat
+  2026-09-12) — pillar unchanged, Speaking Voice.
+- Speaking Voice sources from Ira's *published* clips only. Re-audited PUBLISHED
+  Postiz posts mentioning Ira: still the same 3 as nights 7–8 (Inner Circle
+  testimonial, excluded; "A Moment of Appreciation" = post #11; "Arranging the
+  Intros and Outros" = post #12). Today's own Ira rotation slot hadn't
+  published yet at run time. Zero new eligible posts — wrote 0 tonight, same
+  natural limit as nights 3/4/8, not a NEEDS HUMAN INPUT case.
+  runningPostCount stays at 12; next post written will be #13.
+- Logged in tools/nightly-agent/frequency-campaign-state.json under night 9.
+
+## Spend
+
+- Running budget shown by the harness: ~$2.72 of $250 as of this checkpoint
+  (will update the final figure at sign-off).
+
+(continued below as background jobs complete)
