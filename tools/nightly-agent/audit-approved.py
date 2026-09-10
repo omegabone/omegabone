@@ -1,6 +1,6 @@
-import json, glob, os, re
+import json, glob, os
 
-approved = {}  # id -> {status, brand, topic, source_dir}
+approved = {}
 for f in glob.glob('tools/clip-review/state-*/reviews.json'):
     d = json.load(open(f))
     clips = d.get('clips', d)
@@ -8,29 +8,32 @@ for f in glob.glob('tools/clip-review/state-*/reviews.json'):
         if isinstance(v, dict) and v.get('status') == 'approved':
             approved[cid] = {**v, 'source': f}
 
-print(f"Total approved across all state dirs: {len(approved)}")
+print(f"Total approved: {len(approved)}")
 
-ready_files = os.listdir('clips-ready')
-ready_lower = [r.lower() for r in ready_files]
+idx = {}
+for f in ['tools/clip-renderer/out/render-index.json', 'tools/clip-renderer/out/approved/render-index.json', 'tools/clip-renderer/out/run-2026-09-05/render-index.json']:
+    if os.path.exists(f):
+        idx.update(json.load(open(f)))
 
-def norm(s):
-    return re.sub(r'[^a-z0-9]+', '', s.lower())
+ready_files = set(os.listdir('clips-ready'))
+out_files = set(os.listdir('tools/clip-renderer/out')) if os.path.isdir('tools/clip-renderer/out') else set()
 
-unrendered = []
-for cid, v in approved.items():
-    topic = v.get('topic', '')
-    ntopic = norm(topic) if topic else None
-    # try to find student name prefix from cid
-    student = re.match(r'^([a-z]+)', cid).group(1) if re.match(r'^([a-z]+)', cid) else ''
-    found = False
-    if ntopic:
-        for rf in ready_lower:
-            if ntopic and ntopic in norm(rf):
-                found = True
-                break
-    if not found:
-        unrendered.append((cid, v.get('topic'), v.get('brand'), student))
+not_in_index = []
+in_index_not_ready = []
+for cid in approved:
+    keys = [k for k in idx if k.startswith(cid + ':')]
+    if not keys:
+        not_in_index.append(cid)
+    else:
+        for k in keys:
+            fn = idx[k]
+            if fn not in ready_files:
+                in_index_not_ready.append((cid, k, fn, fn in out_files))
 
-print(f"\nApproved clips with NO topic match in clips-ready/: {len(unrendered)}")
-for cid, topic, brand, student in unrendered:
-    print(f"  {cid} | topic={topic!r} | brand={brand} | student={student}")
+print(f"\nApproved but NOT in any render-index: {len(not_in_index)}")
+for cid in not_in_index:
+    print(f"  {cid} | topic={approved[cid].get('topic')} | brand={approved[cid].get('brand')}")
+
+print(f"\nIn render-index but file missing from clips-ready/: {len(in_index_not_ready)}")
+for cid, k, fn, in_out in in_index_not_ready:
+    print(f"  {cid} | {k} -> {fn} | existsInOutDir={in_out}")
