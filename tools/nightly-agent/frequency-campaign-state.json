@@ -270,6 +270,27 @@
       "_comment": "Today is Wednesday 2026-09-09, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-08-01 through 2026-09-09) and filtered for every PUBLISHED post mentioning Ira by name: still exactly the same 3 posts as nights 7-8 (Inner Circle testimonial 2026-08-22, excluded; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12). Today's own rotation slot for Ira ('Buzzing Your Speeches', 2026-09-09T17:00Z) is still in QUEUE state, not yet PUBLISHED, at the time of tonight's run -- not eligible yet per the published-only sourcing rule. Zero genuinely new published Ira clips since last night. Wrote 0 posts tonight -- same natural limit as Nights 3, 4 and 8, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 12; next post written will still be #13.",
       "postsWritten": 0,
       "posts": []
+    },
+    {
+      "night": 10,
+      "date": "2026-09-10",
+      "pillar": "Speaking Voice",
+      "_comment": "Today is Thursday 2026-09-10, still within Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged, next rotation is Sunday 2026-09-13 -> Diction. Re-checked Ira's PUBLISHED posts fresh (GET /public/v1/posts): still exactly 3 total (Inner Circle testimonial 2026-08-22, excluded as not illustrative; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12), PLUS one genuinely new one since last night's check: 'Buzzing Your Speeches' (2026-09-09), which had been QUEUE-state at Night 9's check and has now actually gone live -- eligible for the first time tonight per the published-only sourcing rule. Local transcript/caption data DOES exist for this one (tools/clip-extractor/clips-out/reviews.json, clip id ira-15-may-2026-1, topic 'Buzzing Your Speeches'): Ira is told to buzz all the spoken/talking parts of her song intro over the weekend, focusing on vowel sounds over consonants, so that buzzing loudly and comfortably over the music translates into speaking that way too. Brand VME confirmed via clips-ready filename (Vocal_Mastery_Buzzing_Your_Speeches_Ira-vertical.mp4), same convention as posts #11-12 since Ira's posts are always bare-domain. Wrote exactly 1 post (not 7) -- a real natural limit: only one genuinely new published Ira clip exists right now, not a NEEDS HUMAN INPUT case, same pattern as Nights 5-7. globalPostNumber 13 is not divisible by 3 or 5 -> no CTA.",
+      "postsWritten": 1,
+      "posts": [
+        {
+          "globalPostNumber": 13,
+          "filename": "vme-13-the-sentence-nobody-rehearses.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Ira",
+            "topic": "Buzzing Your Speeches",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=l96oTgdHdcs"
+          },
+          "dateWritten": "2026-09-10"
+        }
+      ]
     }
   ]
 }
