@@ -1,9 +1,9 @@
 /**
  * Alternate model providers.
  *
- * Claude is the default selector (see select.mjs). Kimi, ChatGPT and Hermes all
- * expose an OpenAI-compatible /chat/completions endpoint, so one adapter serves
- * all three — only the base URL, API key and model id differ.
+ * Claude is the default selector (see select.mjs). Kimi, DeepSeek, ChatGPT and
+ * Hermes all expose an OpenAI-compatible /chat/completions endpoint, so one
+ * adapter serves them all — only the base URL, API key and model id differ.
  *
  * Model IDs move frequently. The defaults below are a starting point; override
  * with --model whenever a provider ships a newer one.
@@ -24,6 +24,12 @@ export const PROVIDERS = {
     baseUrl: 'https://api.moonshot.ai/v1',
     defaultModel: 'kimi-k2-0905-preview',
     envKeys: ['MOONSHOT_API_KEY', 'KIMI_API_KEY'],
+  },
+  deepseek: {
+    label: 'DeepSeek',
+    baseUrl: 'https://api.deepseek.com/v1',
+    defaultModel: 'deepseek-chat',
+    envKeys: ['DEEPSEEK_API_KEY'],
   },
   chatgpt: {
     label: 'ChatGPT (OpenAI)',
