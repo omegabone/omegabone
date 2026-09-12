@@ -291,6 +291,14 @@
           "dateWritten": "2026-09-10"
         }
       ]
+    },
+    {
+      "night": 11,
+      "date": "2026-09-12",
+      "pillar": "Speaking Voice",
+      "_comment": "No run happened on 2026-09-11 -- logs/run-2026-09-11.out shows the session hit its weekly usage limit and exited with zero work done, no nightly log was written for that date. Tonight (Saturday 2026-09-12) is still the last day of Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged one more night; Week 3 (Diction) starts tomorrow, Sunday 2026-09-13. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-01-01 through 2026-09-12, 566 rows) and filtered for every PUBLISHED post mentioning Ira by name: still exactly the same 4 rows as Night 10 (Inner Circle testimonial 2026-08-22, excluded as not illustrative; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12; 'Buzzing Your Speeches' 2026-09-09/10, used as post #13) -- zero genuinely new published Ira clips since Night 10. Today's own rotation slot for Ira ('General Inspiration Coaching', 2026-09-12T17:00Z) is still in QUEUE state at the time of tonight's run, not yet PUBLISHED, so not eligible yet per the published-only sourcing rule. Wrote 0 posts tonight -- same natural limit as Nights 3, 4, 8 and 9, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 13; next post written will still be #14, and Week 3 sourcing will switch to Diction's topic-keyword rule starting tomorrow's run.",
+      "postsWritten": 0,
+      "posts": []
     }
   ]
 }
