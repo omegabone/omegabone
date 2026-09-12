@@ -1,0 +1,3 @@
+Ira is building a one-woman concert around a single throughline: what "home" actually feels like once you've lost it twice — once leaving Russia, once leaving a ten-year marriage. Between run-throughs of the songs that carry that story, she lands on an insight of her own mid-lesson: saying "please, enjoy" out loud and then holding the silence before she sings is the actual moment she's claiming the room, not a throwaway line before the music starts. Omega tells her to write it down on the spot — it becomes the thesis for the showcase she's building next. A rehearsal that turns into a real breakthrough on stage presence, not just song order.
+
+omegabone.com/Learn2Sing
