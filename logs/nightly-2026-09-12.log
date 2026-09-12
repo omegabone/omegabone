@@ -1,0 +1,127 @@
+# Nightly run — 2026-09-12
+
+Read tools/nightly-agent/PROMPT.md, ~/.claude/skills/omegabone-clip/SKILL.md,
+and ~/.claude/skills/omegabone-postiz/SKILL.md in full before starting.
+
+No run happened on 2026-09-11 — logs/run-2026-09-11.out shows the session
+hit its weekly usage limit and exited with zero work done, no log written.
+Tonight picks up from the last real run, 2026-09-10.
+
+## Phase 1 — publish anything already human-approved
+
+- Audited every tools/clip-review/state-*/reviews.json for approved-but-
+  unrendered clips. All reviews.json mtimes are unchanged since 2026-09-08
+  (no human review activity in the last 4 days), so the 68-approved-clip
+  set already audited on 09-06/09-07/09-10 is still exhaustive. Cross-
+  checked all 68 against clips-ready/ by topic: 0 approved-but-unrendered.
+  Nothing to render tonight.
+- Rotation (Antoine/Ira/MetaMuse): fresh Postiz audit (GET /public/v1/posts,
+  2026-09-09 through 2026-12-31, plus a full 2026-01-01-to-today PUBLISHED-
+  only pass, 566 rows). No drift since 09-10 — lastScheduled/antoineQueueRange
+  in rotation-queue.json are still accurate. Future slots remaining: Antoine
+  27 (through 2026-12-01, healthy), Ira 23 (through 2026-11-17, healthy),
+  **MetaMuse only 5 (through 2026-09-25)**. MetaMuse has zero unconsumed
+  approved clips other than the 3 Aerosmith-lyric copyright risks flagged
+  repeatedly since 09-06 ("Ending a Song", "Diction Work", "Meta Muse
+  Performs at the May Finale") — confirmed all 3 still correctly absent from
+  the live/queued post list, no re-deletion needed tonight. Nothing new to
+  schedule for any of the three; every open gap day through the ranges above
+  is already filled.
+- Retry-failed-posts check (standing rule from the omegabone-postiz skill):
+  reviewed every ERROR-state post in the last 4 days. "Read your own body…"
+  (4 channels, 09-09) and Ira's "Buzzing Your Speeches" (instagram, 09-09)
+  both already show a matching later PUBLISHED row — already retried by a
+  prior session, no action needed. The remaining ERRORs (21 Day Challenge
+  Day 19/20, Antoine's own "Book a 30-Minute Consultation") belong to streams
+  this agent doesn't touch per Phase 1 scope. Nothing retried tonight.
+- Drive archival: same standing blocker as every prior run — no Drive
+  connector available in this session accepts a large binary upload path
+  (only inline base64/text), and there's nothing new to archive tonight
+  anyway since nothing was posted. No change.
+- **NEEDS HUMAN INPUT (carried over, now urgent):** MetaMuse's rotation goes
+  dark after 2026-09-25 (13 days out) unless her pending review batch
+  (tools/nightly-agent/batches/metamuse-2026-09-01/, sitting untouched for
+  12 days) gets reviewed, or the 3 Aerosmith-lyric clips get a licensing
+  decision one way or the other.
+- Full detail logged in tools/nightly-agent/rotation-queue.json under the
+  2026-09-12 note.
+
+## Phase 2 — tomorrow's review batch
+
+- Checked every local lesson in lessons/ (68 videos) against every known
+  clip-picking manifest across tools/clip-review/state-*/ and
+  tools/nightly-agent/batches/*/ — **all 68 already have clips picked**,
+  confirming the local backlog for clip-extraction is fully exhausted (this
+  matches what 09-07 and 09-09 already found).
+- Per 09-07's standing finding, no public YouTube playlist exists for
+  MetaMuse's or Ira's full raw-lesson archive (the uploads are private/
+  unlisted) — re-confirmed no new information changes that tonight, so per
+  policy this agent did not guess or fabricate a playlist URL to pull new
+  source video. NEEDS HUMAN INPUT stays open: paste the actual lesson-
+  archive playlist link(s) so a future run can pull fresh source video.
+- Worked the existing description/thumbnail backlog instead (sanctioned by
+  09-07/09-09's precedent, since clip-picking has nothing left to do). Built
+  a lesson-stem map from all 68 local lesson filenames and diffed against
+  tools/nightly-agent/video-review/ folder names — found 3 leftover empty
+  folders from an interrupted run (ira-21-may-2026, ira-30-may-2026,
+  metamuse-7-jul-2026 — created 09-10, never populated) and 2 folders
+  missing only their thumbnail (antoine-18-may-2026, antoine-19-may-2026).
+  Processed all 5 of those plus one fresh lesson (metamuse-12-jun-2026) —
+  6 total, at the nightly cap, split 2 Antoine / 2 Ira / 2 MetaMuse:
+  1. antoine-18-may-2026 — description already existed; added thumbnail
+     only. Headline "It's a Storybook Sound" (Omega's own reframe of
+     "flair" mid-lesson), VME green.
+  2. antoine-19-may-2026 — description already existed; added thumbnail
+     only. Headline "You're Not Hearing It in Your Head" (real-time pitch
+     correction mid-song), VME green.
+  3. ira-21-may-2026 — new description + thumbnail. Ira/Vega building her
+     one-woman "searching for home" concert; the session's real insight is
+     her own — saying "please, enjoy" and holding the silence is how she
+     claims the room. Headline "Please, Enjoy Is How You Take Space",
+     Learn 2 Sing purple, CTA omegabone.com/Learn2Sing (source title is
+     L2S-branded).
+  4. ira-30-may-2026 — new description + thumbnail. Same concert rehearsed
+     again under her stage name Vega, this time all about mic discipline
+     (holding it steady, balancing track vs. voice) rather than the songs
+     themselves. Headline "Today I'm Not Ira, But Vega", Learn 2 Sing
+     purple, omegabone.com/Learn2Sing.
+  5. metamuse-7-jul-2026 — new description + thumbnail. MetaMuse's own song
+     "The Heart Is a Woman" plus a practical Suno-to-YouTube-to-Canva
+     workflow tangent for changing a track's key. Headline "The Heart Is a
+     Woman, Not a Hustle", VME green, omegabone.com/VocalMastery.
+  6. metamuse-12-jun-2026 — new description + thumbnail. A travel-squeezed
+     lesson streamed from Jakarta before a Lombok hackathon flight; the
+     real fix is choreography, not vocal technique — "I don't know how to
+     manage my body." Deliberately avoided naming or quoting the cover
+     song being worked (an Aerosmith ballad) in either the description or
+     the thumbnail, consistent with this pipeline's standing copyright
+     caution. Headline "I Don't Know How to Manage My Body", VME green,
+     omegabone.com/VocalMastery.
+  All 6 thumbnails rendered via headless Chrome
+  (tools/nightly-agent/render-thumbnail.mjs, a small reusable version of
+  make-thumbnails.mjs's house style) and verified as real, correctly-sized
+  1280x720 PNGs (142-158KB each, not blank/0-byte) before moving on.
+- Did not touch reviews.json anywhere or run clip-review's interactive
+  review — that stays the human's step tomorrow morning.
+
+## Phase 3 — Frequency-funnel blog campaign
+
+- Night 11. Today (Sat 2026-09-12) is still Week 2 (Sun 2026-09-06–Sat
+  2026-09-12) — pillar unchanged, Speaking Voice. Week 3 (Diction) starts
+  tomorrow, Sunday 2026-09-13.
+- Speaking Voice sources from Ira's *published* clips only. Fresh full-range
+  Postiz audit (GET /public/v1/posts, 2026-01-01 through 2026-09-12, 566
+  rows, PUBLISHED-only): still exactly the same 4 rows as night 10 (Inner
+  Circle testimonial, excluded as not illustrative; "A Moment of
+  Appreciation" = post #11; "Arranging the Intros and Outros" = post #12;
+  "Buzzing Your Speeches" = post #13). Today's own Ira rotation slot
+  ("General Inspiration Coaching") is still QUEUE state, not yet published,
+  at run time — not eligible per the published-only sourcing rule. Zero
+  genuinely new candidates — wrote 0 posts tonight, same natural limit as
+  nights 3/4/8/9, not a NEEDS HUMAN INPUT case. runningPostCount stays at
+  13; next post written will be #14.
+- Logged in tools/nightly-agent/frequency-campaign-state.json under night 11.
+
+## Spend
+
+- Running budget shown by the harness: ~$4.44 of $250 as of sign-off.
