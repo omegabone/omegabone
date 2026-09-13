@@ -1,0 +1,3 @@
+Tess comes in worried about what happens to her voice the moment she gets excited — it jumps into her throat and her chest takes over before she can stop it. Omega's fix has nothing to do with singing at first: a four-count breathing drill, working from thumbs down to pinkies, that's really a way of walking her whole nervous system back down before she opens her mouth. From there the lesson moves into picking a song low enough to speak instead of perform — Lana Del Rey's "Brooklyn Baby" over Rihanna — proving the same principle in a different key: the answer is almost never to push harder.
+
+omegabone.com/VocalMastery
