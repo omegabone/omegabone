@@ -18,4 +18,4 @@ This is exactly the kind of foundational fix Frequency is being built around: no
 
 Full clip is live here: https://www.youtube.com/watch?v=mSPdXeUvMZc
 
-More at omegabone.com.
+More at omegabone.com/VocalMastery.
