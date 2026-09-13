@@ -299,6 +299,41 @@
       "_comment": "No run happened on 2026-09-11 -- logs/run-2026-09-11.out shows the session hit its weekly usage limit and exited with zero work done, no nightly log was written for that date. Tonight (Saturday 2026-09-12) is still the last day of Week 2 (Sunday 2026-09-06 - Saturday 2026-09-12) -- pillar correctly unchanged one more night; Week 3 (Diction) starts tomorrow, Sunday 2026-09-13. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-01-01 through 2026-09-12, 566 rows) and filtered for every PUBLISHED post mentioning Ira by name: still exactly the same 4 rows as Night 10 (Inner Circle testimonial 2026-08-22, excluded as not illustrative; 'A Moment of Appreciation' 2026-09-03, used as post #11; 'Arranging the Intros and Outros' 2026-09-06, used as post #12; 'Buzzing Your Speeches' 2026-09-09/10, used as post #13) -- zero genuinely new published Ira clips since Night 10. Today's own rotation slot for Ira ('General Inspiration Coaching', 2026-09-12T17:00Z) is still in QUEUE state at the time of tonight's run, not yet PUBLISHED, so not eligible yet per the published-only sourcing rule. Wrote 0 posts tonight -- same natural limit as Nights 3, 4, 8 and 9, not a NEEDS HUMAN INPUT case. runningPostCount unchanged at 13; next post written will still be #14, and Week 3 sourcing will switch to Diction's topic-keyword rule starting tomorrow's run.",
       "postsWritten": 0,
       "posts": []
+    },
+    {
+      "night": 12,
+      "date": "2026-09-13",
+      "pillar": "Diction",
+      "_comment": "Today is Sunday 2026-09-13, a new Sunday -- pillar correctly advanced from Week 2/Speaking Voice to Week 3/Diction per pillarRotationReference. Diction sources by topic keyword (vowels, articulation, pronunciation, mouth shape), not by student preference. Re-queried the full Postiz PUBLISHED post history fresh (GET /public/v1/posts, 2026-01-01 through 2026-09-13, 534 rows / 202 unique published posts after dedup, 40 carrying a valid /VocalMastery or /Learn2Sing path). Checked all 40 against the Diction keyword list and the Nights 1-11 consumed-URL list. Found exactly 2 genuinely new, unambiguous Diction-pillar candidates: 'Controlling Vowels -- with Anna' (2026-08-23, youtube=cZsC-kUKNfU) and 'The Perfect Mouth Shape -- with Ameesha' (2026-08-25, youtube=mSPdXeUvMZc). Excluded 'Vocal Technique: The Vowels Deliver Emotion -- with Adri' and 'Be Emotional -- with Upanisha' despite the vowels keyword -- consistent with the Night 3 precedent that classified those two as Emotional Delivery topic (vowels used to discuss emotional expression, not mechanical vowel/mouth-shape control), which sources by 'prefer Antoine's clips' starting Week 4, not by keyword. Also excluded 'Brush the Back of Your Tongue to Get Rid of a Cold -- with Orville' (tongue mentioned, but about clearing mucus/health, not diction) and 'Raise Your Eyebrows on the Way Back Down -- with Brittany' (eyebrow/soft-palate resonance mechanic, not vowel/consonant articulation) as off-keyword. No local transcript/caption data exists for either Anna's or Ameesha's clip (not in any tools/clip-extractor batch manifest or tools/clip-review/state-*/reviews.json) -- both posts draw on the clip's public topic/framing only, same approach as Nights 5-7. Wrote exactly 2 posts (not 7) -- a real natural limit of the currently-published Diction-topic library, not a NEEDS HUMAN INPUT case, consistent with the 'write fewer rather than force weak repeats' rule. globalPostNumber 14 is not divisible by 3 or 5 -> no CTA. globalPostNumber 15 is divisible by 5 -> strong CTA.",
+      "postsWritten": 2,
+      "posts": [
+        {
+          "globalPostNumber": 14,
+          "filename": "vme-14-the-shape-under-every-word.md",
+          "ctaTier": "none",
+          "sourceClip": {
+            "student": "Anna",
+            "topic": "Controlling Vowels",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=cZsC-kUKNfU",
+            "note": "No local transcript/caption data available for this clip; post draws on public topic/framing only."
+          },
+          "dateWritten": "2026-09-13"
+        },
+        {
+          "globalPostNumber": 15,
+          "filename": "vme-15-the-mouth-shape-nobody-teaches.md",
+          "ctaTier": "strong",
+          "sourceClip": {
+            "student": "Ameesha",
+            "topic": "The Perfect Mouth Shape",
+            "brand": "VME",
+            "url": "https://www.youtube.com/watch?v=mSPdXeUvMZc",
+            "note": "No local transcript/caption data available for this clip; post draws on public topic/framing only."
+          },
+          "dateWritten": "2026-09-13"
+        }
+      ]
     }
   ]
 }
