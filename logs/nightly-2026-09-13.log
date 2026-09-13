@@ -1,0 +1,129 @@
+# Nightly run — 2026-09-13
+
+Read tools/nightly-agent/PROMPT.md, ~/.claude/skills/omegabone-clip/SKILL.md,
+and ~/.claude/skills/omegabone-postiz/SKILL.md in full before starting.
+Picks up from the last real run, 2026-09-12.
+
+## Phase 1 — publish anything already human-approved
+
+- Audited every tools/clip-review/state-*/reviews.json for approved-but-
+  unrendered clips. All reviews.json mtimes are unchanged since 2026-09-08
+  (no human review activity), so the 68-approved-clip set audited on prior
+  nights is still exhaustive. clips-ready/ has 254 files, consistent with
+  no new renders needed.
+- Rotation (Antoine/Ira/MetaMuse): fresh Postiz audit (GET /public/v1/posts,
+  today plus 2026-09-13 through 2026-12-31, 544 forward rows). No drift
+  since 09-12. Today's own MetaMuse gap-day slot ("If You Can See It, You
+  Can Achieve It", 2026-09-13T17:00Z) confirmed live in QUEUE state — no
+  action needed. Future slots remaining: Antoine 27 (through 2026-12-01,
+  healthy), Ira 22 (through 2026-11-17, healthy), **MetaMuse only 5**
+  (through 2026-09-25, 12 days out). MetaMuse has zero unconsumed approved
+  clips other than the 3 Aerosmith-lyric copyright risks flagged
+  repeatedly since 09-06 ("Ending a Song", "Diction Work", "Meta Muse
+  Performs at the May Finale") — confirmed all 3 still correctly absent
+  from the live/queued post list. Nothing new to schedule for any of the
+  three tonight.
+- Retry-failed-posts check: reviewed every ERROR-state post since 09-09.
+  Only in-scope-adjacent ERROR is the recurring quote-post pair on
+  2026-09-13 — out of scope per Phase 1 step 4 (not a rotation post).
+  Nothing retried tonight.
+- Drive archival: nothing new posted tonight, so nothing to archive. Same
+  standing blocker as every prior run (no large-binary Drive upload path
+  available in this session) would apply if there were something to send.
+- **NEEDS HUMAN INPUT (carried over, still urgent):** MetaMuse's rotation
+  goes dark after 2026-09-25 unless her pending review batch
+  (tools/nightly-agent/batches/metamuse-2026-09-01/, unreviewed for 13
+  days) gets reviewed, or the 3 Aerosmith-lyric clips get a licensing
+  decision one way or the other.
+- Full detail logged in tools/nightly-agent/rotation-queue.json under the
+  2026-09-13 note.
+
+## Phase 2 — tomorrow's review batch
+
+- Confirmed clip-picking is still fully exhausted for the local lessons/
+  backlog (68 lesson videos, all already have clips picked in some
+  manifest — re-verified against clips-ready/ for tonight's 6 students:
+  37 already-rendered clips exist for Chris/Weston/Orville/Manav/
+  Brittany/Tess combined, from the 2026-09-05 review-all sweep).
+- Worked the description/thumbnail backlog instead. Diffed all 68 local
+  lesson stems against tools/nightly-agent/video-review/ folder names —
+  found 7 single-lesson students with **zero** video-review coverage at
+  all (Chris, Weston, Orville, Manav, Brittany, Tess, Alejandro), versus
+  Antoine/Ira/MetaMuse who already have partial coverage from prior
+  nights. Prioritized breadth over further draining Antoine's much larger
+  backlog: processed 6 of the 7 never-touched students tonight (Chris,
+  Weston, Orville, Manav, Brittany, Tess — Alejandro left for a future
+  night, at the nightly cap of 6).
+  1. chris-undated — new description + thumbnail. Chris is a decade-long
+     bassist who's never trusted his own (lower, baritone) singing voice
+     because he measures it against his jazz-singer mother's. Headline
+     "You're a Whole Grown Man, Not a Viola", VME green,
+     omegabone.com/VocalMastery.
+  2. weston-undated — new description + thumbnail. Big-guy energy doing
+     "Don't You Forget About Me" karaoke; the real lesson is a
+     swimming-pool resistance-training metaphor for the lip buzz.
+     Headline "Your Lips Are Weighing Down Your Breath", Learn 2 Sing
+     purple (source title is L2S-branded), omegabone.com/Learn2Sing.
+  3. orville-undated — new description + thumbnail. Orville sings Ed
+     Sheeran's "I See Fire" because he lived through a real wildfire that
+     burned 60% of his hometown; the lesson is about projecting real
+     grief instead of reciting someone else's. Headline "His Fire Is
+     Make-Believe, Yours Is Real", VME green, omegabone.com/VocalMastery.
+  4. manav-undated — new description + thumbnail. A superfan from Punjab
+     who calls the free lesson charity; Omega reframes it as him paying
+     with his voice and effort, not getting something free. Headline
+     "You're Paying With Your Voice", VME green, omegabone.com/VocalMastery.
+  5. brittany-undated — new description + thumbnail. A marketing-agency
+     CEO who hates her own speaking voice; the lesson's real point is
+     that in the age of AI slop, audiences want a real human, not a
+     polished model. Headline "They Want to Hear a Real Human", VME
+     green, omegabone.com/VocalMastery.
+  6. tess-undated — new description + thumbnail. Tess's voice jumps into
+     her throat when she gets excited; the fix is a 4-count breathing
+     drill (thumbs to pinkies) to bring her whole nervous system down
+     before she sings. Headline "Breathe Down to Your Pinkies to Calm
+     Down", VME green, omegabone.com/VocalMastery.
+  All 6 thumbnails rendered via headless Chrome
+  (tools/nightly-agent/render-thumbnail.mjs) and verified as real,
+  correctly-sized 1280x720 PNGs (149-156KB each, not blank/0-byte) before
+  moving on. Note: Chrome kept the rendering process alive past the
+  screenshot on every one of tonight's 6 renders (a network stall, not a
+  rendering failure — each PNG was already written and verified correct
+  before the hung process was cleaned up); worth a look if it recurs.
+- Did not touch reviews.json anywhere or run clip-review's interactive
+  review — that stays the human's step tomorrow morning.
+
+## Phase 3 — Frequency-funnel blog campaign
+
+- Night 12. Today (Sun 2026-09-13) is a new Sunday — pillar correctly
+  advanced from Week 2/Speaking Voice to Week 3/Diction per
+  frequency-campaign-state.json's pillarRotationReference.
+- Diction sources by topic keyword (vowels, articulation, pronunciation,
+  mouth shape). Fresh full-range Postiz audit (GET /public/v1/posts,
+  2026-01-01 through 2026-09-13, 534 rows / 202 unique published posts,
+  40 with a valid /VocalMastery or /Learn2Sing path). Checked all 40
+  against the Diction keyword list and the Nights 1-11 consumed-URL list.
+  Found exactly 2 genuinely new, unambiguous candidates: "Controlling
+  Vowels — with Anna" and "The Perfect Mouth Shape — with Ameesha".
+  Excluded "The Vowels Deliver Emotion — with Adri" and "Be Emotional —
+  with Upanisha" (vowels keyword present, but per the Night 3 precedent
+  these are Emotional Delivery topics, not mechanical diction) and
+  "Brush the Back of Your Tongue..." / "Raise Your Eyebrows on the Way
+  Back Down" (tongue/eyebrow mentioned but about mucus/resonance, not
+  articulation).
+- Wrote 2 posts (not 7) — a real natural limit of the currently-published
+  Diction-topic library, not a NEEDS HUMAN INPUT case, same pattern as
+  nights that hit a natural ceiling before.
+  - #14 "The Shape Under Every Word" (Anna, "Controlling Vowels") — no
+    CTA (14 not divisible by 3 or 5).
+  - #15 "The Mouth Shape Nobody Teaches" (Ameesha, "The Perfect Mouth
+    Shape") — strong CTA (15 divisible by 5).
+  Neither clip has local transcript/caption data (from before this repo's
+  current lesson set) — both posts draw on public topic/framing only,
+  same honest approach used on Nights 5-7.
+- Logged in tools/nightly-agent/frequency-campaign-state.json under
+  night 12. runningPostCount now 15.
+
+## Spend
+
+- Running budget shown by the harness: ~$2.86 of $250 as of sign-off.
