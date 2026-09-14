@@ -1,0 +1,128 @@
+# Nightly run — 2026-09-14
+
+## Phase 1 — publish anything already approved / maintain rotation
+
+- Fresh full-range Postiz audit (`GET /public/v1/posts`, 2026-01-01 through
+  2026-12-31, 1118 rows / 218 unique published posts after dedup).
+- Cross-referenced every MetaMuse/Ira filename in `clips-ready/` against
+  scheduled topics by **distinct publishDate count per topic** (not just
+  topic-string presence, to catch same-named "_2" duplicate clips) —
+  found 2 approved+rendered MetaMuse clips from the 2026-09-05 review-all
+  sweep that had never been scheduled by any prior night's audit:
+  "Singing With Ai Tracks" and "Speaking With Full Passion" (both from
+  the metamuse-17-jul-2026 lesson). Checked both quotes in
+  `tools/clip-review/state-review-all/approved-manifest.json` — both are
+  original coaching dialogue about performance technique (AI backing
+  tracks, vocal delivery), not sung song lyrics. Copyright-clean.
+- Scheduled both into MetaMuse's next 2 open rotation gap days (both
+  confirmed empty first):
+  - "Singing With Ai Tracks" → 2026-09-28T17:00Z, all 5 channels.
+    Post IDs: cmu1bfrhk0owfqk0yu8f129s9 (facebook),
+    cmu1bfrkd0owgqk0yeyr85qd4 (instagram-standalone),
+    cmu1bfrmt0owhqk0y6oc03nlu (linkedin), cmu1bfrp50owiqk0yyiva27ee
+    (tiktok), cmu1bfrri0owjqk0y8mtd9ejv (youtube).
+  - "Speaking With Full Passion" → 2026-10-01T17:00Z, all 5 channels.
+    Post IDs: cmu1bfs0q0i6nlm0y0vc79324 (facebook),
+    cmu1bfs2s0i6olm0yk30t8ekl (instagram-standalone),
+    cmu1bfs5j0i6plm0yl338pdk4 (linkedin), cmu1bfs7a0i6qlm0y7z4y11iv
+    (tiktok), cmu1bfs9b0i6rlm0yjfo2ww56 (youtube).
+  - Extends MetaMuse's runway from 2026-09-25 to 2026-10-01.
+  - **NEEDS HUMAN INPUT (carried over, still urgent)**: her rotation
+    goes dark again after 2026-10-01 unless
+    `tools/nightly-agent/batches/metamuse-2026-09-01/` gets reviewed, or
+    more MetaMuse lessons get clipped. This is a one-time inventory
+    find, not new supply.
+- Confirmed "Meta Muse Performs at the May Finale" (the Aerosmith-lyric
+  copyright risk, DELETE attempts 500'd on 2026-09-10) is **no longer**
+  in the live/queued list for 2026-10-04 — appears deleted manually
+  since the last check. No further action needed.
+- Re-verified both Ira "_2" duplicate clips (Concert Preparation,
+  Practice Intro for Wicked Game) are each fully consumed (2 distinct
+  scheduled dates apiece). "Audience Connection Stage Presence Ira_2"
+  remains correctly unscheduled — still the same carried-over NEEDS
+  HUMAN INPUT (possible song lyric "Ever been down", unconfirmed).
+- Antoine's own queue (untouched by this agent): 26 slots remaining
+  through 2026-12-01 — healthy, no runway flag needed.
+- Ira: 22 slots remaining through 2026-11-17 — healthy.
+- Checked all ERROR-state posts from the last several days. All in scope
+  were already resolved by prior sessions (Ira's 09-09 Instagram
+  "Buzzing Your Speeches" error has a matching 09-10 PUBLISHED retry
+  row) or are out-of-scope streams (21 Day Challenge Day 19/20/21
+  errors, quote-post stream errors, Antoine's own-queue "Book a
+  30-Minute Consultation" and today's "Connecting Stories" YouTube
+  error) — nothing in-scope to retry tonight.
+- Drive archival: still blocked by the same known limitation noted
+  2026-09-06 (the available Drive connector only accepts inline
+  base64/text, no path for 15-19MB video files) — `driveFileId: null`
+  on tonight's ledger entries, consistent with every prior run.
+- Updated `tools/nightly-agent/posted-ledger.json` and
+  `tools/nightly-agent/rotation-queue.json` with tonight's entries and
+  audit notes.
+
+## Phase 2 — tomorrow's review batch
+
+Local backlog check: of 68 lesson videos in `lessons/`, clip-picking was
+already done (via the 2026-09-05 review-all sweep or earlier nights) for
+every general-lesson student except the videos below. Deliberately did
+**not** add more MetaMuse or Ira lessons to Phase 2 tonight — their
+existing review batches
+(`tools/nightly-agent/batches/metamuse-2026-09-01/`,
+`tools/nightly-agent/batches/ira-2026-09-01/`) are already stale and
+unreviewed; adding more would only grow that backlog, not fix it (same
+reasoning as 2026-09-04). Also left Šimon's 3 local lessons alone — his
+posting stream runs independently of this agent's rotation and already
+appears self-sustaining.
+
+Tonight's 4 videos (fewer than the cap of 6 — this is a genuine local
+backlog limit, not a shortfall):
+
+1. **antoine-11-may-2026** — clip-picking only (description + thumbnail
+   were already done on a prior night). Dispatched to a background
+   agent; result pending at time of writing, see follow-up note below.
+2. **omega-15-sep-2020** and
+3. **omega-20-may-2020** — two old lessons featuring the coach himself
+   rather than a student, never touched by this pipeline before. Full
+   processing (clips + description + thumbnail). Brand: L2S (title
+   says "Learn 2 Sing with Omega"), purple, omegabone.com/Learn2Sing —
+   not ambiguous despite the unusual "student" field. Dispatched to a
+   background agent; result pending.
+4. **alejandro-undated** — clips already exist in `clips-ready/` from
+   the review-all sweep; only description + thumbnail were missing.
+   Dispatched to a background agent; result pending.
+
+Did not touch any `reviews.json` or run clip-review's interactive
+review anywhere — that's the human's step tomorrow morning.
+
+*(Background-agent results for all 3 Phase 2 tasks above were still
+running when this log was first drafted — see the addendum below for
+final outcomes.)*
+
+## Phase 3 — Frequency-funnel blog campaign (VME blog)
+
+Week 3 (Sunday 2026-09-13 – Saturday 2026-09-19) pillar: **Diction**,
+unchanged from last night (next rotation is Sunday 2026-09-20 →
+Emotional Delivery).
+
+Re-queried the full Postiz PUBLISHED post history fresh (same 1118-row
+pull as Phase 1) and checked all 44 valid-path posts against the
+Diction keyword list (vowel, articulat, pronunc, mouth shape, diction,
+consonant): the same 4 matches as last night, no new ones. Of those 4:
+Varun's "Connecting Vowels with the Breath" was already consumed under
+the Warmup pillar (post #9); Anna's "Controlling Vowels" and Ameesha's
+"The Perfect Mouth Shape" were consumed last night as posts #14-15;
+Adri's "Vocal Technique: The Vowels Deliver Emotion" remains
+deliberately excluded (reads as Emotional Delivery topic, reserved for
+Week 4).
+
+**Wrote 0 posts tonight** — a genuine natural limit of the currently-
+published Diction-topic library (same conclusion as Nights 3, 4, 8, 9,
+12), not a NEEDS HUMAN INPUT case. `runningPostCount` unchanged at 15;
+next post written will still be #16. Updated
+`tools/nightly-agent/frequency-campaign-state.json` with tonight's
+audit note.
+
+## Spend
+
+Session cost so far: ~$2.73 (per the running budget counter) at the
+point Phase 3 wrapped, before the Phase 2 background agents' own token
+usage is folded in.
