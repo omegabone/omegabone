@@ -88,7 +88,12 @@ backlog limit, not a shortfall):
    background agent; result pending.
 4. **alejandro-undated** — clips already exist in `clips-ready/` from
    the review-all sweep; only description + thumbnail were missing.
-   Dispatched to a background agent; result pending.
+   **Done.** Headline "You're Not Tone-Deaf. The Song Doesn't Fit You."
+   (pulled verbatim from Omega's line in the transcript), VME green,
+   omegabone.com/VocalMastery. Description covers his burnout-to-
+   happiness-engineer arc and the wedding-song callback. Thumbnail PNG
+   verified real (160,847 bytes, correctly rendered). Landed at
+   `tools/nightly-agent/video-review/alejandro-undated/`.
 
 Did not touch any `reviews.json` or run clip-review's interactive
 review anywhere — that's the human's step tomorrow morning.
