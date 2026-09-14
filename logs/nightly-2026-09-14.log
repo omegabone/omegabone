@@ -77,8 +77,26 @@ Tonight's 4 videos (fewer than the cap of 6 — this is a genuine local
 backlog limit, not a shortfall):
 
 1. **antoine-11-may-2026** — clip-picking only (description + thumbnail
-   were already done on a prior night). Dispatched to a background
-   agent; result pending at time of writing, see follow-up note below.
+   were already done on a prior night). **Done**, 6 clips, 0 rejected,
+   via the no-API-key manual path (re-segmented at `--segment-seconds
+   180` since the default segmentation only yielded 5 segments on this
+   transcript): "Your Cologne Is Changing Your Voice" (51s, Unaware),
+   "No Tone, No Rhythm, Still an Improvement" (41s, Problem Aware /
+   mistake_reveal), "Pick Your Voice in the Harmony and Stick With It"
+   (24s, Solution Aware), "Find Your Actual Sticking Point" (18s,
+   Product Aware), "Some Singers Tell the Story, Some Just Sing It"
+   (27s, Brand Aware / authority_clip), "Your Name, Your City, One Line
+   About Your Business" (22s, Solution Aware). Landed at
+   `tools/nightly-agent/batches/antoine-11-may-2026/manifest.json`.
+   **FYI for review**: this lesson was unusually thin on teaching
+   content (opening theme song, banter, a full a cappella performance,
+   a Bob Dylan tangent), so several clips are shorter than the 30-90s
+   figure the skill's rubric summary states — checked
+   `tools/clip-extractor/src/config.mjs` and the code's actual enforced
+   floor is `minSeconds: 10`, not 30, so these passed real `enforce()`
+   legitimately. Flagging the 30 vs 10 documentation/code mismatch here
+   in case it's not intentional; not changed tonight since it's a
+   pre-existing pipeline default, not something introduced tonight.
 2. **omega-15-sep-2020** and
 3. **omega-20-may-2020** — two old lessons featuring the coach himself
    rather than a student, never touched by this pipeline before. Full
