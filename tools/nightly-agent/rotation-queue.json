@@ -8,7 +8,7 @@
   "lastScheduled": {
     "Antoine": "2026-12-01T17:00:00.000Z",
     "Ira": "2026-11-17T17:00:00.000Z",
-    "MetaMuse": "2026-09-25T17:00:00.000Z"
+    "MetaMuse": "2026-10-01T17:00:00.000Z"
   },
   "consumedApprovedClips": {
     "Ira": "As of tonight (2026-09-06), 25 distinct topics now scheduled 2026-09-03 through 2026-11-14 -- 21 of those (through 2026-11-02) were already live in Postiz before tonight, scheduled by some other process outside this agent's own nightly runs (a large human review-all sweep on 2026-09-05 rendered ~23 new Ira clips straight into clips-ready/ and something/someone bulk-scheduled 21 of those topics already, far beyond this file's last-known state of 13 topics through 2026-10-09 -- see the 2026-09-06 note below). Tonight this agent added the 4 remaining unconsumed+screened Ira clips (Communicate Your Heart, Major Tom Introduction Practice, Say Thank You After the Music Stops, Telling Your Authentic Story) into the next 4 open Ira gap days after 2026-11-02. Zero unconsumed Ira clips remain in clips-ready/ as of tonight. 2026-09-07: re-audited, still zero unconsumed approved Ira clips -- no change since last night.",
