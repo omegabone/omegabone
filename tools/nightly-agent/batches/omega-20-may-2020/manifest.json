@@ -1,0 +1,479 @@
+{
+  "generatedAt": "2026-09-14T14:15:56.274Z",
+  "rules": {
+    "minSeconds": 10,
+    "maxSeconds": 90,
+    "minClips": 1,
+    "maxClips": 40,
+    "maxPerCategory": 12,
+    "wpm": 150,
+    "model": "claude-sonnet-5 (in-agent reasoning, no clip-extractor API key configured — see nightly log)"
+  },
+  "lessons": [
+    {
+      "id": "omega-2020-05-20-learn-2-sing-with-omega-20-may-2020",
+      "videoTitle": "Learn 2 Sing with Omega 20.May.2020",
+      "student": "Omega",
+      "date": "2020-05-20",
+      "url": "",
+      "clipCount": 4,
+      "shortfall": 0,
+      "clips": [
+        {
+          "id": "omega-2020-05-20-1",
+          "rank": 1,
+          "awarenessCategory": "unaware",
+          "awarenessLabel": "Unaware",
+          "highValueType": "one_line_correction",
+          "topic": "Your Instrument Is Your Eyebrows, Mouth, and Soft Palate",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 68.659,
+          "end": 152.86,
+          "durationSeconds": 84,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "instrument now what is your instrument remember it's your eyebrows it's your mouth it's the different parts of your mouth so we have your soft palate needs to be raised which is if you run your tongue along your teeth and to the top part of your mouth and to the back of your mouth where your uvula is you want to raise that and if you don't remember how to do that just yawn and that will automatically raise your ears raise your soft palate and raise your eyebrows so you want to keep that same tall space with your chin dropped okay so you want your ah not to be so far back in your mouth you want it to be forward like the e and so when you give me the e I want a nice square e not a wide e I want a square okay so I'll sing it for you a few times and then you'll sing it with me okay so make sure that when you go from the AA to the e all you're doing is closing your mouth a little bit and you're bringing your tongue forward just a little bit okay",
+          "whyItHooks": "Answers a question most singers never ask themselves — what your actual instrument is — with a trick (yawning) anyone can test in five seconds.",
+          "suggestedCaption": "Your instrument is your eyebrows, your mouth, your soft palate. Can't feel it? Just yawn.",
+          "score": 81,
+          "segment": 1,
+          "captions": [
+            {
+              "start": 0,
+              "end": 3.331,
+              "text": "instrument now what is your instrument"
+            },
+            {
+              "start": 3.341,
+              "end": 6.721,
+              "text": "remember it's your eyebrows it's your"
+            },
+            {
+              "start": 6.731,
+              "end": 8.581,
+              "text": "mouth it's the different parts of your"
+            },
+            {
+              "start": 8.591,
+              "end": 10.891,
+              "text": "mouth so we have your soft palate needs"
+            },
+            {
+              "start": 10.901,
+              "end": 13.98,
+              "text": "to be raised which is if you run your"
+            },
+            {
+              "start": 13.99,
+              "end": 18.06,
+              "text": "tongue along your teeth and to the top"
+            },
+            {
+              "start": 18.07,
+              "end": 23.52,
+              "text": "part of your mouth and to the back of"
+            },
+            {
+              "start": 23.53,
+              "end": 25.74,
+              "text": "your mouth where your uvula is you want"
+            },
+            {
+              "start": 25.75,
+              "end": 27.721,
+              "text": "to raise that and if you don't remember"
+            },
+            {
+              "start": 27.731,
+              "end": 35.661,
+              "text": "how to do that just yawn"
+            },
+            {
+              "start": 39.141,
+              "end": 39.151,
+              "text": "and that will automatically raise your"
+            },
+            {
+              "start": 39.151,
+              "end": 41.721,
+              "text": "ears raise your soft palate and raise"
+            },
+            {
+              "start": 41.731,
+              "end": 43.491,
+              "text": "your eyebrows so you want to keep that"
+            },
+            {
+              "start": 43.501,
+              "end": 48.101,
+              "text": "same tall space with your chin dropped"
+            },
+            {
+              "start": 48.111,
+              "end": 52.941,
+              "text": "okay so you want your ah not to be so"
+            },
+            {
+              "start": 52.951,
+              "end": 54.711,
+              "text": "far back in your mouth you want it to be"
+            },
+            {
+              "start": 54.721,
+              "end": 57.501,
+              "text": "forward like the e and so when you give"
+            },
+            {
+              "start": 57.511,
+              "end": 61.491,
+              "text": "me the e I want a nice square e not a"
+            },
+            {
+              "start": 61.501,
+              "end": 67.521,
+              "text": "wide e I want a square okay so I'll sing"
+            },
+            {
+              "start": 67.531,
+              "end": 71.301,
+              "text": "it for you a few times and then you'll"
+            },
+            {
+              "start": 71.311,
+              "end": 73.821,
+              "text": "sing it with me okay so make sure that"
+            },
+            {
+              "start": 73.831,
+              "end": 77.301,
+              "text": "when you go from the AA to the e all"
+            },
+            {
+              "start": 77.311,
+              "end": 79.011,
+              "text": "you're doing is closing your mouth a"
+            },
+            {
+              "start": 79.021,
+              "end": 81.141,
+              "text": "little bit and you're bringing your"
+            },
+            {
+              "start": 81.151,
+              "end": 84.201,
+              "text": "tongue forward just a little bit okay"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-05-20-2",
+          "rank": 2,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "authority_clip",
+          "topic": "Practice & Learning Process",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 656.73,
+          "end": 701.97,
+          "durationSeconds": 45,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "how was that that was much easier than the first time we did it right because we added the buzz and the buzz helped us to connect our breath to the pitches that we wanted to sing right good so I want you to do this every day add this to your workout routine do exercises one two and now three every day morning and evening first do the whole routine with the buzz all the way through one two and three then go back again and add the consonants and the syllables okay so I'll see you next time thank you so much for joining me",
+          "whyItHooks": "Explains the actual mechanism the buzz provides (connecting breath to pitch), then hands the viewer a concrete daily routine — a full teaching arc that closes the lesson.",
+          "suggestedCaption": "The buzz is what connects your breath to the pitch. Do it every day, morning and evening — here's the routine.",
+          "score": 78,
+          "segment": 5,
+          "captions": [
+            {
+              "start": 0,
+              "end": 4.14,
+              "text": "how was that that was much easier than"
+            },
+            {
+              "start": 4.15,
+              "end": 5.49,
+              "text": "the first time we did it right because"
+            },
+            {
+              "start": 5.5,
+              "end": 7.92,
+              "text": "we added the buzz and the buzz helped us"
+            },
+            {
+              "start": 7.93,
+              "end": 10.32,
+              "text": "to connect our breath to the pitches"
+            },
+            {
+              "start": 10.33,
+              "end": 15.839,
+              "text": "that we wanted to sing right good so I"
+            },
+            {
+              "start": 15.849,
+              "end": 18.3,
+              "text": "want you to do this every day"
+            },
+            {
+              "start": 18.31,
+              "end": 20.93,
+              "text": "add this to your workout routine do"
+            },
+            {
+              "start": 20.94,
+              "end": 24.42,
+              "text": "exercises one two and now three every"
+            },
+            {
+              "start": 24.43,
+              "end": 27.12,
+              "text": "day morning and evening first do the"
+            },
+            {
+              "start": 27.13,
+              "end": 30.36,
+              "text": "whole routine with the buzz all the way"
+            },
+            {
+              "start": 30.37,
+              "end": 33.36,
+              "text": "through one two and three then go back"
+            },
+            {
+              "start": 33.37,
+              "end": 35.459,
+              "text": "again and add the consonants and the"
+            },
+            {
+              "start": 35.469,
+              "end": 41.7,
+              "text": "syllables okay so I'll see you next time"
+            },
+            {
+              "start": 41.71,
+              "end": 45.24,
+              "text": "thank you so much for joining me"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-05-20-3",
+          "rank": 3,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "performance_coaching",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 364.67,
+          "end": 435.83,
+          "durationSeconds": 71,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "okay so let's loosen up our lips let's do the buzz first now remember your lips need to be just barely together and if you don't have enough air to make your sound you're not you need to stand up you need to bend over and do the exercise with your knees slightly bent bent over okay with your hands above your head and so that will lift up your ribcage and give you more space to get more air out of your body okay but be careful make sure you do it in a safe place if you if you're not able to do the bus properly okay but let's do the exercise again with the buzz all the way through to the top and then again with the WHA and the e and the AH okay here we go first the bus [Music]",
+          "whyItHooks": "An unexpected full-body fix for a breath problem — bending over with hands overhead to lift the ribcage — plus an honest safety caveat, which reads as real coaching, not a stock tip.",
+          "suggestedCaption": "Can't get enough air for the buzz? Bend over, hands above your head — it lifts your ribcage and gives you more room to breathe.",
+          "score": 76,
+          "segment": 3,
+          "captions": [
+            {
+              "start": 0,
+              "end": 4.79,
+              "text": "okay so let's loosen up our lips let's"
+            },
+            {
+              "start": 4.8,
+              "end": 6.68,
+              "text": "do the buzz first now remember your lips"
+            },
+            {
+              "start": 6.69,
+              "end": 9.95,
+              "text": "need to be just barely together and if"
+            },
+            {
+              "start": 9.96,
+              "end": 12.32,
+              "text": "you don't have enough air to make your"
+            },
+            {
+              "start": 12.33,
+              "end": 16.82,
+              "text": "sound you're not you need to stand up"
+            },
+            {
+              "start": 16.83,
+              "end": 18.98,
+              "text": "you need to bend over and do the"
+            },
+            {
+              "start": 18.99,
+              "end": 21.32,
+              "text": "exercise with your knees slightly bent"
+            },
+            {
+              "start": 21.33,
+              "end": 25.07,
+              "text": "bent over okay with your hands above"
+            },
+            {
+              "start": 25.08,
+              "end": 27.11,
+              "text": "your head and so that will lift up your"
+            },
+            {
+              "start": 27.12,
+              "end": 29.78,
+              "text": "ribcage and give you more space to get"
+            },
+            {
+              "start": 29.79,
+              "end": 34.01,
+              "text": "more air out of your body okay but be"
+            },
+            {
+              "start": 34.02,
+              "end": 35.63,
+              "text": "careful make sure you do it in a safe"
+            },
+            {
+              "start": 35.64,
+              "end": 38,
+              "text": "place if you if you're not able to do"
+            },
+            {
+              "start": 38.01,
+              "end": 41.57,
+              "text": "the bus properly okay but let's do the"
+            },
+            {
+              "start": 41.58,
+              "end": 45.95,
+              "text": "exercise again with the buzz all the way"
+            },
+            {
+              "start": 45.96,
+              "end": 49.37,
+              "text": "through to the top and then again with"
+            },
+            {
+              "start": 49.38,
+              "end": 55.46,
+              "text": "the WHA and the e and the AH okay here"
+            },
+            {
+              "start": 55.47,
+              "end": 58.56,
+              "text": "we go first the bus"
+            },
+            {
+              "start": 58.57,
+              "end": 71.16,
+              "text": "[Music]"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-05-20-4",
+          "rank": 4,
+          "awarenessCategory": "problem_aware",
+          "awarenessLabel": "Problem Aware",
+          "highValueType": "mistake_reveal",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 530.29,
+          "end": 620.06,
+          "durationSeconds": 90,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "good did it tickle so remember if it tickles you can touch right here lightly or you can touch your cheeks but make sure that you don't fill up your air your cheeks with air because you're losing that energy that could be projected forward good so let's try it again with the wall-e ah here we go [Music] [Applause] [Music] [Laughter] [Applause]",
+          "whyItHooks": "A concrete physical sensation check (does it tickle) paired with a mistake to avoid, so a viewer can self-diagnose immediately.",
+          "suggestedCaption": "If the buzz tickles, you're doing it right — just don't let air puff into your cheeks, that's energy you're losing.",
+          "score": 68,
+          "segment": 4,
+          "captions": [
+            {
+              "start": 0,
+              "end": 0.01,
+              "text": "good did it tickle so remember if it"
+            },
+            {
+              "start": 0.01,
+              "end": 2.16,
+              "text": "tickles you can touch right here lightly"
+            },
+            {
+              "start": 2.17,
+              "end": 4.59,
+              "text": "or you can touch your cheeks but make"
+            },
+            {
+              "start": 4.6,
+              "end": 5.94,
+              "text": "sure that you don't fill up your air"
+            },
+            {
+              "start": 5.95,
+              "end": 7.83,
+              "text": "your cheeks with air because you're"
+            },
+            {
+              "start": 7.84,
+              "end": 10.02,
+              "text": "losing that energy that could be"
+            },
+            {
+              "start": 10.03,
+              "end": 13.86,
+              "text": "projected forward good so let's try it"
+            },
+            {
+              "start": 13.87,
+              "end": 21.98,
+              "text": "again with the wall-e ah here we go"
+            },
+            {
+              "start": 21.99,
+              "end": 34.13,
+              "text": "[Music]"
+            },
+            {
+              "start": 80.27,
+              "end": 82,
+              "text": "[Applause]"
+            },
+            {
+              "start": 82.01,
+              "end": 87.65,
+              "text": "[Music]"
+            },
+            {
+              "start": 87.66,
+              "end": 87.68,
+              "text": "[Laughter]"
+            },
+            {
+              "start": 87.69,
+              "end": 89.77,
+              "text": "[Applause]"
+            }
+          ],
+          "renderable": true
+        }
+      ],
+      "rejected": [
+        {
+          "reason": "opening theme song / lesson-open window",
+          "segment": 1,
+          "quote": "so this exercise works on the vowels R and E making sure that the ah which is in the back of your mouth is as bright as "
+        }
+      ]
+    }
+  ]
+}
