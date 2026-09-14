@@ -1,0 +1,419 @@
+{
+  "generatedAt": "2026-09-14T14:16:01.090Z",
+  "rules": {
+    "minSeconds": 10,
+    "maxSeconds": 90,
+    "minClips": 1,
+    "maxClips": 40,
+    "maxPerCategory": 12,
+    "wpm": 150,
+    "model": "claude-sonnet-5 (in-agent reasoning, no clip-extractor API key configured — see nightly log)"
+  },
+  "lessons": [
+    {
+      "id": "antoine-11-may-2026-vocal-mastery-with-antoine-11-may-2026",
+      "videoTitle": "Vocal Mastery with Antoine 11.May.2026",
+      "student": "Antoine",
+      "date": "11.May.2026",
+      "url": "",
+      "clipCount": 6,
+      "shortfall": 0,
+      "clips": [
+        {
+          "id": "antoine-11-may-2026-1",
+          "rank": 1,
+          "awarenessCategory": "unaware",
+          "awarenessLabel": "Unaware",
+          "highValueType": null,
+          "topic": "Your Cologne Is Changing Your Voice",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 1007,
+          "end": 1058,
+          "durationSeconds": 51,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "Menthol changes your breath. In what way? Menthol in all smells. Like if you wear cologne or perfume. But you don't really wear cologne, do you? Like your brain is working to process that, right? Instead of just you -- because all of this is very important to your singing, right? And so if you're constantly putting stuff in here, you're going to change your sound.",
+          "whyItHooks": "It reframes something viewers do every day, wearing a scent, as a hidden variable that quietly changes how they sound.",
+          "suggestedCaption": "Your cologne is changing your voice and you don't even know it.",
+          "score": 73,
+          "segment": 4,
+          "captions": [
+            {
+              "start": 0,
+              "end": 10,
+              "text": "Menthol changes your breath."
+            },
+            {
+              "start": 10,
+              "end": 16,
+              "text": "In what way?"
+            },
+            {
+              "start": 16,
+              "end": 28,
+              "text": "Menthol in all smells. Like if you wear cologne or perfume. But you don't really wear cologne, do you?"
+            },
+            {
+              "start": 28,
+              "end": 41,
+              "text": "Like your brain is working to process that, right? Instead of just you -- because all of this is very important to your singing, right?"
+            },
+            {
+              "start": 41,
+              "end": 51,
+              "text": "And so if you're constantly putting stuff in here, you're going to change your sound."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-11-may-2026-2",
+          "rank": 2,
+          "awarenessCategory": "problem_aware",
+          "awarenessLabel": "Problem Aware",
+          "highValueType": "mistake_reveal",
+          "topic": "Transformation & Student Success Stories",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 2679,
+          "end": 2720,
+          "durationSeconds": 41,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": ">> Like if it was another song that had other words, like where would you say that -- let's say like my tone was not there. >> No. Your tone wasn't there. The rhythm wasn't there. There wasn't any emotion. But it wasn't as bad as when you started other songs. >> Okay. >> Right? So there's definitely improvement. Like the bottom of this song is nowhere near as low as what it was when it first started. >> Okay. >> Singing, right? Bottom of \"Hey, Hey, My, My\" was rough. Right? But like that's to be expected.",
+          "whyItHooks": "Blunt, specific criticism immediately reframed as proof of real progress, the kind of coaching viewers wish they got.",
+          "suggestedCaption": "Your tone wasn't there. Your rhythm wasn't there. And that's still an improvement.",
+          "score": 71,
+          "segment": 9,
+          "captions": [
+            {
+              "start": 0,
+              "end": 5,
+              "text": ">> Like if it was another song that had other words,"
+            },
+            {
+              "start": 5,
+              "end": 8,
+              "text": "like where would you say that -- let's say like my tone"
+            },
+            {
+              "start": 8,
+              "end": 10,
+              "text": "was not there."
+            },
+            {
+              "start": 10,
+              "end": 12,
+              "text": ">> No."
+            },
+            {
+              "start": 12,
+              "end": 14,
+              "text": "Your tone wasn't there."
+            },
+            {
+              "start": 14,
+              "end": 16,
+              "text": "The rhythm wasn't there."
+            },
+            {
+              "start": 16,
+              "end": 18,
+              "text": "There wasn't any emotion."
+            },
+            {
+              "start": 18,
+              "end": 20,
+              "text": "But it wasn't as bad as when you started other songs."
+            },
+            {
+              "start": 20,
+              "end": 22,
+              "text": ">> Okay."
+            },
+            {
+              "start": 22,
+              "end": 24,
+              "text": ">> Right?"
+            },
+            {
+              "start": 24,
+              "end": 26,
+              "text": "So there's definitely improvement."
+            },
+            {
+              "start": 26,
+              "end": 28,
+              "text": "Like the bottom of this song is nowhere near as low as"
+            },
+            {
+              "start": 28,
+              "end": 30,
+              "text": "what it was when it first started."
+            },
+            {
+              "start": 30,
+              "end": 32,
+              "text": ">> Okay."
+            },
+            {
+              "start": 32,
+              "end": 34,
+              "text": ">> Singing, right?"
+            },
+            {
+              "start": 34,
+              "end": 37,
+              "text": "Bottom of \"Hey, Hey, My, My\" was rough."
+            },
+            {
+              "start": 37,
+              "end": 39,
+              "text": "Right?"
+            },
+            {
+              "start": 39,
+              "end": 41,
+              "text": "But like that's to be expected."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-11-may-2026-3",
+          "rank": 3,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": null,
+          "topic": "Vocal Technique & Breath",
+          "cta": "🟠 Buy Course",
+          "clipType": "short",
+          "start": 1857,
+          "end": 1881,
+          "durationSeconds": 24,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "But there's harmony throughout the song. And so sometimes you're singing the top. Sometimes you're singing the bottom. Sometimes you're not singing either, right? So you have to decide what voice you're going to sing and stick with that.",
+          "whyItHooks": "A simple rule for anyone who freezes up not knowing which harmony part to commit to.",
+          "suggestedCaption": "Pick your voice in the harmony. Then stick with it.",
+          "score": 66,
+          "segment": 6,
+          "captions": [
+            {
+              "start": 0,
+              "end": 3,
+              "text": "But there's harmony throughout the song."
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "text": "And so sometimes you're singing the top."
+            },
+            {
+              "start": 5,
+              "end": 6,
+              "text": "Sometimes you're singing the bottom."
+            },
+            {
+              "start": 6,
+              "end": 11,
+              "text": "Sometimes you're not singing either, right?"
+            },
+            {
+              "start": 11,
+              "end": 24,
+              "text": "So you have to decide what voice you're going to sing and stick with that."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-11-may-2026-4",
+          "rank": 4,
+          "awarenessCategory": "product_aware",
+          "awarenessLabel": "Product Aware",
+          "highValueType": null,
+          "topic": "General Inspiration & Coaching",
+          "cta": "🟢 Book Private Lessons",
+          "clipType": "short",
+          "start": 2850,
+          "end": 2868,
+          "durationSeconds": 18,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": ">> If you'd like a free 30-minute diagnostic where you're going to have a complete breakdown of what's your sticking point. Whether it is breath management, tone, emotional delivery. You know where the link is. It's in the description. Book your time. And I'll see you in the next one.",
+          "whyItHooks": "A direct, low-friction offer delivered right after real coaching, while the value is still fresh.",
+          "suggestedCaption": "Free 30-minute diagnostic. Find your actual sticking point.",
+          "score": 64,
+          "segment": 10,
+          "captions": [
+            {
+              "start": 0,
+              "end": 2,
+              "text": ">> If you'd like a free 30-minute diagnostic where"
+            },
+            {
+              "start": 2,
+              "end": 4,
+              "text": "you're going to have a complete breakdown of what's"
+            },
+            {
+              "start": 4,
+              "end": 6,
+              "text": "your sticking point."
+            },
+            {
+              "start": 6,
+              "end": 8,
+              "text": "Whether it is breath management, tone, emotional"
+            },
+            {
+              "start": 8,
+              "end": 10,
+              "text": "delivery."
+            },
+            {
+              "start": 10,
+              "end": 12,
+              "text": "You know where the link is."
+            },
+            {
+              "start": 12,
+              "end": 14,
+              "text": "It's in the description."
+            },
+            {
+              "start": 14,
+              "end": 16,
+              "text": "Book your time."
+            },
+            {
+              "start": 16,
+              "end": 18,
+              "text": "And I'll see you in the next one."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-11-may-2026-5",
+          "rank": 5,
+          "awarenessCategory": "brand_aware",
+          "awarenessLabel": "Brand Aware",
+          "highValueType": "authority_clip",
+          "topic": "The Role of the Singer / Performer Identity",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 2009,
+          "end": 2036,
+          "durationSeconds": 27,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "It might be easier if we learn Bob Dylan's version. Yeah, that's good. And then transition into the other one. Because Bob Dylan is just going to sing the melody. Right. He's not going to be singing a whole lot of stuff. Because his musicality is poetry. Right. He tells the stories. Axl Rose is a singing singer. Right. As opposed to a poetic singer.",
+          "whyItHooks": "A sharp, quotable distinction between two kinds of singer that reframes how anyone picks or interprets a song.",
+          "suggestedCaption": "Some singers tell the story. Some singers just sing it.",
+          "score": 63,
+          "segment": 7,
+          "captions": [
+            {
+              "start": 0,
+              "end": 3,
+              "text": "It might be easier if we learn Bob Dylan's version."
+            },
+            {
+              "start": 3,
+              "end": 6,
+              "text": "Yeah, that's good."
+            },
+            {
+              "start": 6,
+              "end": 9,
+              "text": "And then transition into the other one."
+            },
+            {
+              "start": 9,
+              "end": 12,
+              "text": "Because Bob Dylan is just going to sing the melody."
+            },
+            {
+              "start": 12,
+              "end": 13,
+              "text": "Right."
+            },
+            {
+              "start": 13,
+              "end": 15,
+              "text": "He's not going to be singing a whole lot of stuff."
+            },
+            {
+              "start": 15,
+              "end": 17,
+              "text": "Because his musicality is poetry."
+            },
+            {
+              "start": 17,
+              "end": 18,
+              "text": "Right."
+            },
+            {
+              "start": 18,
+              "end": 20,
+              "text": "He tells the stories."
+            },
+            {
+              "start": 20,
+              "end": 22,
+              "text": "Axl Rose is a singing singer."
+            },
+            {
+              "start": 22,
+              "end": 23,
+              "text": "Right."
+            },
+            {
+              "start": 23,
+              "end": 27,
+              "text": "As opposed to a poetic singer."
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "antoine-11-may-2026-6",
+          "rank": 6,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": null,
+          "topic": "Audience Connection & Stage Presence",
+          "cta": "🟠 Buy Course",
+          "clipType": "short",
+          "start": 1375,
+          "end": 1397,
+          "durationSeconds": 22,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "OK. My business is. So your introduction is your name, where you're from, one sentence about your business, and then you introduce the song. That's the format for this month. We discuss about this format.",
+          "whyItHooks": "A ready-made intro formula viewers can steal for their own next performance.",
+          "suggestedCaption": "Name. Where you're from. One sentence about your business. Then sing.",
+          "score": 58,
+          "segment": 5,
+          "captions": [
+            {
+              "start": 0,
+              "end": 12,
+              "text": "OK. My business is. So your introduction is your name, where you're from, one sentence about your business, and then you introduce the song."
+            },
+            {
+              "start": 12,
+              "end": 22,
+              "text": "That's the format for this month. We discuss about this format."
+            }
+          ],
+          "renderable": true
+        }
+      ],
+      "rejected": []
+    }
+  ]
+}
