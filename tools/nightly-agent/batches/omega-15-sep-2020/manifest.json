@@ -1,0 +1,421 @@
+{
+  "generatedAt": "2026-09-14T14:15:55.865Z",
+  "rules": {
+    "minSeconds": 10,
+    "maxSeconds": 90,
+    "minClips": 1,
+    "maxClips": 40,
+    "maxPerCategory": 12,
+    "wpm": 150,
+    "model": "claude-sonnet-5 (in-agent reasoning, no clip-extractor API key configured — see nightly log)"
+  },
+  "lessons": [
+    {
+      "id": "omega-2020-09-15-learn-2-sing-with-omega-15-sep-2020",
+      "videoTitle": "Learn 2 Sing with Omega 15.Sep.2020",
+      "student": "Omega",
+      "date": "2020-09-15",
+      "url": "",
+      "clipCount": 5,
+      "shortfall": 0,
+      "clips": [
+        {
+          "id": "omega-2020-09-15-1",
+          "rank": 1,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "one_line_correction",
+          "topic": "Keep Your Lips in That Same Juicy Fishy Shape",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 108.15899999999999,
+          "end": 154.82999999999998,
+          "durationSeconds": 47,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "now ladies and gentlemen let's sing exercise one remember you want to make sure that you keep your lips in the same juicy fishy shape until you change from one exercise to the next okay so each exercise you're going to gradually lower your chin higher and higher okay here we go",
+          "whyItHooks": "A vivid, oddly specific cue (\"juicy fishy shape\") that's instantly memorable and easy to try right now.",
+          "suggestedCaption": "Keep your lips in that same juicy fishy shape. Don't let them shift mid-exercise.",
+          "score": 75,
+          "segment": 1,
+          "captions": [
+            {
+              "start": 0,
+              "end": 2.23,
+              "text": "now ladies and gentlemen let's sing"
+            },
+            {
+              "start": 2.24,
+              "end": 3.831,
+              "text": "exercise one"
+            },
+            {
+              "start": 3.841,
+              "end": 6.711,
+              "text": "remember you want to make sure that you"
+            },
+            {
+              "start": 6.721,
+              "end": 9.031,
+              "text": "keep your lips in the same"
+            },
+            {
+              "start": 9.041,
+              "end": 13.031,
+              "text": "juicy fishy shape until you"
+            },
+            {
+              "start": 13.041,
+              "end": 17.511,
+              "text": "change from one exercise to the next"
+            },
+            {
+              "start": 17.521,
+              "end": 19.59,
+              "text": "okay so each exercise you're going to"
+            },
+            {
+              "start": 19.6,
+              "end": 20.631,
+              "text": "gradually"
+            },
+            {
+              "start": 20.641,
+              "end": 24.551,
+              "text": "lower your chin higher and higher"
+            },
+            {
+              "start": 24.561,
+              "end": 46.671,
+              "text": "okay here we go"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-09-15-2",
+          "rank": 2,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "authority_clip",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 303.749,
+          "end": 386.22,
+          "durationSeconds": 82,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "for exercise number two we have a k sound that allows us to engage our abdominal muscles and our intercostal muscles to create lots of space in our lungs okay here we go [Music] key [Music] key [Music] key [Music]",
+          "whyItHooks": "Names the exact muscles a k-sound exercise engages, giving viewers the 'why' behind a drill they've probably done without understanding.",
+          "suggestedCaption": "This k-sound exercise engages your abdominals and intercostals to open up space in your lungs.",
+          "score": 70,
+          "segment": 3,
+          "captions": [
+            {
+              "start": 0,
+              "end": 0.01,
+              "text": "for exercise number two we have a"
+            },
+            {
+              "start": 0.01,
+              "end": 3.921,
+              "text": "k sound that allows us to"
+            },
+            {
+              "start": 3.931,
+              "end": 7.121,
+              "text": "engage our abdominal muscles and our"
+            },
+            {
+              "start": 7.131,
+              "end": 9.121,
+              "text": "intercostal muscles to create"
+            },
+            {
+              "start": 9.131,
+              "end": 12.561,
+              "text": "lots of space in our lungs okay here we"
+            },
+            {
+              "start": 12.571,
+              "end": 13.351,
+              "text": "go"
+            },
+            {
+              "start": 13.361,
+              "end": 19.081,
+              "text": "[Music]"
+            },
+            {
+              "start": 19.091,
+              "end": 20.871,
+              "text": "key"
+            },
+            {
+              "start": 20.881,
+              "end": 41.291,
+              "text": "[Music]"
+            },
+            {
+              "start": 47.091,
+              "end": 50.091,
+              "text": "key"
+            },
+            {
+              "start": 61.081,
+              "end": 61.091,
+              "text": "[Music]"
+            },
+            {
+              "start": 61.091,
+              "end": 68.051,
+              "text": "key"
+            },
+            {
+              "start": 77.341,
+              "end": 82.471,
+              "text": "[Music]"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-09-15-3",
+          "rank": 3,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "one_line_correction",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 502.95,
+          "end": 592.31,
+          "durationSeconds": 89,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "now with exercise 3 we start with a nice u which gives us the perfect shape for soft juicy lips remember your chin only moves when we go from exercise to exercise here we go why [Music] [Laughter] [Applause] wow",
+          "whyItHooks": "A clean, repeatable rule (chin stays still except between exercises) that a viewer can self-check immediately.",
+          "suggestedCaption": "Your chin only moves when you switch exercises — not during one.",
+          "score": 69,
+          "segment": 4,
+          "captions": [
+            {
+              "start": 0,
+              "end": 0.01,
+              "text": "now with exercise 3 we start with a nice"
+            },
+            {
+              "start": 0.01,
+              "end": 3.12,
+              "text": "u which gives us the perfect shape for"
+            },
+            {
+              "start": 3.13,
+              "end": 11.759,
+              "text": "soft juicy lips"
+            },
+            {
+              "start": 14.879,
+              "end": 14.889,
+              "text": "remember your chin only moves when we go"
+            },
+            {
+              "start": 14.889,
+              "end": 15.199,
+              "text": "from"
+            },
+            {
+              "start": 15.209,
+              "end": 35.45,
+              "text": "exercise to exercise here we go"
+            },
+            {
+              "start": 74.23,
+              "end": 74.24,
+              "text": "why"
+            },
+            {
+              "start": 74.24,
+              "end": 83.45,
+              "text": "[Music]"
+            },
+            {
+              "start": 83.46,
+              "end": 84.42,
+              "text": "[Laughter]"
+            },
+            {
+              "start": 84.43,
+              "end": 85.879,
+              "text": "[Applause]"
+            },
+            {
+              "start": 85.889,
+              "end": 89.36,
+              "text": "wow"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-09-15-4",
+          "rank": 4,
+          "awarenessCategory": "solution_aware",
+          "awarenessLabel": "Solution Aware",
+          "highValueType": "one_line_correction",
+          "topic": "Vocal Technique & Breath",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "long",
+          "start": 716.71,
+          "end": 788.99,
+          "durationSeconds": 72,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "for exercise number four we only have one syllable starts with the k to engage our abdominal muscles and it finishes with the ooh the right place for a nice tall round sound here we go [Music] oh go [Music] go go",
+          "whyItHooks": "Breaks a single syllable down into its functional parts — attack and shape — which is a level of precision most singers never get.",
+          "suggestedCaption": "One syllable, two jobs: the k engages your abs, the ooh gives you a tall round sound.",
+          "score": 65,
+          "segment": 5,
+          "captions": [
+            {
+              "start": 0,
+              "end": 0.01,
+              "text": "for exercise number four we only have"
+            },
+            {
+              "start": 0.01,
+              "end": 2.239,
+              "text": "one syllable"
+            },
+            {
+              "start": 2.249,
+              "end": 5.6,
+              "text": "starts with the k to engage our"
+            },
+            {
+              "start": 5.61,
+              "end": 6.88,
+              "text": "abdominal muscles"
+            },
+            {
+              "start": 6.89,
+              "end": 9.919,
+              "text": "and it finishes with the ooh the right"
+            },
+            {
+              "start": 9.929,
+              "end": 11.679,
+              "text": "place for a nice"
+            },
+            {
+              "start": 11.689,
+              "end": 15.52,
+              "text": "tall round sound"
+            },
+            {
+              "start": 15.53,
+              "end": 28.15,
+              "text": "here we go"
+            },
+            {
+              "start": 28.16,
+              "end": 54.119,
+              "text": "[Music]"
+            },
+            {
+              "start": 54.129,
+              "end": 57.6,
+              "text": "oh"
+            },
+            {
+              "start": 59.15,
+              "end": 59.16,
+              "text": "go"
+            },
+            {
+              "start": 59.16,
+              "end": 68.119,
+              "text": "[Music]"
+            },
+            {
+              "start": 69.76,
+              "end": 69.77,
+              "text": "go"
+            },
+            {
+              "start": 69.77,
+              "end": 72.28,
+              "text": "go"
+            }
+          ],
+          "renderable": true
+        },
+        {
+          "id": "omega-2020-09-15-5",
+          "rank": 5,
+          "awarenessCategory": "product_aware",
+          "awarenessLabel": "Product Aware",
+          "highValueType": null,
+          "topic": "General Inspiration & Coaching",
+          "cta": "🔵 Watch Lessons",
+          "clipType": "short",
+          "start": 815.36,
+          "end": 842.399,
+          "durationSeconds": 27,
+          "durationEstimated": false,
+          "clipUrl": "",
+          "quote": "please take a moment to subscribe to my youtube channel omegabone.com and please tell a friend if you have any questions or concerns please drop me a note thank you for joining me now remember you guys practice every day have fun",
+          "whyItHooks": "Warm, direct sign-off that shows Omega's personality and gives a clear next action.",
+          "suggestedCaption": "Practice every day — and have fun doing it.",
+          "score": 57,
+          "segment": 6,
+          "captions": [
+            {
+              "start": 0,
+              "end": 1.75,
+              "text": "please take a moment to subscribe to my"
+            },
+            {
+              "start": 1.76,
+              "end": 4.31,
+              "text": "youtube channel omegabone.com"
+            },
+            {
+              "start": 4.32,
+              "end": 7.75,
+              "text": "and please tell a friend"
+            },
+            {
+              "start": 7.76,
+              "end": 10.149,
+              "text": "if you have any questions or concerns"
+            },
+            {
+              "start": 10.159,
+              "end": 11.029,
+              "text": "please"
+            },
+            {
+              "start": 11.039,
+              "end": 14.55,
+              "text": "drop me a note thank you for joining me"
+            },
+            {
+              "start": 14.56,
+              "end": 19.35,
+              "text": "now remember you guys practice every day"
+            },
+            {
+              "start": 19.36,
+              "end": 27.039,
+              "text": "have fun"
+            }
+          ],
+          "renderable": true
+        }
+      ],
+      "rejected": []
+    }
+  ]
+}
