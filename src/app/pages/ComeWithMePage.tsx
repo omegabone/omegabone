@@ -549,7 +549,7 @@ export function ComeWithMePage() {
             width: "100%",
           }}>
             <p style={{ ...cinzel, color: "#6e5e50", fontSize: "0.72rem", margin: 0, letterSpacing: "0.05em" }}>
-              Only <span style={{ color: "#ef4444" }}>200</span> will ever exist. This offer closes permanently when they are gone.
+              Only <span style={{ color: "#ef4444" }}>1000</span> will ever exist. This offer closes permanently when they are gone.
             </p>
           </div>
           <style>{`
