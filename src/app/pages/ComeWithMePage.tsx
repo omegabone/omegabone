@@ -158,7 +158,7 @@ export function ComeWithMePage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const countdown = useCountdown(new Date("2026-07-17T23:59:59-05:00"));
+  const countdown = useCountdown(new Date("2026-11-24T12:20:00-05:00"));
   const { posts: blogPosts, isLoading: isLoadingBlog } = useBlogspotFeed("https://comewithmeseries.blogspot.com");
 
   const cinzel   = { fontFamily: "'Cinzel', serif" };
@@ -591,7 +591,7 @@ export function ComeWithMePage() {
           {/* Countdown */}
           <div style={{ marginBottom: "3rem" }}>
             <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.25rem" }}>
-              Investor Gates Close -- July 17 at Midnight EST
+              Investor Gates Close -- November 24 at 12:20pm EST
             </p>
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
               {[
@@ -653,7 +653,6 @@ export function ComeWithMePage() {
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier I</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Signal</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$150</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #2a2a2a" }}>
@@ -697,7 +696,6 @@ export function ComeWithMePage() {
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier II</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Resonance</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$500</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #2a2a2a" }}>
@@ -742,7 +740,6 @@ export function ComeWithMePage() {
                 <p style={{ ...cinzel, color: "#ef4444", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier III</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Transmission</h3>
-                  <span style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700 }}>$5,000</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #7f1d1d" }}>
@@ -793,7 +790,6 @@ export function ComeWithMePage() {
                 <p style={{ ...cinzel, color: "#b8922a", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier IV</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
                   <h3 style={{ ...cinzel, color: "#f0ead8", fontSize: "1.3rem", fontWeight: 700 }}>Frequency</h3>
-                  <span style={{ ...cinzel, color: "#d4aa3a", fontSize: "1.2rem", fontWeight: 700 }}>$5,000</span>
                 </div>
               </div>
               <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #3a2e14" }}>
