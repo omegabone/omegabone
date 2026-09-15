@@ -187,7 +187,7 @@ function VideoCard({ n, title, youtubeId, locked }: { n: number; title: string; 
                 textDecoration: "none",
               }}
             >
-              UNLOCK THE FREQUENCY SERIES — $500
+              UNLOCK THE FREQUENCY SERIES
             </a>
           </div>
         ) : youtubeId ? (

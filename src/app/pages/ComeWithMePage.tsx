@@ -548,25 +548,6 @@ export function ComeWithMePage() {
             maxWidth: "520px",
             width: "100%",
           }}>
-            {/* Counts */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "0.9rem" }}>
-              <span style={{ ...cinzel, color: "#f0ead8", fontSize: "clamp(1.6rem, 4vw, 2.1rem)", fontWeight: 700 }}>68</span>
-              <span style={{ ...cinzel, color: "#a89880", fontSize: "0.85rem" }}>of</span>
-              <span style={{ ...cinzel, color: "#f0ead8", fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)", fontWeight: 700 }}>200</span>
-              <span style={{ ...cinzel, color: "#a89880", fontSize: "0.82rem" }}>packages claimed</span>
-            </div>
-
-            {/* Progress bar */}
-            <div style={{ width: "100%", height: "5px", background: "rgba(255,255,255,0.07)", borderRadius: "999px", overflow: "hidden", marginBottom: "0.9rem" }}>
-              <div style={{
-                height: "100%",
-                width: "34%",
-                background: "linear-gradient(90deg, #ef4444, #f87171)",
-                borderRadius: "999px",
-                boxShadow: "0 0 8px rgba(239,68,68,0.6)",
-              }} />
-            </div>
-
             <p style={{ ...cinzel, color: "#6e5e50", fontSize: "0.72rem", margin: 0, letterSpacing: "0.05em" }}>
               Only <span style={{ color: "#ef4444" }}>200</span> will ever exist. This offer closes permanently when they are gone.
             </p>
