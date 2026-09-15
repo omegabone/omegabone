@@ -263,6 +263,14 @@ const FREQUENCY_CSS = `
   .freq-root .tier .who { color: var(--freq-bone-dim); font-style: italic; font-size: 16px; min-height: 3em; }
   .freq-root .tier .price { font-family: var(--freq-font-head); color: var(--freq-gold); font-size: 30px; margin: 20px 0 6px; }
   .freq-root .tier .price .small { font-size: 15px; color: var(--freq-bone-dim); font-style: italic; }
+  .freq-root .tier .price.small { font-size: 15px; color: var(--freq-bone-dim); font-style: italic; margin-top: 0; }
+  /* PayPal hosted-button widgets: show only the quantity + pay buttons.
+     Product photos, PayPal's own title/price/description are hidden so the
+     page keeps its own copy and no prices show until checkout. */
+  .freq-root [id^="paypal-container"] .hero-container,
+  .freq-root [id^="paypal-container"] .thumbnail-container,
+  .freq-root [id^="paypal-container"] .item-header,
+  .freq-root [id^="paypal-container"] .item-description { display: none !important; }
   .freq-root .tier ul { list-style: none; margin: 14px 0 24px; }
   .freq-root .tier li { padding: 8px 0 8px 22px; position: relative; font-size: 16px; color: var(--freq-bone-dim); border-bottom: 1px solid rgba(141,119,95,0.12); }
   .freq-root .tier li::before { content: "✦"; position: absolute; left: 0; color: var(--freq-accent); font-size: 11px; top: 11px; }
@@ -679,7 +687,6 @@ export function FrequencyPage() {
               <span className="plate tier-plate">The Frequency Series</span>
               <h3>Self-Paced Video Course</h3>
               <p className="who">For the messenger who wants to start clearing the signal before they ever step into a room with me.</p>
-              <div className="price">$500<span className="small"> one time</span></div>
               <div className="price small">Five modules, worked on your own time</div>
               <ul>
                 <li>Five video modules: the warmup, the speaking voice, diction, emotional delivery, the stage</li>
@@ -705,7 +712,6 @@ export function FrequencyPage() {
             <div className="tier">
               <h3>The Live Room</h3>
               <p className="who">For the artist who wants transformation with the momentum of a room.</p>
-              <div className="price">$5,000</div>
               <div className="price small">Group cohort, capped at ten</div>
               <ul>
                 <li>The full method across the cohort arc</li>
@@ -719,7 +725,6 @@ export function FrequencyPage() {
               <span className="rec">Recommended</span>
               <h3>The Inner Circle</h3>
               <p className="who">For the messenger whose calling is too important to be misheard.</p>
-              <div className="price">$18,000<span className="small"> to $25,000</span></div>
               <div className="price small">Private, capped at five clients</div>
               <ul>
                 <li>Built entirely around your voice and your rooms</li>
@@ -759,13 +764,11 @@ export function FrequencyPage() {
             <div id="books-l2s" className="tier" style={{ textAlign: "center" }}>
               <h3>Learn 2 Sing</h3>
               <p className="who">The complete method, from first breath to full performance.</p>
-              <div className="price">$50</div>
               <div style={{ marginTop: 18 }}><PayPalBookButton hostedButtonId="TC8PM4Y4NQJ36" /></div>
             </div>
             <div id="books-vme" className="tier" style={{ textAlign: "center" }}>
               <h3>Vocal Mastery for Entrepreneurs</h3>
               <p className="who">The companion text to The Frequency Series.</p>
-              <div className="price">$50</div>
               <div style={{ marginTop: 18 }}><PayPalBookButton hostedButtonId="EBUP3BC8GZM8A" /></div>
             </div>
           </div>
