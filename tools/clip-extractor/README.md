@@ -33,6 +33,7 @@ Then set an API key for whichever model you want to select with:
 ```bash
 export ANTHROPIC_API_KEY=...     # Claude (default)
 export MOONSHOT_API_KEY=...      # Kimi
+export DEEPSEEK_API_KEY=...      # DeepSeek
 export OPENAI_API_KEY=...        # ChatGPT
 export NOUS_API_KEY=...          # Hermes
 export OPENROUTER_API_KEY=...    # OpenRouter (any of the above via one key)
@@ -80,9 +81,32 @@ A different model:
 
 ```bash
 node bin/extract-clips.mjs --library ~/Downloads/library.csv --provider kimi
+node bin/extract-clips.mjs --library ~/Downloads/library.csv --provider deepseek
 node bin/extract-clips.mjs --library ~/Downloads/library.csv --provider hermes
 node bin/extract-clips.mjs --library ~/Downloads/library.csv --provider chatgpt --model gpt-4o
 ```
+
+Same library, different provider, different `--out` directory gives you two
+shortlists to compare. `manifest.json` records the provider and model for the
+run, so the comparison stays honest.
+
+### Picking one
+
+The rubric and the hard rules are identical whichever provider runs — the only
+thing that changes is who proposes candidates. So the choice is about cost,
+throughput, and how a model handles the material:
+
+| Provider | Good for |
+|---|---|
+| `claude` | The default. Best taste on emotional nuance; most expensive per sweep. |
+| `deepseek` | Cheapest full-library sweeps. `--model deepseek-reasoner` for tighter rubric scoring, `deepseek-chat` for speed. |
+| `kimi` | Long segments — raise `--segment-words` and it still holds the whole beat. |
+| `hermes` | Lessons where other models get squeamish. Trauma, grief and body-shame material is teaching content here, not something to soften; Hermes refuses less. |
+| `openrouter` | One key, any of the above. Slower, handy before committing to a provider account. |
+
+A practical pattern: sweep the whole library on `deepseek` to get the shortlist
+cheap, then re-run the handful of lessons that matter most on `claude` and
+compare `report.md` side by side.
 
 No API calls at all, to check the plumbing:
 
@@ -217,7 +241,7 @@ src/sources.mjs         Sheet and transcript parsers
 src/segment.mjs         Lesson to segments
 src/prompt.mjs          The rubric
 src/select.mjs          Claude selection
-src/providers.mjs       Kimi / ChatGPT / Hermes / OpenRouter
+src/providers.mjs       Kimi / DeepSeek / ChatGPT / Hermes / OpenRouter
 src/enforce.mjs         The hard rules
 src/output.mjs          CSV, JSON, Markdown writers
 src/offline.mjs         Keyword heuristic for smoke tests
