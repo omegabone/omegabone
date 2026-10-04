@@ -18,6 +18,10 @@
       "destination": "/clipper.html"
     },
     {
+      "source": "/antoine",
+      "destination": "/antoine.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

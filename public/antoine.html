@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#9B1B30" />
+  <link rel="icon" href="data:," />
+  <title>Antoine’s Concert — Follow the Transformation</title>
+  <meta name="description" content="Follow Antoine’s journey from finance founder to singer and first-time songwriter as he builds a concert to introduce his new Bible app." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --paper: #9B1B30;
+      --ink: #F4EFE6;
+      --muted: rgba(244, 239, 230, .78);
+      --line: rgba(212, 175, 55, .38);
+      --panel: #861628;
+      --poster: #0B0B0D;
+      --poster-ink: #F4EFE6;
+      --accent: #D4AF37;
+      --accent-ink: #0B0B0D;
+      --gold: #D4AF37;
+      --ember: #C8102E;
+      --bronze: #8C6239;
+      --amber: #E8A33D;
+      --obsidian: #0B0B0D;
+      --focus: #F4EFE6;
+      --shadow: rgba(11, 11, 13, .38);
+      --title: "Cinzel Decorative", Georgia, serif;
+      --subtitle: "Cinzel", Georgia, serif;
+      --body: "EB Garamond", Georgia, serif;
+      --serif: var(--body);
+      --sans: var(--subtitle);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --paper: #9B1B30;
+        --ink: #F4EFE6;
+        --muted: rgba(244, 239, 230, .8);
+        --line: rgba(212, 175, 55, .42);
+        --panel: #861628;
+        --poster: #0B0B0D;
+        --poster-ink: #F4EFE6;
+        --accent: #D4AF37;
+        --accent-ink: #0B0B0D;
+        --focus: #F4EFE6;
+        --shadow: rgba(11, 11, 13, .34);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.62;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+    .wrap { width: min(1140px, calc(100% - 40px)); margin: 0 auto; }
+    .hero {
+      min-height: 76svh;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-copy {
+      padding: clamp(54px, 8vw, 112px) max(24px, calc((100vw - 1140px) / 2)) clamp(52px, 7vw, 92px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .edition {
+      font-family: var(--sans);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-size: .78rem;
+      margin: 0 0 24px;
+      color: var(--accent);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      font-size: clamp(3.7rem, 8.4vw, 8.6rem);
+      line-height: .82;
+      letter-spacing: -.055em;
+      max-width: 730px;
+      margin-bottom: 34px;
+    }
+    .hero-lede {
+      font-size: clamp(1.1rem, 2vw, 1.42rem);
+      max-width: 625px;
+      line-height: 1.5;
+      margin-bottom: 34px;
+    }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 13px 22px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      border: 2px solid var(--accent);
+      text-decoration: none;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 700;
+      font-size: .93rem;
+      cursor: pointer;
+    }
+    .button:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .button.secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+    .button.secondary:hover { background: var(--ink); color: var(--paper); }
+    .arrow { font-size: 1.2rem; line-height: 1; }
+    .status {
+      margin: 24px 0 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: .92rem;
+    }
+    .status::before { content: ""; width: 9px; height: 9px; flex: none; background: var(--gold); border-radius: 50%; }
+
+    .stage-art {
+      position: relative;
+      overflow: hidden;
+      min-height: 590px;
+      background: var(--poster);
+      color: var(--poster-ink);
+      display: flex;
+      align-items: flex-end;
+      isolation: isolate;
+      padding: clamp(28px, 5vw, 68px);
+    }
+    .stage-art::before,
+    .stage-art::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -16%;
+      width: 29%;
+      height: 105%;
+      background: linear-gradient(to bottom, rgba(255,248,225,.58), rgba(255,248,225,.03) 76%);
+      filter: blur(7px);
+      clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+      transform-origin: top;
+    }
+    .stage-art::before { left: 7%; transform: rotate(-16deg); }
+    .stage-art::after { right: 5%; transform: rotate(17deg); }
+    .rings { position: absolute; inset: 0; z-index: -2; opacity: .55; }
+    .ring { position: absolute; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; aspect-ratio: 1; }
+    .ring:nth-child(1) { width: 73%; right: -23%; top: 10%; }
+    .ring:nth-child(2) { width: 45%; left: -20%; bottom: 9%; }
+    .ring:nth-child(3) { width: 16%; right: 14%; bottom: 20%; border-color: var(--gold); }
+    .mic {
+      position: absolute;
+      left: 48%;
+      bottom: 0;
+      width: 5px;
+      height: 63%;
+      background: linear-gradient(#141414, #515151 75%, #101010);
+      transform: rotate(-3deg);
+      transform-origin: bottom;
+      box-shadow: 12px 5px 30px rgba(0,0,0,.3);
+    }
+    .mic::before {
+      content: "";
+      position: absolute;
+      width: 52px;
+      height: 80px;
+      border-radius: 50% 50% 46% 46%;
+      background: repeating-linear-gradient(90deg, #181818 0 3px, #686868 4px 5px);
+      top: -56px;
+      left: -25px;
+      transform: rotate(-7deg);
+      box-shadow: inset -9px -8px 12px rgba(0,0,0,.42);
+    }
+    .stage-caption { position: relative; z-index: 1; width: min(460px, 100%); }
+    .stage-caption .number {
+      font-family: var(--sans);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: clamp(3.6rem, 8vw, 7rem);
+      line-height: .75;
+      letter-spacing: -.05em;
+      margin-bottom: 20px;
+    }
+    .stage-caption p { font-style: italic; font-size: clamp(1rem, 1.7vw, 1.2rem); margin-bottom: 0; }
+
+    .quick-nav { border-bottom: 1px solid var(--line); }
+    .quick-nav .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .quick-nav a {
+      padding: 20px 18px;
+      font-family: var(--sans);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      text-decoration: none;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .quick-nav a:first-child { border-left: 1px solid var(--line); }
+    .quick-nav a:hover { background: var(--panel); color: var(--accent); }
+
+    section { padding: clamp(72px, 9vw, 124px) 0; }
+    .watch { border-bottom: 1px solid var(--line); }
+    .watch-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      min-height: 430px;
+      background: var(--poster);
+      color: var(--poster-ink);
+      box-shadow: 0 20px 45px var(--shadow);
+    }
+    .watch-screen {
+      min-height: 360px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,.2);
+      background:
+        radial-gradient(circle at 50% 125%, rgba(224,174,74,.33), transparent 46%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 44px);
+    }
+    .watch-screen::before {
+      content: "";
+      width: min(34vw, 250px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px rgba(255,255,255,.025), 0 0 0 68px rgba(255,255,255,.018);
+    }
+    .watch-badge {
+      position: absolute;
+      padding: 10px 15px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--poster);
+    }
+    .watch-copy { padding: clamp(32px, 5vw, 62px); display: flex; flex-direction: column; justify-content: center; }
+    .watch-copy .step { margin-bottom: 18px; color: var(--gold); }
+    .watch-copy h3 { font-size: clamp(2.1rem, 4vw, 3.7rem); }
+    .watch-copy p { color: rgba(255,248,232,.78); }
+    .watch-copy .button { margin-top: 10px; align-self: flex-start; }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(230px, .75fr) minmax(0, 1.25fr);
+      gap: clamp(32px, 8vw, 110px);
+      align-items: start;
+      margin-bottom: clamp(48px, 7vw, 78px);
+    }
+    .section-number {
+      font-family: var(--sans);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+    .section-number::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+    h2 {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      font-size: clamp(2.7rem, 5.7vw, 5.8rem);
+      line-height: .92;
+      letter-spacing: -.045em;
+      margin-bottom: 22px;
+    }
+    .section-intro { font-size: 1.13rem; max-width: 690px; color: var(--muted); }
+
+    .arc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+    .arc article { padding: 30px 32px 36px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+    .arc article:first-child { border-left: 1px solid var(--line); }
+    .step {
+      font-family: var(--sans);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 58px;
+    }
+    h3 { font-family: var(--sans); text-transform: uppercase; font-size: 1.55rem; line-height: 1.08; letter-spacing: -.02em; margin-bottom: 14px; }
+    .arc p { margin-bottom: 0; color: var(--muted); }
+
+    .proof { background: var(--poster); color: var(--poster-ink); }
+    .proof .section-number { color: var(--gold); }
+    .proof .section-number::after { background: rgba(255,255,255,.25); }
+    .proof .section-intro { color: rgba(255,248,232,.78); }
+    .lesson-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(28px, 6vw, 80px); align-items: stretch; }
+    .quote {
+      padding: clamp(28px, 4vw, 48px);
+      border: 1px solid rgba(255,255,255,.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 370px;
+    }
+    .quote p:first-child { font-size: clamp(1.42rem, 2.6vw, 2.2rem); line-height: 1.35; font-style: italic; }
+    .quote cite { font-family: var(--sans); font-style: normal; text-transform: uppercase; letter-spacing: .09em; color: var(--gold); }
+    .reset {
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(28px, 5vw, 58px);
+      display: grid;
+      align-content: center;
+    }
+    .reset h3 { font-size: clamp(1.9rem, 3.5vw, 3rem); }
+    .reset > p { color: var(--muted); max-width: 570px; }
+    .exercise {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 22px;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 22px 0;
+      margin: 22px 0 28px;
+    }
+    .timer {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: grid;
+      place-items: center;
+      font-family: var(--sans);
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .exercise p { margin: 0; }
+    .exercise strong { display: block; font-family: var(--sans); text-transform: uppercase; margin-bottom: 4px; }
+    .reset .button { border: 0; }
+    .reset .button:disabled { cursor: default; opacity: .65; }
+
+    .pathway { border-bottom: 1px solid var(--line); }
+    .offers { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 42px); align-items: stretch; }
+    .offer { border-top: 5px solid var(--ink); padding: 30px 0 0; display: flex; flex-direction: column; }
+    .offer.course { border-color: var(--accent); }
+    .offer-label { font-family: var(--sans); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 700; color: var(--muted); }
+    .offer-price { font-family: var(--sans); font-size: clamp(4rem, 7vw, 6.4rem); font-weight: 700; letter-spacing: -.06em; line-height: 1; margin: 16px 0 18px; }
+    .offer h3 { font-size: 2rem; }
+    .offer ul { margin: 4px 0 28px; padding: 0; list-style: none; }
+    .offer li { padding: 8px 0 8px 27px; position: relative; }
+    .offer li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+    .offer .button { margin-top: auto; align-self: flex-start; }
+    .fine { color: var(--muted); font-size: .88rem; margin-top: 15px; }
+
+    .closing { padding-bottom: max(90px, calc(70px + env(safe-area-inset-bottom))); }
+    .closing-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(36px, 8vw, 100px); align-items: end; }
+    .closing h2 { font-size: clamp(3rem, 7.5vw, 7.4rem); max-width: 800px; margin-bottom: 0; }
+    .closing-copy p { color: var(--muted); }
+    .note { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--sans); font-size: .93rem; }
+
+    /* Frequency variant: the CwM system carried on Ruby red. */
+    body {
+      background: var(--paper);
+      font-family: var(--body);
+      font-size: 18px;
+    }
+    .hero { border-color: var(--line); }
+    .hero-copy {
+      background:
+        linear-gradient(90deg, transparent 0 96%, rgba(212, 175, 55, .12) 96% 96.3%, transparent 96.3%),
+        var(--paper);
+    }
+    .edition,
+    .section-number,
+    .step,
+    .offer-label,
+    .note,
+    .status,
+    .button,
+    .quick-nav a,
+    .quote cite,
+    .exercise strong,
+    .watch-badge { font-family: var(--subtitle); }
+    .edition,
+    .section-number,
+    .step { color: var(--gold); }
+    h1 {
+      font-family: var(--subtitle);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: clamp(3.35rem, 7.25vw, 7.4rem);
+      line-height: .91;
+      letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+    h2 {
+      font-family: var(--subtitle);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -.025em;
+      line-height: .94;
+    }
+    h3 {
+      font-family: var(--subtitle);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -.012em;
+    }
+    .hero-lede,
+    .section-intro,
+    .stage-caption p,
+    .quote p:first-child { font-style: italic; }
+    .button {
+      background: var(--gold);
+      color: var(--obsidian);
+      border-color: var(--gold);
+    }
+    .button:hover {
+      background: var(--obsidian);
+      border-color: var(--obsidian);
+      color: var(--ink);
+    }
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+    .button.secondary:hover {
+      background: var(--gold);
+      color: var(--obsidian);
+      border-color: var(--gold);
+    }
+    .status::before { background: var(--gold); box-shadow: 0 0 0 4px rgba(212, 175, 55, .12); }
+    .stage-art {
+      background: var(--obsidian);
+      border-left: 1px solid var(--gold);
+    }
+    .stage-art::before,
+    .stage-art::after {
+      background: linear-gradient(to bottom, rgba(212, 175, 55, .52), rgba(212, 175, 55, .02) 76%);
+    }
+    .ring { border-color: rgba(200, 16, 46, .55); }
+    .ring:nth-child(3) { border-color: var(--gold); }
+    .mic { background: linear-gradient(var(--gold), var(--bronze) 74%, var(--obsidian)); }
+    .mic::before {
+      background: repeating-linear-gradient(90deg, var(--obsidian) 0 3px, var(--bronze) 4px 5px);
+      box-shadow: inset -9px -8px 12px rgba(11, 11, 13, .52), 0 0 0 1px var(--gold);
+    }
+    .stage-caption .tower-title {
+      font-family: var(--title);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: clamp(2rem, 4.4vw, 4.5rem);
+      line-height: .95;
+      letter-spacing: -.015em;
+      margin-bottom: 20px;
+    }
+    .quick-nav { background: #861628; }
+    .quick-nav a:hover { background: var(--obsidian); color: var(--gold); }
+    .watch-panel {
+      background: var(--obsidian);
+      border: 1px solid var(--gold);
+    }
+    .watch-screen {
+      background:
+        radial-gradient(circle at 50% 125%, rgba(212, 175, 55, .28), transparent 46%),
+        repeating-linear-gradient(90deg, rgba(212, 175, 55, .055) 0 1px, transparent 1px 44px);
+    }
+    .watch-badge { background: var(--obsidian); }
+    .section-number::after { background: var(--line); }
+    .arc article { background: rgba(11, 11, 13, .13); }
+    .arc article:nth-child(2) { background: rgba(11, 11, 13, .24); }
+    .proof {
+      background: var(--panel);
+      color: var(--ink);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .proof .section-number { color: var(--gold); }
+    .proof .section-number::after { background: var(--line); }
+    .proof .section-intro { color: var(--muted); }
+    .quote {
+      background: var(--obsidian);
+      border-color: var(--gold);
+    }
+    .reset { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+    .timer { border-color: var(--gold); color: var(--gold); }
+    .reset .button { border: 2px solid var(--gold); }
+    .offer { border-color: var(--gold); }
+    .offer.course {
+      border: 1px solid var(--gold);
+      border-top: 5px solid var(--gold);
+      background: var(--obsidian);
+      padding: 30px;
+      box-shadow: 12px 12px 0 rgba(11, 11, 13, .18);
+    }
+    .offer.course h3 { font-family: var(--title); font-size: clamp(1.65rem, 2.8vw, 2.35rem); }
+    .offer.course .offer-label,
+    .offer.course .fine { color: var(--muted); }
+    .offer-price {
+      font-family: var(--subtitle);
+      color: var(--gold);
+      letter-spacing: -.03em;
+    }
+    .closing {
+      background: var(--obsidian);
+      border-top: 1px solid var(--gold);
+    }
+    .closing h2 {
+      font-family: var(--subtitle);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -.025em;
+    }
+
+    .frequency-tower {
+      position: absolute;
+      right: 14%;
+      bottom: 0;
+      width: 118px;
+      height: 72%;
+      z-index: 0;
+      filter: drop-shadow(0 0 18px rgba(212, 175, 55, .16));
+    }
+    .tower-core {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 66px;
+      height: 82%;
+      transform: translateX(-50%);
+      background: var(--paper);
+      border: 1px solid var(--gold);
+      clip-path: polygon(44% 0, 56% 0, 69% 16%, 78% 100%, 22% 100%, 31% 16%);
+    }
+    .tower-spire {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      height: 24%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+    }
+    .tower-band {
+      position: absolute;
+      left: 50%;
+      height: 2px;
+      background: var(--gold);
+      transform: translateX(-50%);
+    }
+    .tower-band.one { bottom: 18%; width: 62px; }
+    .tower-band.two { bottom: 35%; width: 52px; }
+    .tower-band.three { bottom: 52%; width: 42px; }
+    .tower-signal {
+      position: absolute;
+      left: 50%;
+      top: 13%;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: .72;
+    }
+    .tower-signal.one { width: 70px; height: 28px; }
+    .tower-signal.two { width: 110px; height: 44px; opacity: .42; }
+    .tower-signal.three { width: 156px; height: 62px; opacity: .2; }
+
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-copy { padding: 64px 24px 54px; }
+      h1 { font-size: clamp(3.5rem, 18vw, 6.4rem); }
+      .stage-art { min-height: 500px; }
+      .section-head, .lesson-grid, .closing-grid, .watch-panel { grid-template-columns: 1fr; }
+      .watch-screen { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+      .section-number { max-width: 260px; }
+      .arc { grid-template-columns: 1fr; }
+      .arc article { border-left: 1px solid var(--line); }
+      .step { margin-bottom: 20px; }
+      .offers { grid-template-columns: 1fr; gap: 64px; }
+      .quote { min-height: 310px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, 1140px); }
+      .quick-nav .wrap { grid-template-columns: 1fr; width: 100%; }
+      .quick-nav a, .quick-nav a:first-child { border-left: 0; border-right: 0; border-bottom: 1px solid var(--line); padding: 14px; }
+      .quick-nav a:last-child { border-bottom: 0; }
+      section { padding: 68px 0; }
+      .actions { align-items: stretch; flex-direction: column; }
+      .button { width: 100%; }
+      .stage-art { min-height: 430px; padding: 26px; }
+      .stage-caption p { max-width: 270px; }
+      .exercise { grid-template-columns: 72px 1fr; gap: 15px; }
+      .timer { width: 72px; height: 72px; font-size: 1.5rem; }
+      .offer .button { align-self: stretch; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="edition">A founder’s live voice-training case study</p>
+        <h1>Hear the change.</h1>
+        <p class="hero-lede">When Antoine began singing lessons in February 2026, he was the finance bro from the Network School community—not a songwriter. Now he is learning to write songs for the launch of his new Bible app while building the voice and stage command to perform them in concert.</p>
+        <div class="actions">
+          <a class="button" href="https://m.facebook.com/groups/266096668213824/?ref=share&amp;mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Follow the concert build <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="#free-lesson">Try a free lesson</a>
+        </div>
+        <p class="status">Concert date and viewing details will be announced in Learn 2 Sing.</p>
+      </div>
+    </div>
+
+    <nav class="quick-nav" aria-label="Page sections">
+      <div class="wrap">
+        <a href="#watch">Watch</a>
+        <a href="#free-lesson">Free lesson</a>
+        <a href="#continue">Keep training</a>
+      </div>
+    </nav>
+
+    <section class="watch" id="watch">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-number">Step 1 / Watch</div>
+          <div>
+            <h2>The concert comes first.</h2>
+            <p class="section-intro">This is the viewing stop for Antoine’s finished performance: a concert designed to introduce his new Bible app. Until it is scheduled, follow the rehearsal story and return here for the live or replay link.</p>
+          </div>
+        </div>
+        <div class="watch-panel">
+          <div class="watch-screen" aria-label="Concert viewing area awaiting a scheduled performance">
+            <span class="watch-badge">Concert link coming soon</span>
+          </div>
+          <div class="watch-copy">
+            <div class="step">Upcoming performance</div>
+            <h3>Viewing details are being finalized.</h3>
+            <p>No date or stream has been invented. The Learn 2 Sing group will carry the rehearsal updates and the confirmed viewing announcement.</p>
+            <a class="button" href="https://m.facebook.com/groups/266096668213824/?ref=share&amp;mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Follow for the concert <span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-number">01 / Follow the work</div>
+          <div>
+            <h2>Concerts are built in the rehearsal room.</h2>
+            <p class="section-intro">Antoine helped change the direction of Learn 2 Sing by making the case for teaching founders—the people all around him at Network School. He completed L2S, began the 90-day Vocal Mastery for Entrepreneurs program, then stepped away when life got hard. His coach persuaded him to return through songwriting for his Bible app: songwriting on Tuesdays, singing on Thursdays.</p>
+          </div>
+        </div>
+        <div class="arc">
+          <article>
+            <div class="step">February 2026</div>
+            <h3>Learn to sing</h3>
+            <p>Antoine began as a finance professional who wanted a stronger voice. He completed Learn 2 Sing before moving into Vocal Mastery for Entrepreneurs.</p>
+          </article>
+          <article>
+            <div class="step">Tuesdays + Thursdays</div>
+            <h3>Write, then sing</h3>
+            <p>Tuesdays are for learning songwriting from the ground up. Thursdays train range, phrasing, emotional delivery, and the voice that will carry those songs.</p>
+          </article>
+          <article>
+            <div class="step">On stage</div>
+            <h3>Launch the app</h3>
+            <p>Watch the finished concert bring the new songs, trained voice, and story of Antoine’s Bible app together in one clear performance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof" id="free-lesson">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-number">02 / Feel the method</div>
+          <div>
+            <h2>Don’t just watch. Try it.</h2>
+            <p class="section-intro">A small physical change can alter the sound immediately. Use this short reset, then continue with the full free lesson at Omega Bone.</p>
+          </div>
+        </div>
+        <div class="lesson-grid">
+          <blockquote class="quote">
+            <p>“You will hear the difference, or we keep working.”</p>
+            <cite>Omega Bone coaching promise</cite>
+          </blockquote>
+          <div class="reset">
+            <h3>20-second resonance reset</h3>
+            <p>Stand comfortably. Release your jaw. Let the sound stay easy—never force volume or pitch.</p>
+            <div class="exercise" aria-live="polite">
+              <div class="timer" id="timer">20</div>
+              <p><strong id="exercise-title">Ready</strong><span id="exercise-copy">Tap start. You’ll exhale, hum gently, then speak one clear sentence.</span></p>
+            </div>
+            <div class="actions">
+              <button class="button" id="start-reset" type="button">Start the reset</button>
+              <a class="button secondary" href="https://www.omegabone.com/" target="_blank" rel="noopener noreferrer">Get the full free lesson <span class="arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pathway" id="continue">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-number">03 / Choose the next step</div>
+          <div>
+            <h2>Start free. Continue when you hear it.</h2>
+            <p class="section-intro">The path is intentionally simple: experience one lesson first. If the method makes sense in your own voice, the self-paced course gives you the full foundation.</p>
+          </div>
+        </div>
+        <div class="offers">
+          <article class="offer">
+            <div class="offer-label">First step</div>
+            <div class="offer-price">Free</div>
+            <h3>Vocal lesson + diagnostic</h3>
+            <ul>
+              <li>Hear how the method works in practice</li>
+              <li>Identify the first gap in your voice</li>
+              <li>Decide what kind of training fits next</li>
+            </ul>
+            <a class="button secondary" href="https://www.omegabone.com/" target="_blank" rel="noopener noreferrer">Take the free first step <span class="arrow" aria-hidden="true">↗</span></a>
+          </article>
+          <article class="offer course">
+            <div class="offer-label">Self-paced course</div>
+            <div class="offer-price">$500</div>
+            <h3>The Frequency Series</h3>
+            <ul>
+              <li>Five modules: warmup, speaking voice, diction, emotional delivery, and stage</li>
+              <li>Companion text included</li>
+              <li>Train on your own schedule</li>
+            </ul>
+            <a class="button" href="https://www.paypal.com/ncp/payment/WB7JGER2N3BTU" target="_blank" rel="noopener noreferrer">View course checkout <span class="arrow" aria-hidden="true">↗</span></a>
+            <p class="fine">Secure checkout opens on PayPal. Review the order details there before purchasing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap closing-grid">
+        <h2>Watch the work become the show.</h2>
+        <div class="closing-copy">
+          <p>The rehearsal story continues inside the Learn 2 Sing group. Follow along, ask specific questions, and return for the concert announcement.</p>
+          <a class="button" href="https://m.facebook.com/groups/266096668213824/?ref=share&amp;mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Join the audience <span class="arrow" aria-hidden="true">↗</span></a>
+          <p class="note">The concert schedule is still being finalized; no date has been assumed.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var button = document.getElementById('start-reset');
+      var timer = document.getElementById('timer');
+      var title = document.getElementById('exercise-title');
+      var copy = document.getElementById('exercise-copy');
+      var interval = null;
+
+      function setStep(remaining) {
+        if (remaining > 15) {
+          title.textContent = 'Release';
+          copy.textContent = 'Exhale quietly and let your shoulders and jaw soften.';
+        } else if (remaining > 7) {
+          title.textContent = 'Hum';
+          copy.textContent = 'Hum gently on a comfortable note. Feel vibration near the lips.';
+        } else if (remaining > 0) {
+          title.textContent = 'Speak';
+          copy.textContent = 'Say: “My voice carries the message.” Keep the same easy resonance.';
+        } else {
+          title.textContent = 'Notice';
+          copy.textContent = 'Did the sentence feel easier or sound clearer? Continue with the free lesson.';
+        }
+      }
+
+      button.addEventListener('click', function () {
+        if (interval) { window.clearInterval(interval); }
+        var remaining = 20;
+        timer.textContent = String(remaining);
+        setStep(remaining);
+        button.disabled = true;
+        button.textContent = 'Reset in progress';
+        interval = window.setInterval(function () {
+          remaining -= 1;
+          timer.textContent = String(Math.max(remaining, 0));
+          setStep(remaining);
+          if (remaining <= 0) {
+            window.clearInterval(interval);
+            interval = null;
+            button.disabled = false;
+            button.textContent = 'Try it again';
+          }
+        }, 1000);
+      });
+    }());
+  </script>
+</body>
+</html>
