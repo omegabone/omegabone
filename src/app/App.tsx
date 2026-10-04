@@ -1,36 +1,23 @@
-import { RouterProvider } from "react-router";
-import { router } from "./routes";
-import { BlogspotProvider } from "./context/BlogspotContext";
-import { Component, ReactNode, useEffect, useState } from "react";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { routes } from "./routes";
+import { applyPageMeta } from "./seo";
+import { AppShell } from "./AppShell";
 
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-  state = { hasError: false };
-  static getDerivedStateFromError() { return { hasError: true }; }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ padding: "2rem", textAlign: "center" }}>
-          <p>Something went wrong. <a href="/" style={{ color: "#1a56db" }}>Go home</a></p>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
+const router = createBrowserRouter(routes);
+
+// Keep title/description/canonical in step with client-side navigation.
+// The first page's tags are already in the prerendered HTML.
+let lastPath = router.state.location.pathname;
+router.subscribe(({ location }) => {
+  if (location.pathname === lastPath) return;
+  lastPath = location.pathname;
+  applyPageMeta(location.pathname);
+});
 
 export default function App() {
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
-
   return (
-    <ErrorBoundary>
-      <BlogspotProvider>
-        <RouterProvider router={router} />
-        {hydrated && <Analytics />}
-        {hydrated && <SpeedInsights />}
-      </BlogspotProvider>
-    </ErrorBoundary>
+    <AppShell>
+      <RouterProvider router={router} />
+    </AppShell>
   );
 }

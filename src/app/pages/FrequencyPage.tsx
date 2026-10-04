@@ -359,26 +359,6 @@ export function FrequencyPage() {
     }
   };
 
-  // Title / meta, restored on unmount
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Vocal Mastery for Entrepreneurs · Omega Bone";
-
-    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    const prevDesc = metaDesc?.content ?? "";
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.name = "description";
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.content =
-      "Your voice is not the obstacle. It is the answer. Vocal Mastery for Entrepreneurs with Omega Bone.";
-
-    return () => {
-      document.title = prevTitle;
-      if (metaDesc) metaDesc.content = prevDesc;
-    };
-  }, []);
 
   // Ported vanilla JS: FAQ accordion, sticky CTA reveal, scroll reveal, video fallback
   useEffect(() => {
@@ -461,7 +441,7 @@ export function FrequencyPage() {
   return (
     <>
     <div className="freq-root" ref={rootRef}>
-      <style>{FREQUENCY_CSS}</style>
+      <style dangerouslySetInnerHTML={{ __html: FREQUENCY_CSS }} />
       <SiteHeader theme="cwm" />
 
       {/* ================= HERO / ANCHOR ================= */}

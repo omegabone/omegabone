@@ -1,0 +1,7 @@
+# Search engines and AI search crawlers are welcome on public pages.
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /frequency/vault
+
+Sitemap: https://omegabone.com/sitemap.xml

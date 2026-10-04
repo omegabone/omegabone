@@ -85,12 +85,12 @@ function Waveform({ playing }: { playing: boolean }) {
           }}
         />
       ))}
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes wave {
           from { transform: scaleY(0.4); }
           to   { transform: scaleY(1.2); }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 }
@@ -128,11 +128,11 @@ function WorldMap() {
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
-          <style>{`
+          <style dangerouslySetInnerHTML={{ __html: `
             @keyframes mpp { 0% { r:5; opacity:0.85; } 100% { r:24; opacity:0; } }
             .mpr1 { animation: mpp 2.6s ease-out infinite; }
             .mpr2 { animation: mpp 2.6s ease-out infinite 1.1s; }
-          `}</style>
+          ` }} />
         </defs>
 
         {/* Ocean */}
@@ -222,7 +222,7 @@ export function ComeWithMePage() {
             <ChevronDown size={16} style={{ animation: "bounce 2s infinite" }} />
           </div>
         </div>
-        <style>{`@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}`}</style>
+        <style dangerouslySetInnerHTML={{ __html: `@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}` }} />
       </section>
 
       {/* ══ THE STORY ══════════════════════════════════════════ */}
@@ -552,13 +552,13 @@ export function ComeWithMePage() {
               Only <span style={{ color: "#ef4444" }}>1000</span> will ever exist. This offer closes permanently when they are gone.
             </p>
           </div>
-          <style>{`
+          <style dangerouslySetInnerHTML={{ __html: `
             @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
             @keyframes pingOut {
               0%   { transform: scale(0.8); opacity: 0.7; }
               100% { transform: scale(2.4); opacity: 0; }
             }
-          `}</style>
+          ` }} />
 
           <h2 style={{ ...cinzelDec, fontSize: "clamp(1.8rem, 5vw, 3.2rem)", fontWeight: 700, color: "#f0ead8", lineHeight: 1.15, marginBottom: "1.5rem" }}>
             The gates are open now.<br />They will not stay open.
@@ -582,7 +582,7 @@ export function ComeWithMePage() {
                 { value: countdown.seconds, label: "Seconds" },
               ].map((unit, i) => (
                 <div key={i} style={{ background: "#0f0f0f", border: "1px solid #2a2a2a", borderRadius: "12px", padding: "1.25rem 1.5rem", minWidth: "90px" }}>
-                  <p style={{ ...cinzel, color: "#ef4444", fontSize: "2.2rem", fontWeight: 700, lineHeight: 1, margin: 0 }}>
+                  <p suppressHydrationWarning style={{ ...cinzel, color: "#ef4444", fontSize: "2.2rem", fontWeight: 700, lineHeight: 1, margin: 0 }}>
                     {String(unit.value).padStart(2, "0")}
                   </p>
                   <p style={{ ...cinzel, color: "#4a4a4a", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: "0.4rem" }}>

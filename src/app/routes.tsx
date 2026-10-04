@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, useParams } from "react-router";
+import { Navigate, useParams, type RouteObject } from "react-router";
 import { lazy, Suspense, ComponentType } from "react";
 
 const Music33Page        = lazy(() => import("./pages/Music33Page").then(m => ({ default: m.Music33Page })));
@@ -59,7 +59,7 @@ function slugRedirect(base: string) {
   };
 }
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   { path: "/",                                  Component: wrap(FrequencyPage) },
   { path: "/about",                             Component: wrap(AboutPage) },
   { path: "/Music_Room_33",                     Component: wrap(Music33Page) },
@@ -106,4 +106,4 @@ export const router = createBrowserRouter([
   { path: "/comewithme",                        Component: () => <Navigate to="/Come_with_Me" replace /> },
   { path: "/comewithme/blog",                   Component: () => <Navigate to="/Come_with_Me/blog" replace /> },
   { path: "*",                                  Component: NotFound },
-]);
+];

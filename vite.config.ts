@@ -14,7 +14,7 @@ const figmaAssetPlugin = {
   },
 }
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   // Visible in the /practice footer so anyone can tell which build they're on
   define: {
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
@@ -40,7 +40,8 @@ export default defineConfig({
   },
 
   build: {
-    rollupOptions: {
+    // The prerender (SSR) build leaves react etc. external, so no vendor chunks there
+    rollupOptions: isSsrBuild ? {} : {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router'],
@@ -59,4 +60,4 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
-})
+}))

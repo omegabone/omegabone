@@ -16,10 +16,10 @@ export function Hero() {
           {/* Left Content */}
           <div className="flex-1 max-w-xl">
             {/* Badge */}
-            <style>{`
+            <style dangerouslySetInnerHTML={{ __html: `
               @keyframes enroll-flash { 0%, 100% { font-weight: 400; } 50% { font-weight: 800; } }
               .enroll-flash { animation: enroll-flash 1.4s ease-in-out infinite; }
-            `}</style>
+            ` }} />
             <div className="flex items-center gap-2 text-[#1a56db] text-sm mb-3">
               <span className="w-2 h-2 rounded-full bg-[#1a56db] animate-pulse" />
               <span className="enroll-flash">Now Enrolling</span>

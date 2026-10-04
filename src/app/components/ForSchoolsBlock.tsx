@@ -1,7 +1,7 @@
 export function ForSchoolsBlock() {
   return (
     <section>
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .fsb * { box-sizing: border-box; }
         .fsb-inner {
           max-width: 620px;
@@ -33,7 +33,7 @@ export function ForSchoolsBlock() {
         @media (prefers-reduced-motion: reduce) {
           .fsb * { transition: none !important; }
         }
-      `}</style>
+      ` }} />
 
       <div className="fsb-inner">
         <p>Hiring for a school or program?</p>

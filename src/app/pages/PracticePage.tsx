@@ -83,7 +83,7 @@ function Waveform({ active, color }: { active: boolean; color: string }) {
           }}
         />
       ))}
-      <style>{`@keyframes warmup-wave { from { transform: scaleY(0.5); } to { transform: scaleY(1.3); } }`}</style>
+      <style dangerouslySetInnerHTML={{ __html: `@keyframes warmup-wave { from { transform: scaleY(0.5); } to { transform: scaleY(1.3); } }` }} />
     </div>
   );
 }

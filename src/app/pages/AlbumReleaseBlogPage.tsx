@@ -201,7 +201,7 @@ export function AlbumReleaseBlogPage() {
                             style={{ ...garamond, color: MUTED, fontSize: "1.05rem", lineHeight: 1.85 }}
                             dangerouslySetInnerHTML={{ __html: post.content }}
                           />
-                          <style>{`
+                          <style dangerouslySetInnerHTML={{ __html: `
                             .cwm-blog-content p { margin-bottom: 1.25rem; }
                             .cwm-blog-content h1, .cwm-blog-content h2, .cwm-blog-content h3 {
                               font-family: 'Cinzel', serif;
@@ -233,7 +233,7 @@ export function AlbumReleaseBlogPage() {
                               font-style: italic;
                               color: ${CREAM};
                             }
-                          `}</style>
+                          ` }} />
                           <div style={{ marginTop: "2rem", paddingTop: "1rem", borderTop: `1px solid ${BORDER}` }}>
                             <button
                               onClick={() => setExpandedSlug(null)}

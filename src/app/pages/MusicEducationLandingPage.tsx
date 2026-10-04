@@ -6,25 +6,6 @@ export function MusicEducationLandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Omega Bone — Music Education Specialist";
-
-    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    const prevDesc = metaDesc?.content ?? "";
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.name = "description";
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.content =
-      "Ms Omega Bone can help your scholars promote their skills singing, playing and performing the music they create with websites, albums and videos they produce.";
-
-    return () => {
-      document.title = prevTitle;
-      if (metaDesc) metaDesc.content = prevDesc;
-    };
-  }, []);
 
   useEffect(() => {
     const ids = ["featured-work", "skills", "experience", "references", "contact"];
@@ -181,7 +162,7 @@ export function MusicEducationLandingPage() {
   return (
     <div className="ed">
       <SiteHeader theme="dark" topOffsetPx={56} />
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .ed {
           --royal: #1e3a8a;
           --sky: #4c8df6;
@@ -467,7 +448,7 @@ export function MusicEducationLandingPage() {
         @media (prefers-reduced-motion: reduce) {
           .ed * { transition: none !important; }
         }
-      `}</style>
+      ` }} />
 
       {/* Navigation */}
       <nav className="ed-nav">
