@@ -268,6 +268,69 @@
     .watch-copy h3 { font-size: clamp(2.1rem, 4vw, 3.7rem); }
     .watch-copy p { color: rgba(255,248,232,.78); }
     .watch-copy .button { margin-top: 10px; align-self: flex-start; }
+    .lesson-videos {
+      margin-top: clamp(42px, 6vw, 72px);
+      padding-top: clamp(34px, 5vw, 54px);
+      border-top: 1px solid var(--line);
+    }
+    .lesson-videos-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .72fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+    .lesson-videos-head h3 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      margin-bottom: 0;
+    }
+    .lesson-videos-head p { margin-bottom: 0; color: var(--muted); }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .video-card {
+      margin: 0;
+      background: var(--obsidian);
+      border: 1px solid var(--gold);
+      color: var(--poster-ink);
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--obsidian);
+      overflow: hidden;
+    }
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .video-card figcaption {
+      padding: 14px 16px;
+      font-family: var(--subtitle);
+      font-size: .86rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .video-card.missing {
+      min-height: 230px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: transparent;
+      color: var(--ink);
+      border-style: dashed;
+    }
+    .video-card.missing h3 { font-size: 1.45rem; margin-bottom: 10px; }
+    .video-card.missing p { margin-bottom: 0; color: var(--muted); }
     .section-head {
       display: grid;
       grid-template-columns: minmax(230px, .75fr) minmax(0, 1.25fr);
@@ -595,7 +658,8 @@
       .hero-copy { padding: 64px 24px 54px; }
       h1 { font-size: clamp(3.5rem, 18vw, 6.4rem); }
       .stage-art { min-height: 500px; }
-      .section-head, .lesson-grid, .closing-grid, .watch-panel { grid-template-columns: 1fr; }
+      .section-head, .lesson-grid, .closing-grid, .watch-panel, .lesson-videos-head { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
       .watch-screen { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
       .section-number { max-width: 260px; }
       .arc { grid-template-columns: 1fr; }
@@ -665,6 +729,39 @@
             <h3>Viewing details are being finalized.</h3>
             <p>No date or stream has been invented. The Learn 2 Sing group will carry the rehearsal updates and the confirmed viewing announcement.</p>
             <a class="button" href="https://m.facebook.com/groups/266096668213824/?ref=share&amp;mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Follow for the concert <span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="lesson-videos" aria-labelledby="restart-lessons-title">
+          <div class="lesson-videos-head">
+            <h3 id="restart-lessons-title">Watch the restart lessons.</h3>
+            <p>Follow all four of Antoine’s lessons since restarting: two songwriting sessions and two concert-preparation sessions.</p>
+          </div>
+          <div class="video-grid">
+            <figure class="video-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/OarFfwy3CME" title="Building a Concert Setlist That Tells a Story" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <figcaption>Building a Concert Setlist That Tells a Story</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/gzvourp99pU" title="Put Your Customer in the Song" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <figcaption>Put Your Customer in the Song</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/tA4Gbm6MFR8" title="Stress the Right Word: Songwriting, Session 3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <figcaption>Stress the Right Word: Songwriting, Session 3</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/E56ZaoWRhr0" title="Energy Without Accents: Concert Prep, Session 4" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <figcaption>Energy Without Accents: Concert Prep, Session 4</figcaption>
+            </figure>
           </div>
         </div>
       </div>
