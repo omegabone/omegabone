@@ -217,6 +217,9 @@ const FREQUENCY_CSS = `
   .freq-root .proof-videos { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; max-width: 900px; margin: 0 auto 44px; }
   .freq-root .proof-videos .videoframe { aspect-ratio: 9/16; }
   @media (max-width: 860px) { .freq-root .proof-videos { grid-template-columns: 1fr; max-width: 340px; } }
+  .freq-root .proof-ba { display: grid; grid-template-columns: repeat(2,1fr); gap: 26px; max-width: 1100px; margin: 0 auto 44px; }
+  .freq-root .proof-ba .videoframe { aspect-ratio: 16/9; }
+  @media (max-width: 860px) { .freq-root .proof-ba { grid-template-columns: 1fr; max-width: 560px; } }
   .freq-root .videoframe {
     position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden;
     border: 1px solid var(--freq-bronze); background: #33090E;
@@ -562,6 +565,43 @@ export function FrequencyPage() {
           <div className="proof-head">
             <span className="plate">The proof</span>
             <h2 style={{ marginTop: 16 }}>It changes people. In their own words.</h2>
+          </div>
+
+          {/* BEFORE AND AFTER — horizontal 16:9, on YouTube */}
+          <div className="proof-ba">
+            <div className="proof-video-item">
+              <div className="videoframe" data-name="Antoine Riendeau">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/krmhkmh5RCg"
+                  title="Antoine Riendeau, before and after one lesson"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{ width: "100%", height: "100%", border: 0, display: "block" }}
+                />
+              </div>
+              <div className="video-caption">
+                <span className="name">Antoine Riendeau</span>
+                <div className="subline" style={{ fontSize: 13, marginTop: 4 }}>Before and after one lesson</div>
+              </div>
+            </div>
+
+            <div className="proof-video-item">
+              <div className="videoframe" data-name="Chris Carlson">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/BYebiVHmbeo"
+                  title="Chris Carlson, before and after one month"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{ width: "100%", height: "100%", border: 0, display: "block" }}
+                />
+              </div>
+              <div className="video-caption">
+                <span className="name">Chris Carlson</span>
+                <div className="subline" style={{ fontSize: 13, marginTop: 4 }}>Before and after one month</div>
+              </div>
+            </div>
           </div>
 
           {/* VIDEO TESTIMONIALS — /public/videos/testimonial-*.mp4 (vertical 9:16) */}
