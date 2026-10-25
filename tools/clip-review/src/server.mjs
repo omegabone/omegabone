@@ -143,7 +143,9 @@ export function createReviewServer(config) {
     // hand over every approved clip and re-render the lot.
     // A clip trimmed or retitled after its render is stale and goes again
     // (2026-10-25: 18 edited clips were otherwise never re-rendered).
-    const fresh = library().filter((c) => c.status === 'approved' && (!c.rendered || c.renderStale) && c.hasSource);
+    const done = doneIds();
+    const fresh = library().filter((c) => c.status === 'approved' && c.hasSource
+      && (!c.rendered || (c.renderStale && !done.has(c.id))));
     if (!fresh.length) return json(res, 400, { error: 'no newly approved clips to render' });
     writeRenderManifest(newRenderManifestPath, fresh, { lessons, transcripts, captionsFor, formatState });
     const approvedCount = fresh.length;
