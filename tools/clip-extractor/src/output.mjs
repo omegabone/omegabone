@@ -141,6 +141,7 @@ export function writeOutputs(outDir, results, opts = {}) {
       maxClips: opts.maxClips,
       maxPerCategory: opts.maxPerCategory,
       wpm: opts.wpm,
+      provider: opts.offline ? 'offline-heuristic' : opts.provider,
       model: opts.offline ? 'offline-heuristic' : opts.model,
     },
     lessons: results.map(({ lesson, clips, rejected, shortfall }) => ({
