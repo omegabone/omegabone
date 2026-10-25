@@ -15,6 +15,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, extname, basename } from 'node:path';
 // One source of truth for which product a title belongs to — the renderer's.
 import { brandFromTitle } from '../../clip-renderer/scripts/brand-from-title.mjs';
+import { isOpeningSong as songOf } from '../../clip-extractor/src/opening-song.mjs';
 
 /**
  * Clip ids are filename stems. The extractor's own slugs are lowercase and
@@ -54,15 +55,25 @@ export function scanRenders(dir) {
   const found = new Map();
   const claimed = new Set();
 
-  for (const [id, name] of Object.entries(index)) {
-    if (!ID_PATTERN.test(id) || typeof name !== 'string') continue;
+  for (const [key, name] of Object.entries(index)) {
+    if (typeof name !== 'string') continue;
+    // The renderer keys the index "<clipId>:<format>" so one clip can hold both
+    // shapes. The library is keyed by clip id, so the format is split back off
+    // here — matching on the whole key filed every render as an orphan.
+    const cut = key.lastIndexOf(':');
+    const id = cut === -1 ? key : key.slice(0, cut);
+    const format = cut === -1 ? null : key.slice(cut + 1);
+    if (!ID_PATTERN.test(id)) continue;
     const path = join(dir, name);
     if (!existsSync(path)) continue;
     const stat = statSync(path);
     if (!stat.isFile()) continue;
 
-    found.set(id, { file: name, bytes: stat.size, modified: stat.mtime.toISOString() });
     claimed.add(name);
+    // A clip rendered in both shapes keeps the newer file as the one to play.
+    const prev = found.get(id);
+    if (prev && prev.modified >= stat.mtime.toISOString()) continue;
+    found.set(id, { file: name, bytes: stat.size, modified: stat.mtime.toISOString(), format });
   }
 
   for (const name of readdirSync(dir)) {
@@ -131,6 +142,10 @@ export function readManifest(path) {
         score: clip.score ?? null,
         sourceUrl: clip.clipUrl ?? lesson.url ?? '',
         renderable: Boolean(clip.renderable),
+        band: Boolean(clip.band),
+        vmeFont: Boolean(clip.vmeFont),
+        noStudentLine: Boolean(clip.noStudentLine),
+        captionFit: Boolean(clip.captionFit),
       });
     }
   }
@@ -216,8 +231,11 @@ function decorate(entry, render, review, sources) {
     file: render?.file ?? null,
     bytes: render?.bytes ?? null,
     rendered: Boolean(render),
-    // Stale once trimmed: the file on disk is the old cut.
-    renderStale: Boolean(render) && (trimmed || topicEdited || Boolean(captionsOverride)),
+    // Stale when an edit is newer than the file on disk: the file is the old
+    // cut. A render made after the edit already carries it (2026-10-25: every
+    // edited clip read as stale forever and never reached the Upload button).
+    renderStale: Boolean(render) && (trimmed || topicEdited || Boolean(captionsOverride))
+      && !(review?.updatedAt && render.modified && review.updatedAt <= render.modified),
     hasSource: sources.has(entry.lessonId),
     // The reviewer's choice wins; otherwise the lesson title decides.
     brand: review?.brand ?? brandFromTitle(entry.lesson).brand,
@@ -226,6 +244,25 @@ function decorate(entry, render, review, sources) {
     feedback: review?.feedback ?? '',
     reviewedAt: review?.updatedAt ?? null,
   };
+}
+
+/** True when the clip is the opening or closing song rather than a lesson. */
+export function isOpeningSong(clip) {
+  return songOf({ title: clip.topic ?? '', text: clip.quote ?? '' });
+}
+
+/**
+ * Whether a clip still belongs in the review list.
+ *
+ * Rendered clips stay: she asked to see her approved videos (2026-09-19),
+ * and dropping them here left the Approved tab empty and the Rendered tab
+ * permanently at zero. The opening and closing theme leaves, at any status;
+ * it will never become a clip, so it is not worth a decision. Any other
+ * rejected clip stays: a rejection is worth being able to see and undo.
+ */
+export function inQueue(clip) {
+  if (isOpeningSong(clip)) return false;
+  return true;
 }
 
 /** Tally for the filter bar. */
