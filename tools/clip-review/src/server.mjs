@@ -12,7 +12,7 @@ import { createReadStream, existsSync, statSync, readFileSync, writeFileSync } f
 import { join, extname, resolve, sep, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
-import { buildLibrary, countStatuses, readLessons, ID_PATTERN } from './library.mjs';
+import { buildLibrary, countStatuses, readLessons, inQueue, ID_PATTERN } from './library.mjs';
 import {
   loadReviews,
   saveReviews,
@@ -28,6 +28,10 @@ import { resolveSources } from './sources.mjs';
 // straight from the filesystem, with no server at all. Serving it from here is
 // the other half of the same file.
 const PAGE = fileURLToPath(new URL('../review.html', import.meta.url));
+// Run after a render to copy the new files into clips-ready, and by the Upload
+// button to send rendered clips to the Postiz media library.
+const FINISH = fileURLToPath(new URL('../finish-approved.mjs', import.meta.url));
+const UPLOADER = fileURLToPath(new URL('../upload-rendered.py', import.meta.url));
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -62,7 +66,30 @@ export function createReviewServer(config) {
   // Reviews are held in memory for the session and flushed on every edit, so a
   // closed laptop loses nothing.
   const reviews = loadReviews(stateDir);
+
+  // Clips that have gone to Postiz. Kept in posted.json beside reviews.json;
+  // the posting run appends to it. A clip that is rendered and posted is
+  // finished, so it leaves the list (stated 2026-09-19: "remove the approved
+  // videos that have been rendered and posted"). Read per request so a
+  // posting run does not need a server restart to take effect.
+  const postedIds = () => {
+    try {
+      const raw = JSON.parse(readFileSync(join(stateDir, 'posted.json'), 'utf8'));
+      return new Set(Array.isArray(raw) ? raw : raw.posted ? Object.keys(raw.posted) : raw.ids || []);
+    } catch { return new Set(); }
+  };
+  // Clips sent to the Postiz media library by the Upload button. Uploaded
+  // clips leave the list the same way posted ones do (stated 2026-10-03:
+  // "an upload button that then removes the uploaded videos from the cue").
+  const uploadedIds = () => {
+    try {
+      return new Set(Object.keys(JSON.parse(readFileSync(join(stateDir, 'uploaded.json'), 'utf8')).uploaded || {}));
+    } catch { return new Set(); }
+  };
+  const doneIds = () => new Set([...postedIds(), ...uploadedIds()]);
   const renderManifestPath = join(stateDir, 'approved-manifest.json');
+  // The Render button's own manifest: approved clips with no render yet.
+  const newRenderManifestPath = join(stateDir, 'render-new.json');
 
   // The run-wide format lives in its own small file beside the reviews, so it
   // survives restarts without touching per-clip decisions.
@@ -111,10 +138,17 @@ export function createReviewServer(config) {
       return json(res, 500, { error: 'renderer not configured on this server' });
     }
 
-    const approvedCount = library().filter((c) => c.status === 'approved').length;
-    if (!approvedCount) return json(res, 400, { error: 'nothing is approved yet' });
+    // Only clips approved since the last render (stated 2026-10-03: "the
+    // render should only render newly approved clips"). The button used to
+    // hand over every approved clip and re-render the lot.
+    // A clip trimmed or retitled after its render is stale and goes again
+    // (2026-10-25: 18 edited clips were otherwise never re-rendered).
+    const fresh = library().filter((c) => c.status === 'approved' && (!c.rendered || c.renderStale) && c.hasSource);
+    if (!fresh.length) return json(res, 400, { error: 'no newly approved clips to render' });
+    writeRenderManifest(newRenderManifestPath, fresh, { lessons, transcripts, captionsFor, formatState });
+    const approvedCount = fresh.length;
 
-    const rendererArgs = [rendererScript, '--manifest', renderManifestPath, '--out', renderDir];
+    const rendererArgs = [rendererScript, '--manifest', newRenderManifestPath, '--out', renderDir];
     if (video) rendererArgs.push('--video', video);
     else if (videoDir) rendererArgs.push('--video-dir', videoDir);
 
@@ -144,12 +178,47 @@ export function createReviewServer(config) {
       renderJob.error = err.message;
     });
     child.on('close', (code) => {
-      renderJob.running = false;
-      renderJob.finishedAt = new Date().toISOString();
-      renderJob.exitCode = code;
+      const done = (exit) => {
+        renderJob.running = false;
+        renderJob.finishedAt = new Date().toISOString();
+        renderJob.exitCode = exit;
+      };
+      if (code !== 0) return done(code);
+      // Hand the new files to clips-ready, as MAKE CLIPS.command does.
+      const finish = spawn('node', [FINISH]);
+      finish.stdout.on('data', (d) => { renderJob.log += d.toString(); });
+      finish.stderr.on('data', (d) => { renderJob.log += d.toString(); });
+      finish.on('error', () => done(0));
+      finish.on('close', () => done(0));
     });
 
     return json(res, 200, { started: true, approvedCount });
+  }
+
+  // Upload job, one at a time, same shape as the render job.
+  const uploadJob = { running: false, startedAt: null, finishedAt: null, exitCode: null, log: '', error: null };
+  const uploadStatus = () => ({ ...uploadJob, log: uploadJob.log.slice(-4000) });
+
+  function startUpload(res) {
+    if (uploadJob.running) return json(res, 409, { error: 'an upload is already running', ...uploadStatus() });
+    if (renderJob.running) return json(res, 409, { error: 'wait for the render to finish' });
+    const done = doneIds();
+    const ids = library()
+      .filter((c) => c.status === 'approved' && c.rendered && !c.renderStale && !done.has(c.id))
+      .map((c) => c.id);
+    if (!ids.length) return json(res, 400, { error: 'no rendered clips waiting to upload' });
+
+    Object.assign(uploadJob, { running: true, startedAt: new Date().toISOString(), finishedAt: null, exitCode: null, log: '', error: null });
+    const child = spawn('python3', [UPLOADER, stateDir, renderDir, ...ids]);
+    child.stdout.on('data', (d) => { uploadJob.log += d.toString(); });
+    child.stderr.on('data', (d) => { uploadJob.log += d.toString(); });
+    child.on('error', (err) => {
+      Object.assign(uploadJob, { running: false, finishedAt: new Date().toISOString(), error: err.message });
+    });
+    child.on('close', (code) => {
+      Object.assign(uploadJob, { running: false, finishedAt: new Date().toISOString(), exitCode: code });
+    });
+    return json(res, 200, { started: true, count: ids.length });
   }
 
   const server = createServer(async (req, res) => {
@@ -165,7 +234,10 @@ export function createReviewServer(config) {
       }
 
       if (path === '/api/clips' && req.method === 'GET') {
-        const clips = library();
+        // The page shows only what is still open; the full library still backs
+        // the approved manifest and every per-clip lookup.
+        const posted = doneIds();
+        const clips = library().filter(inQueue).filter((c) => !(c.rendered && posted.has(c.id)));
         return json(res, 200, {
           clips,
           counts: countStatuses(clips),
@@ -234,6 +306,14 @@ export function createReviewServer(config) {
 
       if (path === '/api/render' && req.method === 'GET') {
         return json(res, 200, renderStatus());
+      }
+
+      if (path === '/api/upload' && req.method === 'POST') {
+        return startUpload(res);
+      }
+
+      if (path === '/api/upload' && req.method === 'GET') {
+        return json(res, 200, uploadStatus());
       }
 
       if (path.startsWith('/source/') && (req.method === 'GET' || req.method === 'HEAD')) {
