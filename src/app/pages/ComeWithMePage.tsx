@@ -153,6 +153,9 @@ function WorldMap() {
 /* ════════════════════════════════════════════════════════
    MAIN PAGE
 ════════════════════════════════════════════════════════ */
+// Raise by hand after each sharing pass; at 50 the free singles box disappears.
+const CWM_FREE_SPOTS_TAKEN = 0;
+
 export function ComeWithMePage() {
   const [audioPlaying, setAudioPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -167,7 +170,14 @@ export function ComeWithMePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) setSubmitted(true);
+    if (!email) return;
+    // Feeds the "CWM 50" Google Sheet. Each Gmail there is shared on the
+    // private singles (The Beast, I Am, Dreams) by hand-run sharing passes.
+    navigator.sendBeacon(
+      "https://docs.google.com/forms/d/e/1FAIpQLSdB9eug5Wz5H0EE4w98ojq86gIa6sVdKf6UYxUg6_gROCalrQ/formResponse",
+      new URLSearchParams({ "entry.317309204": email })
+    );
+    setSubmitted(true);
   };
 
   return (
@@ -594,12 +604,28 @@ export function ComeWithMePage() {
           </div>
 
           {/* Email form */}
-          {!submitted ? (
-            null
+          {CWM_FREE_SPOTS_TAKEN >= 50 ? null : !submitted ? (
+            <form onSubmit={handleSubmit} style={{ background: "#161616", border: "1px solid rgba(239,68,68,0.27)", borderRadius: "16px", padding: "2rem", maxWidth: "420px", margin: "0 auto" }}>
+              <p style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>✦ 3 Free Singles</p>
+              <p style={{ ...garamond, color: "#a89880", fontStyle: "italic", marginBottom: "1rem" }}>
+                The Beast, I Am and Dreams (Living in Love). {50 - CWM_FREE_SPOTS_TAKEN} of 50 free spots left.
+              </p>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your Gmail address"
+                style={{ ...garamond, width: "100%", boxSizing: "border-box", background: "#0c0c0c", border: "1px solid #3a2a2a", borderRadius: "10px", color: "#f0ead8", fontSize: "1rem", padding: "0.75rem 1rem", marginBottom: "0.75rem" }}
+              />
+              <button type="submit" style={{ ...cinzel, width: "100%", background: "#ef4444", color: "#fff", border: "none", borderRadius: "10px", padding: "0.8rem", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>
+                Get the Singles
+              </button>
+            </form>
           ) : (
             <div style={{ background: "#161616", border: "1px solid rgba(239,68,68,0.27)", borderRadius: "16px", padding: "2rem", maxWidth: "420px", margin: "0 auto" }}>
               <p style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>✦ You're in.</p>
-              <p style={{ ...garamond, color: "#a89880", fontStyle: "italic" }}>Full tier details are on their way to your inbox. The gates are still open - for now.</p>
+              <p style={{ ...garamond, color: "#a89880", fontStyle: "italic" }}>The 3 singles will be shared to this Gmail address on YouTube.</p>
             </div>
           )}
 
