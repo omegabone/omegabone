@@ -1,0 +1,2315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clip review</title>
+    <style>
+      /*
+       * Tokens are the VME palette from the renderer (tools/clip-renderer/src/theme.ts)
+       * so the review room looks like the clips being reviewed rather than a second
+       * identity. Copied values, not imports — this page has no build step.
+       */
+
+      :root {
+        --bg: #081812;
+        --panel: #0d2418;
+        --panel-raised: #122d1e;
+        --border: #1f4a32;
+        --accent: #7ce8a0;
+        --accent-bright: #9cffc0;
+        --ink: #ffffff;
+        --ink-dim: rgba(255, 255, 255, 0.62);
+        --ink-faint: rgba(255, 255, 255, 0.38);
+        --reject: #ff8a7a;
+        --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+        --bar-height: 3.5rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      /*
+       * Several panels below set `display`, which would otherwise beat the browser's
+       * own `[hidden] { display: none }` and leave hidden things on screen.
+       */
+      [hidden] {
+        display: none !important;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font);
+        font-size: 15px;
+        line-height: 1.5;
+        overflow: hidden;
+      }
+
+      kbd {
+        font: inherit;
+        font-size: 0.75em;
+        padding: 0.1em 0.35em;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--ink-faint);
+        background: rgba(0, 0, 0, 0.25);
+      }
+
+      /* ---------- top bar ---------- */
+
+      .bar {
+        height: var(--bar-height);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0 1.25rem;
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .bar h1 {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+
+      .filters {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+
+      .filters button {
+        font: inherit;
+        font-size: 0.82rem;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 0.3rem 0.8rem;
+        cursor: pointer;
+      }
+
+      .filters button:hover {
+        color: var(--ink);
+        border-color: var(--border);
+      }
+
+      .filters button[aria-pressed="true"] {
+        color: var(--bg);
+        background: var(--accent);
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+
+      .filters .count {
+        opacity: 0.7;
+        margin-left: 0.4rem;
+      }
+
+      .bar-end {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+      }
+
+      .mode {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+      }
+
+      .hint {
+        cursor: help;
+      }
+
+      /* ---------- layout ---------- */
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 24rem) 1fr;
+        height: calc(100vh - var(--bar-height));
+      }
+
+      .list {
+        overflow-y: auto;
+        border-right: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .list-lesson {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding: 0.7rem 1rem 0.4rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        background: var(--panel);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 0.75rem 1fr auto;
+        align-items: baseline;
+        gap: 0.7rem;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid rgba(31, 74, 50, 0.5);
+        padding: 0.7rem 1rem;
+        cursor: pointer;
+      }
+
+      .row:hover {
+        background: var(--panel-raised);
+        color: var(--ink);
+      }
+
+      .row[aria-current="true"] {
+        background: var(--panel-raised);
+        color: var(--ink);
+        box-shadow: inset 3px 0 0 var(--accent);
+      }
+
+      .row .dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        border: 1px solid var(--ink-faint);
+        align-self: center;
+      }
+
+      .row[data-status="approved"] .dot {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .row[data-status="rejected"] .dot {
+        background: var(--reject);
+        border-color: var(--reject);
+      }
+
+      .row .title {
+        min-width: 0;
+      }
+
+      .row .title strong {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .row .title span {
+        font-size: 0.76rem;
+        color: var(--ink-faint);
+      }
+
+      .row .tail {
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+        white-space: nowrap;
+      }
+
+      .row[data-rendered="false"] .tail {
+        color: var(--reject);
+      }
+
+      .row .note {
+        grid-column: 2 / -1;
+        font-size: 0.74rem;
+        color: var(--accent);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* ---------- stage ---------- */
+
+      .stage {
+        display: grid;
+        grid-template-columns: minmax(240px, 26rem) minmax(0, 1fr);
+        gap: 2rem;
+        padding: 1.5rem;
+        overflow-y: auto;
+      }
+
+      .stage.empty {
+        display: grid;
+        place-items: center;
+        color: var(--ink-faint);
+      }
+
+      .player {
+        position: sticky;
+        top: 0;
+      }
+
+      /*
+       * The composed preview: the same canvas the renderer draws, at the same
+       * proportions (tools/clip-renderer/src/theme.ts → layoutFor), so trimming
+       * and the caption/brand choice can be judged here instead of only after
+       * a render. The shape follows the clip's output format: 9:16 for
+       * IG/TikTok, 16:9 for YouTube.
+       */
+      .frame {
+        position: relative;
+        container-type: inline-size;
+        width: 100%;
+        aspect-ratio: 1080 / 1920;
+        max-height: calc(100vh - var(--bar-height) - 3rem);
+        margin: 0 auto;
+        overflow: hidden;
+        background: #000;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+
+      /* Wider preview column when the clip is a landscape render, so a 16:9
+         frame does not shrink to a stamp inside a portrait-sized column. */
+      .stage[data-format="horizontal"] {
+        grid-template-columns: minmax(320px, 42rem) minmax(0, 1fr);
+      }
+
+      .frame[data-format="horizontal"] {
+        aspect-ratio: 16 / 9;
+      }
+
+      .frame-video {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: #000;
+      }
+
+      /* Windowed = previewing raw lesson footage against the composed frame.
+         Unwindowed = playing an already-rendered file, which already has the
+         title and captions burned in, so the overlay would double them up. */
+      .frame[data-windowed="true"] .frame-video {
+        top: 34.18%; /* centered: equal space above and below the footage */
+        aspect-ratio: 16 / 9;
+      }
+
+      .frame[data-windowed="false"] .frame-video {
+        inset: 0;
+      }
+
+      /* Horizontal output: the footage fills the whole frame in both modes —
+         the render overlays its text on it, so the preview does too. */
+      .frame[data-format="horizontal"] .frame-video {
+        inset: 0;
+      }
+
+      .frame[data-windowed="false"] .frame-title,
+      .frame[data-windowed="false"] .frame-caption {
+        display: none;
+      }
+
+      .frame-video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .frame-title {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        top: 13.54%; /* layout.headerTop = 260/1920, tools/clip-renderer/src/theme.ts */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.1cqw;
+        text-align: center;
+      }
+
+      .frame-presents {
+        font-size: 2.3cqw;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+      }
+
+      .frame-topic {
+        font-size: 4.8cqw;
+        font-weight: 700;
+        line-height: 1.15;
+        text-wrap: balance;
+      }
+
+      .frame-student {
+        font-size: 2.5cqw;
+        opacity: 0.75;
+      }
+
+      .frame-caption {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        bottom: 22.396%;
+        text-align: center;
+        font-size: 5.2cqw;
+        font-weight: 700;
+        line-height: 1.18;
+        text-wrap: balance;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Horizontal output mirrors the renderer's horizontal layout: header
+         nearer the top edge, captions near the bottom, both over footage.
+         theme.ts → layoutFor('horizontal'). */
+      .frame[data-format="horizontal"] .frame-title { top: 6%; }
+      .frame[data-format="horizontal"] .frame-topic { font-size: 3.4cqw; }
+      .frame[data-format="horizontal"] .frame-presents { font-size: 1.7cqw; }
+      .frame[data-format="horizontal"] .frame-student { font-size: 1.8cqw; }
+      .frame[data-format="horizontal"] .frame-caption {
+        bottom: 7.8%;
+        font-size: 4cqw;
+      }
+
+      .frame-note {
+        margin: 0.5rem 0 0;
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        text-align: center;
+      }
+
+      .unrendered {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 9 / 16;
+        margin: 0;
+        padding: 2rem;
+        text-align: center;
+        color: var(--ink-faint);
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+      }
+
+      .frame[data-format="horizontal"] ~ .unrendered,
+      .unrendered[data-format="horizontal"] {
+        aspect-ratio: 16 / 9;
+      }
+
+      .detail {
+        min-width: 0;
+        max-width: 46rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.3rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .title-edit {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0 0 0.35rem;
+      }
+
+      .topic-input {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        color: var(--ink);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 0.15rem 0.4rem;
+        margin-left: -0.4rem;
+      }
+
+      .topic-input:hover { border-color: var(--border); }
+      .topic-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: var(--panel);
+      }
+
+      .meta {
+        margin: 0;
+        color: var(--ink-dim);
+        font-size: 0.85rem;
+      }
+
+      .verdict {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 1.25rem 0;
+      }
+
+      .verdict button {
+        font: inherit;
+        font-weight: 600;
+        font-size: 0.88rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .verdict button:hover {
+        border-color: var(--accent);
+      }
+
+      .verdict button kbd {
+        border-color: currentColor;
+        opacity: 0.55;
+      }
+
+      .verdict .approve[aria-pressed="true"] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+      }
+
+      .verdict .reject[aria-pressed="true"] {
+        background: var(--reject);
+        border-color: var(--reject);
+        color: var(--bg);
+      }
+
+      .verdict .reset[aria-pressed="true"] {
+        border-color: var(--ink-dim);
+      }
+
+      .saved {
+        font-size: 0.78rem;
+        color: var(--accent);
+        min-height: 1.2em;
+      }
+
+      .saved.error {
+        color: var(--reject);
+      }
+
+      .field {
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+
+      .field > span {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem;
+        resize: vertical;
+      }
+
+      textarea:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+
+      .facts {
+        margin: 0;
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        gap: 0.5rem 1.25rem;
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.25rem;
+      }
+
+      .facts dt {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        padding-top: 0.15rem;
+      }
+
+      .facts dd {
+        margin: 0;
+        color: var(--ink-dim);
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .facts dd.quote {
+        border-left: 2px solid var(--border);
+        padding-left: 0.85rem;
+        font-style: italic;
+        color: var(--ink);
+      }
+
+      .facts a {
+        color: var(--accent);
+      }
+
+      dialog {
+        background: var(--panel);
+        color: var(--ink);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        max-width: 24rem;
+      }
+
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      dialog h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1rem;
+      }
+
+      dialog ul {
+        margin: 0 0 1rem;
+        padding-left: 1.1rem;
+        color: var(--ink-dim);
+        font-size: 0.88rem;
+      }
+
+      dialog button {
+        font: inherit;
+        padding: 0.4rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        body {
+          overflow: auto;
+        }
+
+        .layout,
+        .stage {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .list {
+          max-height: 40vh;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .player {
+          position: static;
+        }
+
+        .frame {
+          max-height: 70vh;
+        }
+      }
+
+      /* ---------- folder-mode welcome ---------- */
+
+      .welcome {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: var(--bg);
+        z-index: 10;
+      }
+
+      .welcome-inner {
+        max-width: 34rem;
+        text-align: center;
+      }
+
+      .welcome h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.6rem;
+      }
+
+      .welcome p {
+        margin: 0 0 1.25rem;
+        color: var(--ink-dim);
+      }
+
+      .welcome .big {
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.7rem 1.5rem;
+        border-radius: 10px;
+        border: 1px solid var(--accent);
+        background: var(--accent);
+        color: var(--bg);
+        cursor: pointer;
+      }
+
+      .welcome .secondary {
+        font: inherit;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+        padding: 0.7rem 1.25rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .welcome .note {
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--ink-faint);
+      }
+
+      .welcome .note code {
+        color: var(--accent);
+      }
+
+      .welcome .warn {
+        color: var(--reject);
+      }
+
+      .folder {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+        max-width: 22rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bar-end button {
+        font: inherit;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.15rem 0.6rem;
+        cursor: pointer;
+      }
+
+      .bar-end button:hover {
+        color: var(--ink);
+        border-color: var(--accent);
+      }
+
+      .render-btn {
+        font-weight: 650;
+        color: var(--bg) !important;
+        background: var(--accent);
+        border-color: var(--accent) !important;
+      }
+
+      .render-btn:hover { background: var(--accent-bright); border-color: var(--accent-bright) !important; }
+      .render-btn:disabled { opacity: 0.5; cursor: default; }
+      .render-btn:disabled:hover { background: var(--accent); border-color: var(--accent) !important; }
+
+      .render-status {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        max-width: 22rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .render-status.error { color: var(--reject); }
+      .render-status.ok { color: var(--accent); }
+
+      /* ---------- output-format switch (top bar) ---------- */
+
+      .format-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.14rem 0.32rem 0.14rem 0.7rem;
+      }
+
+      .format-switch .format-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-right: 0.15rem;
+      }
+
+      .format-switch button {
+        font: inherit;
+        font-size: 0.74rem;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 0.12rem 0.55rem;
+        cursor: pointer;
+      }
+
+      .format-switch button:hover { color: var(--ink); border-color: var(--border); }
+
+      .format-switch button[aria-pressed="true"] {
+        color: var(--bg);
+        background: var(--accent);
+        border-color: var(--accent);
+        font-weight: 650;
+      }
+
+      /* ---------- transport ---------- */
+
+      .transport {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.6rem;
+      }
+
+      .transport button {
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel-raised);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .transport button:hover { border-color: var(--accent); }
+
+      .clock {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ---------- brand picker ---------- */
+
+      .brands {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 1rem 0 0;
+      }
+
+      .brand-label {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-right: 0.35rem;
+      }
+
+      .brand {
+        font: inherit;
+        font-size: 0.8rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink-dim);
+        cursor: pointer;
+      }
+
+      .brand:hover { color: var(--ink); }
+      .brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+      .brand .chip {
+        width: 0.85rem;
+        height: 0.85rem;
+        border-radius: 3px;
+        /* The swatch is the caption highlight itself, at the alpha it renders
+         * at, with the solid bar under it. */
+        box-shadow: inset 0 -3px 0 0 currentColor;
+      }
+
+      .brand[aria-pressed="true"] {
+        color: var(--ink);
+        border-color: currentColor;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .brand .auto {
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+      }
+
+      /* ---------- per-clip format override ---------- */
+
+      .clip-format {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.6rem 0 0;
+      }
+
+      .clip-format .auto-note {
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+      }
+
+      /* ---------- trim editor ---------- */
+
+      .trim,
+      .captions-edit {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.9rem;
+        margin: 1.25rem 0;
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      .caption-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        padding: 0.35rem 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .caption-row:first-child { border-top: 0; }
+
+      .caption-row .caption-time {
+        flex: none;
+        width: 3.6rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+        padding-top: 0.4rem;
+      }
+
+      .caption-row textarea {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        font-size: 0.92rem;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.4rem 0.6rem;
+        resize: vertical;
+        min-height: 2.4rem;
+      }
+
+      .caption-row textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+      .captions-empty { color: var(--ink-faint); font-size: 0.88rem; }
+
+      .trim-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .trim-title {
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .length {
+        font-size: 0.8rem;
+        font-weight: 650;
+        font-variant-numeric: tabular-nums;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.1rem 0.55rem;
+      }
+
+      .length.ok { color: var(--accent); border-color: var(--accent); }
+      .length.out { color: var(--reject); border-color: var(--reject); }
+
+      .ghost {
+        font: inherit;
+        font-size: 0.76rem;
+        margin-left: auto;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--ink-dim);
+        cursor: pointer;
+      }
+
+      .ghost:hover { color: var(--ink); border-color: var(--accent); }
+
+      .times {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.6rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .times label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .times input {
+        font: inherit;
+        font-size: 0.9rem;
+        font-variant-numeric: tabular-nums;
+        width: 7rem;
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.35rem 0.5rem;
+      }
+
+      .times input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+      .times .arrow { color: var(--ink-faint); padding-bottom: 0.5rem; }
+
+      .trim-help {
+        margin: 0 0 0.6rem;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+      }
+
+      .words {
+        max-height: 12rem;
+        overflow-y: auto;
+        line-height: 2;
+        border-top: 1px solid var(--border);
+        padding-top: 0.6rem;
+      }
+
+      .word {
+        font: inherit;
+        font-size: 0.88rem;
+        color: var(--ink-faint);
+        background: transparent;
+        border: 0;
+        border-radius: 4px;
+        padding: 0.1rem 0.2rem;
+        margin: 0 0.05rem;
+        cursor: pointer;
+      }
+
+      .word:hover { color: var(--ink); background: rgba(124, 232, 160, 0.14); }
+      .word:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+      .word.in {
+        color: var(--bg);
+        background: var(--accent);
+        font-weight: 600;
+      }
+
+      .word.in:hover { background: var(--accent-bright); }
+
+      .row .tail.edited { color: var(--accent); }
+
+      .batch {
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        max-width: 26rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .welcome pre {
+        margin: 0.75rem 0 0;
+        text-align: left;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.8rem;
+        color: var(--accent);
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.7rem 0.85rem;
+      }
+
+      .welcome code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent); }
+
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <h1>Clip review</h1>
+      <nav class="filters" id="filters" aria-label="Filter clips"></nav>
+      <div class="bar-end">
+        <span class="batch" id="batch"></span>
+        <div class="format-switch" id="format-switch" role="group" aria-label="Output size">
+          <span class="format-label">Output</span>
+          <button type="button" data-format="vertical">IG/TikTok 9:16</button>
+          <button type="button" data-format="horizontal">YouTube 16:9</button>
+          <button type="button" data-both="true">Both</button>
+        </div>
+        <button type="button" class="render-btn" id="render-btn">Render approved</button>
+        <span class="render-status" id="render-status" aria-live="polite"></span>
+        <span class="hint" id="hint">? for keys</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="list" id="list" aria-label="Clips"></aside>
+
+      <section class="stage" id="stage" hidden>
+        <div class="player">
+          <div class="frame" id="frame">
+            <div class="frame-video" id="frame-video">
+              <video id="video" controls preload="metadata" playsinline></video>
+            </div>
+            <div class="frame-title" id="frame-title">
+              <div class="frame-presents" id="frame-presents"></div>
+              <div class="frame-topic" id="frame-topic"></div>
+              <div class="frame-student" id="frame-student"></div>
+            </div>
+            <div class="frame-caption" id="frame-caption"></div>
+          </div>
+          <p class="unrendered" id="novideo" hidden></p>
+
+          <div class="transport" id="transport">
+            <button type="button" id="play-clip">Play the clip <kbd>Space</kbd></button>
+            <span class="clock" id="clock"></span>
+          </div>
+          <p class="frame-note">Preview — approximates the actual render; not pixel-exact.</p>
+        </div>
+
+        <div class="detail">
+          <!-- Brand sits above the title: the colour gets changed on nearly
+               every clip, the captions rarely, so it must not need a scroll. -->
+          <div class="brands" id="brands" role="group" aria-label="Brand">
+            <span class="brand-label">Caption highlight</span>
+          </div>
+
+          <div class="detail-head">
+            <p class="eyebrow" id="eyebrow"></p>
+            <div class="title-edit">
+              <input type="text" id="topic" class="topic-input" aria-label="Title" />
+              <button type="button" class="ghost" id="reset-topic" hidden>Reset title</button>
+            </div>
+            <p class="meta" id="meta"></p>
+          </div>
+
+          <section class="trim" id="trim" aria-label="Trim">
+            <header class="trim-head">
+              <span class="trim-title">In and out</span>
+              <span class="length" id="length"></span>
+              <button type="button" class="ghost" id="reset-trim" hidden>Undo trim</button>
+            </header>
+
+            <div class="times">
+              <label>
+                <span>Start</span>
+                <input type="text" id="start" inputmode="numeric" placeholder="M:SS" />
+              </label>
+              <span class="arrow">→</span>
+              <label>
+                <span>End</span>
+                <input type="text" id="end" inputmode="numeric" placeholder="M:SS" />
+              </label>
+            </div>
+
+            <p class="trim-help" id="trim-help">
+              Click a word to move the nearer edge to it — a word outside the clip
+              lengthens it, a word inside shortens it.
+            </p>
+
+            <div class="words" id="words" aria-label="Transcript"></div>
+          </section>
+
+          <div class="verdict" role="group" aria-label="Verdict">
+            <button type="button" class="approve" data-status="approved">Approve <kbd>A</kbd></button>
+            <button type="button" class="reject" data-status="rejected">Reject <kbd>R</kbd></button>
+            <button type="button" class="reset" data-status="pending">Undecided <kbd>U</kbd></button>
+            <span class="saved" id="saved" aria-live="polite"></span>
+          </div>
+
+          <section class="captions-edit" id="captions-edit" aria-label="Captions">
+            <header class="trim-head">
+              <span class="trim-title">On-screen captions</span>
+              <button type="button" class="ghost" id="reset-captions" hidden>Reset captions</button>
+            </header>
+            <p class="trim-help">Edit the words as they'll actually appear burned into the video.</p>
+            <div id="captions-list"></div>
+          </section>
+
+          <div class="clip-format" id="clip-format" role="group" aria-label="This clip's output size">
+            <span class="brand-label">Output size</span>
+            <button type="button" class="brand" data-clip-format="follow">Follow the switch</button>
+            <button type="button" class="brand" data-clip-format="vertical">9:16</button>
+            <button type="button" class="brand" data-clip-format="horizontal">16:9</button>
+          </div>
+
+          <label class="field">
+            <span>Feedback <kbd>F</kbd></span>
+            <textarea id="feedback" rows="4" placeholder="What works, what to recut, caption changes…"></textarea>
+          </label>
+
+          <dl class="facts" id="facts"></dl>
+        </div>
+      </section>
+
+      <section class="stage empty" id="empty" hidden>
+        <p>No clips match this filter.</p>
+      </section>
+    </main>
+
+    <section class="welcome" id="welcome" hidden>
+      <div class="welcome-inner">
+        <h2>Start it with the launcher</h2>
+        <p>
+          This page reviews the batch your extractor last wrote, and plays the
+          lesson videos it cut the clips from. A page opened straight from the
+          filesystem cannot reach either, so it has to be started rather than
+          double-clicked on its own.
+        </p>
+        <p class="note">
+          Double-click <code>Review clips.command</code> in this folder — or run:
+        </p>
+        <pre id="launch-cmd">cd tools/clip-review
+node bin/review.mjs --video-dir ~/Videos/lessons</pre>
+      </div>
+    </section>
+
+    <dialog id="keys">
+      <h2>Keyboard</h2>
+      <ul>
+        <li><kbd>J</kbd> / <kbd>K</kbd> next / previous clip</li>
+        <li><kbd>A</kbd> approve <kbd>R</kbd> reject <kbd>U</kbd> undecided</li>
+        <li><kbd>V</kbd> output 9:16 <kbd>H</kbd> output 16:9 (the Output switch)</li>
+        <li><kbd>Space</kbd> play the clip from its in-point</li>
+        <li><kbd>[</kbd> / <kbd>]</kbd> nudge the in-point, <kbd>Shift</kbd> for the out-point</li>
+        <li><kbd>N</kbd> jump to the next undecided clip</li>
+        <li><kbd>F</kbd> write feedback, <kbd>Esc</kbd> to leave the box</li>
+        <li><kbd>?</kbd> this list</li>
+      </ul>
+      <form method="dialog"><button>Close</button></form>
+    </dialog>
+
+    <script>
+      /*
+       * The review page.
+       *
+       * A clip is a decision, not a file: it is reviewed, trimmed and approved
+       * before anything is rendered, by playing the lesson video across the
+       * clip's window. Approving writes a render manifest of the approved clips
+       * at their trimmed in and out points, so the renderer only ever renders
+       * what was actually approved.
+       *
+       * Trimming is by word. Clicking a word moves whichever boundary is nearer
+       * to it, so a word before the in-point pulls the clip open and a word
+       * inside it pulls the clip in.
+       *
+       * A classic script, not a module, and inline CSS: the file is served by
+       * bin/review.mjs but must still render standalone, and module scripts are
+       * blocked by CORS on file:// URLs.
+       */
+      (function () {
+        'use strict';
+
+        var $ = function (id) { return document.getElementById(id); };
+        var el = {
+          filters: $('filters'), list: $('list'), stage: $('stage'), empty: $('empty'),
+          video: $('video'), novideo: $('novideo'), transport: $('transport'),
+          frame: $('frame'), framePresents: $('frame-presents'),
+          frameTopic: $('frame-topic'), frameStudent: $('frame-student'),
+          frameCaption: $('frame-caption'),
+          playClip: $('play-clip'), clock: $('clock'), eyebrow: $('eyebrow'),
+          topic: $('topic'), resetTopic: $('reset-topic'), meta: $('meta'), trim: $('trim'), length: $('length'),
+          resetTrim: $('reset-trim'), start: $('start'), end: $('end'),
+          trimHelp: $('trim-help'), words: $('words'), feedback: $('feedback'),
+          captionsList: $('captions-list'), resetCaptions: $('reset-captions'),
+          facts: $('facts'), saved: $('saved'), batch: $('batch'), hint: $('hint'),
+          renderBtn: $('render-btn'), renderStatus: $('render-status'),
+          brands: $('brands'), clipFormat: $('clip-format'), formatSwitch: $('format-switch'),
+          keys: $('keys'), welcome: $('welcome'), layout: document.querySelector('.layout'),
+        };
+
+        /* Tabs first: the three verdicts you move clips between. All and
+           Rendered sit after them as utility views. */
+        var FILTERS = [['pending', 'Undecided'], ['approved', 'Approved'], ['rejected', 'Rejected'], ['all', 'All'], ['rendered', 'Rendered']];
+        var NUDGE = 0.25;
+
+        /* Output shapes, mirroring tools/clip-renderer/src/theme.ts FORMATS. */
+        var FORMAT_LABEL = { vertical: 'IG/TikTok 9:16', horizontal: 'YouTube 16:9' };
+
+        /*
+         * The four products, with the accent each one highlights captions in.
+         * These are the accents from tools/clip-renderer/src/theme.ts — copied,
+         * because that file is TypeScript and this page has no build step.
+         */
+        // Full token set, copied from tools/clip-renderer/src/theme.ts — the
+        // preview frame below has to look like the actual render, not just
+        // tint a swatch, or trimming here stops predicting what comes out.
+        var BRANDS = [
+          {
+            id: 'vme', label: 'VME', accent: '#7CE8A0',
+            bg: '#081812', panel: '#122d1e', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
+            font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'Vocal Mastery for Entrepreneurs',
+          },
+          {
+            id: 'frequency', label: 'Frequency', accent: '#C42A40',
+            bg: '#33090E', panel: '#3F0D12', ink: '#F1F0CC', inkDim: '#BAB09A',
+            font: "'EB Garamond', Georgia, serif", weight: 600, uppercase: false,
+            presents: 'Vocal Mastery for Entrepreneurs: Frequency Series',
+          },
+          {
+            id: 'learn2sing', label: 'Learn 2 Sing', accent: '#C9A9F0',
+            bg: '#130a1e', panel: '#241636', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
+            font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'Learn 2 Sing',
+          },
+          {
+            id: 'mr33', label: 'Music 33', accent: '#6FA3FF',
+            bg: '#07142c', panel: '#0f2146', ink: '#ffffff', inkDim: 'rgba(255,255,255,0.65)',
+            font: 'Inter, system-ui, sans-serif', weight: 700, uppercase: true,
+            presents: 'MusicRoom 33',
+          },
+        ];
+        function brandFor(id) {
+          for (var i = 0; i < BRANDS.length; i++) if (BRANDS[i].id === id) return BRANDS[i];
+          return BRANDS[0];
+        }
+        // tools/clip-renderer/src/theme.ts → layout, expressed as a share of the
+        // canvas so the same numbers work at any on-screen size. Video is
+        // centered vertically: equal space above and below the footage.
+        var FRAME = (function () {
+          var videoHeight = (1080 * 9 / 16) / 1920;
+          return { videoTop: (1 - videoHeight) / 2, videoHeight: videoHeight, captionBottom: 430 / 1920, headerTop: 96 / 1920 };
+        })();
+
+        var state = {
+          clips: [], counts: {}, rules: {}, lessons: {}, filter: 'pending',
+          currentId: null, words: {}, currentCaptions: [], loaded: false,
+          // The run-wide output shape the render button will use.
+          formatState: { format: 'vertical', both: false },
+        };
+
+        /* ================= server ================= */
+
+        function getJson(path) {
+          return fetch(path).then(function (res) {
+            if (!res.ok) throw new Error('server said ' + res.status);
+            return res.json();
+          });
+        }
+
+        function load() {
+          return Promise.all([getJson('/api/clips'), getJson('/api/format')]).then(function (results) {
+            var data = results[0];
+            state.clips = data.clips;
+            state.counts = data.counts;
+            state.rules = data.rules || {};
+            state.lessons = {};
+            (data.lessons || []).forEach(function (lesson) { state.lessons[lesson.id] = lesson; });
+            if (results[1] && results[1].format) state.formatState = results[1];
+            state.loaded = true;
+
+            el.batch.textContent = data.counts.all + ' clips · approved batch written to ' +
+              shortPath(data.renderManifest);
+            el.batch.title = data.renderManifest;
+
+            renderFormatSwitch();
+            if (!visible().length && state.filter === 'pending') state.filter = 'all';
+            if (!state.currentId) state.currentId = (visible()[0] || {}).id || null;
+            render();
+          });
+        }
+
+        function save(id, patch) {
+          el.saved.className = 'saved';
+          el.saved.textContent = 'Saving…';
+
+          return fetch('/api/clips/' + encodeURIComponent(id), {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(patch),
+          }).then(function (res) {
+            if (res.ok) return res.json();
+            return res.json().catch(function () { return { error: res.statusText }; })
+              .then(function (body) { throw new Error(body.error); });
+          }).then(function (data) {
+            for (var i = 0; i < state.clips.length; i++) {
+              if (state.clips[i].id === id) state.clips[i] = data.clip;
+            }
+            state.counts = data.counts;
+            el.saved.textContent = 'Saved';
+            clearTimeout(save.clear);
+            save.clear = setTimeout(function () { el.saved.textContent = ''; }, 1600);
+            return data.clip;
+          }).catch(function (err) {
+            el.saved.className = 'saved error';
+            el.saved.textContent = 'Not saved: ' + err.message;
+            return null;
+          });
+        }
+
+        function wordsFor(clip) {
+          if (state.words[clip.id]) return Promise.resolve(state.words[clip.id]);
+          return getJson('/api/words/' + encodeURIComponent(clip.id)).then(function (data) {
+            state.words[clip.id] = data;
+            return data;
+          }).catch(function () {
+            return { words: [], hasWords: false, hasTranscript: false };
+          });
+        }
+
+        // Not cached like words: which cues fall inside the clip changes the
+        // instant start/end is trimmed, so a cached set would go stale on the
+        // very edit the preview exists to check.
+        function captionsForEdit(clip) {
+          return getJson('/api/captions/' + encodeURIComponent(clip.id))
+            .then(function (data) { return { cues: data.cues || [], edited: Boolean(data.edited) }; })
+            .catch(function () { return { cues: [], edited: false }; });
+        }
+
+        /* ================= selectors ================= */
+
+        function visible() {
+          if (state.filter === 'all') return state.clips;
+          // Rendered is a fact about the file, not a verdict, so it filters
+          // on clip.rendered rather than clip.status like the other tabs.
+          if (state.filter === 'rendered') return state.clips.filter(function (c) { return c.rendered; });
+          return state.clips.filter(function (c) { return c.status === state.filter; });
+        }
+
+        function current() {
+          return state.clips.filter(function (c) { return c.id === state.currentId; })[0] || null;
+        }
+
+        function shortPath(path) {
+          if (!path) return '';
+          var parts = String(path).split(/[/\\]/);
+          return parts.slice(-2).join('/');
+        }
+
+        function clock(seconds) {
+          if (seconds === null || seconds === undefined || isNaN(seconds)) return '—';
+          var whole = Math.max(0, Math.floor(seconds));
+          var m = Math.floor(whole / 60);
+          var s = whole % 60;
+          return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        // The trim inputs read and write M:SS (or H:MM:SS) so a time can be typed
+        // straight off the YouTube scrubber, rather than raw seconds nobody
+        // reads off the video.
+        function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+        function formatTime(value) {
+          if (value === null || value === undefined || isNaN(value)) return '';
+          var v = Math.max(0, Number(value));
+          var h = Math.floor(v / 3600);
+          var m = Math.floor((v % 3600) / 60);
+          var s = v - h * 3600 - m * 60;
+          var secStr = pad2(Math.floor(s)) + (Math.abs(s - Math.round(s)) < 0.005 ? '' : ('.' + s.toFixed(2).split('.')[1]));
+          return h > 0 ? (h + ':' + pad2(m) + ':' + secStr) : (m + ':' + secStr);
+        }
+
+        function parseTime(value) {
+          var text = String(value || '').trim();
+          if (!text) return null;
+          var parts = text.split(':').map(function (p) { return p.trim(); });
+          if (parts.some(function (p) { return p === '' || isNaN(Number(p)); })) return null;
+          var nums = parts.map(Number);
+          var total;
+          if (nums.length === 3) total = nums[0] * 3600 + nums[1] * 60 + nums[2];
+          else if (nums.length === 2) total = nums[0] * 60 + nums[1];
+          else if (nums.length === 1) total = nums[0];
+          else return null;
+          return isNaN(total) || total < 0 ? null : total;
+        }
+
+        /* ================= render ================= */
+
+        function render() { renderFilters(); renderList(); renderDetail(); }
+
+        function renderFilters() {
+          var nodes = FILTERS.map(function (entry) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.setAttribute('aria-pressed', String(state.filter === entry[0]));
+            button.appendChild(document.createTextNode(entry[1]));
+
+            var count = document.createElement('span');
+            count.className = 'count';
+            count.textContent = state.counts[entry[0]] || 0;
+            button.appendChild(count);
+
+            button.addEventListener('click', function () {
+              state.filter = entry[0];
+              var kept = visible().filter(function (c) { return c.id === state.currentId; });
+              if (!kept.length) state.currentId = (visible()[0] || {}).id || null;
+              render();
+            });
+            return button;
+          });
+          el.filters.replaceChildren.apply(el.filters, nodes);
+        }
+
+        function renderList() {
+          var nodes = [];
+          var lesson = null;
+
+          visible().forEach(function (clip) {
+            var heading = clip.lesson || 'Unfiled clips';
+            if (heading !== lesson) {
+              lesson = heading;
+              var head = document.createElement('p');
+              head.className = 'list-lesson';
+              head.textContent = heading;
+              nodes.push(head);
+            }
+            nodes.push(rowFor(clip));
+          });
+
+          el.list.replaceChildren.apply(el.list, nodes);
+          var here = el.list.querySelector('[aria-current="true"]');
+          if (here) here.scrollIntoView({ block: 'nearest' });
+        }
+
+        function rowFor(clip) {
+          var row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'row';
+          row.dataset.status = clip.status;
+          row.dataset.rendered = String(clip.rendered);
+          row.setAttribute('aria-current', String(clip.id === state.currentId));
+
+          var dot = document.createElement('span');
+          dot.className = 'dot';
+
+          var title = document.createElement('span');
+          title.className = 'title';
+          var strong = document.createElement('strong');
+          strong.textContent = clip.topic || clip.id;
+          var sub = document.createElement('span');
+          sub.textContent = [clip.student, clip.awareness].filter(Boolean).join(' · ') || clip.id;
+          title.appendChild(strong);
+          title.appendChild(sub);
+
+          var tail = document.createElement('span');
+          tail.className = 'tail';
+          tail.textContent = clip.durationSeconds === null ? 'no times' : Math.round(clip.durationSeconds) + 's';
+          if (clip.trimmed) tail.classList.add('edited');
+
+          row.appendChild(dot);
+          row.appendChild(title);
+          row.appendChild(tail);
+
+          if (clip.feedback) {
+            var note = document.createElement('span');
+            note.className = 'note';
+            note.textContent = clip.feedback;
+            row.appendChild(note);
+          }
+
+          row.addEventListener('click', function () { select(clip.id); });
+          return row;
+        }
+
+        function renderDetail() {
+          var clip = current();
+          el.stage.hidden = !clip;
+          el.empty.hidden = Boolean(clip);
+          if (!clip) return;
+
+          el.eyebrow.textContent = [clip.awareness, clip.highValueType].filter(Boolean).join(' · ');
+          if (document.activeElement !== el.topic) el.topic.value = clip.topic || clip.id;
+          el.resetTopic.hidden = !clip.topicEdited;
+          el.meta.textContent = [clip.student, clip.date].filter(Boolean).join(' · ') +
+            (clip.trimmed ? ' · trimmed' : '') +
+            (clip.renderStale ? ' · rendered file is the old cut' : '');
+
+          applyFrameFormat(clip);
+          renderFrameBrand(clip);
+          showVideo(clip);
+          renderTrim(clip);
+          renderCaptionsEditor(clip);
+          renderBrands(clip);
+
+          var buttons = document.querySelectorAll('.verdict button');
+          for (var i = 0; i < buttons.length; i++) {
+            buttons[i].setAttribute('aria-pressed', String(buttons[i].dataset.status === clip.status));
+          }
+
+          if (el.feedback.value !== clip.feedback && document.activeElement !== el.feedback) {
+            el.feedback.value = clip.feedback;
+          }
+          renderFacts(clip);
+        }
+
+        /* ---------- the player ----------
+         * The lesson video is the thing being reviewed: a clip is a window on
+         * it, and trimming moves the window. A rendered file, when one exists,
+         * is only played when there is no lesson video to play instead.
+         */
+
+        /*
+         * The output shape this clip renders in: its own override wins, then
+         * the run-wide switch. With Both pinned the run produces both shapes —
+         * the preview shows the portrait one and the note below the picker
+         * says so.
+         */
+        function clipFormat(clip) {
+          if (clip.formatOverride) return { shape: clip.formatOverride, overridden: true };
+          if (state.formatState.both) return { shape: 'vertical', overridden: false };
+          return { shape: state.formatState.format, overridden: false };
+        }
+
+        function applyFrameFormat(clip) {
+          var eff = clipFormat(clip);
+          el.frame.dataset.format = eff.shape;
+          el.stage.dataset.format = eff.shape;
+          el.novideo.dataset.format = eff.shape;
+          renderClipFormat(clip);
+        }
+
+        function renderClipFormat(clip) {
+          var buttons = el.clipFormat.querySelectorAll('button');
+          for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            var value = button.dataset.clipFormat;
+            var active =
+              value === 'follow' ? !clip.formatOverride : clip.formatOverride === value;
+            button.setAttribute('aria-pressed', String(active));
+            button.style.color = active ? 'var(--ink)' : '';
+          }
+
+          var old = el.clipFormat.querySelector('.auto-note');
+          if (old) old.parentNode.removeChild(old);
+
+          var note = document.createElement('span');
+          note.className = 'auto-note';
+          note.textContent = clip.formatOverride
+            ? 'this clip overrides the switch'
+            : state.formatState.both
+              ? 'follows the switch · renders both 9:16 and 16:9'
+              : 'follows the switch · ' + FORMAT_LABEL[state.formatState.format];
+          el.clipFormat.appendChild(note);
+        }
+
+        function renderFormatSwitch() {
+          var buttons = el.formatSwitch.querySelectorAll('button');
+          for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            if (button.dataset.both) {
+              button.setAttribute('aria-pressed', String(state.formatState.both));
+            } else {
+              var active = !state.formatState.both && state.formatState.format === button.dataset.format;
+              button.setAttribute('aria-pressed', String(active));
+            }
+          }
+        }
+
+        // Styles the composed frame like the renderer would for this clip's
+        // chosen brand — tools/clip-renderer/src/Clip.tsx, minus the footage
+        // itself (that stays a real <video>, not a redrawn approximation).
+        function renderFrameBrand(clip) {
+          var brand = brandFor(clip.brand);
+          el.frame.style.background = brand.bg;
+          el.framePresents.style.fontFamily = brand.font;
+          el.framePresents.style.color = brand.accent;
+          el.framePresents.style.textTransform = brand.uppercase ? 'uppercase' : 'none';
+          el.framePresents.textContent = brand.presents + ' presents';
+          el.frameTopic.style.fontFamily = brand.font;
+          el.frameTopic.style.fontWeight = brand.weight;
+          el.frameTopic.style.color = brand.ink;
+          el.frameTopic.textContent = clip.topic || clip.id;
+          el.frameStudent.style.fontFamily = brand.font;
+          el.frameStudent.style.color = brand.inkDim;
+          el.frameStudent.textContent = clip.student ? ('with ' + clip.student) : '';
+          el.frameCaption.style.fontFamily = brand.font;
+          el.frameCaption.style.fontWeight = brand.weight;
+          el.frameCaption.style.color = brand.ink;
+        }
+
+        function videoSource(clip) {
+          var lesson = state.lessons[clip.lessonId];
+          if (lesson && lesson.hasSource) {
+            return { url: '/source/' + encodeURIComponent(clip.lessonId), windowed: true };
+          }
+          if (clip.rendered) {
+            return { url: '/media/' + encodeURIComponent(clip.file), windowed: false };
+          }
+          return null;
+        }
+
+        function showVideo(clip) {
+          var source = videoSource(clip);
+
+          if (!source) {
+            el.frame.hidden = true;
+            el.transport.hidden = true;
+            el.novideo.hidden = false;
+            el.novideo.textContent = clip.rendered
+              ? 'No lesson video for this clip.'
+              : 'No video yet — pass --video-dir to review against the lesson.';
+            return;
+          }
+
+          el.frame.hidden = false;
+          el.novideo.hidden = true;
+          el.transport.hidden = !source.windowed;
+
+          if (el.video.dataset.src !== source.url) {
+            el.video.dataset.src = source.url;
+            el.video.src = source.url;
+          }
+          el.video.dataset.windowed = String(source.windowed);
+          el.frame.dataset.windowed = String(source.windowed);
+          if (source.windowed && clip.start !== null) seekTo(clip.start);
+
+          el.frameCaption.textContent = '';
+        }
+
+        // Captions are loaded once here — for both the live playback overlay
+        // (state.currentCaptions, read by the timeupdate handler) and the
+        // editable list below it — rather than twice, so an edit and the
+        // preview can never show two different versions of the same clip.
+        function renderCaptionsEditor(clip) {
+          state.currentCaptions = [];
+          el.captionsList.replaceChildren();
+          el.resetCaptions.hidden = true;
+
+          captionsForEdit(clip).then(function (data) {
+            if (state.currentId !== clip.id) return;
+            state.currentCaptions = data.cues;
+            el.resetCaptions.hidden = !data.edited;
+
+            if (!data.cues.length) {
+              var empty = document.createElement('p');
+              empty.className = 'captions-empty';
+              empty.textContent = clip.start === null
+                ? 'No timecodes on this clip yet.'
+                : 'No transcript cues fall inside this clip.';
+              el.captionsList.appendChild(empty);
+              return;
+            }
+
+            var rows = data.cues.map(function (cue, i) {
+              var row = document.createElement('div');
+              row.className = 'caption-row';
+
+              var time = document.createElement('span');
+              time.className = 'caption-time';
+              time.textContent = clock(cue.start);
+
+              var box = document.createElement('textarea');
+              box.rows = 1;
+              box.value = cue.text;
+              box.addEventListener('change', function () { commitCaptionEdit(clip, i, box.value); });
+
+              row.appendChild(time);
+              row.appendChild(box);
+              return row;
+            });
+            el.captionsList.replaceChildren.apply(el.captionsList, rows);
+          });
+        }
+
+        function commitCaptionEdit(clip, index, text) {
+          var next = (state.currentCaptions || []).map(function (cue, i) {
+            return i === index ? { start: cue.start, end: cue.end, text: text } : cue;
+          });
+          save(clip.id, { captions: next }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        }
+
+        function seekTo(time) {
+          var apply = function () {
+            try { el.video.currentTime = time; } catch (err) { /* not seekable yet */ }
+          };
+          if (el.video.readyState >= 1) apply();
+          else el.video.addEventListener('loadedmetadata', apply, { once: true });
+        }
+
+        function playClip() {
+          var clip = current();
+          if (!clip || el.frame.hidden) return;
+
+          if (el.video.dataset.windowed !== 'true') {
+            if (el.video.paused) el.video.play(); else el.video.pause();
+            return;
+          }
+          if (clip.start !== null) seekTo(clip.start);
+          el.video.play();
+        }
+
+        // Stop at the out-point, so playing a clip plays the clip rather than
+        // running on into the rest of the lesson.
+        el.video.addEventListener('timeupdate', function () {
+          var clip = current();
+          if (!clip || el.video.dataset.windowed !== 'true') return;
+
+          var t = el.video.currentTime;
+          el.clock.textContent = clock(t - (clip.start || 0)) + ' / ' + clock(clip.durationSeconds);
+
+          // Same rule as tools/clip-renderer/src/Captions.tsx: the cue whose
+          // [start, end) contains the current time, one at a time.
+          var cues = state.currentCaptions || [];
+          var active = null;
+          for (var i = 0; i < cues.length; i++) {
+            if (t >= cues[i].start && t < cues[i].end) { active = cues[i]; break; }
+          }
+          el.frameCaption.textContent = active ? active.text : '';
+
+          if (clip.end !== null && t >= clip.end) {
+            el.video.pause();
+            seekTo(clip.start === null ? 0 : clip.start);
+          }
+        });
+
+        function renderBrands(clip) {
+          var nodes = [document.createTextNode('')];
+          var label = document.createElement('span');
+          label.className = 'brand-label';
+          label.textContent = 'Caption highlight';
+          nodes = [label];
+
+          BRANDS.forEach(function (brand) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'brand';
+            button.style.color = brand.accent;
+            button.setAttribute('aria-pressed', String(brand.id === clip.brand));
+
+            var chip = document.createElement('span');
+            chip.className = 'chip';
+            chip.style.background = brand.accent + '4D';
+
+            var name = document.createElement('span');
+            name.textContent = brand.label;
+            name.style.color = brand.id === clip.brand ? 'var(--ink)' : 'var(--ink-dim)';
+
+            button.appendChild(chip);
+            button.appendChild(name);
+
+            // Says where the current brand came from, so an unreviewed clip
+            // does not look like somebody chose it.
+            if (brand.id === clip.brand && !clip.brandChosen) {
+              var auto = document.createElement('span');
+              auto.className = 'auto';
+              auto.textContent = 'from the title';
+              button.appendChild(auto);
+            }
+
+            button.addEventListener('click', function () {
+              save(clip.id, { brand: brand.id }).then(function (saved) {
+                if (saved) renderDetail();
+              });
+            });
+            nodes.push(button);
+          });
+
+          el.brands.replaceChildren.apply(el.brands, nodes);
+        }
+
+        /* ---------- the trim editor ---------- */
+
+        function renderTrim(clip) {
+          var editable = clip.start !== null && clip.end !== null;
+          el.trim.hidden = !editable;
+          if (!editable) return;
+
+          if (document.activeElement !== el.start) el.start.value = formatTime(clip.start);
+          if (document.activeElement !== el.end) el.end.value = formatTime(clip.end);
+
+          el.length.textContent = Math.round(clip.durationSeconds) + 's';
+          el.length.className = 'length ' + lengthVerdict(clip.durationSeconds);
+          el.length.title = ruleText();
+          el.resetTrim.hidden = !clip.trimmed;
+
+          wordsFor(clip).then(function (data) {
+            if (state.currentId !== clip.id) return;
+            renderWords(clip, data);
+          });
+        }
+
+        function lengthVerdict(length) {
+          var min = state.rules.minSeconds;
+          var max = state.rules.maxSeconds;
+          if (!min || !max) return 'ok';
+          return length < min || length > max ? 'out' : 'ok';
+        }
+
+        function ruleText() {
+          var min = state.rules.minSeconds;
+          var max = state.rules.maxSeconds;
+          return min && max ? 'The batch rule is ' + min + '–' + max + 's' : '';
+        }
+
+        function renderWords(clip, data) {
+          if (!data.hasTranscript) {
+            el.trimHelp.textContent =
+              'No transcript for this lesson, so there are no words to click. The in and out points can still be typed.';
+            el.words.replaceChildren();
+            return;
+          }
+
+          el.trimHelp.textContent = data.hasWords
+            ? 'Click a word to move the nearer edge to it — a word outside the clip lengthens it, a word inside shortens it.'
+            : 'Click a word to move the nearer edge to it. This lesson has no word-level timings, so word times are spread across each subtitle line — check the cut by ear.';
+
+          var nodes = data.words.map(function (word) {
+            var span = document.createElement('button');
+            span.type = 'button';
+            span.className = 'word' + (inClip(word, clip) ? ' in' : '');
+            span.textContent = word.word;
+            span.title = clock(word.start);
+            span.addEventListener('click', function () { snapTo(word); });
+            return span;
+          });
+
+          el.words.replaceChildren.apply(el.words, nodes);
+
+          var first = el.words.querySelector('.word.in');
+          if (first) {
+            el.words.scrollTop = Math.max(0, first.offsetTop - el.words.offsetTop - 40);
+          }
+        }
+
+        function inClip(word, clip) {
+          return word.start >= clip.start - 0.05 && word.end <= clip.end + 0.05;
+        }
+
+        /**
+         * Which edge a clicked word moves. The nearer one — so clicking out in
+         * the context before the clip pulls the in-point back to that word, and
+         * clicking a word just inside the end pulls the out-point in to it.
+         */
+        function chooseEdge(word, start, end) {
+          return Math.abs(word.start - start) <= Math.abs(word.end - end) ? 'start' : 'end';
+        }
+
+        function snapTo(word) {
+          var clip = current();
+          if (!clip) return;
+
+          var edge = chooseEdge(word, clip.start, clip.end);
+          var patch = {};
+          patch[edge] = edge === 'start' ? word.start : word.end;
+          commitTrim(patch);
+        }
+
+        function commitTrim(patch) {
+          var clip = current();
+          if (!clip) return;
+
+          // Guard here as well as on the server: a rejected patch would leave
+          // the boxes showing an edit that was never made.
+          var next = {
+            start: patch.start === undefined ? clip.start : patch.start,
+            end: patch.end === undefined ? clip.end : patch.end,
+          };
+          if (next.start !== null && next.end !== null && next.end - next.start < 1) {
+            el.saved.className = 'saved error';
+            el.saved.textContent = 'That would leave less than a second';
+            return;
+          }
+
+          save(clip.id, patch).then(function (saved) {
+            if (!saved) return;
+            renderDetail();
+            renderList();
+            if (saved.start !== null) seekTo(saved.start);
+          });
+        }
+
+        function nudge(edge, by) {
+          var clip = current();
+          if (!clip || clip.start === null) return;
+          var patch = {};
+          patch[edge] = Math.max(0, (edge === 'start' ? clip.start : clip.end) + by);
+          commitTrim(patch);
+        }
+
+        function renderFacts(clip) {
+          var facts = [
+            ['Caption', clip.suggestedCaption], ['CTA', clip.cta],
+            ['Why it hooks', clip.whyItHooks], ['Quote', clip.quote],
+            ['In the lesson', clip.start === null ? '' : clock(clip.start) + ' – ' + clock(clip.end)],
+            ['Score', clip.score === null ? '' : String(clip.score)],
+            ['Rendered file', clip.file || ''], ['Source', clip.sourceUrl],
+          ].filter(function (entry) { return entry[1]; });
+
+          var nodes = [];
+          facts.forEach(function (entry) {
+            var dt = document.createElement('dt');
+            dt.textContent = entry[0];
+            var dd = document.createElement('dd');
+            if (entry[0] === 'Quote') dd.className = 'quote';
+
+            if (entry[0] === 'Source') {
+              var a = document.createElement('a');
+              a.href = entry[1];
+              a.textContent = 'open the lesson at this point';
+              a.target = '_blank';
+              a.rel = 'noreferrer';
+              dd.appendChild(a);
+            } else {
+              dd.textContent = entry[1];
+            }
+            nodes.push(dt, dd);
+          });
+          el.facts.replaceChildren.apply(el.facts, nodes);
+        }
+
+        /* ================= actions ================= */
+
+        function select(id) {
+          if (id === state.currentId) return;
+          flushFeedback();
+          state.currentId = id;
+          render();
+        }
+
+        function step(delta) {
+          var clips = visible();
+          var at = -1;
+          clips.forEach(function (c, i) { if (c.id === state.currentId) at = i; });
+          var next = clips[Math.min(Math.max(at + delta, 0), clips.length - 1)];
+          if (next) select(next.id);
+        }
+
+        function nextUndecided() {
+          var clips = visible();
+          var at = -1;
+          clips.forEach(function (c, i) { if (c.id === state.currentId) at = i; });
+          var after = clips.slice(at + 1).filter(function (c) { return c.status === 'pending'; })[0];
+          var found = after || state.clips.filter(function (c) { return c.status === 'pending'; })[0];
+          if (found) select(found.id);
+        }
+
+        function setStatus(status) {
+          var clip = current();
+          if (!clip) return Promise.resolve();
+
+          return Promise.resolve(flushFeedback()).then(function () {
+            return save(clip.id, { status: status });
+          }).then(function () {
+            render();
+            var kept = visible().filter(function (c) { return c.id === state.currentId; });
+            if (state.filter === 'pending' && !kept.length) {
+              state.currentId = (visible()[0] || {}).id || null;
+              render();
+            }
+          });
+        }
+
+        var feedbackTimer = null;
+        var pendingEdit = null;
+
+        function queueFeedback() {
+          var clip = current();
+          if (!clip) return;
+          pendingEdit = { id: clip.id, feedback: el.feedback.value };
+          clearTimeout(feedbackTimer);
+          feedbackTimer = setTimeout(flushFeedback, 700);
+        }
+
+        function flushFeedback() {
+          clearTimeout(feedbackTimer);
+          if (!pendingEdit) return Promise.resolve();
+
+          var edit = pendingEdit;
+          pendingEdit = null;
+          var clip = state.clips.filter(function (c) { return c.id === edit.id; })[0];
+          if (!clip || clip.feedback === edit.feedback) return Promise.resolve();
+
+          return save(edit.id, { feedback: edit.feedback }).then(renderList);
+        }
+
+        /* ================= wiring ================= */
+
+        var verdictButtons = document.querySelectorAll('.verdict button');
+        for (var i = 0; i < verdictButtons.length; i++) {
+          (function (button) {
+            button.addEventListener('click', function () { setStatus(button.dataset.status); });
+          })(verdictButtons[i]);
+        }
+
+        el.playClip.addEventListener('click', playClip);
+        el.resetTrim.addEventListener('click', function () {
+          commitTrim({ start: null, end: null });
+        });
+
+        el.topic.addEventListener('change', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { topic: el.topic.value }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+        el.resetTopic.addEventListener('click', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { topic: null }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
+        el.resetCaptions.addEventListener('click', function () {
+          var clip = current();
+          if (!clip) return;
+          save(clip.id, { captions: null }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
+        /* ---------- output format ---------- */
+
+        // One path for the switch, the per-clip row's "follow" note, and the
+        // V / H keys — so they can never disagree about what is saved.
+        function patchFormat(patch) {
+          state.formatState = {
+            format: patch.format || state.formatState.format,
+            both: patch.both !== undefined ? patch.both : false,
+          };
+          renderFormatSwitch();
+          if (current()) applyFrameFormat(current());
+
+          return fetch('/api/format', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(patch),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('server said ' + res.status);
+            return res.json();
+          }).then(function (saved) {
+            state.formatState = saved;
+            renderFormatSwitch();
+            if (current()) applyFrameFormat(current());
+          }).catch(function () {
+            // Re-load on failure: the server's copy is the truth.
+            getJson('/api/format').then(function (data) {
+              state.formatState = data;
+              renderFormatSwitch();
+              if (current()) applyFrameFormat(current());
+            });
+          });
+        }
+
+        el.formatSwitch.addEventListener('click', function (e) {
+          var button = e.target.closest('button');
+          if (!button) return;
+
+          patchFormat(
+            button.dataset.both
+              ? { both: !(state.formatState.both) }
+              : { format: button.dataset.format, both: false },
+          );
+        });
+
+        el.clipFormat.addEventListener('click', function (e) {
+          var button = e.target.closest('button[data-clip-format]');
+          if (!button) return;
+          var clip = current();
+          if (!clip) return;
+
+          var value = button.dataset.clipFormat;
+          save(clip.id, { format: value === 'follow' ? null : value }).then(function (saved) {
+            if (saved) renderDetail();
+          });
+        });
+
+        [el.start, el.end].forEach(function (input) {
+          input.addEventListener('change', function () {
+            var value = parseTime(input.value);
+            if (value === null) {
+              el.saved.className = 'saved error';
+              el.saved.textContent = 'Could not read that time — use M:SS or H:MM:SS';
+              var clip = current();
+              if (clip) input.value = formatTime(input === el.start ? clip.start : clip.end);
+              return;
+            }
+            var patch = {};
+            patch[input === el.start ? 'start' : 'end'] = value;
+            commitTrim(patch);
+          });
+        });
+
+        el.feedback.addEventListener('input', queueFeedback);
+        el.feedback.addEventListener('blur', flushFeedback);
+        el.feedback.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') el.feedback.blur();
+        });
+
+        el.hint.addEventListener('click', function () { el.keys.showModal(); });
+
+        /* ---------- render approved clips ---------- */
+
+        var renderPoll = null;
+
+        function pollRender() {
+          getJson('/api/render').then(function (data) {
+            if (data.running) {
+              el.renderStatus.className = 'render-status';
+              el.renderStatus.textContent = 'Rendering… ' + lastLogLine(data.log);
+              return;
+            }
+
+            clearInterval(renderPoll);
+            renderPoll = null;
+            el.renderBtn.disabled = false;
+
+            if (data.error) {
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = 'Render failed to start: ' + data.error;
+            } else if (data.exitCode === 0) {
+              el.renderStatus.className = 'render-status ok';
+              el.renderStatus.textContent = 'Render finished.';
+            } else if (data.exitCode !== null) {
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = 'Render exited with an error — ' + lastLogLine(data.log);
+            }
+
+            // Picks up freshly rendered files and clears renderStale flags.
+            load();
+          });
+        }
+
+        function lastLogLine(log) {
+          var lines = String(log || '').trim().split('\n').filter(Boolean);
+          return lines.length ? lines[lines.length - 1].trim().slice(0, 90) : '';
+        }
+
+        el.renderBtn.addEventListener('click', function () {
+          el.renderBtn.disabled = true;
+          el.renderStatus.className = 'render-status';
+          el.renderStatus.textContent = 'Starting render…';
+
+          fetch('/api/render', { method: 'POST' }).then(function (res) {
+            return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+          }).then(function (result) {
+            if (!result.ok) {
+              el.renderBtn.disabled = false;
+              el.renderStatus.className = 'render-status error';
+              el.renderStatus.textContent = result.data.error || 'Could not start the render';
+              return;
+            }
+            clearInterval(renderPoll);
+            renderPoll = setInterval(pollRender, 1500);
+            pollRender();
+          }).catch(function (err) {
+            el.renderBtn.disabled = false;
+            el.renderStatus.className = 'render-status error';
+            el.renderStatus.textContent = 'Could not start the render: ' + err.message;
+          });
+        });
+
+        // A render already running when the page loads (started from another
+        // tab, or this page was reloaded mid-render) still shows progress.
+        getJson('/api/render').then(function (data) {
+          if (data.running) {
+            el.renderBtn.disabled = true;
+            renderPoll = setInterval(pollRender, 1500);
+            pollRender();
+          }
+        }).catch(function () {});
+
+        document.addEventListener('keydown', function (e) {
+          if (!state.loaded || e.metaKey || e.ctrlKey || e.altKey) return;
+          if (e.target && e.target.matches && e.target.matches('textarea, input')) return;
+
+          var actions = {
+            j: function () { step(1); }, arrowdown: function () { step(1); },
+            k: function () { step(-1); }, arrowup: function () { step(-1); },
+            a: function () { setStatus('approved'); },
+            r: function () { setStatus('rejected'); },
+            u: function () { setStatus('pending'); },
+
+            v: function () { patchFormat({ format: 'vertical', both: false }); },
+            h: function () { patchFormat({ format: 'horizontal', both: false }); },
+
+            n: nextUndecided,
+            f: function () { el.feedback.focus(); },
+            '[': function () { nudge(e.shiftKey ? 'end' : 'start', -NUDGE); },
+            ']': function () { nudge(e.shiftKey ? 'end' : 'start', NUDGE); },
+            '{': function () { nudge('end', -NUDGE); },
+            '}': function () { nudge('end', NUDGE); },
+            '?': function () { el.keys.showModal(); },
+            ' ': playClip,
+          };
+
+          var action = actions[e.key.toLowerCase()] || actions[e.key];
+          if (!action) return;
+          e.preventDefault();
+          action();
+        });
+
+        // Exposed for the browser tests, which drive the page against a stubbed
+        // server. Nothing in the page reads it back.
+        window.ClipReview = { state: state, chooseEdge: chooseEdge, load: load, render: render };
+
+        // Served, this answers. Opened from the filesystem it does not, and the
+        // page says how to start it rather than showing an empty room.
+        (location.protocol === 'file:'
+          ? Promise.reject(new Error('file://'))
+          : load()
+        ).catch(function () {
+          el.welcome.hidden = false;
+          el.layout.hidden = true;
+        });
+      })();
+    </script>
+  </body>
+</html>

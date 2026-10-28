@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-08-16T00:00:00.000Z",
+  "lessons": [
+    {
+      "id": "brittany-21-may-2026-vocal-mastery",
+      "videoTitle": "Vocal Mastery with Brittany",
+      "student": "Brittany",
+      "date": "21 May 2026",
+      "hasWords": false,
+      "cues": [
+        { "start": 0.0, "end": 1.0, "text": "Take the breath low before anything else." },
+        { "start": 1.0, "end": 2.0, "text": "Raise your eyebrows now." },
+        { "start": 2.0, "end": 3.0, "text": "The soft palate lifts with them." },
+        { "start": 3.0, "end": 3.9, "text": "That is the ceiling of the room." }
+      ]
+    }
+  ]
+}

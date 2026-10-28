@@ -8,7 +8,8 @@
  */
 
 import { parseArgs } from 'node:util';
-import { resolve } from 'node:path';
+import { resolve, join, basename, extname } from 'node:path';
+import { readdirSync } from 'node:fs';
 import { readLibrarySheet, readTimedTranscript } from '../src/sources.mjs';
 import { segmentLesson } from '../src/segment.mjs';
 import { createClient, selectFromSegment, mapWithConcurrency } from '../src/select.mjs';
@@ -26,6 +27,7 @@ const { values: args } = parseArgs({
   options: {
     library: { type: 'string' },
     transcript: { type: 'string' },
+    'transcript-dir': { type: 'string' },
     out: { type: 'string', default: 'clips-out' },
 
     provider: { type: 'string', default: 'claude' },
@@ -45,6 +47,7 @@ const { values: args } = parseArgs({
     wpm: { type: 'string' },
     'segment-words': { type: 'string' },
     'segment-seconds': { type: 'string' },
+    'max-tokens': { type: 'string' },
     concurrency: { type: 'string', default: '3' },
 
     title: { type: 'string' },
@@ -69,12 +72,18 @@ Source
                           Needs "Video Title" and "Transcript" columns.
   --transcript <path>     A single timed transcript (.srt/.vtt/Whisper .json).
                           Gives real timecodes instead of estimates.
+  --transcript-dir <dir>  A folder of timed transcripts — a whole session's
+                          lessons in one pass. Student and date are read from
+                          each filename.
   --title/--student/--date/--url
                           Metadata for a --transcript run.
 
 Model
   --provider <name>       claude (default), kimi, chatgpt, hermes, openrouter
   --model <id>            Override the provider's default model.
+  --max-tokens <n>        Cap the model response size (default ${DEFAULTS.maxTokens}).
+                          Lower it when a pay-as-you-go balance cannot cover
+                          the full reservation (OpenRouter 402).
   --offline               Skip the API entirely and use the keyword heuristic.
                           For smoke-testing the pipeline, not for real selection.
   --providers             Show provider status and which API keys are present.
@@ -122,8 +131,8 @@ if (args.providers) {
   process.exit(0);
 }
 
-if (!args.library && !args.transcript) {
-  console.error('Error: pass --library <sheet> or --transcript <file>. See --help.');
+if (!args.library && !args.transcript && !args['transcript-dir']) {
+  console.error('Error: pass --library <sheet>, --transcript <file> or --transcript-dir <dir>. See --help.');
   process.exit(1);
 }
 
@@ -149,6 +158,7 @@ const opts = {
   minSegmentWords: DEFAULTS.minSegmentWords,
   shortMaxSeconds: DEFAULTS.shortMaxSeconds,
   maxTokens: DEFAULTS.maxTokens,
+  ...(args['max-tokens'] ? { maxTokens: num(args['max-tokens'], DEFAULTS.maxTokens) } : {}),
   effort: DEFAULTS.effort,
   model: args.model || PROVIDERS[args.provider].defaultModel,
   offline: args.offline,
@@ -160,6 +170,8 @@ const opts = {
 let lessons;
 if (args.library) {
   lessons = readLibrarySheet(resolve(args.library));
+} else if (args['transcript-dir']) {
+  lessons = readTranscriptFolder(resolve(args['transcript-dir']));
 } else {
   lessons = [
     readTimedTranscript(resolve(args.transcript), {
@@ -169,6 +181,57 @@ if (args.library) {
       url: args.url,
     }),
   ];
+}
+
+/**
+ * Every timed transcript in a folder, as one batch.
+ *
+ * This is the shape a downloaded set of lessons already has — a video and its
+ * subtitles side by side, named after the lesson — so a whole session's worth
+ * can be run in one pass rather than one command per lesson.
+ *
+ * The filename carries what the sheet would otherwise supply: the student, and
+ * a date if one is in there.
+ */
+function readTranscriptFolder(dir) {
+  const SUBTITLES = new Set(['.srt', '.vtt', '.json']);
+  const files = readdirSync(dir)
+    .filter((f) => SUBTITLES.has(extname(f).toLowerCase()))
+    .sort();
+
+  if (!files.length) {
+    console.error(`No .srt, .vtt or .json transcripts in ${dir}`);
+    process.exit(1);
+  }
+
+  return files.map((file) => {
+    const stem = basename(file, extname(file))
+      // yt-dlp leaves the language on the end: "lesson.en.srt".
+      .replace(/\.[a-z]{2}(-[A-Za-z]+)?$/, '');
+    const dateMatch = stem.match(/\d{1,2}[-. ](?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-. ]\d{2,4}/i);
+    const date = dateMatch ? dateMatch[0] : '';
+
+    // These lesson titles put the student's name last ("Vocal Mastery Varun",
+    // "Vocal Mastery with Adri", "Vocal Mastery Live, Ameesha", "🎶 Vocal
+    // Mastery with Ameesha 22.Jun.2026 🎶") — the first word is always
+    // "Vocal", so take the last token instead. The date and any decorative
+    // emoji/punctuation are stripped first, or the last token would be a
+    // trailing 🎶 or the date rather than the name.
+    const nameTokens = stem
+      .replace(date, '')
+      .replace(/[^\p{L}\p{N}'-]+/gu, ' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+    const student = nameTokens.pop() || stem;
+
+    return readTimedTranscript(join(dir, file), {
+      videoTitle: stem.replace(/[-_]+/g, ' ').trim(),
+      student,
+      date,
+      url: args.url || '',
+    });
+  });
 }
 
 if (args.filter) {
@@ -192,7 +255,7 @@ console.log(
   `Rules: ${opts.minSeconds}-${opts.maxSeconds}s · ${opts.minClips}-${opts.maxClips} clips/lesson · max ${opts.maxPerCategory} per category\n`,
 );
 
-const client = args.offline || args.provider !== 'claude' ? null : createClient();
+const client = args.offline || args.provider !== 'claude' ? null : await createClient();
 const concurrency = Math.max(1, Number(args.concurrency));
 
 const results = [];
@@ -244,6 +307,9 @@ if (written.srtCount) {
   console.log(`  ${written.captions}  (${written.srtCount} caption files)`);
 } else {
   console.log('  (no caption files — source has no timecodes)');
+}
+if (written.transcripts) {
+  console.log(`  ${written.transcripts}  (for trimming clips in the review page)`);
 }
 if (failures) console.log(`\n${failures} lesson(s) failed — see messages above.`);
 console.log();

@@ -1,0 +1,3 @@
+Ira is finally running her full one-woman concert start to finish — no more stopping for "commercial breaks," just five songs about the long search for home, from a cramped Moscow apartment to a love that was never supposed to happen to Bowie's Major Tom to landing, finally, in Bittersweet Symphony. Omega drills the stagecraft most singers never think about: how to end a story so the room knows applause is coming — "the please needs to be high, and joy needs to be low" — when to hold a pause, and when to just keep dancing instead of cutting the music dead. By the end the lesson turns into something bigger than blocking, with Omega breaking down mid-note thanking Ira for the "liberty" and "life" this work has given both of them.
+
+omegabone.com/Learn2Sing

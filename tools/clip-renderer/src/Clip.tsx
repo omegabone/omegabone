@@ -9,7 +9,7 @@ import {
   Easing,
 } from 'remotion';
 import type { ClipProps } from './schema';
-import { layout, brandFor } from './theme';
+import { layoutFor, brandFor } from './theme';
 import { Captions } from './Captions';
 
 /** Thin rule with an accent core. */
@@ -26,19 +26,21 @@ const Rule: React.FC<{ accent: string; width: number }> = ({ accent, width }) =>
 export const Clip: React.FC<ClipProps> = ({
   videoSrc,
   startSeconds,
-  awarenessLabel,
   topic,
   student,
   suggestedCaption,
-  cta,
   captions,
   showCaptions,
   brand: brandName,
+  format = 'vertical',
 }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps, durationInFrames, width, height } = useVideoConfig();
+  const layout = layoutFor(format);
   const brand = brandFor(brandName);
   const hasCues = showCaptions && captions.length > 0;
+  // Horizontal overlays text on the footage; vertical seats it on the ground.
+  const overlay = layout.overlay;
 
   // Remotion serves assets over its own http server: absolute filesystem paths
   // and file:// URLs are both rejected. Anything that is not already an http
@@ -71,7 +73,7 @@ export const Clip: React.FC<ClipProps> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: brand.bg }}>
-      {/* Ground: brand base with a faint accent wash behind the footage. */}
+      {/* Ground: brand base with a faint accent wash behind everything. */}
       <AbsoluteFill
         style={{
           background: `radial-gradient(120% 70% at 50% 26%, ${brand.panel} 0%, transparent 64%),
@@ -79,17 +81,25 @@ export const Clip: React.FC<ClipProps> = ({
         }}
       />
 
-      {/* Footage. */}
+      {/* Footage. Vertical: a centered band. Horizontal: full-bleed. */}
       <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
         <div
-          style={{
-            position: 'absolute',
-            top: layout.videoTop,
-            width: layout.width,
-            height: Math.round((layout.width * 9) / 16),
-            overflow: 'hidden',
-            boxShadow: `0 30px 80px rgba(0,0,0,0.5), 0 0 0 2px ${brand.border}`,
-          }}
+          style={
+            overlay
+              ? {
+                  position: 'absolute',
+                  inset: 0,
+                  overflow: 'hidden',
+                }
+              : {
+                  position: 'absolute',
+                  top: layout.videoTop,
+                  width: '100%',
+                  height: layout.videoHeight,
+                  overflow: 'hidden',
+                  boxShadow: `0 30px 80px rgba(0,0,0,0.5), 0 0 0 2px ${brand.border}`,
+                }
+          }
         >
           {src ? (
             <OffthreadVideo
@@ -115,6 +125,24 @@ export const Clip: React.FC<ClipProps> = ({
               no footage attached
             </AbsoluteFill>
           )}
+          {/* Scrim only where text sits over footage — keeps type legible
+              without tinting the whole frame. */}
+          {overlay ? (
+            <>
+              <AbsoluteFill
+                style={{
+                  background: `linear-gradient(180deg, rgba(4,10,8,0.78) 0%, rgba(4,10,8,0.45) 16%, rgba(4,10,8,0) 34%)`,
+                  pointerEvents: 'none',
+                }}
+              />
+              <AbsoluteFill
+                style={{
+                  background: `linear-gradient(0deg, rgba(4,10,8,0.82) 0%, rgba(4,10,8,0.5) 14%, rgba(4,10,8,0) 30%)`,
+                  pointerEvents: 'none',
+                }}
+              />
+            </>
+          ) : null}
         </div>
       </AbsoluteFill>
 
@@ -133,31 +161,40 @@ export const Clip: React.FC<ClipProps> = ({
             style={{
               fontFamily: brand.text,
               fontWeight: 600,
-              fontSize: 25,
+              fontSize: overlay ? 22 : 25,
               letterSpacing: '0.3em',
               textTransform: labelCase,
               color: brand.accent,
+              textShadow: overlay ? '0 2px 12px rgba(0,0,0,0.6)' : undefined,
             }}
           >
-            {awarenessLabel}
+            {brand.presents} presents
           </div>
-          <Rule accent={brand.accent} width={420} />
+          <Rule accent={brand.accent} width={overlay ? 360 : 420} />
           <div
             style={{
               fontFamily: brand.display,
               fontWeight: brand.displayWeight,
-              fontSize: 52,
+              fontSize: overlay ? 46 : 52,
               letterSpacing: '-0.02em',
               color: brand.ink,
               textAlign: 'center',
-              maxWidth: 900,
+              maxWidth: overlay ? 1500 : 900,
               lineHeight: 1.12,
+              textShadow: overlay ? '0 2px 18px rgba(0,0,0,0.65)' : undefined,
             }}
           >
             {topic}
           </div>
           {student ? (
-            <div style={{ fontFamily: brand.text, fontSize: 27, color: brand.inkDim }}>
+            <div
+              style={{
+                fontFamily: brand.text,
+                fontSize: overlay ? 24 : 27,
+                color: brand.inkDim,
+                textShadow: overlay ? '0 2px 12px rgba(0,0,0,0.6)' : undefined,
+              }}
+            >
               with {student}
             </div>
           ) : null}
@@ -173,7 +210,7 @@ export const Clip: React.FC<ClipProps> = ({
         prints the same sentence twice.
       */}
       {hasCues ? (
-        <Captions cues={captions} brand={brand} />
+        <Captions cues={captions} brand={brand} format={format} />
       ) : (
         <div
           style={{
@@ -183,7 +220,7 @@ export const Clip: React.FC<ClipProps> = ({
             bottom: layout.captionBottom,
             fontFamily: brand.display,
             fontWeight: brand.displayWeight,
-            fontSize: 62,
+            fontSize: overlay ? 54 : 62,
             lineHeight: 1.18,
             textAlign: 'center',
             textWrap: 'balance',
@@ -195,31 +232,6 @@ export const Clip: React.FC<ClipProps> = ({
           {suggestedCaption}
         </div>
       )}
-
-      {/* Footer: the call to action alone. */}
-      <AbsoluteFill
-        style={{
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          paddingBottom: layout.footerBottom,
-          opacity: footer,
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-          <Rule accent={brand.accent} width={300} />
-          <div
-            style={{
-              fontFamily: brand.display,
-              fontWeight: brand.displayWeight,
-              fontSize: 33,
-              letterSpacing: '0.04em',
-              color: brand.accentBright,
-            }}
-          >
-            {cta}
-          </div>
-        </div>
-      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

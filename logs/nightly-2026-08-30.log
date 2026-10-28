@@ -1,0 +1,29 @@
+Nightly Omega Bone agent — 2026-08-30 (TONIGHT.md one-off override)
+=====================================================================
+
+NOTE: three earlier launchd-triggered attempts tonight (logged in
+logs/run-2026-08-30.out, 05:09/05:33/05:49) all failed before doing any
+real work — the launchd-invoked session had no write/bash permission and
+no PushNotification tool. This run is a fresh interactive-equivalent
+session with full tool access; picking up from scratch since nothing was
+actually written, rendered, downloaded, or posted by those attempts.
+
+Read both skill files (omegabone-clip, omegabone-postiz) and PROMPT.md in
+full before starting.
+
+Environment check:
+- Write/Bash access: OK (confirmed working, unlike the earlier attempts).
+- .env has no ANTHROPIC_API_KEY/NOUS_API_KEY/OPENROUTER_API_KEY/etc — every
+  provider extract-clips.mjs supports shows "no key" via --providers.
+  NEEDS HUMAN INPUT: add one of these keys to .env so future nightly runs
+  can call the real clip-extractor CLI directly. For tonight, working
+  around this by acting as the model myself: reusing the pipeline's own
+  segmentation (src/segment.mjs) and rule enforcement (src/enforce.mjs)
+  code, but generating the per-segment candidate JSON myself (the
+  candidate schema/rubric extract-clips.mjs would otherwise send to
+  Claude) instead of shelling out to a missing API key, then running the
+  real enforce() over my candidates so nothing skips the code-side rule
+  checks. This is slower than a real API run but produces the same
+  validated output shape (manifest.json/clips.csv/report.md) rather than
+  falling back to the explicitly-worse --offline keyword heuristic.
+

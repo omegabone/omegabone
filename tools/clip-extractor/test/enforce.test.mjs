@@ -81,7 +81,7 @@ test('grounding is checked before length, so fabrications read as fabrications',
   // hundreds of words earlier. This is stitching, not quoting.
   const { rejected } = enforce(
     lesson,
-    [candidate({ full_quote: 'Omega: That is where it lives.' })],
+    [candidate({ full_quote: 'Omega: That is where it lives. Omega: When you get near the top of your range your shoulders come up and your jaw locks.' })],
     opts,
   );
   assert.match(rejected[0].reason, /not grounded/);

@@ -1,0 +1,96 @@
+Nightly Omega Bone video agent — 2026-09-06
+Session start: 2026-09-06T13:12:03Z
+
+Read both skill files (omegabone-clip, omegabone-postiz) and PROMPT.md in full
+before starting, per instructions.
+
+=== Phase 1 — publish anything already human-approved ===
+
+Surveyed state before touching anything: tools/nightly-agent/posted-ledger.json,
+rotation-queue.json, frequency-campaign-state.json, all tools/clip-review/state-*/
+dirs, clips-ready/, and a fresh Postiz GET /public/v1/posts query (2026-08-25
+through 2026-12-01, 543 rows).
+
+Found a big change since the last nightly run (2026-09-04): a large human-driven
+"review everything" sweep happened during the day on 2026-09-05, entirely outside
+this agent's normal per-student flow (tools/clip-review/state-review-all/,
+state-full/, batches/full-2026-08-31/, clips-ready/approved-clips.csv with 177
+files, render logs showing ~1400 rendered frames / 79 final clips on 2026-09-05).
+That sweep rendered a batch of new MetaMuse and Ira clips into clips-ready/, and
+something/someone had already bulk-scheduled 21 of the new Ira topics into Postiz
+(through 2026-11-02) before tonight — rotation-queue.json's own lastScheduled/
+consumedApprovedClips were stale as a result (same drift pattern seen on 09-02),
+now corrected from live Postiz data.
+
+Also discovered the sweep appears to have started a fourth named-rotation stream
+for Šimon ("... — with Šimon. More at omegabone.com/Learn2Sing", every ~4 days at
+07:00 UTC, scheduled 09-06 through 11-21). This is NOT part of the Antoine/Ira/
+MetaMuse pattern this agent owns — left completely untouched per PROMPT.md's
+"everything else is untouched by this agent" rule. Noting it so it isn't
+mistaken for a rotation gap on a future run.
+
+Copyright screening (required before scheduling any new rotation clip): pulled
+each new MetaMuse clip's real transcript quote from
+tools/clip-review/state-review-all/approved-manifest.json. Three of the eight
+new MetaMuse-labeled clips quote actual song lyrics rather than original lesson
+content — SKIPPED, NOT scheduled, NOT consumed, files left in clips-ready/:
+  - "Ending a Song" — quotes Aerosmith "I Don't Want to Miss a Thing"
+    ("...the very last time you sing thing. And I don't want to miss a thing.")
+  - "Diction Work" — repeated "I still miss you, babe", song-lyric-shaped,
+    ambiguous enough to skip per the skip-if-ambiguous rule
+  - "Meta Muse Performs at the May Finale" — student label is actually "Finale"
+    (a group live-performance clip), also quotes the same Aerosmith song at
+    length; excluded both for copyright and for not being a normal MetaMuse
+    lesson clip
+NEEDS HUMAN INPUT: confirm licensing/fair-use on those 3 files before ever
+posting them, or remove them from the candidate pool.
+
+The other 5 new MetaMuse clips read as original coaching dialogue or
+in-progress AI-assisted songwriting (no known copyrighted lyrics) — scheduled.
+The 4 new Ira clips were screened the same way — none contain sung lyrics
+("Say Thank You After the Music Stops" only talks about song titles/choices;
+"Major Tom Introduction Practice" is coaching dialogue despite the
+Bowie-adjacent name) — all 4 scheduled.
+
+Posted (scheduled, all 5 channels — facebook, instagram-standalone, linkedin,
+tiktok, youtube — via Postiz's public API, per the omegabone-postiz skill):
+
+MetaMuse (bare "omegabone.com", no path, matching her established caption
+convention), filling her next 5 open rotation gap days:
+  1. "If You Can See It, You Can Achieve It" → 2026-09-13T17:00:00Z
+  2. "Song Writing to Process Stress" → 2026-09-16T17:00:00Z
+  3. "Song Writing with Ai" → 2026-09-19T17:00:00Z
+  4. "Using Space to Intensify Passion" → 2026-09-22T17:00:00Z
+  5. "Writing Lyrics and Melodies for Ai Generated Music" → 2026-09-25T17:00:00Z
+  MetaMuse's rotation now has nothing scheduled past 2026-09-25 — she has zero
+  unconsumed approved clips left (the 3 flagged copyright ones aside).
+
+Ira (bare "omegabone.com", no path), filling her next 4 open rotation gap days
+after the pre-existing 2026-11-02 slot:
+  6. "Communicate Your Heart" → 2026-11-05T17:00:00Z
+  7. "Major Tom Introduction Practice" → 2026-11-08T17:00:00Z
+  8. "Say Thank You After the Music Stops" → 2026-11-11T17:00:00Z
+  9. "Telling Your Authentic Story" → 2026-11-14T17:00:00Z
+  Zero unconsumed Ira clips remain in clips-ready/ now.
+
+Antoine: untouched, queue still has 27 slots remaining (through 2026-11-25) —
+well above the "fewer than 5 remain" flag threshold. Will need attention in
+the next few weeks as it approaches ~2026-11-01; not urgent tonight.
+
+Full postId lists per clip are in tools/nightly-agent/posted-ledger.json.
+Updated tools/nightly-agent/rotation-queue.json with all of the above
+(lastScheduled, consumedApprovedClips, and detailed notes).
+
+Google Drive archival (Phase 1 step 5): ATTEMPTED, COULD NOT COMPLETE. The
+only Drive connector available this session (Google_Drive create_file) only
+accepts inline base64/text content in the tool call itself — no separate
+large-binary upload path exists. These clip files are 3-61MB; base64-encoding
+even the smallest still produces a payload far past this session's per-call
+token ceiling. No "Clips Archive" folder exists yet in Drive (searched, zero
+results), and no gdrive/rclone CLI or synced Drive folder is available on this
+machine either. Did not work around this by hosting the files elsewhere first
+to get a URL — the omegabone-postiz skill explicitly warns off that pattern
+for this pipeline, and it would add real cost/risk for what's an archival
+nice-to-have. driveFileId left null on every ledger entry tonight. NEEDS HUMAN
+INPUT: wire up a real Drive upload path (CLI tool or desktop sync), or confirm
+per-clip Drive archival isn't actually needed.

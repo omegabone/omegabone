@@ -18,6 +18,7 @@
 const RULES = [
   { brand: 'learn2sing', pattern: /learn\s*2\s*sing|\bl2s\b/i },
   { brand: 'frequency', pattern: /\bfrequency\b/i },
+  { brand: 'mr33', pattern: /music\s*33|\bm(?:r)?33\b/i },
   { brand: 'vme', pattern: /vocal\s+mastery|\bvme\b/i },
 ];
 

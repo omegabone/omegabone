@@ -2,7 +2,6 @@
  * Claude selection pass — one call per segment.
  */
 
-import Anthropic from '@anthropic-ai/sdk';
 import {
   AWARENESS_KEYS,
   HIGH_VALUE_KEYS,
@@ -184,7 +183,22 @@ export async function mapWithConcurrency(items, limit, worker) {
   return results;
 }
 
-export function createClient() {
+/**
+ * The SDK is loaded here rather than at the top of the file so that the offline
+ * selector — and every other provider, which speak plain HTTP — run with
+ * nothing installed. `npm install` is one more step between a lesson and a
+ * posted clip, and it is only genuinely needed to call Claude.
+ */
+export async function createClient() {
+  let Anthropic;
+  try {
+    ({ default: Anthropic } = await import('@anthropic-ai/sdk'));
+  } catch {
+    throw new Error(
+      'Selecting with Claude needs the SDK: run `npm install` in tools/clip-extractor.\n' +
+        'Or run with --offline to pick clips by keyword, with no install and no API key.',
+    );
+  }
   // Resolves ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, or an `ant auth login` profile.
   return new Anthropic();
 }

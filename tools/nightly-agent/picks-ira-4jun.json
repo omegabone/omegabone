@@ -1,0 +1,96 @@
+{
+  "lessonFile": "Vocal Mastery with Ira 4.Jun.2026.en.srt",
+  "videoTitle": "Vocal Mastery with Ira 4.Jun.2026",
+  "student": "Ira",
+  "date": "4.Jun.2026",
+  "picks": [
+    {
+      "start": 282,
+      "end": 330,
+      "awarenessCategory": "problem_aware",
+      "highValueType": "one_line_correction",
+      "topic": "Releasing Neck Tension on High Notes",
+      "quote": "So then I want you to focus on holding your pinkies and lowering your chin instead of holding your neck up because that's where the tension is.",
+      "whyItHooks": "Names the exact physical habit singers don't know they're doing on high notes, then gives a fix they can try in the next five seconds.",
+      "suggestedCaption": "Lower the chin. The tension was never in the note.",
+      "score": 88
+    },
+    {
+      "start": 948,
+      "end": 1025,
+      "awarenessCategory": "solution_aware",
+      "highValueType": "authority_clip",
+      "topic": "A Grounded Voice Beats Showing Off",
+      "quote": "Singers want to do all of this Mariah Carey stuff at the top, but most of my clients — it's more important to tell a good story.",
+      "whyItHooks": "Reframes the whole goal of training away from range gymnastics toward storytelling, which is what most singers actually want but never hear said out loud.",
+      "suggestedCaption": "Most singers chase the high note. The story is the thing.",
+      "score": 92
+    },
+    {
+      "start": 2986,
+      "end": 3075,
+      "awarenessCategory": "unaware",
+      "highValueType": "mistake_reveal",
+      "topic": "Singers Are Athletes — Train Like One",
+      "quote": "This is athletic. It's not just emotional. You have to train and condition your whole body. You've got to think of yourself as a vocal athlete.",
+      "whyItHooks": "Most people have never once considered that singing has a nutrition and conditioning regimen behind it — iron, greens, rest before a show.",
+      "suggestedCaption": "You are a vocal athlete. Train like it.",
+      "score": 90
+    },
+    {
+      "start": 3120,
+      "end": 3175,
+      "awarenessCategory": "problem_aware",
+      "highValueType": "emotional_unlock",
+      "topic": "The Only Job in the Moment Is to Relax",
+      "quote": "At the very moment when you need to do it, the only one thing that I need to do right now is just relax, because otherwise it's not going to work.",
+      "whyItHooks": "A student articulating her own breakthrough about performance nerves lands harder than a coach explaining it.",
+      "suggestedCaption": "The moment before you perform, you have exactly one job.",
+      "score": 85
+    },
+    {
+      "start": 3225,
+      "end": 3262,
+      "awarenessCategory": "unaware",
+      "highValueType": "one_line_correction",
+      "topic": "Breathe So You Can Listen",
+      "quote": "If you breathe you can listen, and if you can listen, you're natural — you know all the things.",
+      "whyItHooks": "Connects breath to listening rather than to volume or control, which is the opposite of what most singers are taught.",
+      "suggestedCaption": "Breathing isn't for the note. It's so you can hear.",
+      "score": 87
+    },
+    {
+      "start": 3325,
+      "end": 3358,
+      "awarenessCategory": "brand_aware",
+      "highValueType": null,
+      "topic": "Listening and Breathing Carry You for Life",
+      "quote": "Listening, breathing — that's gonna carry you through for the rest of your life.",
+      "whyItHooks": "Positions the training as something bigger than singing, which is the through-line of the whole Omega Bone method.",
+      "suggestedCaption": "These two things outlast every song you'll ever sing.",
+      "score": 80
+    },
+    {
+      "start": 2809,
+      "end": 2870,
+      "awarenessCategory": "solution_aware",
+      "highValueType": "performance_coaching",
+      "topic": "Micro-Movements That Mark the Beat",
+      "quote": "What I love about your movement is that you help to accentuate the beat. Small little micro movements — enough to say here's the beat, here's a moment, here's a thought, here's the feeling.",
+      "whyItHooks": "Gives permission to stop performing big, and shows that restrained movement is a deliberate craft choice rather than a lack of stage presence.",
+      "suggestedCaption": "You don't need big moves. You need the beat marked.",
+      "score": 86
+    },
+    {
+      "start": 1205,
+      "end": 1240,
+      "awarenessCategory": "product_aware",
+      "highValueType": null,
+      "topic": "Book a 30-Minute Diagnostic",
+      "quote": "Ladies and gentlemen, if you would like to get a 30-minute diagnostic so that you can see if you can work in our program, click the link.",
+      "whyItHooks": "Direct, in-lesson invitation in Omega's own voice — the natural CTA clip for this batch.",
+      "suggestedCaption": "Curious whether this would work for your voice? Start here.",
+      "score": 78
+    }
+  ]
+}

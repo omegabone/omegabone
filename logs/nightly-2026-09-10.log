@@ -1,0 +1,104 @@
+Nightly Omega Bone agent — 2026-09-10
+======================================
+
+## Phase 1 — publish approved clips / maintain rotation
+
+- Loaded posted-ledger.json and rotation-queue.json first, per Phase 1 step 2.
+- Audit found a real bug in prior bookkeeping (not a missing render): 68 approved
+  clips existed across all tools/clip-review/state-*/reviews.json, but clips-ready/
+  only had 216 files. Wrote tools/nightly-agent/audit-approved.py (kept in the repo
+  as a reusable diagnostic for future nights) and confirmed all 68 approved clips
+  WERE already rendered (present in render-index.json) — 38 of the rendered files
+  were just sitting in tools/clip-renderer/out/run-2026-09-05/ and never copied
+  into clips-ready/, an incomplete copy step from that day's big sweep. Copied all
+  38 directly (no re-render, no render-all.mjs cost). clips-ready/ now has 254
+  files. Full list of copied filenames is in posted-ledger.json's
+  note_2026-09-10_render_copy_gap.
+- Fresh Postiz audit (GET /public/v1/posts, 2026-08-25 through 2026-12-31, 932
+  rows). Today's rotation gap day (2026-09-10 = MetaMuse's day per the gap
+  pattern) was already filled by a prior session ("Writing Songs with Ai — with
+  Meta Muse", 2026-09-10T17:00Z, all 5 channels) — nothing to do there.
+- Failed-post retry (standing rule from omegabone-postiz skill, scoped to the
+  named-rotation streams only — left the quote-style/21-Day-Challenge stream's
+  own errors untouched per PROMPT.md Phase 1 step 4):
+    - "Whistling in a Song — with Antoine" (youtube, 2026-09-08T12:00Z) had
+      already been retried successfully by a prior session (PUBLISHED
+      2026-09-08T13:20Z) — no action.
+    - "Buzzing Your Speeches — with Ira" (instagram-standalone, 2026-09-09T17:00Z)
+      had never been retried. Re-uploaded and reposted to instagram-standalone
+      only (other 4 channels already PUBLISHED). New postId:
+      cmtvrxmrr09pylm0ymn946zc9.
+- New schedulable clip found: ira-12-may-2026-4, approved topic "Practicing
+  Concert Introduction" (renamed at review time from the manifest's original,
+  more concerning-looking "Singing 'My Mother Said' on Repeat" — checked the
+  actual approved/trimmed captions and it's clean spoken concert-intro
+  commentary, not a lyric performance, so copyright-clean). This was genuinely
+  unconsumed — confirmed via a title search across the full live Postiz queue
+  that no post with this topic exists anywhere. Scheduled into the next open
+  Ira gap day, 2026-11-17T17:00Z, all 5 channels. Post IDs and file details in
+  posted-ledger.json under entries_2026-09-10. rotation-queue.json's
+  lastScheduled.Ira updated to 2026-11-17.
+- NEEDS HUMAN INPUT — ira-12-may-2026-3 (second/duplicate "Audience Connection
+  Stage Presence" clip, file Vocal_Mastery_Audience_Connection_Stage_Presence_
+  Ira_2-vertical.mp4, approved and rendered): its captions contain what reads
+  as a sung line ("Been down, ever been down... Have you ever been down")
+  followed by a post-performance thank-you speech. Could not confirm whether
+  that's an original improvisation or a real copyrighted song — skipped
+  scheduling it rather than guess, per the skip-if-ambiguous rule.
+- Copyright item carried forward, now escalating: "Meta Muse Performs at the
+  May Finale" (Aerosmith "I Don't Want to Miss a Thing" lyric risk) has now
+  been flagged on 2026-09-06, 09-07, and 09-09, and is STILL live in the queue
+  for 2026-10-04T17:00Z across all 5 channels — same post IDs reported on
+  09-09, confirming it was never actually removed despite two prior sessions
+  saying they would. Tonight I had direct curl access (not the MCP tool that
+  refused before) and attempted DELETE /public/v1/posts/<id> on all 5 —
+  every single call returned a genuine HTTP 500 "Internal server error" from
+  Postiz's own API, not a permissions issue. I did not attempt any workaround.
+  NEEDS HUMAN INPUT: please delete this manually in the Postiz web app before
+  2026-10-04, or confirm fair-use/licensing if it should stay. "Ending a Song"
+  and "Diction Work" (the other two Aerosmith-risk MetaMuse clips flagged the
+  same nights) remain correctly absent from the queue — no drift there.
+- Noted for bookkeeping only, no action taken: "Engaging Your Abdominal
+  Muscles" (finale-undated-3, newly approved 2026-09-05, copyright-clean) is
+  already live in the queue under a different caption ("...with Omega",
+  2026-09-16T22:00Z) via some process outside this agent's rotation tracking.
+  Left alone, not duplicated.
+- Scope note: general-lesson slot-filling (Chris/Tess/Brittany/Weston/
+  Alejandro/Manav/Orville/etc., the 0:00 and 5:00 "everyone else" pool) was
+  NOT touched tonight. PROMPT.md's Phase 1 step 3 scopes this agent's active
+  scheduling duty to the Antoine/Ira/MetaMuse rotation specifically; the
+  2026-09-08 general-lesson backfill was a one-off done with the user's
+  direct same-day confirmation, not something I'm treating as a standing
+  nightly mandate. Flagging this interpretation explicitly in case it's
+  wrong — happy to take on general-lesson slot-filling as a standing duty
+  going forward if that's the intent.
+- Antoine's own queue: confirmed 28 future dates remain scheduled (through
+  2026-12-01) — well above the "flag if <5 remain" threshold. This agent
+  doesn't touch Antoine's own queue regardless (per PROMPT.md).
+- Google Drive archival: same known blocker as every prior night this month
+  (the only Drive tool available takes inline content only, no path for a
+  multi-MB binary; no working gdrive/rclone CLI on this machine). Not
+  re-attempted; not re-explained at length here, see
+  posted-ledger.json note_2026-09-06_drive_archival for the full writeup.
+
+## Phase 2 — tomorrow's review batch
+
+Delegated to a background agent (full context: worklist-rebuild methodology,
+cap of 6 videos, brand CTA rules, thumbnail/description procedure, known
+gotchas). Result will be appended below once it reports back.
+
+## Phase 3 — Frequency-funnel blog campaign
+
+Delegated to a background agent. Pre-verified for it: today is still Week 2
+(Speaking Voice pillar, ends Saturday 2026-09-12); runningPostCount is 12,
+next post is #13; Ira has exactly one genuinely new PUBLISHED clip since
+night 9 ("Buzzing Your Speeches", 2026-09-09) — so tonight should write
+exactly 1 post (#13, no CTA tier since 13 isn't divisible by 3 or 5), not a
+full batch of 7. Result will be appended below once it reports back.
+
+## Spend
+
+- Running budget shown by the harness so far: ~$2.85 of $250 (Phase 1 work
+  only; Phase 2/3 background agent costs will be added once they report).
+
+(continued below as background jobs complete)

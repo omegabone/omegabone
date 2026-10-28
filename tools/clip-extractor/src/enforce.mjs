@@ -12,6 +12,8 @@
  *   - clips must not overlap each other
  *   - one clip per segment (the best surviving candidate)
  *   - 5-8 clips total, with a cap per awareness category
+ *   - no instrumental/backing-track passages (singing or vocalising over music)
+ *   - never the opening theme song / lesson-open music window
  */
 
 import {
@@ -32,6 +34,40 @@ function normalise(text) {
     .replace(/[‘’]/g, "'")
     .replace(/[“”]/g, '"')
     .replace(/[^a-z0-9'" ]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Models re-decorate "verbatim" quotes with the [MM:SS] timecode prefixes and
+ * speaker labels they saw in the prompt — even when the source text carries
+ * neither, which a local Whisper transcript never does (no speakers, no
+ * timecodes inside the cue text). Left in, the decoration breaks the grounding
+ * check and every otherwise-good candidate dies as "quote not grounded".
+ *
+ * Whether to strip labels is decided per segment: when the transcript itself
+ * speaks in speaker labels ("Omega: …"), a label in the quote is meaningful
+ * evidence and must stay — a label welded onto a span from elsewhere is how
+ * stitched fabrications announce themselves. When the source has no labels,
+ * a label in the quote is pure model invention and is stripped.
+ */
+const TIMECODE_PREFIX = /^\s*\[?\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d+)?\]?\s*/;
+const DASH_PREFIX = /^\s*-+\s+/;
+const SPEAKER_LABEL_PREFIX = /^\s*(?:>>\s*)?(?:[A-Z][\w’'.&-]*\s+){0,4}[A-Z][\w’'.&-]*:\s+/;
+
+export function sourceUsesSpeakerLabels(segmentText) {
+  return SPEAKER_LABEL_PREFIX.test(segmentText || '');
+}
+
+function stripQuoteDecoration(quote, { stripLabels }) {
+  return (quote || '')
+    .split('\n')
+    .map((line) => {
+      let out = line.replace(TIMECODE_PREFIX, '').replace(DASH_PREFIX, '');
+      if (stripLabels) out = out.replace(SPEAKER_LABEL_PREFIX, '');
+      return out;
+    })
+    .join(' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -60,6 +96,32 @@ function quoteIsGrounded(quote, segmentText, threshold = 0.8) {
 
   const hits = shingles.filter((sh) => s.includes(sh)).length;
   return hits / shingles.length >= threshold;
+}
+
+const MUSIC_MARKERS = /\[\s*music\s*\]|\[\s*instrumental\s*\]|\(\s*music\s*\)|\(\s*singing\s*\)|♪|🎵|🎶/i;
+
+/**
+ * A clip that's mostly the coach (or a student) singing or vocalising along
+ * with an instrumental track, rather than teaching. Two signals:
+ *   - explicit transcript markers ("[Music]", "♪", etc.)
+ *   - a short phrase repeated over and over — how Whisper hallucinates when
+ *     transcribing sustained singing/vocal exercises over backing music, and
+ *     also how an actual repeated chorus line reads in a transcript.
+ */
+function isMusicOrInstrumental(text) {
+  if (!text) return false;
+  if (MUSIC_MARKERS.test(text)) return true;
+
+  const lines = text
+    .split(/\n|(?<=[.!?])\s+/)
+    .map((l) => l.trim().toLowerCase())
+    .filter(Boolean);
+  if (lines.length < 6) return false;
+
+  const counts = new Map();
+  for (const l of lines) counts.set(l, (counts.get(l) || 0) + 1);
+  const maxRepeat = Math.max(...counts.values());
+  return maxRepeat / lines.length >= 0.5;
 }
 
 /** Trim a quote to end on a sentence boundary at or before `maxWords`. */
@@ -195,6 +257,16 @@ export function enforce(lesson, candidates, opts = {}) {
     const reject = (reason) =>
       rejected.push({ reason, segment: c.segmentIndex, quote: (c.full_quote || '').slice(0, 120) });
 
+    // Models re-decorate "verbatim" quotes with [MM:SS] timecodes and speaker
+    // labels. Timecodes and dashes are always model invention; speaker labels
+    // are invention only when the transcript itself uses none — where the
+    // source does use them, a label in the quote stays as checkable evidence.
+    if (c.full_quote) {
+      c.full_quote = stripQuoteDecoration(c.full_quote, {
+        stripLabels: !sourceUsesSpeakerLabels(c.segment?.text),
+      });
+    }
+
     // Rule: exactly one valid awareness category.
     if (!AWARENESS_KEYS.includes(c.primary_category)) {
       reject(`invalid primary_category "${c.primary_category}"`);
@@ -205,9 +277,28 @@ export function enforce(lesson, candidates, opts = {}) {
       reject('not self-contained');
       continue;
     }
-    // Rule: quote must come from the transcript.
+    // Rule: quote must come from the transcript. (The quote is already
+    // decoration-free; the segment text may still carry speaker labels, which
+    // the fuzzy containment inside treats as ordinary words on both sides.)
     if (!quoteIsGrounded(c.full_quote, c.segment.text)) {
       reject('quote not grounded in segment transcript');
+      continue;
+    }
+    // Rule: no instrumental/backing-track passages — singing or vocalising
+    // over music is not a teaching moment.
+    if (isMusicOrInstrumental(c.full_quote)) {
+      reject('instrumental/music passage, not spoken coaching');
+      continue;
+    }
+    // Rule: never the opening theme song. Segment 1 can run for several
+    // minutes past the intro (it's the first auto-segmented chunk, not just
+    // the theme song), so this must gate on the candidate's own start time,
+    // not the segment's — otherwise every candidate anywhere in segment 1
+    // is wrongly rejected, including ones long after the music intro ends.
+    const introGuard = opts.introGuardSeconds ?? DEFAULTS.introGuardSeconds;
+    const candidateStart = c.start_time ?? c.segment.start ?? 0;
+    if (c.segment.index === 1 && candidateStart < introGuard) {
+      reject('opening theme song / lesson-open window');
       continue;
     }
 
