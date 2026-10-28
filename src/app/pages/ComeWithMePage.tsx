@@ -663,16 +663,6 @@ export function ComeWithMePage() {
 
             {/* ── The Signal ────────────────────────────── */}
             <div style={{ background: "#131313", border: "1px solid #3a2a2a", borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", position: "relative", overflow: "visible" }}>
-              {/* Signed Set badge */}
-              <div style={{
-                position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)",
-                background: "#2a1a1a", border: "1px solid #ef4444", color: "#ef4444",
-                padding: "0.25rem 0.9rem", borderRadius: "99px",
-                fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase",
-                whiteSpace: "nowrap", ...cinzel,
-              }}>
-                Signed Set
-              </div>
               <div>
                 <p style={{ ...cinzel, color: "#6b6b6b", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Tier II</p>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
@@ -688,7 +678,7 @@ export function ComeWithMePage() {
                   { text: "Month-long group course with Omega", signed: true },
                   { text: "Live group session, recorded for your vault", signed: true },
                   { text: "Named in the album credits", signed: true },
-                  { text: "First access to Album 2", signed: false },
+                  { text: "Come With Me 2 for free", signed: false },
                 ].map((item, i) => (
                   <li key={i} style={{ ...garamond, color: item.signed ? "#f0ead8" : "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                     <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
