@@ -86,6 +86,7 @@ export const router = createBrowserRouter([
   { path: "/frequency/vault",                   Component: wrap(CourseVaultPage) },
   { path: "/Vocal_Mastery/practice",             Component: wrap(PracticePage) },
   { path: "/Learn_2_Sing/practice",               Component: wrap(Learn2SingPracticePage) },
+  { path: "/frequencyseries/practice",            Component: wrap(FrequencyPracticePage) },
   // Old addresses — keep shared links and indexed URLs working
   { path: "/practice",                          Component: () => <Navigate to="/Vocal_Mastery/practice" replace /> },
   { path: "/vocal-mastery",                     Component: () => <Navigate to="/Vocal_Mastery" replace /> },
