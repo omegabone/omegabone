@@ -40,6 +40,7 @@ export function ExerciseNotation({ measures }: Props) {
             drawCredits: false,
             drawMeasureNumbers: false,
             drawingParameters: "compacttight",
+            renderSingleHorizontalStaffline: true,
           });
           await osmdRef.current.load(scoreXml);
         }
