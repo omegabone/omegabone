@@ -722,3 +722,8 @@ export function PracticePage() {
 export function Learn2SingPracticePage() {
   return <PracticePortal colors={LAVENDER} />;
 }
+
+/** Frequency Series practice portal — omegabone.com/frequencyseries/practice */
+export function FrequencyPracticePage() {
+  return <PracticePortal colors={FREQUENCY_RED} />;
+}
