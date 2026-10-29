@@ -8,8 +8,8 @@ const NAV_LINKS = [
   { label: "Learn 2 Sing",           href: "/Learn_2_Sing" },
   { label: "Music Room 33",          href: "/Music_Room_33" },
   { label: "The Frequency Series",   href: "/frequency" },
-  { label: "Warm Ups",               href: "/frequencyseries/practice" },
   { label: "Come with Me",           href: "/Come_with_Me" },
+  { label: "Warm Ups",               href: "/frequencyseries/practice" },
 ];
 
 type Theme = "light" | "dark" | "cwm";
