@@ -50,10 +50,19 @@ export function ExerciseNotation({ measures }: Props) {
           drawFromMeasureNumber: measures[0],
           drawUpToMeasureNumber: measures[1],
         });
-        // Keep every bar of the exercise on one line.
-        osmdRef.current.EngravingRules.RenderXMeasuresPerLineAkaSystem =
-          measures[1] - measures[0] + 1;
         osmdRef.current.render();
+
+        // One line for the whole exercise, shrunk to fit the card's width.
+        const svg = hostRef.current?.querySelector("svg");
+        if (svg) {
+          const w = svg.getAttribute("width");
+          const h = svg.getAttribute("height");
+          if (w && h && !svg.getAttribute("viewBox")) {
+            svg.setAttribute("viewBox", `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
+          }
+          svg.style.width = "100%";
+          svg.style.height = "auto";
+        }
       } catch {
         if (!cancelled) setFailed(true);
       }
