@@ -38,6 +38,7 @@ export function ExerciseNotation({ measures }: Props) {
             drawLyricist: false,
             drawPartNames: false,
             drawCredits: false,
+            drawMeasureNumbers: false,
             drawingParameters: "compacttight",
           });
           await osmdRef.current.load(scoreXml);
@@ -48,6 +49,9 @@ export function ExerciseNotation({ measures }: Props) {
           drawFromMeasureNumber: measures[0],
           drawUpToMeasureNumber: measures[1],
         });
+        // Keep every bar of the exercise on one line.
+        osmdRef.current.EngravingRules.RenderXMeasuresPerLineAkaSystem =
+          measures[1] - measures[0] + 1;
         osmdRef.current.render();
       } catch {
         if (!cancelled) setFailed(true);
