@@ -65,6 +65,21 @@ const LAVENDER: PracticePalette = {
   whiteFaint: "rgba(255,255,255,0.42)",
 };
 
+/** Frequency Series portal: dark obsidian red with the Frequency page's reds. */
+const FREQUENCY_RED: PracticePalette = {
+  bg: "#1c0508",
+  panel: "#2c0a0f",
+  card: "#33090E",
+  border: "#5e1a24",
+  trackBg: "#4A1319",
+  accent: "#C42A40",
+  accentBright: "#E8566A",
+  buttonText: "#1c0508",
+  white: "#ffffff",
+  whiteDim: "rgba(255,255,255,0.65)",
+  whiteFaint: "rgba(255,255,255,0.42)",
+};
+
 /* ── Decorative waveform, mirrors the one used elsewhere on the site ── */
 function Waveform({ active, color }: { active: boolean; color: string }) {
   const bars = [6, 11, 16, 9, 13, 7, 12, 5];
