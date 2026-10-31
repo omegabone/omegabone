@@ -32,6 +32,15 @@
   ],
   "headers": [
     {
+      "source": "/workplaceharassment(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         {
