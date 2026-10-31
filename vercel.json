@@ -22,6 +22,10 @@
       "destination": "/antoine.html"
     },
     {
+      "source": "/workplaceharassment",
+      "destination": "/workplaceharassment.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
