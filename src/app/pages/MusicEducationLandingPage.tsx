@@ -84,7 +84,7 @@ export function MusicEducationLandingPage() {
     {
       title: "Celebrating Music Excellence",
       detail: "Promotional Video",
-      id: "aGtT4UyUprg",
+      id: "ph6DK8Tngok",
     },
     {
       title: "Thinking Out Loud",
