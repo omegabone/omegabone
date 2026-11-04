@@ -153,8 +153,8 @@ function WorldMap() {
 /* ════════════════════════════════════════════════════════
    MAIN PAGE
 ════════════════════════════════════════════════════════ */
-// Raise by hand after each sharing pass; at 50 the free singles box disappears.
-const CWM_FREE_SPOTS_TAKEN = 0;
+// Raise by hand after each sharing pass; at 50 the singles box disappears.
+const CWM_SPOTS_TAKEN = 0;
 
 export function ComeWithMePage() {
   const [audioPlaying, setAudioPlaying] = useState(false);
@@ -604,11 +604,11 @@ export function ComeWithMePage() {
           </div>
 
           {/* Email form */}
-          {CWM_FREE_SPOTS_TAKEN >= 50 ? null : !submitted ? (
+          {CWM_SPOTS_TAKEN >= 50 ? null : !submitted ? (
             <form onSubmit={handleSubmit} style={{ background: "#161616", border: "1px solid rgba(239,68,68,0.27)", borderRadius: "16px", padding: "2rem", maxWidth: "420px", margin: "0 auto" }}>
-              <p style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>✦ 3 Free Singles</p>
+              <p style={{ ...cinzel, color: "#ef4444", fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>✦ The First 3 Singles</p>
               <p style={{ ...garamond, color: "#a89880", fontStyle: "italic", marginBottom: "1rem" }}>
-                The Beast, I Am and Dreams (Living in Love). {50 - CWM_FREE_SPOTS_TAKEN} of 50 free spots left.
+                The Beast, I Am and Dreams (Living in Love). {50 - CWM_SPOTS_TAKEN} of 50 spots left.
               </p>
               <input
                 type="email"
@@ -704,7 +704,7 @@ export function ComeWithMePage() {
                   { text: "Month-long group course with Omega", signed: true },
                   { text: "Live group session, recorded for your vault", signed: true },
                   { text: "Named in the album credits", signed: true },
-                  { text: "Come With Me 2 for free", signed: false },
+                  { text: "Come With Me 2", signed: false },
                 ].map((item, i) => (
                   <li key={i} style={{ ...garamond, color: item.signed ? "#f0ead8" : "#a89880", fontSize: "0.95rem", display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                     <span style={{ color: "#ef4444", flexShrink: 0, marginTop: "2px" }}>✦</span>
