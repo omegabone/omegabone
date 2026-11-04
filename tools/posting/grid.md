@@ -3,7 +3,7 @@ Her master chart, set 2026-11-04, in force immediately. This file is the source 
 Do not re-derive it. All content is vertical. Times are Pacific.
 Every day is exactly the same, weekends included.
 
-| When PT | Content | YouTube, TikTok, X, Pinterest | Facebook, Instagram |
+| When PT | Content | YouTube, TikTok, X, Pinterest | Facebook, Instagram, Threads |
 |---|---|---|---|
 | 00:00 | General lesson clip | Yes | No |
 | 05:00 | General lesson clip | Yes | Yes |
