@@ -203,6 +203,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
     pause,
     resume,
     skip,
+    rewind,
     restart,
     setKeySemitones,
     setTempoPercent,
