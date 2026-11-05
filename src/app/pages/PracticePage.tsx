@@ -1,5 +1,5 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { CalendarPlus, Flame, Pause, Play, RotateCcw, SkipForward } from "lucide-react";
+import { CalendarPlus, Flame, Pause, Play, RotateCcw, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useState } from "react";
 import { downloadWarmupIcs } from "../lib/warmupReminder";
 import {
