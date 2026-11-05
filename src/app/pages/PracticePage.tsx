@@ -221,6 +221,32 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
   const isError = status === "error";
   const hasStarted = isPlaying || isPaused || isBuffering || isFinished;
 
+  const rewindButton = (
+    <button
+      onClick={rewind}
+      style={{
+        ...systemFont,
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0.4rem",
+        background: "transparent",
+        color: colors.accent,
+        border: `1px solid ${colors.accent}66`,
+        borderRadius: "999px",
+        padding: "0.9rem 0.5rem",
+        fontSize: "0.8rem",
+        fontWeight: 700,
+        letterSpacing: "0.05em",
+        textTransform: "uppercase",
+        cursor: "pointer",
+      }}
+    >
+      <SkipBack size={15} /> Rewind
+    </button>
+  );
+
   // Completing the routine counts as today's practice.
   useEffect(() => {
     if (isFinished) recordPractice();
