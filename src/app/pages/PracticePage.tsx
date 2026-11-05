@@ -529,7 +529,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                   color: isBuffering ? colors.whiteDim : colors.buttonText,
                   border: "none",
                   borderRadius: "999px",
-                  padding: "0.9rem 1rem",
+                  padding: "0.9rem 0.5rem",
                   fontSize: "0.85rem",
                   fontWeight: 700,
                   letterSpacing: "0.08em",
