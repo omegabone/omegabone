@@ -553,7 +553,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                   color: colors.accent,
                   border: `1px solid ${colors.accent}66`,
                   borderRadius: "999px",
-                  padding: "0.9rem 1rem",
+                  padding: "0.9rem 0.5rem",
                   fontSize: "0.8rem",
                   fontWeight: 700,
                   letterSpacing: "0.05em",
