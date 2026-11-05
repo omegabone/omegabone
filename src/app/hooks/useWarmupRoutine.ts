@@ -194,6 +194,15 @@ export function useWarmupRoutine() {
     playStepAt(stepIndexRef.current + 1);
   }, [status, playStepAt]);
 
+  // One step back. On the first step it replays that step; from the finished
+  // screen it returns to the last step (stepIndexRef still points there).
+  const rewind = useCallback(() => {
+    if (status !== "playing" && status !== "paused" && status !== "buffering" && status !== "finished") return;
+    engineRef.current?.unlock();
+    const target = status === "finished" ? stepIndexRef.current : Math.max(0, stepIndexRef.current - 1);
+    playStepAt(target, -1);
+  }, [status, playStepAt]);
+
   const restart = useCallback(() => {
     if (status === "idle" || status === "loading" || status === "error") return;
     playStepAt(0);
