@@ -247,6 +247,7 @@ export function useWarmupRoutine() {
     pause,
     resume,
     skip,
+    rewind,
     restart,
     setKeySemitones,
     setTempoPercent,
