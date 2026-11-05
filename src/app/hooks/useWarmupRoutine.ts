@@ -108,8 +108,10 @@ export function useWarmupRoutine() {
         // User skipped/restarted while we were waiting — that action wins.
         if (playRequestRef.current !== requestId) return;
         if (!buffer) {
-          // Download failed — skip this file's steps rather than stall.
-          playStepAt(index + 1);
+          // Download failed — skip this file's steps rather than stall, in the
+          // direction the student was moving. Nothing earlier? Go forward.
+          if (direction === -1 && index > 0) playStepAt(index - 1, -1);
+          else playStepAt(index + 1);
           return;
         }
       }
