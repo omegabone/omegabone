@@ -566,6 +566,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             </div>
           )}
 
+          {isFinished && <div style={{ display: "flex" }}>{rewindButton}</div>}
+
           {hasStarted && (
             <button
               onClick={restart}
