@@ -85,7 +85,7 @@ export function useWarmupRoutine() {
   }, []);
 
   const playStepAt = useCallback(
-    async (index: number) => {
+    async (index: number, direction: 1 | -1 = 1) => {
       const requestId = ++playRequestRef.current;
       if (index >= totalSteps) {
         engineRef.current?.stop();
