@@ -511,7 +511,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           )}
 
           {(isPlaying || isPaused || isBuffering) && (
-            <div style={{ display: "flex", gap: "0.75rem" }}>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {rewindButton}
               <button
                 onClick={isPlaying ? pause : isPaused ? resume : undefined}
                 disabled={isBuffering}
