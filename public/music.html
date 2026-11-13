@@ -39,10 +39,10 @@
   var el = document.getElementById('status'), done = false;
   function set(cls, text){ if (done) return; done = true; el.className = 'status ' + cls; el.textContent = text; }
   // A no-cors ping: it cannot read the answer, but it can tell reachable from not.
-  var timer = setTimeout(function(){ set('down', 'The music app is not answering on this computer.'); }, 2500);
+  var timer = setTimeout(function(){ set('down', 'Press the button to open the music app. If nothing opens, the app is not running yet.'); }, 2500);
   fetch('http://localhost:8790/', {mode: 'no-cors', cache: 'no-store'})
     .then(function(){ clearTimeout(timer); set('up', 'The music app is running. Opening it now.'); location.replace('http://localhost:8790/'); })
-    .catch(function(){ clearTimeout(timer); set('down', 'The music app is not answering on this computer.'); });
+    .catch(function(){ clearTimeout(timer); set('down', 'Press the button to open the music app. If nothing opens, the app is not running yet.'); });
 </script>
 </body>
 </html>
