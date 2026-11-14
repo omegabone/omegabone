@@ -2,6 +2,12 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "music.omegabone.com" }],
+      "destination": "https://omegabone.bandcamp.com/:path*",
+      "permanent": false
+    },
+    {
       "source": "/todos",
       "destination": "https://claude.ai/code/artifact/cb27b87a-df22-442d-83b3-606d52e5008d",
       "permanent": false
