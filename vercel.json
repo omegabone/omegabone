@@ -2,6 +2,12 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "music.omegabone.com" }],
+      "destination": "https://omegabone.bandcamp.com/",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "music.omegabone.com" }],
       "destination": "https://omegabone.bandcamp.com/:path*",
