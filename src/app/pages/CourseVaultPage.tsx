@@ -97,6 +97,7 @@ function InlineUnlock({ onUnlock }: { onUnlock: () => void }) {
     >
       <input
         type="password"
+        autoComplete="current-password"
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
