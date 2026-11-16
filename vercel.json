@@ -14,6 +14,16 @@
       "permanent": false
     },
     {
+      "source": "/music",
+      "destination": "/orinthology",
+      "permanent": false
+    },
+    {
+      "source": "/ornithology",
+      "destination": "/orinthology",
+      "permanent": false
+    },
+    {
       "source": "/todos",
       "destination": "https://claude.ai/code/artifact/cb27b87a-df22-442d-83b3-606d52e5008d",
       "permanent": false
@@ -34,8 +44,8 @@
       "destination": "/antoine.html"
     },
     {
-      "source": "/music",
-      "destination": "/music.html"
+      "source": "/orinthology",
+      "destination": "/orinthology.html"
     },
     {
       "source": "/workplaceharassment",
