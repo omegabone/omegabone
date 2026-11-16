@@ -14,11 +14,6 @@
       "permanent": false
     },
     {
-      "source": "/music",
-      "destination": "/orinthology",
-      "permanent": false
-    },
-    {
       "source": "/ornithology",
       "destination": "/orinthology",
       "permanent": false
