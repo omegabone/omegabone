@@ -33,7 +33,27 @@ interface PracticePalette {
   white: string;
   whiteDim: string;
   whiteFaint: string;
+  /** Ornithology app: its own font, no site header, no Omega Bone logo */
+  font?: string;
+  embed?: boolean;
 }
+
+/** Ornithology by BirdSong Media (the Calibrate tab): dark studio slate with brass, the app's own colours. */
+const ORNITHOLOGY: PracticePalette = {
+  bg: "#0F1115",
+  panel: "#171B22",
+  card: "#1E232D",
+  border: "#262C38",
+  trackBg: "#12151B",
+  accent: "#E5A93C",
+  accentBright: "#F2C66D",
+  buttonText: "#191204",
+  white: "#F2F0EB",
+  whiteDim: "#A7AEBB",
+  whiteFaint: "#94A3B8",
+  font: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
+  embed: true,
+};
 
 /** Vocal Mastery portal: dark forest green with light green accents. */
 const FOREST_GREEN: PracticePalette = {
@@ -154,10 +174,10 @@ function SliderRow({
   return (
     <div style={{ marginBottom: "1.75rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.6rem" }}>
-        <span style={{ ...systemFont, color: colors.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <span style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.white, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
           {label}
         </span>
-        <span style={{ ...systemFont, color: trackColor, fontSize: "0.95rem", fontWeight: 700 }}>{valueLabel}</span>
+        <span style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: trackColor, fontSize: "0.95rem", fontWeight: 700 }}>{valueLabel}</span>
       </div>
       <SliderPrimitive.Root
         value={[value]}
@@ -225,7 +245,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
     <button
       onClick={rewind}
       style={{
-        ...systemFont,
+        fontFamily: colors.font ?? systemFont.fontFamily,
         flex: 1,
         display: "flex",
         alignItems: "center",
@@ -260,7 +280,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
 
   return (
     <div style={{ background: colors.bg, minHeight: "100vh", color: colors.white, overflowX: "hidden" }}>
-      <SiteHeader theme="dark" />
+      {!colors.embed && <SiteHeader theme="dark" />}
+      {colors.embed && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" />}
       {/* Noise texture, same treatment as the rest of the dark pages */}
       <div
         style={{
@@ -276,16 +297,16 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
       <div style={{ maxWidth: "560px", margin: "0 auto", padding: "3rem 1.25rem 5rem", position: "relative", zIndex: 1 }}>
         {/* ── Header ── */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <a href="/" style={{ display: "inline-block" }}>
+          {!colors.embed && <a href="/" style={{ display: "inline-block" }}>
             <img
               src={logoImg}
               alt="Omega Bone"
               style={{ width: "min(280px, 75vw)", height: "auto", display: "block", margin: "0 auto", filter: "invert(1)" }}
             />
-          </a>
+          </a>}
           <h1
             style={{
-              ...systemFont,
+              fontFamily: colors.font ?? systemFont.fontFamily,
               color: colors.white,
               fontSize: "clamp(1.8rem, 6vw, 2.6rem)",
               fontWeight: 700,
@@ -295,7 +316,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           >
             Daily Warm-Up
           </h1>
-          <p style={{ ...systemFont, color: colors.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
+          <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontStyle: "italic", fontSize: "1rem" }}>
             Press Start. Follow along.
           </p>
 
@@ -313,11 +334,11 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
               }}
             >
               <Flame size={16} color={colors.accentBright} fill={colors.accent} />
-              <span style={{ ...systemFont, color: colors.accentBright, fontSize: "0.9rem", fontWeight: 700 }}>
+              <span style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accentBright, fontSize: "0.9rem", fontWeight: 700 }}>
                 Day {streak}
               </span>
               {!practicedToday && (
-                <span style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.8rem" }}>
+                <span style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.8rem" }}>
                   — practice today to keep it
                 </span>
               )}
@@ -337,7 +358,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             transition: "box-shadow 0.4s ease",
           }}
         >
-          <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
+          <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", textAlign: "center", marginBottom: "1rem" }}>
             {isLoading
               ? "Loading Exercises..."
               : isBuffering
@@ -350,7 +371,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           </p>
 
           <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
-            <h2 style={{ ...systemFont, color: colors.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
+            <h2 style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.white, fontSize: "clamp(1.4rem, 5vw, 1.9rem)", fontWeight: 700 }}>
               {isFinished
                 ? "Nice work"
                 : isError
@@ -358,12 +379,12 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                   : `${currentFile.title}: ${rep === 1 ? "Buzz" : "Syllables"}`}
             </h2>
             {isFinished && streak > 0 && (
-              <p style={{ ...systemFont, color: colors.accentBright, fontSize: "1.05rem", fontWeight: 700, marginTop: "0.5rem" }}>
+              <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accentBright, fontSize: "1.05rem", fontWeight: 700, marginTop: "0.5rem" }}>
                 Day {streak} 🔥 {streak === 1 ? "Your streak starts now." : "Keep it alive tomorrow."}
               </p>
             )}
             {!isFinished && !isError && (
-              <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
+              <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.9rem", fontWeight: 600, marginTop: "0.4rem" }}>
                 {currentFile.technique}
               </p>
             )}
@@ -374,7 +395,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
               <span
                 style={{
-                  ...systemFont,
+                  fontFamily: colors.font ?? systemFont.fontFamily,
                   display: "inline-block",
                   background: `${colors.accent}1f`,
                   border: `1px solid ${colors.accent}66`,
@@ -422,7 +443,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           {!isFinished && !isError && (
             <p
               style={{
-                ...systemFont,
+                fontFamily: colors.font ?? systemFont.fontFamily,
                 color: colors.whiteDim,
                 fontSize: "0.95rem",
                 lineHeight: 1.7,
@@ -436,7 +457,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
 
           {isError && (
             <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
+              <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.7 }}>
                 None of the warm-up files could be found. Drop{" "}
                 <code style={{ color: colors.accent }}>exercise-1-C.mp3</code> through{" "}
                 <code style={{ color: colors.accent }}>exercise-4-C.mp3</code> into{" "}
@@ -456,7 +477,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
               marginBottom: "1.5rem",
             }}
           >
-            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.85rem", lineHeight: 1.6 }}>
               Skipped missing file{loadErrors.length > 1 ? "s" : ""}:{" "}
               <span style={{ color: colors.accent }}>{loadErrors.join(", ")}</span>. Add{loadErrors.length > 1 ? "" : " it"} to{" "}
               <code>public/audio/</code> to include {loadErrors.length > 1 ? "them" : "it"} in the routine.
@@ -471,7 +492,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
               onClick={start}
               disabled={isLoading}
               style={{
-                ...systemFont,
+                fontFamily: colors.font ?? systemFont.fontFamily,
                 background: isLoading ? colors.trackBg : `linear-gradient(135deg, ${colors.accentBright}, ${colors.accent})`,
                 color: colors.buttonText,
                 border: "none",
@@ -493,7 +514,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <button
               onClick={start}
               style={{
-                ...systemFont,
+                fontFamily: colors.font ?? systemFont.fontFamily,
                 background: "transparent",
                 color: colors.accent,
                 border: `1px solid ${colors.accent}`,
@@ -517,7 +538,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                 onClick={isPlaying ? pause : isPaused ? resume : undefined}
                 disabled={isBuffering}
                 style={{
-                  ...systemFont,
+                  fontFamily: colors.font ?? systemFont.fontFamily,
                   flex: 2,
                   display: "flex",
                   alignItems: "center",
@@ -543,7 +564,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
               <button
                 onClick={skip}
                 style={{
-                  ...systemFont,
+                  fontFamily: colors.font ?? systemFont.fontFamily,
                   flex: 1,
                   display: "flex",
                   alignItems: "center",
@@ -572,7 +593,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <button
               onClick={restart}
               style={{
-                ...systemFont,
+                fontFamily: colors.font ?? systemFont.fontFamily,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -605,16 +626,16 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
               marginBottom: "1.5rem",
             }}
           >
-            <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
               How to Practice
             </p>
-            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
               {howToPractice}
             </p>
-            <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.75rem" }}>
               The Buzz — First Pass of Every Exercise
             </p>
-            <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.95rem", lineHeight: 1.7 }}>
               {buzzNote}
             </p>
           </div>
@@ -623,7 +644,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
         {/* ── Key + tempo controls ── */}
         <div style={{ background: colors.panel, border: `1px solid ${colors.border}`, borderRadius: "20px", padding: "1.75rem 1.5rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-            <p style={{ ...systemFont, color: colors.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+            <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteFaint, fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase" }}>
               Key &amp; Tempo — Applies To The Whole Routine
             </p>
           </div>
@@ -655,7 +676,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           <button
             onClick={resetKeyTempo}
             style={{
-              ...systemFont,
+              fontFamily: colors.font ?? systemFont.fontFamily,
               display: "block",
               margin: "0.5rem auto 0",
               background: "transparent",
@@ -683,21 +704,21 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             textAlign: "center",
           }}
         >
-          <p style={{ ...systemFont, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.5rem" }}>
+          <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.accent, fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.5rem" }}>
             Make It a Habit
           </p>
-          <p style={{ ...systemFont, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+          <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteDim, fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.25rem" }}>
             Put a daily warm-up reminder in your calendar.
           </p>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-            <label style={{ ...systemFont, color: colors.white, fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <label style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.white, fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
               Every day at
               <input
                 type="time"
                 value={reminderTime}
                 onChange={(e) => setReminderTime(e.target.value)}
                 style={{
-                  ...systemFont,
+                  fontFamily: colors.font ?? systemFont.fontFamily,
                   background: colors.trackBg,
                   color: colors.white,
                   border: `1px solid ${colors.border}`,
@@ -711,7 +732,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <button
               onClick={() => downloadWarmupIcs(reminderTime, window.location.href)}
               style={{
-                ...systemFont,
+                fontFamily: colors.font ?? systemFont.fontFamily,
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
@@ -732,10 +753,10 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
           </div>
         </div>
 
-        <p style={{ ...systemFont, color: colors.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
+        <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteFaint, textAlign: "center", fontStyle: "italic", fontSize: "0.85rem", marginTop: "2.5rem" }}>
           Pitch-shifted with tempo preserved — practice at your own key and speed.
         </p>
-        <p style={{ ...systemFont, color: colors.whiteFaint, textAlign: "center", fontSize: "0.65rem", marginTop: "0.75rem", opacity: 0.7 }}>
+        <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, color: colors.whiteFaint, textAlign: "center", fontSize: "0.65rem", marginTop: "0.75rem", opacity: 0.7 }}>
           v{__BUILD_DATE__}
         </p>
       </div>
@@ -756,4 +777,9 @@ export function Learn2SingPracticePage() {
 /** Frequency Series practice portal — omegabone.com/frequencyseries/practice */
 export function FrequencyPracticePage() {
   return <PracticePortal colors={FREQUENCY_RED} />;
+}
+
+/** Ornithology app, Calibrate tab — omegabone.com/ornithology/warmup */
+export function OrnithologyPracticePage() {
+  return <PracticePortal colors={ORNITHOLOGY} />;
 }

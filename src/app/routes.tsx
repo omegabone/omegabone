@@ -23,6 +23,7 @@ const ApplyPage            = lazy(() => import("./pages/ApplyPage").then(m => ({
 const PracticePage         = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.PracticePage })));
 const Learn2SingPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.Learn2SingPracticePage })));
 const FrequencyPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.FrequencyPracticePage })));
+const OrnithologyPracticePage = lazy(() => import("./pages/PracticePage").then(m => ({ default: m.OrnithologyPracticePage })));
 const MusicEducationLandingPage = lazy(() => import("./pages/MusicEducationLandingPage").then(m => ({ default: m.MusicEducationLandingPage })));
 const FrequencyPage        = lazy(() => import("./pages/FrequencyPage").then(m => ({ default: m.FrequencyPage })));
 const CourseVaultPage      = lazy(() => import("./pages/CourseVaultPage").then(m => ({ default: m.CourseVaultPage })));
@@ -87,6 +88,7 @@ export const router = createBrowserRouter([
   { path: "/Vocal_Mastery/practice",             Component: wrap(PracticePage) },
   { path: "/Learn_2_Sing/practice",               Component: wrap(Learn2SingPracticePage) },
   { path: "/frequencyseries/practice",            Component: wrap(FrequencyPracticePage) },
+  { path: "/ornithology/warmup",                 Component: wrap(OrnithologyPracticePage) },
   // Old addresses — keep shared links and indexed URLs working
   { path: "/practice",                          Component: () => <Navigate to="/Vocal_Mastery/practice" replace /> },
   { path: "/vocal-mastery",                     Component: () => <Navigate to="/Vocal_Mastery" replace /> },
