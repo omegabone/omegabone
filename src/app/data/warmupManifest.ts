@@ -7,6 +7,10 @@ export interface WarmupManifestEntry {
   defaultKey: string;
   /** 1-based measure range of this exercise within the warm-ups score. */
   measures: [number, number];
+  /** Length of the audio file in seconds. */
+  duration: number;
+  /** Start time (seconds) of each of the 13 rounds: C up by half steps to B, then high C. Measured from the audio 2026-11-19. */
+  rounds: number[];
 }
 
 /** Shown before the routine starts — how the whole practice works. */
@@ -40,6 +44,8 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "up for “ee,” jaw completely still, pushing enough air to travel across the room.",
     defaultKey: "C",
     measures: [1, 3],
+    duration: 87.943,
+    rounds: [0.0, 7.89, 13.93, 20.2, 26.47, 32.74, 38.78, 45.05, 51.32, 57.35, 63.39, 69.66, 75.7],
   },
   {
     id: 2,
@@ -52,6 +58,8 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "in place and move only your tongue, pressing one clean note at a time.",
     defaultKey: "C",
     measures: [4, 5],
+    duration: 72.844,
+    rounds: [0.0, 6.97, 12.31, 17.65, 22.76, 28.1, 33.44, 38.78, 43.89, 49.23, 54.33, 59.44, 64.32],
   },
   {
     id: 3,
@@ -65,6 +73,8 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "cross from chest into head voice, so it all sounds like one voice.",
     defaultKey: "C",
     measures: [6, 9],
+    duration: 105.284,
+    rounds: [0.0, 9.06, 16.95, 24.61, 32.28, 39.94, 47.6, 55.26, 62.93, 70.59, 78.25, 86.15, 93.81],
   },
   {
     id: 4,
@@ -77,5 +87,7 @@ export const warmupManifest: WarmupManifestEntry[] = [
       "the big leaps.",
     defaultKey: "C",
     measures: [10, 12],
+    duration: 84.244,
+    rounds: [0.0, 7.43, 13.7, 19.97, 26.01, 32.28, 38.55, 44.58, 50.62, 56.66, 62.93, 68.96, 75.0],
   },
 ];

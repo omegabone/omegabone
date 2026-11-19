@@ -100,6 +100,14 @@ export class PitchAudioEngine {
     this.shifter = shifter;
   }
 
+  /** Jump to a point in the current file (seconds of the original audio). Works while paused too. */
+  seek(seconds: number) {
+    if (!this.shifter) return;
+    const d = this.shifter.duration;
+    if (!d) return;
+    this.shifter.percentagePlayed = Math.max(0, Math.min(0.999, seconds / d));
+  }
+
   pause() {
     this.shifter?.disconnect();
   }

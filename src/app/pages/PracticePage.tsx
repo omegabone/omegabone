@@ -1,5 +1,5 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { CalendarPlus, Flame, Pause, Play, RotateCcw, SkipBack, SkipForward } from "lucide-react";
+import { CalendarPlus, ChevronLeft, ChevronRight, Flame, Pause, Play, RotateCcw, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useState } from "react";
 import { downloadWarmupIcs } from "../lib/warmupReminder";
 import {
@@ -216,6 +216,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
     currentFile,
     rep,
     progress,
+    roundIndex,
+    totalRounds,
     loadErrors,
     keySemitones,
     tempoPercent,
@@ -224,6 +226,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
     resume,
     skip,
     rewind,
+    nextRound,
+    prevRound,
     restart,
     setKeySemitones,
     setTempoPercent,
@@ -244,6 +248,8 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
   const rewindButton = (
     <button
       onClick={rewind}
+      aria-label="Previous exercise"
+      title="Previous exercise"
       style={{
         fontFamily: colors.font ?? systemFont.fontFamily,
         flex: 1,
@@ -263,7 +269,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
         cursor: "pointer",
       }}
     >
-      <SkipBack size={15} /> Rewind
+      <SkipBack size={15} /> Ex
     </button>
   );
 
@@ -424,17 +430,32 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <Waveform active={isPlaying} color={colors.accent} />
           </div>
 
-          {/* Progress bar for the current file */}
+          {/* Round counter: each exercise runs 13 rounds, C up by half steps to high C */}
           {!isFinished && !isError && (
-            <div style={{ width: "100%", height: "4px", borderRadius: "999px", background: colors.trackBg, overflow: "hidden", marginBottom: "1.5rem" }}>
-              <div
-                style={{
-                  height: "100%",
-                  width: `${progress}%`,
-                  background: `linear-gradient(90deg, ${colors.accent}, ${colors.accentBright})`,
-                  transition: "width 0.2s linear",
-                }}
-              />
+            <div style={{ marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: colors.font ?? systemFont.fontFamily, textAlign: "center", marginBottom: "0.6rem" }}>
+                <span style={{ color: colors.accentBright, fontSize: "1.6rem", fontWeight: 800 }}>{hasStarted ? roundIndex + 1 : 1}</span>
+                <span style={{ color: colors.whiteDim, fontSize: "1rem", fontWeight: 600 }}> of {totalRounds}</span>
+              </p>
+              <div style={{ display: "flex", gap: "3px" }}>
+                {Array.from({ length: totalRounds }, (_, i) => {
+                  const current = hasStarted ? roundIndex : -1;
+                  const filled = i < current || (i === current && progress >= 100);
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        height: "6px",
+                        borderRadius: "999px",
+                        background: filled ? colors.accent : i === current ? colors.accentBright : colors.trackBg,
+                        boxShadow: i === current ? `0 0 8px ${colors.accentBright}80` : "none",
+                        transition: "background 0.25s ease",
+                      }}
+                    />
+                  );
+                })}
+              </div>
             </div>
           )}
 
@@ -535,6 +556,30 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
             <div style={{ display: "flex", gap: "0.5rem" }}>
               {rewindButton}
               <button
+                onClick={prevRound}
+                disabled={isBuffering}
+                aria-label="Previous round"
+                title="Previous round"
+                style={{
+                  fontFamily: colors.font ?? systemFont.fontFamily,
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.2rem",
+                  background: `${colors.accent}1f`,
+                  color: colors.accentBright,
+                  border: `1px solid ${colors.accent}66`,
+                  borderRadius: "999px",
+                  padding: "0.9rem 0.3rem",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  cursor: isBuffering ? "default" : "pointer",
+                }}
+              >
+                <ChevronLeft size={17} /> #
+              </button>
+              <button
                 onClick={isPlaying ? pause : isPaused ? resume : undefined}
                 disabled={isBuffering}
                 style={{
@@ -562,7 +607,33 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                 {isPlaying ? "Pause" : isPaused ? "Resume" : "Loading..."}
               </button>
               <button
+                onClick={nextRound}
+                disabled={isBuffering}
+                aria-label="Next round"
+                title="Next round"
+                style={{
+                  fontFamily: colors.font ?? systemFont.fontFamily,
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.2rem",
+                  background: `${colors.accent}1f`,
+                  color: colors.accentBright,
+                  border: `1px solid ${colors.accent}66`,
+                  borderRadius: "999px",
+                  padding: "0.9rem 0.3rem",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  cursor: isBuffering ? "default" : "pointer",
+                }}
+              >
+                # <ChevronRight size={17} />
+              </button>
+              <button
                 onClick={skip}
+                aria-label="Next exercise"
+                title="Next exercise"
                 style={{
                   fontFamily: colors.font ?? systemFont.fontFamily,
                   flex: 1,
@@ -582,7 +653,7 @@ function PracticePortal({ colors }: { colors: PracticePalette }) {
                   cursor: "pointer",
                 }}
               >
-                <SkipForward size={15} /> Skip
+                Ex <SkipForward size={15} />
               </button>
             </div>
           )}

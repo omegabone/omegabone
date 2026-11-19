@@ -49,6 +49,10 @@ export function useWarmupRoutine() {
   const [status, setStatus] = useState<RoutineStatus>("idle");
   const [stepIndex, setStepIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  // Which of the 13 rounds (0-based) is playing in the current file.
+  const [roundIndex, setRoundIndex] = useState(0);
+  const lastRoundRef = useRef(-1);
+  const roundIndexRef = useRef(0);
   const [loadErrors, setLoadErrors] = useState<string[]>([]);
   const [keySemitones, setKeySemitonesState] = useState(0);
   const [tempoPercent, setTempoPercentState] = useState(100);
@@ -102,6 +106,7 @@ export function useWarmupRoutine() {
         stepIndexRef.current = index;
         setStepIndex(index);
         setProgress(0);
+        setRoundIndex(0);
         engineRef.current?.stop();
         setStatus("buffering");
         buffer = await promises[step.fileIndex];
@@ -120,10 +125,22 @@ export function useWarmupRoutine() {
       setStepIndex(index);
       setProgress(0);
       lastProgressRef.current = -1;
+      setRoundIndex(0);
+      lastRoundRef.current = 0;
+      roundIndexRef.current = 0;
+      const entry = warmupManifest[step.fileIndex];
       setStatus("playing");
       engineRef.current!.play(buffer, {
         onEnded: () => playStepAt(index + 1),
         onProgress: (percent) => {
+          const seconds = (percent / 100) * entry.duration;
+          let r = 0;
+          while (r + 1 < entry.rounds.length && seconds >= entry.rounds[r + 1]) r++;
+          if (r !== lastRoundRef.current) {
+            lastRoundRef.current = r;
+            roundIndexRef.current = r;
+            setRoundIndex(r);
+          }
           const rounded = Math.floor(percent);
           if (rounded !== lastProgressRef.current) {
             lastProgressRef.current = rounded;
@@ -203,6 +220,35 @@ export function useWarmupRoutine() {
     playStepAt(target, -1);
   }, [status, playStepAt]);
 
+  // Move between the 13 rounds inside the current exercise.
+  const goToRound = useCallback(
+    (target: number) => {
+      const entry = warmupManifest[steps[stepIndexRef.current].fileIndex];
+      if (target >= entry.rounds.length) {
+        playStepAt(stepIndexRef.current + 1);
+        return;
+      }
+      const r = Math.max(0, target);
+      engineRef.current?.unlock();
+      engineRef.current?.seek(entry.rounds[r]);
+      lastRoundRef.current = r;
+      roundIndexRef.current = r;
+      setRoundIndex(r);
+      setProgress(Math.floor((entry.rounds[r] / entry.duration) * 100));
+    },
+    [steps, playStepAt],
+  );
+
+  const nextRound = useCallback(() => {
+    if (status !== "playing" && status !== "paused") return;
+    goToRound(roundIndexRef.current + 1);
+  }, [status, goToRound]);
+
+  const prevRound = useCallback(() => {
+    if (status !== "playing" && status !== "paused") return;
+    goToRound(roundIndexRef.current - 1);
+  }, [status, goToRound]);
+
   const restart = useCallback(() => {
     if (status === "idle" || status === "loading" || status === "error") return;
     playStepAt(0);
@@ -240,6 +286,8 @@ export function useWarmupRoutine() {
     currentFile: warmupManifest[currentStep.fileIndex],
     rep: currentStep.rep,
     progress,
+    roundIndex,
+    totalRounds: warmupManifest[currentStep.fileIndex].rounds.length,
     loadErrors,
     keySemitones,
     tempoPercent,
@@ -248,6 +296,8 @@ export function useWarmupRoutine() {
     resume,
     skip,
     rewind,
+    nextRound,
+    prevRound,
     restart,
     setKeySemitones,
     setTempoPercent,
